@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="esyt.framework.persistence.qxgl.mapper.SYSSecurityMapper">
+	<!-- 查询用户具有权限的业务系统 -->
+	<select id="queryUserYwxt" resultType="rmywxt" parameterType="java.lang.String">
+		SELECT
+		   APP_ID,
+		   APP_NAME,
+		   APP_ICON,
+		   LAN_ID,
+		   F_SYZT,
+		   APP_URL
+		FROM
+		   sys_app APP
+		WHERE
+		   F_SYZT = '1' and 
+		   EXISTS (
+		      SELECT
+		         1
+		      FROM
+		         bsusqx QX,BSUSROLE ur
+		      WHERE
+		         APP.APP_ID = QX.ACCESS_VALUE AND 
+		         (
+			       ( F_MASTER = 'USER' AND MASTER_VALUE = #{USER_ID})
+			      OR ( F_MASTER = 'ROLE' AND MASTER_VALUE=ur.ROLE_ID AND ur.USER_ID = #{USER_ID})
+		         )
+		   )
+	</select>
+	<!-- 查询用户某个系统的权限菜单-->
+	<select id="queryUserMenuOfApp" resultType="rmMenu" >
+		SELECT DISTINCT
+		menu.MENU_BH,
+		menu.MENU_MC,
+		menu.MODULE_BH,
+		menu.APP_ID,
+		menu.F_JS,
+		menu.F_MX,
+		menu.F_PARENT,
+		menu.F_DISP,
+		menu.URL,
+		menu.F_TARGET,
+		menu.F_REL,
+		menu.F_ATTR,
+		menu.IMAGE,
+		menu.SHORTCUT,
+		menu.F_CRDATE,
+		menu.F_CHDATE
+		FROM SYS_MENU menu ,bsusqx qx,bsusrole ur
+				WHERE
+				   qx.ACCESS_VALUE LIKE CONCAT(menu.MENU_BH, '%')
+				AND (
+				   (
+				      qx.F_MASTER = 'ROLE'
+				      AND qx.MASTER_VALUE = ur.ROLE_ID
+				      AND ur.USER_ID = #{USER_ID}
+				   )
+				   OR (
+				      qx.F_MASTER = 'USER'
+				      AND qx.MASTER_VALUE = #{USER_ID}
+				   )
+				)
+				AND qx.F_OP = '1'
+				AND F_ACCESS = #{APP_ID}
+		ORDER BY menu.MENU_BH
+	</select>
+	<select id="" resultMap="rmrole" parameterType="java.lang.String">
+		select ROLE.ROLE_ID,ROLE.ROLE_NAME,ROLE.F_JS,ROLE.F_MX,ROLE.F_PARENT,ROLE.F_NOTE 
+          from BSROLE ROLE
+         where NOT EXISTS  (SELECT 1 FROM BSUSROLE GX WHERE ROLE.ROLE_ID = GX.ROLE_ID AND GX.USER_ID = #{USER_ID} )
+         order by ROLE.ROLE_ID ;
+	</select>
+	
+    
+      <!-- 插入 -->
+    <insert id="saveUserRoles" parameterType="esyt.framework.persistence.qxgl.beans.BaseUSRole">
+        INSERT INTO BSUSROLE (
+        	USER_ID,
+	        ROLE_ID
+        ) VALUES (
+        	#{USER_ID} ,
+        	#{ROLE_ID}
+        )
+	</insert>
+	<!-- 查询用户已分配功能 -->
+	<select id="queryMenuTree" resultType="hashmap" parameterType="java.lang.String">
+		SELECT
+		menu.MENU_BH,
+		menu.MENU_MC,
+		menu.MODULE_BH,
+		menu.APP_ID,
+		menu.F_JS,
+		menu.F_MX,
+		menu.F_PARENT,
+		menu.F_DISP,
+		menu.URL,
+		menu.IMAGE,
+		menu.SHORTCUT,
+		menu.F_CRDATE,
+		menu.F_CHDATE
+		FROM SYS_MENU  menu
+		ORDER BY menu.MENU_BH
+	</select>
+	<!-- 查询子菜单-->
+	<select id="querySubMenu" resultType="hashmap" >
+		SELECT
+		menu.MENU_BH,
+		menu.MENU_MC,
+		menu.MODULE_BH,
+		menu.APP_ID,
+		menu.F_JS,
+		menu.F_MX,
+		menu.F_PARENT,
+		menu.F_DISP,
+		menu.URL,
+		menu.IMAGE,
+		menu.SHORTCUT,
+		menu.F_CRDATE,
+		menu.F_CHDATE,
+		bsusqx.F_OP
+		FROM SYS_MENU menu  LEFT JOIN bsusqx
+				  ON  menu.MENU_BH=bsusqx.ACCESS_VALUE
+				 AND  bsusqx.F_OP = '1'
+				 AND  bsusqx.MASTER_VALUE = #{USER_ID}
+				 AND  bsusqx.F_ACCESS = 'MENU'
+				 AND  bsusqx.F_MASTER ='USER'
+			   WHERE  menu.F_JS = #{JS}+1 AND menu.MENU_BH LIKE #{MENU_BH} '%' 
+		ORDER BY menu.MENU_BH
+	</select>
+	<!-- 保存用户功能权限n-->
+	<insert id="saveUserGnqx" parameterType="java.util.Map">
+		 INSERT INTO bsusqx (
+        	bsusqx.F_ID,
+			bsusqx.F_MASTER,
+			bsusqx.MASTER_VALUE,
+			bsusqx.F_ACCESS,
+			bsusqx.ACCESS_VALUE,
+			bsusqx.F_OP
+        ) VALUES (
+        	#{F_ID} ,
+        	#{F_MASTER},
+        	#{MASTER_VALUE},
+        	#{F_ACCESS},
+        	#{ACCESS_VALUE},
+        	#{F_OP}
+        )
+	</insert>
+	<delete id="delUserGnqx" parameterType="java.lang.String">
+		 DELETE FROM bsusqx WHERE F_ID=#{F_ID}
+	</delete>
+</mapper>
+
+

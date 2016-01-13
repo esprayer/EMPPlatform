@@ -1,0 +1,978 @@
+<?xml version="1.0" encoding="gb2312"?>
+<wizards>
+    <FavFuncList>
+        <F id="BB"/>
+        <F id="KMJE"/>
+        <!--F id="SHBB"/-->
+        <!--F id="SAPBB"/-->
+    </FavFuncList>
+    <BaseLimitObjects text="参数对象">
+        <O id="YEAR"  type="N" help="HelpYear" text="会计年度" defvalue="0" des1="" des2="可以使用相对会计年度与绝对会计年度,0表示当前会计年度,-1表示上一会计年度,2003表示2003会计年度"/>
+        <O id="MONTH" type="N" help="HelpMonth" text="会计期间" defvalue="0" des1="" des2="可以使用相对会计期间与绝对会计期间,0表示当前期间,-1表示上一会计期间,3表示第3会计期间"/>
+        <!--备查簿-->
+        <O id="BCLX"  type="C" help="HelpBCLX" text="备查类型" des1="" tbName="BCLXZD" bhCol="LXZD_BH" mcCol="LXZD_MC" struCol=""/>
+        <O id="BCYWLX"  type="C" help="HelpBCYWLX" text="备查业务类型" des1="" tbName="BCYWLX" bhCol="YWLX_BH" mcCol="YWLX_MC" struCol=""/>
+        <O id="BCXMBH"  type="C" help="HelpBCXM" text="备查项目" des1="" tbName="BCXMZD" bhCol="XMZD_BH" mcCol="XMZD_MC" struCol=""/>
+        <O id="DCOL"  type="C" help="HelpDCOL" text="数据对象" des1=""/>
+        <O id="ZBLB"  type="C" help="HelpZBLB" text="指标类别" des1="" />
+        <O id="ZBBH"  type="C" help="HelpZBBH" text="指标编号" des1="" />
+        <O id="BBZBDCOL"  type="C" help="HelpBBZBDCOL" text="数据对象" des1=""/>
+
+        <!--递延所得税-->
+        <O id="DYXMBH"  type="C" help="HelpDYXMBH" text="递延项目编号" des1="" tbName="DYXMZD" bhCol="F_XMBH" mcCol="F_XMMC" struCol=""/>
+        <!--XYBB专用-->
+        <O id="COFFSET" type="N" help="" text="列偏移" defvalue="@MONTH@" des1="" des2=""/>
+        <O id="ROFFSET" type="N" help="" text="行偏移" defvalue="@MONTH@" des1="" des2=""/>
+        <!--工程-->
+        <O id="GNFW" type="C" text="功能范围" help="HelpGNFW" tbName="LSGNFW" bhCol="F_GNBH" mcCol="F_GNMC" struCol=""/>
+        <O id="FYYS" type="C" text="费用要素" help="HelpFYYS" tbName="LSFYZD" bhCol="F_FYBH" mcCol="F_FYMC" struCol=""/>
+        <O id="ZRZX"  type="C" help="HelpZRZX" text="核算主体" defvalue="0" des1="" tbName="ACZRZX" bhCol="F_CODE" mcCol="F_STMC" struCol="ZW_ZRSTRU"/>
+        <O id="BKBH"  type="C" help="HelpBKBH" text="业务范围" defvalue="0" des1="" tbName="ACBKZD" bhCol="F_BKBH" mcCol="F_BKMC" struCol="ZW_BKSTRU"/>
+        <O id="KMBH"  type="C" help="HelpKMBH" text="科目编号" des1="" tbName="LSKMXX" bhCol="F_KMBH" mcCol="F_KMMC" struCol="ZW_KMSTRU"/>
+        <O id="WBBH"  type="C" help="HelpWBBH" text="外币编号" des1="" tbName="LSWBBH" bhCol="F_WBBH" mcCol="F_WBMC" struCol=""/>
+        <O id="XMBH"  type="C" help="HelpXMBH" text="项目编号" des1="" tbName="LSHSZD" bhCol="F_HSBH" mcCol="F_HSMC" struCol="ZW_HSSTRU"/>
+        <O id="XMLB"  type="C" help="HelpXMLB" text="项目类别" des1="" tbName="LSHSFL" bhCol="F_HSLB" mcCol="F_FLMC" struCol=""/>
+        <O id="BMBH"  type="C" help="HelpBMBH" text="责任成本中心编号" des1="" tbName="ACBMZD" bhCol="F_BMBH" mcCol="F_BMMC" struCol="ZW_BMSTRU"/>
+        <O id="GRBH"  type="C" help="HelpGRBH" text="个人编号" des1="" tbName="LSZGZD" bhCol="F_ZGBH" mcCol="F_NAME" struCol=""/>
+        <O id="ZTBH"  type="C" help="HelpZTBH" text="账套编号" des1="" tbName="LCZTXX" bhCol="DWZD_BH" mcCol="DWZD_MC" struCol=""/>
+        <O id="CPBH"  type="C" help="HelpCPBH" text="产品编号" des1="" tbName="LSCPZD" bhCol="F_CPBH" mcCol="F_CPMC" struCol="ZW_CPSTRU"/>
+        <O id="CBBH"  type="C" help="HelpCBBH" text="成本中心编号" des1="" tbName="ACCBZX" bhCol="F_CBBH" mcCol="F_CBMC" struCol="ZW_CBSTRU"/>
+        <O id="CBLX"  type="C" help="HelpCBLX" text="成本类型编号" des1="" tbName="LSCBLX" bhCol="F_LXBH" mcCol="F_LXMC" struCol=""/>
+        <O id="XJBH"  type="C" help="HelpXJBH" text="现金流量编号" des1="" tbName="ACXJLL" bhCol="F_XJBH" mcCol="F_XJMC" struCol="ZW_XJSTRU"/>
+        <O id="WLBH"  type="C" help="HelpWLBH" text="往来单位编号" des1="" tbName="LSWLDW" bhCol="F_DWBH" mcCol="F_DWMC" struCol=""/>
+        <O id="WLLB"  type="C" help="HelpWLLB" text="往来类别" des1=""    tbName="LSWLFL" bhCol="F_FLBH" mcCol="F_FLMC" struCol=""/>
+        <!--自定义辅助类别及编号帮助-->
+        <O id="ZFLB" type="C" help="HelpZFLB" text="自定义辅助类别" des1="" tbName="LSZDFZLB" bhCol="F_LBBH" mcCol="F_LBMC" struCol=""/>
+        <O id="ZFBH" type="C" help="HelpZFBH" text="自定义辅助编号" des1="" struCol=""/>
+        <O id="ZFLBBH" type="C" help="HelpZFLBBH" text="自定义辅助类别+编号" des1="" struCol=""/>
+
+        <O id="TZLB" type="C" help="HelpTZLB" text="台账类别" des1="" tbName="LSYSLB" bhCol="F_YSLB" mcCol="F_LBMC" struCol=""/>
+        <O id="TZBH" type="C" help="HelpTZBH" text="台账项目编号" des1="" tbName="LSYSZD" bhCol="F_YSBH" mcCol="F_YSMC" struCol="ZW_YSSTRU"/>
+        <O id="PZBH" type="C" help="HelpPZBH" text="凭证编号" des1=""/>
+        <O id="PZRQ" type="C" help="HelpPZRQ" text="凭证日期" des1=""/>
+        <O id="PZJY" type="C" help="HelpPZJY" text="凭证摘要" des1=""/>
+        <O id="BBBH" type="C" help="HelpBBBH" text="报表编号" defvalue="@BBBH@" des1=""/>
+        <O id="DWBH" type="C" help="HelpDWBH" text="单位编号" defvalue="@DWBH@" des1=""/>
+        <O id="LBBH" type="C" help="HelpLBBH" text="类别编号" defvalue="@LBBH@" des1=""/>
+        <O id="BBREF" type="C" help="HelpBBREF" text="报表范围" des1="" des2="报表范围可以本表或其他表的一块指定区域,如果本表,可以直接在所打开的报表上进行选择,如果是其他表,可以使用帮助按钮打开进行选择!"/>
+        <O id="DOBJ" type="C" help="HelpDOBJ" text="取数对象" des1="@DOBJ@" des2=""/>
+        <O id="COBJ" type="C" help="HelpCOBJ" text="条件对象" des1="@COBJ@" des2=""/>
+        <O id="SOBJ" type="C" help="HelpSOBJ" text="条件对象" des1="@SOBJ@" des2=""/>
+        <O id="QJBH" type="C" help="HelpQJBH" text="区间编号" des1=""/>
+        <O id="SJQJBH" type="C" help="HelpSJQJBH" text="区间类别+编号" des1="时间账龄分析的期间编号"/>
+        <O id="YJGCBH" type="C" help="HelpYJGCBH" text="油建工程编号" des1=""/>
+        <O id="YJCBBH" type="C" help="HelpYJCBBH" text="油建成本中心编号" des1=""/>
+        <O id="YJSXBH" type="C" help="HelpYJSXBH" text="油建属性编号" des1=""/>
+        <O id="ZJGCBH" type="C" help="HelpZJGCBH" text="钻井工程编号" des1=""/>
+        <O id="ZJCBBH" type="C" help="HelpZJCBBH" text="钻井成本中心编号" des1=""/>
+        <!-- 基建成本-->
+        <O id="ZYGCLB" type="C" help="HelpZYGCLB" text="工程类别"  tbName="ZYGCLB" bhCol="F_LBBH" mcCol="F_LBMC" struCol=""/>
+        <O id="ZYGCBH" type="C" help="HelpZYGCBH" text="项目编号" des1="" tbName="ZYGCZD" bhCol="F_GCBH" mcCol="F_GCMC" struCol="ZY_GCSTRU"/>
+        <O id="ZYCBBH" type="C" help="HelpZYCBBH" text="费用要素编号" des1="" tbName="ZYCBZD" bhCol="F_CBBH" mcCol="F_CBMC" struCol="ZY_CBSTRU"/>
+        <O id="ZYZZBH" type="C" help="HelpZYZZBH" text="转资编号" des1="" tbName="ZYZZZD" bhCol="F_ZZBH" mcCol="F_ZZMC" struCol="ZY_ZZSTRU"/>
+        <O id="ZYXZBH" type="C" help="HelpZYXZBH" text="作业性质编号" des1="" tbName="ZYXZZD" bhCol="F_ZYBH" mcCol="F_ZYMC" struCol="ZY_XZSTRU"/>
+        <O id="ZYZBBH" type="C" help="HelpZYZBBH" text="指标编号" des1="" tbName="ZYSMZD" bhCol="F_SMBH" mcCol="F_SMMC" struCol="ZY_SMSTRU"/>
+        <O id="ZYSXBH" type="C" help="HelpZYSXBH" text="项目属性类别+编号" des1=""/>
+        <O id="ZYXDBH" type="C" help="HelpZYXDBH" text="项目小队编号" des1=""/>
+        <O id="SQL" type="C" help="HelpDSQL" text="直接SQL函数" des1=""/>
+        <O id="MACRO" type="C" help="HelpDOBJ" text="宏函数" des1=""/>
+        <O id="DBFFILE" type="C" help="HelpDBFFILE" text="DBF取数函数" des1=""/>
+        <O id="JLBBBH" type="C" help="HelpJLBBBH" text="兼容报表范围" des1=""/>
+        <O id="JLBBREF" type="C" help="HelpJLBBREF" text="兼容单元格范围" des1=""/>
+        <O id="KMLB" type="C" help="HelpKMLB" text="科目列表" des1=""/>
+        <O id="LBXM" type="C" help="HelpLBXM" text="列表项目" des1=""/>
+        <O id="YSLB" type="C" help="HelpYSLB" text="预算类别" des1=""/>
+        <O id="YSBH" type="C" help="HelpYSBH" text="预算编号" des1=""/>
+        <O id="FLDX" type="C" help="HelpFLDX" text="分类对象" des1="KM,BM,DW,GR,XJ,CB,CP,XM,TZ,ZF" des2="科目编号,责任成本中心编号,单位编号,职工编号,现金编号,成本中心编号,产品编号,专项核算编号,台账类别编号,自定义辅助编号"/>
+        <!--O id="FLDX" type="C" help="HelpFLDX" text="分类对象" des1="KM" des2="科目编号"/-->
+        <O id="FLBH" type="C" help="HelpFLBH" text="分类编号" des1=""/>
+        <!--资产函数专用-->
+        <O id="ZCLB" type="C" help="HelpZCLB" text="资产类别" des1="" tbName="GDZCLB" bhCol="GDZCLB_LBBH" mcCol="GDZCLB_LBMC" struCol="GD_LBSTRU"/>
+        <O id="ZCBH" type="C" help="HelpZCBH" text="资产编号" des1="" tbName="GDZCZC" bhCol="GDZCZC_ZCBH" mcCol="GDZCZC_ZCMC" struCol=""/>
+        <O id="ZCYWLX" type="C" help="HelpZCYWLX" text="业务类型" des1="" tbName="ZCYWLX" bhCol="F_LXBH" mcCol="F_LXMC" struCol=""/>
+
+        <!--O id="ZCSYDW" type="C" help="HelpZCSYDW" text="使用单位" des1="" tbName="GDSYDW" bhCol="GDSYDW_DWBH" mcCol="GDSYDW_DWMC" struCol=""/>
+        <O id="ZCGLFL" type="C" help="HelpZCGLFL" text="管理分类" des1="" tbName="" bhCol="" mcCol="" struCol=""/>
+        <O id="ZCCQGS" type="C" help="HelpZCCQGS" text="产权归属" des1="" tbName="GDCQGS" bhCol="GDCQGS_CQBH" mcCol="GDCQGS_CQMC" struCol=""/>
+        <O id="ZCJJYT" type="C" help="HelpZCJJYT" text="经济用途" des1="" tbName="GDJJYT" bhCol="GDJJYT_YTBH" mcCol="GDJJYT_YTMC" struCol=""/>
+        <O id="ZCLY" type="C" help="HelpZCLY" text="资产来源" des1="" tbName="GDZCLY" bhCol="GDZCLY_LYBH" mcCol="GDZCLY_LYMC" struCol=""/>
+        <O id="ZCSYQK" type="C" help="HelpZCSYQK" text="使用情况" des1="" tbName="GDSYQK" bhCol="GDSYQK_SYBH" mcCol="GDSYQK_SYMC" struCol=""/>
+        <O id="ZCJSZT" type="C" help="HelpZCJSZT" text="技术状态" des1="" tbName="GDJSZT" bhCol="GDJSZT_ZTBH" mcCol="GDJSZT_ZTMC" struCol=""/>
+        <O id="ZCJSYY" type="C" help="HelpZCJSYY" text="减少原因" des1="" tbName="GDJSYY" bhCol="GDJSYY_JSYYBH" mcCol="GDJSYY_JSYYMC" struCol=""/>
+        <O id="ZCJSFS" type="C" help="HelpZCJSFS" text="减少方式" des1="" tbName="GDJSFS" bhCol="GDJSFS_JSFSBH" mcCol="GDJSFS_JSFSMC" struCol=""/>
+        <O id="ZCJZYY" type="C" help="HelpZCJZYY" text="减值原因" des1="" tbName="" bhCol="" mcCol="" struCol=""/>
+        <O id="ZCXZYY" type="C" help="HelpZCXZYY" text="闲置原因" des1="" tbName="" bhCol="" mcCol="" struCol=""/>
+        <O id="ZCZJFF" type="C" help="HelpZCZJFF" text="折旧方法" des1="" tbName="GDZJFF" bhCol="GDZJFF_ZJFFBH" mcCol="GDZJFF_ZJFFMC" struCol=""/-->
+        <!--SAP报表函数专用-->
+        <O id="SAPFUNCFL" type="C" help="HelpSAPFUNCFL" text="函数分类" des1=""/>
+        <O id="SAPFLBH"   type="C" help="HelpSAPFLBH"   text="分类编号" des1=""/>
+        <O id="FUNCXH"    type="C" help="HelpFUNCXH"    text="预处理函数序号" des1=""/>
+        <O id="HSDX"    type="C" help="HelpHSDX"    text="自定义SAP函数对象" des1=""/>
+        <!--JY交易平台报表函数专用-->
+        <O id="ZJDW" type="C" help="HelpZJDW" text="资金单位" des1=""/>
+        <O id="DBLB" type="C" help="HelpDBLB" text="调拔业务类别" des1=""/>
+        <O id="DBXM" type="C" help="HelpDBXM" text="调拨业务项目" des1=""/>
+        <O id="DBSJ" type="C" help="HelpDBSJ" text="数据项目" des1=""/>
+        <O id="JYFUNCFL" type="C" help="HelpJYFUNCFL" text="函数分类" des1="DCJE,DRJE" des2="调出金额,调入金额"/>
+        <!--变动汇总函数条件-->
+        <O id="DATACOL" type="C" help="HelpSOBJ" text="取数范围" des1="@SOBJ@" des2=""/>
+        <O id="HZCOL" type="C" help="HelpSOBJ" text="汇总列" des1="@SOBJ@" des2=""/>
+        <O id="RANGECOL" type="C" help="HelpSOBJ" text="范围列" des1="@SOBJ@" des2=""/>
+		<!--应收应付-->
+        <O id="WLKMBH"  type="C" help="HelpWLKMBH" text="科目编号" des1="" tbName="LSKMXX" bhCol="F_KMBH" mcCol="F_KMMC" struCol="ZW_KMSTRU"/>
+        <!--ERP函数参数对象-->
+        <O id="KHBH" type="C" help="HelpKHBH" text="客户编号" des1=""/>
+        <O id="GYBH" type="C" help="HelpGYBH" text="供应商编号" des1=""/>
+        <O id="ZCFL" type="C" help="HelpZCFL" text="分类编号" des1=""/>
+        <O id="CPDM" type="C" help="HelpCPDM" text="产品代码" des1=""/>
+        <O id="CBYS" type="C" help="HelpCBYS" text="成本要素" des1=""/>
+        <O id="XSBH" type="C" help="HelpXSBH" text="销售编号" des1=""/>
+        <O id="ZWLBH" type="C" help="HelpZWLBH" text="物料编号" des1=""/>
+        <O id="ZCBZX" type="C" help="HelpZCBZX" text="成本中心" des1=""/>
+        <!--HTJE函数参数对象-->
+        <O id="HTBH" type="C" help="HelpHTBH" text="合同编号" des1=""/>
+		
+    </BaseLimitObjects>
+    <BaseDataObjects text="取数对象">
+        <O id="@DWMC@" type="C" text="单位名称" des1="单位名称"/>
+        <O id="@DWBH@" type="C" text="单位编号" des1="单位编号"/>
+        <O id="@YYYY@" type="C" text="会计年度" des1="会计年度"/>
+        <O id="@MM@" type="C" text="会计月份" des1="会计月份"/>
+        <O id="@DD@" type="C" text="会计日" des1="会计日"/>
+        <O id="@JEDW@" type="C" text="金额单位" des1="金额单位"/>
+        <O id="@YEAR@" type="C" text="会计年度" des1="会计年度"/>
+        <O id="@MONTH@" type="C" text="会计月份" des1="会计月份"/>
+        <O id="@DAY@" type="C" text="会计日" des1="会计日"/>
+        <O id="@DATE@" type="C" text="会计日期" des1="会计日期"/>
+        <O id="@LBMC@" type="C" text="类别名称" des1="类别名称"/>
+        <O id="@LBBH@" type="C" text="类别编号" des1="类别编号"/>
+        <!--O id="@BMMC@" type="C" text="责任成本中心名称" des1="责任成本中心名称"/-->
+        <O id="@NY@" type="C" text="会计年度，可参与数值运算" des1="会计年度"/>
+        <O id="@NM@" type="C" text="会计月份，可参与数值运算" des1="会计月份"/>
+        <O id="@ND@" type="C" text="会计日，可参与数值运算" des1="会计日"/>
+        <O id="@NR@" type="C" text="会计日期，可参与数值运算" des1="会计日期"/>
+        <O id="@HSZTMX@" type="C" text="核算主体明细，可参与数值运算" des1="核算主体明细"/>
+        <O id="@HSZTJS@" type="C" text="核算主体级数，可参与数值运算" des1="核算主体级数"/>
+        <O id="NCJF" type="N" text="年初借方" des1="去年年末的借方余额"/>
+        <O id="NCDF" type="N" text="年初贷方" des1="去年年末的贷方余额"/>
+        <O id="JFLJ" type="N" text="借方累计" des1="本年从第一个会计月份开始到本月份（包括本月份）所有借方发生之和"/>
+        <O id="DFLJ" type="N" text="贷方累计" des1="本年从第一个会计月份开始到本月份（包括本月份）所有贷方发生之和"/>
+        <O id="YCJF" type="N" text="月初借方" des1="上一个会计月份的月末借方余额"/>
+        <O id="YCDF" type="N" text="月初贷方" des1="上一个会计月份的月末贷方余额"/>
+        <O id="JFFS" type="N" text="借方发生" des1="本会计月份的借方发生"/>
+        <O id="DFFS" type="N" text="贷方发生" des1="本会计月份的贷方发生"/>
+         
+        <O id="DFFS-JFFS" type="N" text="贷方发生减借方发生" des1="贷方发生减借方发生"/>    <!-- add by lqk -->
+           
+        <O id="JFYE" type="N" text="借方余额" des1="本会计月份的借方余额"/>
+        <O id="DFYE" type="N" text="贷方余额" des1="本会计月份的贷方余额"/>
+        <O id="HSZTMC" type="C" text="核算主体名称" des1="核算主体名称"/>
+		<O id="HSZTJS"  type="C"   text="核算主体级数" des1="核算主体级数"/>
+        <O id="HSZTMX"  type="C"   text="核算主体明细" des1="核算主体明细"/>
+        <O id="HSZTGSXZ"  type="C" text="核算主体公司性质" des1="核算主体公司性质"/>
+        <O id="HSZTBKBH"  type="C" text="核算主体业务范围" des1="核算主体业务范围"/>
+        <O id="HSZTDWBH"  type="C"   text="对应内部单位" des1="对应内部单位"/>
+        <O id="HSZTNBDW"  type="C"   text="内部单位编号" des1="内部单位编号"/>
+        <O id="HSZTKGBL"  type="C"   text="核算主体控股比例" des1="核算主体控股比例"/>
+        <O id="HSZTBWB"  type="C"   text="核算主体本位币" des1="核算主体本位币"/>
+        <O id="HSZTSFNS"  type="C"   text="是否纳税主体" des1="是否纳税主体"/>
+        <O id="HSZTMBZX"  type="C"   text="目标纳税主体" des1="目标纳税主体"/>
+        <O id="HSZTSZDQ"  type="C"   text="核算主体所在地区" des1="核算主体所在地区"/>
+        <O id="HSZTNSR"  type="C"   text="核算主体纳税人性质" des1="核算主体纳税人性质"/>
+        <O id="HSZTNWBS"  type="C"   text="核算主体境内外标识" des1="核算主体境内外标识"/>
+        <O id="HSZTZJLX"  type="C"   text="核算主体资金流向" des1="核算主体资金流向"/>
+        <O id="HSZTZSZX"  type="C"   text="是否折算主体" des1="是否折算主体"/>
+        <O id="HSZTSFDX"  type="C"   text="是否抵销核算主体" des1="是否抵销核算主体"/>
+        <O id="HSZTLYJG"  type="C"   text="来源组织机构" des1="来源组织机构"/>
+        <O id="HSZTZZXS"  type="C"   text="核算主体组织形式" des1="核算主体组织形式"/>
+        <O id="KMMC" type="C" text="科目名称" des1="科目名称"/>
+        <O id="BKMC" type="C" text="板块名称" des1="板块名称"/>
+        <O id="NCYE" type="N" text="年初余额" des1="年初余额"/>
+        <O id="QCYE" type="N" text="期初余额" des1="期初余额"/>
+        <O id="DQYE" type="N" text="当前余额" des1="当前余额"/>
+        <O id="TZZJ" type="N" text="调整折旧" des1="调整折旧"/>
+        <O id="BTZJ" type="N" text="补提折旧" des1="补提折旧"/>
+        <O id="TQZJ" type="N" text="提取折旧" des1="提取折旧"/>
+        <O id="LJTZ" type="N" text="累计调整折旧" des1="累计调整折旧"/>
+        <O id="LJBT" type="N" text="累计补提折旧" des1="累计补提折旧"/>
+        <O id="LJTQ" type="N" text="累计提取折旧" des1="累计提取折旧"/>
+        <!-- 科目类附加 -->
+        <O id="BNJD" type="N" text="本年借贷差额" des1="本年借贷差额"/>
+        <O id="BNDJ" type="N" text="本年贷借差额" des1="本年贷借差额"/>
+        <O id="BYJD" type="N" text="本月借贷差额" des1="本月借贷差额"/>
+        <O id="BYDJ" type="N" text="本月贷借差额" des1="本月贷借差额"/>
+        <O id="NJFX" type="N" text="年初借方分析余额" des1="年初借方分析余额"/>
+        <O id="NDFX" type="N" text="年初贷方分析余额" des1="年初贷方分析余额"/>
+        <O id="YJFX" type="N" text="月初借方分析余额" des1="月初借方分析余额"/>
+        <O id="YDFX" type="N" text="月初贷方分析余额" des1="月初贷方分析余额"/>
+        <!-- 个人类附加 -->
+        <O id="GRMC" type="C" text="个人名称" des1="个人名称"/>
+        <!-- 责任成本中心名称 -->
+        <O id="BMMC" type="C" text="责任成本中心名称" des1="责任成本中心名称"/>
+        <!-- 产品名称 -->
+        <O id="CPMC" type="C" text="产品名称" des1="产品名称"/>
+        <!-- 成本名称 -->
+        <O id="CBMC" type="C" text="成本名称" des1="成本名称"/>
+        <!-- 现金名称 -->
+        <O id="XJMC" type="C" text="现金名称" des1="现金名称"/>
+        <!-- 项目类附加 -->
+        <O id="XMMC" type="C" text="项目名称" des1="项目名称"/>
+        <!-- 往来名称 -->
+        <O id="DWMC" type="C" text="往来名称" des1="往来名称"/>
+        <!-- 台账专用 -->
+        <O id="TZMC" type="C" text="台账项目名称" des1="台账项目名称"/>
+        <!-- 钻井成本函数与油建 -->
+        <O id="BYJE" type="N" text="本月金额" des1="基建成本函数专用:本会计月份工程成本账中的金额"/>
+        <O id="BYSL" type="N" text="本月数量" des1="基建成本函数专用:本会计月份工程成本账中的数量"/>
+        <O id="LJJE" type="N" text="累计金额" des1="基建成本函数专用:本年从第一个会计月份开始到本月份（包括本月份）所有金额加上上期金额之和"/>
+        <O id="LJSL" type="N" text="累计数量" des1="基建成本函数专用:本年从第一个会计月份开始到本月份（包括本月份）所有数量加上上期数量之和"/>
+        <O id="FSJE" type="N" text="本年发生金额" des1="基建成本函数专用:本年从第一个会计月份开始到本月份（包括本月份）所有金额之和"/>
+        <O id="FSSL" type="N" text="本年发生数量" des1="基建成本函数专用:本年从第一个会计月份开始到本月份（包括本月份）所有数量之和"/>
+        <O id="SNJE" type="N" text="上年金额" des1="基建成本函数专用;上期金额"/>
+        <O id="SNSL" type="N" text="上年数量" des1="基建成本函数专用;上期数量"/>
+        <O id="JEYE" type="N" text="期末余额" des1="基建成本函数专用;期末余额"/>
+        <O id="SLYE" type="N" text="期末数量" des1="基建成本函数专用;数量余额"/>
+        <O id="GCMC" type="C" text="工程名称" des1="基建成本函数专用;工程名称"/>
+        <O id="SXMC" type="C" text="属性名称" des1="基建成本函数专用;属性名称"/>
+        <O id="QSRQ" type="C" text="开始日期" des1="基建成本函数专用;开始日期"/>
+        <O id="WGRQ" type="C" text="完工日期" des1="基建成本函数专用;完工日期"/>
+        <O id="ZBMC" type="C" text="指标名称" des1="基建成本函数专用;指标名称"/>
+        <O id="BYZB" type="N" text="本月指标" des1="基建成本函数专用:本会计月份的经济指标"/>
+        <O id="LJZB" type="N" text="累计指标" des1="基建成本函数专用:本年从第一个会计月份开始到本月份（包括本月份）所有经济指标加上上年指标之和"/>
+        <O id="FSZB" type="N" text="发生指标" des1="基建成本函数专用:本年从第一个会计月份开始到本月份（包括本月份）所有经济指标之和"/>
+        <O id="SNZB" type="N" text="上年指标" des1="基建成本函数专用:上年指标"/>
+        <!--项目成本函数-->
+        <!-- 预算 -->
+        <O id="YSJE" type="N" text="预算金额" des1=""/>
+        <O id="YSSL" type="N" text="预算数量" des1=""/>
+        <O id="GCMC" type="N" text="工程名称" des1="(YJCB函数中不使用)"/>
+        <O id="CBMC" type="N" text="成本名称" des1="(YJGC函数中不使用)"/>
+        <O id="XDMC" type="N" text="小队名称" des1="作业小队名称"/>
+        <O id="JLDW" type="N" text="计量单位" des1="(YJCB函数中不使用)"/>
+        <O id="SXMC" type="N" text="工程属性名称" des1="(YJCB函数中不使用)"/>
+        <O id="BYGZL" type="N" text="本月工作量" des1="(YJGC/YJCB函数中不使用)"/>
+        <O id="LJGZL" type="N" text="本年累计工作量" des1="(YJGC函数中不使用)"/>
+        <O id="FSGZL" type="N" text="本年发生工作量" des1="(YJGC函数中不使用)"/>
+        <O id="SNGZL" type="N" text="上年工作量" des1="(YJGC函数中不使用)"/>
+        <O id="XZGS" type="N" text="项目概算" des1="(YJCB函数中不使用)"/>
+        <O id="JHGZ" type="N" text="计划工作量" des1="(YJCB函数中不使用)"/>
+        <O id="JHTZ" type="N" text="计划投资" des1="(YJCB函数中不使用)"/>
+        <O id="HSZC" type="N" text="应核销支出" des1="(YJCB函数中不使用)"/>
+        <O id="YWZC" type="N" text="维护费用支出" des1="(YJCB函数中不使用)"/>
+        <O id="YQSS" type="N" text="转油汽资产" des1="(YJCB函数中不使用)"/>
+        <O id="CQDT" type="N" text="转长期待摊" des1="(YJCB函数中不使用)"/>
+        <O id="BNLR" type="N" text="转本年利润" des1="(YJCB函数中不使用)"/>
+        <O id="DZCG" type="N" text="转地质成果" des1="(YJCB函数中不使用)"/>
+        <O id="GDZC" type="N" text="转固定资产" des1="(YJCB函数中不使用)"/>
+        <O id="LDZC" type="N" text="转流动资产" des1="(YJCB函数中不使用)"/>
+        <O id="DYZC" type="N" text="转递延资产" des1="(YJCB函数中不使用)"/>
+        <O id="WXZC" type="N" text="转无形资产" des1="(YJCB函数中不使用)"/>
+        <!-- 应收应付 -->
+        <O id="DWMC" type="C" text="单位名称" des1=""/>
+        <O id="YSZK" type="N" text="应收账款" des1=""/>
+        <O id="-YSZK" type="N" text="贷方发生" des1=""/>
+        <O id="QMYE" type="N" text="借方余额" des1=""/>
+        <O id="-QMYE" type="N" text="贷方余额" des1=""/>
+        <O id="YFZK" type="N" text="应付账款" des1=""/>
+        <O id="-YFZK" type="N" text="-应付账款" des1=""/>
+        <O id="JDCE" type="N" text="借贷差额" des1=""/>
+        <O id="DJCE" type="N" text="贷借差额" des1=""/>
+
+        <O id="YSZKQC" type="N" text="应收账款期初数" des1=""/>
+        <O id="YSZKQM" type="N" text="应收账款期末数" des1=""/>
+        <O id="YSZKGB" type="N" text="个别计提法应收账款" des1=""/>
+        <O id="YSZKZL" type="N" text="账龄分析法应收账款" des1=""/>
+        <O id="YSZKGBQC" type="N" text="个别计提法应收账款期初数" des1=""/>
+        <O id="YSZKZLQC" type="N" text="账龄分析法应收账款期初数" des1=""/>
+        <O id="YSZKGBQM" type="N" text="个别计提法应收账款期末数" des1=""/>
+        <O id="YSZKZLQM" type="N" text="账龄分析法应收账款期末数" des1=""/>
+        <O id="HZZB" type="N" text="坏账准备" des1=""/>
+        <O id="HZZBQC" type="N" text="坏账准备期初数" des1=""/>
+        <O id="HZZBQM" type="N" text="坏账准备期末数" des1=""/>
+        <O id="HZZBGB" type="N" text="个别计提法坏账准备" des1=""/>
+        <O id="HZZBZL" type="N" text="账龄分析法坏账准备" des1=""/>
+        <O id="HZZBGBQC" type="N" text="个别计提法坏账准备期初数" des1=""/>
+        <O id="HZZBZLQC" type="N" text="账龄分析法坏账准备期初数" des1=""/>
+        <O id="HZZBGBQM" type="N" text="个别计提法坏账准备期末数" des1=""/>
+        <O id="HZZBZLQM" type="N" text="账龄分析法坏账准备期末数" des1=""/>
+
+        <O id="YNNDQ" type="N" text="一年内到期金额" des1=""/>
+        <O id="YNWDQ" type="N" text="一年以上到期金额" des1=""/>
+        <O id="DQ01" type="N" text="到期01期间金额" des1=""/>
+        <O id="DQ02" type="N" text="到期02期间金额" des1=""/>
+        <O id="DQ03" type="N" text="到期03期间金额" des1=""/>
+        <O id="DQ04" type="N" text="到期04期间金额" des1=""/>
+        <O id="DQ05" type="N" text="到期05期间金额" des1=""/>
+        <O id="DQ06" type="N" text="到期06期间金额" des1=""/>
+        <O id="DQ07" type="N" text="到期07期间金额" des1=""/>
+        <O id="DQ08" type="N" text="到期08期间金额" des1=""/>
+        <O id="DQ09" type="N" text="到期09期间金额" des1=""/>
+        <O id="DQ10" type="N" text="到期10期间金额" des1=""/>
+        <O id="DQ11" type="N" text="到期11期间金额" des1=""/>
+        <O id="DQ12" type="N" text="到期12期间金额" des1=""/>
+        <O id="DQ13" type="N" text="到期13期间金额" des1=""/>
+        <O id="DQ14" type="N" text="到期14期间金额" des1=""/>
+        <O id="DQ15" type="N" text="到期15期间金额" des1=""/>
+        <!-- 预算分析 -->
+        <O id="BNYS" type="N" text="本年预算" des1=""/>
+        <O id="BYYS" type="N" text="本月预算" des1=""/>
+        <O id="LJYS" type="N" text="累计预算" des1=""/>
+        <O id="BYFS" type="N" text="本月发生" des1=""/>
+        <O id="LJFS" type="N" text="累计发生" des1=""/>
+        <O id="YSCE" type="N" text="预算差额" des1=""/>
+        <O id="YSMC" type="N" text="预算项目名称" des1=""/>
+        <!-- 辅助分析 -->
+        <O id="NCJF" type="N" text="年初借方" des1="去年年末的借方余额"/>
+        <O id="NCDF" type="N" text="年初贷方" des1="去年年末的贷方余额"/>
+        <O id="JFLJ" type="N" text="借方累计" des1="本年从第一个会计月份开始到本月份（包括本月份）所有借方发生之和"/>
+        <O id="DFLJ" type="N" text="贷方累计" des1="本年从第一个会计月份开始到本月份（包括本月份）所有贷方发生之和"/>
+        <O id="YCJF" type="N" text="月初借方" des1="上一个会计月份的月末借方余额"/>
+        <O id="YCDF" type="N" text="月初贷方" des1="上一个会计月份的月末贷方余额"/>
+        <O id="JFFS" type="N" text="借方发生" des1="本会计月份的借方发生"/>
+        <O id="DFFS" type="N" text="贷方发生" des1="本会计月份的贷方发生"/>
+        <O id="JFYE" type="N" text="借方余额" des1="本会计月份的借方余额"/>
+        <O id="DFYE" type="N" text="贷方余额" des1="本会计月份的贷方余额"/>
+        <O id="FLMC" type="C" text="分类名称" des1="对应于以上分类对象，依次是指科目名称、责任成本中心名称、往来单位名称和项目名称"/>
+        <O id="ZFMC" type="C" text="自定义辅助项目名称" des1="自定义辅助项目名称"/>
+        <!-- 交易平台函数 -->
+        <O id="ZGZZFS" type="N" text="中国准则发生" des1="中国准则发生"/>
+        <O id="ZGZZLJ" type="N" text="中国准则累计发生" des1="中国准则累计发生"/>
+        <O id="GJZZFS" type="N" text="国际准则发生" des1="国际准则发生"/>
+        <O id="GJZZLJ" type="N" text="国际准则累计发生" des1="国际准则累计发生"/>
+        <!-- 备查簿函数 -->
+        <O id="BCNCYE" type="N" text="备查年初余额" des1="备查年初余额"/>
+        <O id="BCQMYE" type="N" text="备查期末余额" des1="备查期末余额"/>
+        <O id="BQZJ" type="N" text="本期增加" des1="本期增加"/>
+        <O id="BQJS" type="N" text="本期减少" des1="本期减少"/>
+        <O id="BNZJLJ" type="N" text="本年增加累计" des1="本年增加累计"/>
+        <O id="BNJSLJ" type="N" text="本年减少累计" des1="本年减少累计"/>
+        <O id="ZJLJ" type="N" text="截止本期止增加累计" des1="截止本期止增加累计"/>
+        <O id="JSLJ" type="N" text="截止本期止减少累计" des1="截止本期止减少累计"/>
+        <O id="BCXMMC" type="C" text="备查项目名称" des1="备查项目名称"/>
+        <O id="BCDCOL" type="C" text="按数据对象取数" des1="按数据对象取数"/>
+        <O id="BCMCCOL" type="C" text="按数据对象取对应名称" des1="按数据对象取对应名称"/>
+        <O id="BCDCOLLJ" type="C" text="按数据对象取累计数" des1="按数据对象取累计数"/>
+        <O id="ZZJG" type="C" text="组织机构代码" des1="组织机构代码"/>
+        <!-- 递延所得税函数 -->
+        <O id="DYXMMC" type="C" text="递延项目名称" des1="递延项目名称"/>
+        <O id="ZMJZQC" type="N" text="会计基础年初数" des1="会计基础年初数"/>
+        <O id="ZMJZQM" type="N" text="会计基础期末数" des1="会计基础年末数"/>
+        <O id="JSJCQC" type="N" text="计税基础年初数" des1="计税基础年初数"/>
+        <O id="JSJCQM" type="N" text="计税基础期末数" des1="计税基础年末数"/>
+        <O id="KDKQC" type="N" text="可抵扣暂时性差异年初数" des1="可抵扣暂时性差异年初数"/>
+        <O id="KDKQM" type="N" text="可抵扣暂时性差异期末数" des1="可抵扣暂时性差异年末数"/>
+        <O id="KDKQCWQR" type="N" text="未确认可抵扣暂时性差异年初数" des1="未确认可抵扣暂时性差异年初数"/>
+        <O id="KDKQMWQR" type="N" text="未确认可抵扣暂时性差异期末数" des1="未确认可抵扣暂时性差异年初数"/>
+        <O id="KDKQCQR" type="N" text="确认可抵扣暂时性差异年初数数" des1="确认可抵扣暂时性差异年末数"/>
+        <O id="KDKQMQR" type="N" text="确认可抵扣暂时性差异期末数" des1="确认可抵扣暂时性差异年末数"/>
+        <O id="YNSQC" type="N" text="应纳税暂时性差异年初数" des1="应纳税暂时性差异年初数"/>
+        <O id="YNSQM" type="N" text="应纳税暂时性差异期末数" des1="应纳税暂时性差异年末数"/>
+        <O id="NSSLQC" type="N" text="适用税率年初数" des1="适用税率年初数"/>
+        <O id="NSSLQM" type="N" text="适用税率期末数" des1="适用税率年末数"/>
+        <O id="DYZCQC" type="N" text="递延所得税资产年初数" des1="递延所得税资产年初数"/>
+        <O id="DYZCCS" type="N" text="递延所得税资产本期产生" des1="递延所得税资产本期产生"/>
+        <O id="DYZCZH" type="N" text="递延所得税资产本期转回" des1="递延所得税资产本期转回"/>
+        <O id="DYZCQM" type="N" text="递延所得税资产期末数" des1="递延所得税资产年末数"/>
+        <O id="DYFZQC" type="N" text="递延所得税负债年初数" des1="递延所得税负债年初数"/>
+        <O id="DYFZCS" type="N" text="递延所得税负债本期产生" des1="递延所得税负债本期产生"/>
+        <O id="DYFZZH" type="N" text="递延所得税负债本期转回" des1="递延所得税负债本期转回"/>
+        <O id="DYFZQM" type="N" text="递延所得税负债期末数" des1="递延所得税负债年末数"/>
+        <O id="JRZBGJ" type="N" text="本年计入资本公积" des1="本年计入资本公积"/>
+        <O id="JRSDFY" type="N" text="本年计入递延所得税费用" des1="本年计入递延所得税费用"/>
+
+        <O id="ZCSLBDQYCS" type="N" text="资产税率变动影响权益本期产生" des1="资产税率变动影响权益本期产生"/>
+        <O id="ZCSLBDQYZH" type="N" text="资产税率变动影响权益本期转回" des1="资产税率变动影响权益本期转回"/>
+        <O id="ZCSLBDSYCS" type="N" text="资产税率变动影响损益本期产生" des1="资产税率变动影响损益本期产生"/>
+        <O id="ZCSLBDSYZH" type="N" text="资产税率变动影响损益本期转回" des1="资产税率变动影响损益本期转回"/>
+        <O id="FZSLBDQYCS" type="N" text="负债税率变动影响权益本期产生" des1="负债税率变动影响权益本期产生"/>
+        <O id="FZSLBDQYZH" type="N" text="负债税率变动影响权益本期转回" des1="负债税率变动影响权益本期转回"/>
+        <O id="FZSLBDSYCS" type="N" text="负债税率变动影响损益本期产生" des1="负债税率变动影响损益本期产生"/>
+        <O id="FZSLBDSYZH" type="N" text="负债税率变动影响损益本期转回" des1="负债税率变动影响损益本期转回"/>
+        
+        <O id="DYZCSY" type="N" text="递延资产税率变动影响损益" des1="递延资产税率变动影响损益"/>
+        <O id="DYZCQY" type="N" text="递延资产税率变动影响权益" des1="递延资产税率变动影响权益"/>
+        <O id="DYFZSY" type="N" text="递延负债税率变动影响损益" des1="递延负债税率变动影响损益"/>
+        <O id="DYFZQY" type="N" text="递延负债税率变动影响权益" des1="递延负债税率变动影响权益"/>
+        <O id="DYZCHB" type="N" text="递延资产合并范围变动" des1="递延资产合并范围变动"/>
+        <O id="DYFZHB" type="N" text="递延负债合并范围变动" des1="递延负债合并范围变动"/>
+        <O id="WBCY" type="N" text="递延所得税外币报表折算差额" des1="递延所得税外币报表折算差额"/>
+        
+        <!--资产函数取数对象-->
+        <O id="ZCSL" type="N" text="资产数量" des1="资产数量"/>
+        <O id="ZCXS" type="N" text="资产项数" des1="资产项数"/>
+        <O id="NCYZ" type="N" text="年初原值" des1="年初原值"/>
+        <O id="NCLJZJ" type="N" text="年初累计折旧" des1="年初累计折旧"/>
+        <O id="NCJZZB" type="N" text="年初减值准备" des1="年初减值准备"/>
+        <O id="ZCYZYE" type="N" text="资产原值余额" des1="资产原值余额"/>
+        <O id="LJZJYE" type="N" text="累计折旧余额" des1="累计折旧余额"/>
+        <O id="JZZBYE" type="N" text="减值准备余额" des1="减值准备余额"/>
+
+		<O id="JFYZLJ" type="N" text="借方原值累计" des1="借方原值累计"/>
+        <O id="DFYZLJ" type="N" text="贷方原值累计" des1="贷方原值累计"/>
+        <O id="JFYZ"   type="N" text="借方原值" 	 des1="借方原值"/>
+        <O id="DFYZ" type="N" text="贷方原值" des1="贷方原值"/>
+        <O id="JFZJ" type="N" text="借方折旧" des1="借方折旧"/>
+        <O id="DFZJ" type="N" text="贷方折旧" des1="贷方折旧"/>
+        <O id="JFZJLJ" type="N" text="借方折旧累计" des1="借方折旧累计"/>
+        <O id="DFZJLJ" type="N" text="贷方折旧累计" des1="贷方折旧累计"/>
+
+		<O id="SJZJ" type="N" text="实际折旧" des1="实际折旧"/>
+        <O id="SJZJLJ" type="N" text="实际折旧累计" des1="实际折旧累计"/>
+        <O id="JSZJ"   type="N" text="计算折旧" 	 des1="计算折旧"/>
+        <O id="TZZJ" type="N" text="调整折旧" des1="调整折旧"/>
+        <O id="JFJZLJ" type="N" text="借方减值累计" des1="借方减值累计"/>
+        <O id="DFJZLJ" type="N" text="贷方减值累计" des1="贷方减值累计"/>
+        <O id="JFJZ" type="N" text="借方减值" des1="借方减值"/>
+        <O id="DFJZ" type="N" text="贷方减值" des1="贷方减值"/>
+        
+        <O id="BQYZ" type="N" text="本期原值" des1="本期原值"/>
+        <O id="LJYZ" type="N" text="累计原值" des1="累计原值"/>
+        <O id="BQKLYZ" type="N" text="本期跨类原值" des1="本期跨类原值"/>
+        <O id="LJKLYZ" type="N" text="累计跨类原值" des1="累计跨类原值"/>
+        <O id="BQZJ" type="N" text="本期折旧" des1="本期折旧"/>
+        <O id="LJZJ" type="N" text="累计折旧" des1="累计折旧"/>
+        <O id="BQKLZJ" type="N" text="本期跨类折旧" des1="本期跨类折旧"/>
+        <O id="LJKLZJ" type="N" text="累计跨类折旧" des1="累计跨类折旧"/>
+        <O id="BQJZ" type="N" text="本期减值" des1="本期减值"/>
+        <O id="LJJZ" type="N" text="累计减值" des1="累计减值"/>
+        <O id="BQKLJZ" type="N" text="本期跨类减值" des1="本期跨类减值"/>
+        <O id="LJKLJZ" type="N" text="累计跨类减值" des1="累计跨类减值"/>
+        
+        <O id="BNZLSR" type="N" text="本年租赁收入" des1="本年租赁收入"/>
+        <O id="BYZLSR" type="N" text="本月租赁收入" des1="本月租赁收入"/>
+        
+        <O id="ZCXS" type="N" text="资产项数" des1="资产项数"/>
+        <O id="ZCSL" type="N" text="资产数量" des1="资产数量"/>
+		<O id="PGJG" type="N" text="评估价格" des1="评估价格"/>
+        <O id="ZRJG" type="N" text="转让价格" des1="转让价格"/>
+		<O id="JYFY" type="N" text="交易费用" des1="交易费用"/>
+        <O id="JSY" type="N" text="净损益" des1="净损益"/>		
+		
+        <!--ERP函数取数对象-->
+        <O id="JFFX" type="N" text="借方分析" des1="借方分析"/>
+        <O id="DFFX" type="N" text="贷方分析" des1="贷方分析"/>
+
+		</BaseDataObjects>
+    <BaseConditionObjects text="条件对象">
+		<!-- 增加核算主体的条件 -->
+		<O id="HSZTJS"  type="C"   text="核算主体级数"/>
+        <O id="HSZTMX"  type="C"   text="核算主体明细"/>
+        <O id="HSZTGSXZ"  type="C" text="核算主体公司性质"/>
+        <O id="HSZTBKBH"  type="C" text="核算主体业务范围"/>
+        <O id="HSZTDWBH"  type="C"   text="对应内部单位"/>
+        <O id="HSZTNBDW"  type="C"   text="内部单位编号"/>
+        <O id="HSZTKGBL"  type="C"   text="核算主体控股比例"/>
+        <O id="HSZTBWB"  type="C"   text="核算主体本位币"/>
+        <O id="HSZTSFNS"  type="C"   text="是否纳税主体"/>
+        <O id="HSZTMBZX"  type="C"   text="目标纳税主体"/>
+        <O id="HSZTSZDQ"  type="C"   text="核算主体所在地区"/>
+        <O id="HSZTNSR"  type="C"   text="核算主体纳税人性质"/>
+        <O id="HSZTNWBS"  type="C"   text="核算主体境内外标识"/>
+        <O id="HSZTZJLX"  type="C"   text="核算主体资金流向"/>
+        <O id="HSZTZSZX"  type="C"   text="是否折算核算主体"/>
+        <O id="HSZTSFDX"  type="C"   text="是否抵销核算主体"/>
+        <O id="HSZTLYJG"  type="C"   text="来源组织机构"/>
+        <O id="HSZTZZXS"  type="C"   text="核算主体组织形式"/>
+        <O id="ISNBDW"  type="C"   text="是否内部单位"/>
+		<O id="NBDWBH"  type="C"   text="内部单位编号"/>
+		<O id="NBDW"  type="C"   text="内部单位"/>
+		<O id="DWBH"  type="C"   text="单位编号"/>
+		<O id="WLDW"  type="C"   text="往来单位"/>
+		<O id="F_GNBH"  type="C"   text="功能范围"/>
+		
+		
+		
+		<!-- 账龄分析要以金额为条件 -->
+        <O id="YSZKQC" type="N" text="应收账款期初数" des1=""/>
+        <O id="YSZKQM" type="N" text="应收账款期末数" des1=""/>
+        <O id="YSZKGB" type="N" text="个别计提法应收账款" des1=""/>
+        <O id="YSZKZL" type="N" text="账龄分析法应收账款" des1=""/>
+        <O id="YSZKGBQC" type="N" text="个别计提法应收账款期初数" des1=""/>
+        <O id="YSZKZLQC" type="N" text="账龄分析法应收账款期初数" des1=""/>
+        <O id="YSZKGBQM" type="N" text="个别计提法应收账款期末数" des1=""/>
+        <O id="YSZKZLQM" type="N" text="账龄分析法应收账款期末数" des1=""/>
+        <O id="HZZB" type="N" text="坏账准备" des1=""/>
+        <O id="HZZBQC" type="N" text="坏账准备期初数" des1=""/>
+        <O id="HZZBQM" type="N" text="坏账准备期末数" des1=""/>
+        <O id="HZZBGB" type="N" text="个别计提法坏账准备" des1=""/>
+        <O id="HZZBZL" type="N" text="账龄分析法坏账准备" des1=""/>
+        <O id="HZZBGBQC" type="N" text="个别计提法坏账准备期初数" des1=""/>
+        <O id="HZZBZLQC" type="N" text="账龄分析法坏账准备期初数" des1=""/>
+        <O id="HZZBGBQM" type="N" text="个别计提法坏账准备期末数" des1=""/>
+        <O id="HZZBZLQM" type="N" text="账龄分析法坏账准备期末数" des1=""/>
+
+		<O id="BCLX"  type="C"   text="备查类型"/>
+        <O id="BCYWLX"  type="C" text="备查业务类型"/>
+        <O id="BCXMBH"  type="C"   text="备查项目"/>
+        <O id="DYXMBH"  type="C"   text="递延项目编号"/>
+        <O id="DYXMLX"  type="C"   text="递延项目类型"/>
+        <O id="DYXMLB"  type="C"   text="递延项目类别"/>
+        <O id="DYHZBZ"  type="C"   text="递延汇总标志"/>
+        <O id="DYWLDW"  type="C"   text="递延往来单位"/>
+
+        <O id="ZBJS"  type="N"  text="指标级数" des1="" />
+        <O id="ZBMX"  type="N"  text="指标明细" des1="" />
+        <O id="ZBLB"  type="C"  text="指标类别" des1="" />
+        <O id="ZBBH"  type="C"  text="指标编号" des1="" />
+        <O id="BBZBDCOL"  type="C" text="数据对象" des1=""/>
+
+
+        <O id="WLZ" type="C" text="物料组"/>
+        <O id="GNFW" type="C" text="功能范围"/>
+        <O id="FYYS" type="C" text="费用要素"/>
+		<O id="BKBH" type="C" text="业务范围"/>
+		<O id="WLKMBH"  type="C"   text="往来科目编号"/>
+        <O id="KMBH" type="C" text="科目编号"/>
+        <O id="WBBH" type="C" text="外币编号"/>
+        <O id="KMMC" type="C" text="科目名称"/>
+        <O id="KMJS" type="N" text="科目级数"/>
+        <O id="KMMX" type="B" text="科目明细"/>
+        <O id="BMBH" type="C" text="责任成本中心编号"/>
+        <O id="GRBH" type="C" text="个人编号"/>
+        <O id="XMBH" type="C" text="项目编号"/>
+        <O id="XMJS" type="N" text="项目级数"/>
+        <O id="WBBH" type="C" text="外币编号"/>
+        <O id="ZTBH" type="C" text="账套编号"/>
+        <O id="TZBH" type="C" text="台账项目编号"/>
+        <O id="JFLJ" type="N" text="借方累计"/>
+        <O id="DFLJ" type="N" text="贷方累计"/>
+        <O id="JFFS" type="N" text="借方发生"/>
+        <O id="DFFS" type="N" text="贷方发生"/>
+        <!--O id="BMBH" type="C" text="责任成本中心编号"/-->
+        <O id="CPBH" type="C" text="产品编号"/>
+        <O id="CPMC" type="C" text="产品名称"/>
+        <O id="CBBH" type="C" text="成本中心编号"/>
+        <O id="CBLX" type="C" text="成本类型编号"/>
+        <O id="JYLX" type="C" text="经营类型编号"/>
+        <O id="XJBH" type="C" text="现金编号"/>
+        <O id="WLBH" type="C" text="往来单位编号"/>
+        <O id="WLLB" type="C" text="往来类别编号"/>
+        <O id="TZLB" type="C" text="台账类别编号"/>
+        <!--财务集中新加:自定义辅助类-->
+        <O id="ZFLB" type="C" text="自定义辅助类别编号"/>
+        <O id="ZFBH" type="C" text="自定义辅助项目编号"/>
+        <O id="ZFLBBH" type="C" text="自定义辅助类别+编号"/>
+        <!-- 单位属性-->
+        <O id="WLLBBH" type="C" text="单位属性类别+编号"/>
+        <!--新添加-->
+        <O id="JFYE" type="N" text="借方余额"/>
+        <O id="DFYE" type="N" text="贷方余额"/>
+        <O id="NCJF" type="N" text="年初借方"/>
+        <O id="NCDF" type="N" text="年初贷方"/>
+        <O id="YCJF" type="N" text="月初借方"/>
+        <O id="YCDF" type="N" text="月初贷方"/>
+        <O id="ZRZX" type="C" text="核算主体编号"/>
+        <O id="ZRJS" type="N" text="核算主体级数"/>
+        <O id="BMJS" type="N" text="责任成本中心级数"/>
+        <O id="BMSX" type="C" text="责任成本中心属性"/>
+        <O id="SXJS" type="N" text="责任成本中心属性级数"/>
+        <O id="CPJS" type="N" text="产品级数"/>
+        <O id="CBJS" type="N" text="成本级数"/>
+        <O id="XJJS" type="N" text="现金级数"/>
+        <O id="TZJS" type="N" text="台账级数"/>
+        <O id="XMLB" type="C" text="项目类别"/>
+        <O id="PZBH" type="C" text="凭证编号"/>
+        <O id="PZRQ" type="C" text="凭证日期"/>
+        <O id="PZJY" type="C" text="凭证摘要"/>
+        <O id="PZZD" type="C" text="凭证制单人"/>
+        <O id="PZFH" type="C" text="凭证审核人"/>
+        <O id="PZJZ" type="C" text="凭证记账人"/>
+        <!--账龄分析函数中“其它核算”F_QTHS-->
+        <O id="GRKM" type="B" text="科目关联个人标志"/>
+        <O id="QMYE" type="N" text="期末余额"/>
+        <O id="HSBH" type="C" text="核算编号"/>
+        <O id="XSSL" type="N" text="显示数量"/>
+        <O id="XSBL" type="N" text="显示比例"/>
+        <O id="GLKM" type="C" text="关联科目"/>
+        <O id="YWRQ" type="C" text="业务日期"/>
+        <O id="FZBH" type="C" text="辅助编号"/>
+        <!--新增的项目成本条件对象-->
+        <O id="ZYXZ" type="C" text="作业性质"/>
+        <O id="GCBH" type="C" text="工程编号"/>
+        <O id="ZYCBBH" type="C" text="费用要素编号"/>
+        <O id="ZYZZBH" type="C" text="转资编号"/>
+        <O id="XDBH" type="C" text="小队编号"/>
+        <O id="ZBBH" type="C" text="指标编号"/>
+        <O id="SXLB" type="C" text="工程属性类别"/>
+        <O id="GCSX" type="C" text="工程属性"/>
+        <O id="WGBZ" type="N" text="完工标志"/>
+        <O id="LBSX" type="C" text="属性类别+编号"/>
+        <O id="BYJE" type="N" text="本月金额" />
+        <O id="BYSL" type="N" text="本月数量" />
+        <O id="LJJE" type="N" text="本年累计金额" />
+        <O id="LJSL" type="N" text="本年累计数量" />
+        <O id="FSJE" type="N" text="本年发生金额" />
+        <O id="FSSL" type="N" text="本年发生数量" />
+        <O id="SNJE" type="N" text="上年金额" />
+        <O id="SNSL" type="N" text="上年数量" />
+        <!--预算条件对象-->
+        <O id="YSLB" type="C" text="预算类别"/>
+        <O id="YSXM" type="C" text="预算项目"/>
+        <O id="YSJS" type="N" text="预算级数"/>
+        <O id="YSMX" type="B" text="预算明细"/>
+        <!--分组条件-->
+        <O id="KMGP" type="C" help="HelpKMGP" text="科目分组"/>
+        <O id="CPGP" type="C" text="产品分组"/>
+        <O id="CBGP" type="C" text="成本分组"/>
+        <O id="XJGP" type="C" text="现金分组"/>
+        <O id="BMGP" type="C" text="责任成本中心分组"/>
+        <O id="DWGP" type="C" text="单位分组"/>
+        <O id="GRGP" type="C" text="个人分组"/>
+        <O id="ZFGP" type="C" text="辅助分组"/>
+
+        <!-- 条件科目-->
+        <O id="TJKM" type="C" text="条件科目"/>
+
+
+        <!-- 交易函数-->
+        <O id="YWLX" type="C" text="业务类型"/>
+        <O id="BFDW" type="C" text="本方单位"/>
+        <O id="DFDW" type="C" text="对方单位"/>
+        <O id="BFDWZ" type="C" text="本方单位组"/>
+        <O id="DFDWZ" type="C" text="对方单位组"/>
+        <!-- 应收应付-->
+        <O id="WLKMBH" type="C" text="科目编号"/>
+        <O id="SFJT" type="C" text="是否集团内"/>
+        <O id="SFJN" type="C" text="是否境内"/>
+        <O id="SSSYB" type="C" text="所属事业部"/>
+        <O id="GJBH" type="C" text="国家代码"/>
+        <O id="DQBH" type="C" text="地区代码"/>
+        <O id="SFJW" type="C" text="境内外及系统内外"/>
+		<O id="SF04JW" type="C" text="境内外及系统内外04"/>
+        <O id="ZJLB" type="C" text="在建工程类别"/>
+		<O id="XMLB" type="C" text="项目类别"/>
+        <!--HTJE函数条件对象-->
+        <O id="HTBH" type="C" text="合同编号"/>
+        <O id="HTLB" type="C" text="合同类别"/>
+		
+        <!--资产类条件 -->
+        <!--O id="ZCBH"   type="C" help="HelpZCBH"   text="资产编号"/>
+        <O id="ZCSYDW" type="C" help="HelpZCSYDW" text="使用单位"/>
+        <O id="ZCGLFL" type="C" help="HelpZCGLFL" text="管理分类"/>
+        <O id="ZCCQGS" type="C" help="HelpZCCQGS" text="产权归属"/>
+        <O id="ZCJJYT" type="C" help="HelpZCJJYT" text="经济用途"/>
+        <O id="ZCLY"   type="C" help="HelpZCLY"   text="资产来源"/>
+        <O id="ZCSYQK" type="C" help="HelpZCSYQK" text="使用情况"/>
+        <O id="ZCJSZT" type="C" help="HelpZCJSZT" text="技术状态"/>
+        <O id="ZCJSYY" type="C" help="HelpZCJSYY" text="减少原因"/>
+        <O id="ZCJSFS" type="C" help="HelpZCJSFS" text="减少方式"/>
+        <O id="ZCJZYY" type="C" help="HelpZCJZYY" text="减值原因"/>
+        <O id="ZCXZYY" type="C" help="HelpZCXZYY" text="闲置原因"/>
+        <O id="ZCZJFF" type="C" help="HelpZCZJFF" text="折旧方法"/-->
+
+        <O id="ZCBH"   type="C" help="HelpZCBH"   text="资产编号"/>
+        <O id="ZCSYR"   type="C" help="HelpZCBH"   text="证载一致"/>
+        <O id="ZCDLQY"   type="C" help="HelpZCBH"   text="地理区域"/>
+        <O id="ZCJWBZ"   type="C" help="HelpZCBH"   text="是否境外资产"/>
+        <O id="ZCJWYW"   type="C" help="HelpZCBH"   text="境外资产业务"/>
+        <O id="ZCKMLB"   type="C" help="HelpZCBH"   text="科目分类"/>
+
+        <O id="ZCGBLB"   type="C" help="HelpZCBH"   text="新国标类别"/>
+        <O id="ZCSCGB"   type="C" help="HelpZCBH"   text="生产国别"/>
+        <O id="ZCSL"   type="C" help="HelpZCBH"   text="资产数量"/>
+        <O id="ZCSYBH"   type="C" help="HelpZCBH"   text="使用情况"/>
+        <O id="ZCZBH"   type="C" help="HelpZCBH"   text="资产组编号"/>
+
+        <O id="ZCZLDW"   type="C" help="HelpZCBH"   text="资产承租单位"/>
+        <O id="ZCZTBH"   type="C" help="HelpZCBH"   text="技术状态"/>
+        <O id="ZCBKFB"   type="C" help="HelpZCBH"   text="板块分部"/>
+        <O id="ZCCCBZ"   type="C" help="HelpZCBH"   text="是否车船标识"/>
+        <O id="ZCFWBZ"   type="C" help="HelpZCBH"   text="是否房屋标识"/>
+        <O id="ZCJSFS"   type="C" help="HelpZCBH"   text="减少方式"/>
+		
+        <O id="ZCCQBH"   type="C" help="HelpZCBH"   text="产权归属"/>
+        <O id="ZCLBBH"   type="C" help="HelpZCBH"   text="资产类别"/>
+        <O id="ZCLYBH"   type="C" help="HelpZCBH"   text="资产来源"/>
+        <O id="ZCSYBH"   type="C" help="HelpZCBH"   text="使用情况"/>
+        <O id="ZCXZQX"   type="C" help="HelpZCBH"   text="闲置去向"/>
+        <O id="ZCXZYY"   type="C" help="HelpZCBH"   text="闲置原因"/>
+        <O id="ZCYTBH"   type="C" help="HelpZCBH"   text="经济用途"/>
+        <O id="ZCZJCBZX"   type="C" help="HelpZCBH"   text="折旧成本中心"/>
+        <O id="ZCZJQD"   type="C" help="HelpZCBH"   text="资金渠道"/>
+        <O id="ZCYWLX"   type="C" help="HelpZCYWLX"   text="资产业务类型"/>
+
+
+
+		<O id="ZCJYLX" type="C" text="成本中心经营类型" des1="成本中心经营类型"/>
+
+    </BaseConditionObjects>
+    <FunctionTypes text="函数类别">
+        <T id="BB"   text="报表类"/>
+        <T id="KM"   text="科目类" dobj="NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,KMMC,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,HSZTMC" cobj="KMBH,KMJS,JFYE,DFYE,JFFS,DFFS,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,WBBH,KMGP,GNFW,HSZTJS,HSZTMX,HSZTGSXZ,HSZTBKBH,HSZTDWBH,HSZTNBDW,HSZTKGBL,HSZTBWB,HSZTSFNS,HSZTMBZX,HSZTSZDQ,HSZTNSR,HSZTNWBS,HSZTZJLX,HSZTZSZX,HSZTSFDX,HSZTLYJG,HSZTZZXS"/>
+        <T id="ZX"   text="专项核算类" dobj="NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,KMMC,XMMC,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX" cobj="KMBH,KMJS,XMBH,XMJS,JFYE,DFYE,JFFS,DFFS,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,WBBH,FYYS,GNFW,HSZTJS,HSZTMX,HSZTGSXZ,HSZTBKBH,HSZTDWBH,HSZTNBDW,HSZTKGBL,HSZTBWB,HSZTSFNS,HSZTMBZX,HSZTSZDQ,HSZTNSR,HSZTNWBS,HSZTZJLX,HSZTZSZX,HSZTSFDX,HSZTLYJG,HSZTZZXS"/>
+        <T id="TZ"   text="台账类"    dobj="NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,KMMC,TZMC,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX" cobj="KMBH,KMJS,TZBH,TZJS,JFYE,DFYE,JFFS,DFFS,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,KMGP,FYYS,GNFW,HSZTJS,HSZTMX,HSZTGSXZ,HSZTBKBH,HSZTDWBH,HSZTNBDW,HSZTKGBL,HSZTBWB,HSZTSFNS,HSZTMBZX,HSZTSZDQ,HSZTNSR,HSZTNWBS,HSZTZJLX,HSZTZSZX,HSZTSFDX,HSZTLYJG,HSZTZZXS"/>
+        <T id="BM"   text="责任成本中心类"    dobj="NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,KMMC,BMMC,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX" cobj="KMBH,KMJS,BMBH,BMJS,JFYE,DFYE,JFFS,DFFS,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,KMGP,WBBH,BMGP,FYYS,GNFW,HSZTJS,HSZTMX,HSZTGSXZ,HSZTBKBH,HSZTDWBH,HSZTNBDW,HSZTKGBL,HSZTBWB,HSZTSFNS,HSZTMBZX,HSZTSZDQ,HSZTNSR,HSZTNWBS,HSZTZJLX,HSZTZSZX,HSZTSFDX,HSZTLYJG,HSZTZZXS"/>
+        <T id="CP"   text="产品类"    dobj="NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,KMMC,CPMC,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX" cobj="KMBH,KMJS,CPBH,CPMC,CPJS,WLZ,JFYE,DFYE,JFFS,DFFS,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,KMGP,WBBH,CPGP,FYYS,GNFW,HSZTJS,HSZTMX,HSZTGSXZ,HSZTBKBH,HSZTDWBH,HSZTNBDW,HSZTKGBL,HSZTBWB,HSZTSFNS,HSZTMBZX,HSZTSZDQ,HSZTNSR,HSZTNWBS,HSZTZJLX,HSZTZSZX,HSZTSFDX,HSZTLYJG,HSZTZZXS"/>
+        <T id="CB"   text="成本类"    dobj="NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,KMMC,CBMC,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX" cobj="KMBH,KMJS,CBBH,CBLX,CBJS,JFYE,DFYE,JFFS,DFFS,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,KMGP,CBGP,WBBH,FYYS,GNFW,HSZTJS,HSZTMX,HSZTGSXZ,HSZTBKBH,HSZTDWBH,HSZTNBDW,HSZTKGBL,HSZTBWB,HSZTSFNS,HSZTMBZX,HSZTSZDQ,HSZTNSR,HSZTNWBS,HSZTZJLX,HSZTZSZX,HSZTSFDX,HSZTLYJG,HSZTZZXS"/>
+        <T id="XJ"   text="现金流量类" dobj="NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,KMMC,XJMC,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX" cobj="KMBH,KMJS,XJBH,XJJS,JFYE,DFYE,JFFS,DFFS,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,KMGP,WBBH,XJGP,FYYS,GNFW,HSZTJS,HSZTMX,HSZTGSXZ,HSZTBKBH,HSZTDWBH,HSZTNBDW,HSZTKGBL,HSZTBWB,HSZTSFNS,HSZTMBZX,HSZTSZDQ,HSZTNSR,HSZTNWBS,HSZTZJLX,HSZTZSZX,HSZTSFDX,HSZTLYJG,HSZTZZXS"/>
+        <T id="WL"   text="往来单位类" dobj="NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,KMMC,DWMC,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX" cobj="KMBH,KMJS,BKBH,WLLB,WLBH,WLLBBH,JFYE,DFYE,JFFS,DFFS,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,KMGP,WBBH,DWGP,XSBL,TJKM,FYYS,GNFW,SFJN,HSZTJS,HSZTMX,HSZTGSXZ,HSZTBKBH,HSZTDWBH,HSZTNBDW,HSZTKGBL,HSZTBWB,HSZTSFNS,HSZTMBZX,HSZTSZDQ,HSZTNSR,HSZTNWBS,HSZTZJLX,HSZTZSZX,HSZTSFDX,HSZTLYJG,HSZTZZXS"/>
+        <T id="GR"   text="个人往来类" dobj="NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,KMMC,GRMC,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX" cobj="KMBH,KMJS,BMBH,GRBH,JFYE,DFYE,JFFS,DFFS,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,KMGP,WBBH,GRGP,FYYS,GNFW,HSZTJS,HSZTMX,HSZTGSXZ,HSZTBKBH,HSZTDWBH,HSZTNBDW,HSZTKGBL,HSZTBWB,HSZTSFNS,HSZTMBZX,HSZTSZDQ,HSZTNSR,HSZTNWBS,HSZTZJLX,HSZTZSZX,HSZTSFDX,HSZTLYJG,HSZTZZXS"/>
+        <T id="ZF"   text="自定义辅助类" dobj="NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,KMMC,WLMC,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,ZFMC" cobj="KMBH,KMJS,ZFLBBH,SFJW,SF04JW,ZJLB,XMLB,WLZ,JFYE,DFYE,JFFS,DFFS,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,KMGP,WBBH,ZFGP,FYYS,GNFW"/>
+        <T id="PZHJ" text="凭证合计类" dobj="JFLJ,DFLJ,JFFS,DFFS" cobj="KMBH,BMBH,XMLB,XMBH,WLLB,WLBH,GRBH,CPBH,CBBH,XJBH,TZLB,TZBH,ZFLBBH,PZBH,PZRQ,PZJY,PZZD,PZFH,PZJZ,KMGP,CPGP,CBGP,XJGP,BMGP,DWGP,GRGP,ZFGP,GLKM"/>
+        <T id="YSYF" text="账龄分析类" dobj="DWMC,YSZK,YSZKQC,YSZKQM,YSZKGB,YSZKGBQC,YSZKGBQM,YSZKZL,YSZKZLQC,YSZKZLQM,HZZB,HZZBQC,HZZBQM,HZZBGB,HZZBGBQC,HZZBGBQM,HZZBZL,HZZBZLQC,HZZBZLQM,YNNDQ,YNWDQ,DQ01,DQ02,DQ03,DQ04,DQ05,DQ06,DQ07,DQ08,DQ09,DQ10,DQ11,DQ12,DQ13,DQ14,DQ15" cobj="WLKMBH,WLBH,WLLB,BKBH,DWGP,SFJT,SFJN,SSSYB,GJBH,DQBH,YSZK,YSZKQC,YSZKQM,YSZKGB,YSZKGBQC,YSZKGBQM,YSZKZL,YSZKZLQC,YSZKZLQM,HZZB,HZZBQC,HZZBQM,HZZBGB,HZZBGBQC,HZZBGBQM,HZZBZL,HZZBZLQC,HZZBZLQM,YNNDQ,YNWDQ"/>
+        <T id="FZ"   text="辅助类" dobj="NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,FLMC,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX" cobj="KMBH,FLJS,WLLB,WLBH,WLLBBH,GRBH,BMBH,CPBH,XJBH,CBBH,XMLB,XMBH,TZLB,TZBH,ZFLBBH,SFJW,SF04JW,ZJLB,XMLB,JFYE,DFYE,JFFS,DFFS,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,KMJP,BMGP,CPGP,CBGP,XJGP,DWGP,GRGP,ZFGP,FYYS,GNFW"/>
+        <T id="ZYCB" text="项目类" dobj ="BYJE,BYSL,LJJE,LJSL,FSJE,FSSL,SNJE,SNSL,JEYE,SLYE,GCMC,CBMC,ZYMC,SXMC,QSRQ,WGRQ" cobj="ZYXZ,GCBH,ZYCBBH,LBSX,WGBZ,KMBH,BMBH,CPBH,XJBH,XMLB,XMBH,TZLB,TZBH,BYJE,BYSL,LJJE,LJSL,SNJE,SNSL,JEYE,SLYE,XDBH"/>
+        <T id="ZC" text="资产类" dobj ="ZCSL,ZCXS,NCYZ,NCLJZJ,NCJZZB,ZCYZYE,LJZJYE,JZZBYE,JFYZLJ,DFYZLJ,JFYZ,DFYZ,JFZJ,DFZJ,JFZJLJ,DFZJLJ,SJZJ,SJZJLJ,JSZJ,TZZJ,JFJZLJ,DFJZLJ,JFJZ,DFJZ,BQYZ,LJYZ,BQKLYZ,LJKLYZ,BQZJ,LJZJ,BQKLZJ,LJKLZJ,BQJZ,LJJZ,BQKLJZ,LJKLJZ,BNZLSR,BYZLSR,ZCXS,ZCSL,PGJG,ZRJG,JYFY,JSY" cobj="ZCYWLX,ZCBH,ZCSYR,ZCDLQY,ZCJWBZ,ZCJWYW,ZCKMLB,ZCGBLB,ZCSCGB,ZCSL,ZCSYBH,ZCZBH,ZCZLDW,ZCZTBH,ZCBKFB,ZCCCBZ,ZCFWBZ,ZCJSFS,ZCCQBH,ZCLBBH,ZCLYBH,ZCSYBH,ZCXZQX,ZCXZYY,ZCYTBH,ZCZJCBZX,ZCZJQD,ZCJYLX" />
+        <T id="ZYZB" text="经济指标类" dobj="BYZB,LJZB,FSZB,SNZB,ZBMC,SXMC" cobj="ZYXZ,GCBH,ZBBH,LBSX,WGBZ,BYZB,LJZB,SNZB,ZBJS"/>
+        <T id="BCB" text="备查簿类" dobj="BCNCYE,BCQMYE,BQZJ,BQJS,BNZJLJ,BNJSLJ,ZJLJ,JSLJ,BCXMMC,BCDCOL,BCMCCOL,BCDCOLLJ,YNNDQ,YNWDQ,ZZJG" cobj="BCLX,BCYWLX,BCXMBH,WLLB"/>
+        <T id="DY" text="递延所得税类" dobj="DYXMMC,ZMJZQC,ZMJZQM,JSJCQC,JSJCQM,KDKQC,KDKQM,KDKQCWQR,KDKQMWQR,KDKQCQR,KDKQMQR,YNSQC,YNSQM,NSSLQC,NSSLQM,DYZCQC,DYZCCS,DYZCHB,DYZCZH,DYZCQM,DYFZQC,DYFZCS,DYFZHB,DYFZZH,DYFZQM,JRZBGJ,JRSDFY,DYZCSY,DYZCQY,DYFZSY,DYFZQY,WBCY" cobj="DYXMBH,DYXMLX,DYXMLB,DYHZBZ,DYWLDW"/>
+        <T id="BBZB" text="报表指标类" dobj="*" cobj="ZBJS,ZBMX,ZBLB,ZBBH"/>
+
+        <T id="SQL"  text="SQL类" dobj="" cobj=""/>
+        <T id="MACRO" text="宏函数类" dobj="@DWMC@,@DWBH@,@YYYY@,@MM@,@DD@,@JEDW@,@YEAR@,@MONTH@,@DAY@,@DATE@,@LBMC@,@LBBH@,@NY@,@NM@,@ND@,@NR@,@BMBH@,@BMMC@,@HSZTJS@,@HSZTMX@" cobj=""/>
+        <!--T id="DBF"  text="DBF取数类" dobj="" cobj=""/-->
+        <T id="BC"   text="跨账套取数类" dobj="" cobj=""/>
+        <!--T id="MB"   text="兼容报表类" dobj="" cobj=""/-->
+        <!--T id="TH"   text="台账合计类" dobj="JFLJ,DFLJ,JFFS,DFFS"/-->
+        <!--T id="YX"   text="预算分析类" dobj="BNYS,BYYS,LJYS,BYFS,LJFS,YSCE,YSMC" cobj="YSLB,YSXM,YSJS,YSMX,ZRZX,CBBH,BMBH"/-->
+        <T id="SAP"   text="SAP类" dobj="" cobj=""/>
+        <T id="NBGS"  text="内部函数" dobj="NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ" cobj="KMBH,WLLB,WLBH,GRBH,BMBH,CPBH,XJBH,CBBH,XMLB,XMBH,TZLB,TZBH,ZFLBBH"/>
+        <T id="JY"    text="交易平台取数类" dobj="ZGZZFS,ZGZZLJ,GJZZFS,GJZZLJ" cobj="DBXM,DBSJ,YWLX,BFDW,DFDW,BFDWZ,DFDWZ"/>
+		<!--ERP函数-->
+        <T id="ZKM"   text="ERP科目类" 		dobj="NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,JFFX,DFFX" cobj="KMBH,YWFW,HBDM,JTDM,GSDM,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,JFFX,DFFX"/>
+		<T id="ZKH"   text="ERP客户类" 		dobj="NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,JFFX,DFFX,JFZL,DFZL" cobj="KMBH,KHBH,KUKLA,BRSCH,MINDK,KNRZE,JTDM,GSDM,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,JFFX,DFFX,JFZL,DFZL"/>
+		<T id="ZGY"   text="ERP供应商类" 	dobj="NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,JFFX,DFFX" cobj="KMBH,GYBH,KTOKD,BRSCH,MINDK,KNRZE,JTDM,GSDM,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,JFFX,DFFX"/>
+		<T id="ZZC"   text="ERP资产类" 		dobj="NCYZ,DQYZ,BYZJYZ,LJZJYZ,BYZJZJ,LJZJZJ,KANSW,ANSWL,AUFWM,KNAFA,NAFAG,ANFAV,NAFAL,ZUSNA,KSAFA,KAAFA,SAFAG,AAFAG,NAFAM,SAFAM,ZUSSA,ZUSAA" cobj="NCYZ,DQYZ,BYZJYZ,LJZJYZ,BYZJZJ,LJZJZJ,KANSW,ANSWL,AUFWM,KNAFA,NAFAG,ANFAV,NAFAL,ZUSNA,KSAFA,KAAFA,SAFAG,AAFAG,NAFAM,SAFAM,ZUSSA,ZUSAA,JTDM,GSDM,YWLX,SX1,SX2,SX3,SX4,SX5,CQGS"/>
+		<T id="ZCB"   text="ERP成本类" 		dobj="JFFS,DFFS,JFLJ,DFLJ" cobj="JFFS,DFFS,JFLJ,DFLJ,CPDM,CBYS,KOKRS,JTDM,GSDM"/>
+		<T id="ZXS"   text="ERP销售类" 		dobj="DFFS,JFFS,DFLJ,JFLJ,BYJD,BYDJ,BNJD,BNDJ" cobj="DFFS,JFFS,DFLJ,JFLJ,BYJD,BYDJ,BNJD,BNDJ,KHBH,KHZHZ,KUKLA,BRSCH,MINDK,KNRZE,CPFL,SGROUP,SBGS,XSDQ,FXQD,SPART,Factory,YWFW,JTDM,GSDM"/>
+		<T id="ZWL"   text="ERP物料类" 		dobj="DQYE,DFFS,JFFS,DFLJ,JFLJ" cobj="DFFS,JFFS,DFLJ,JFLJ,WLBH,MATNR,BWKEY,BWART,WLFL,GRUND,BUKRS,KTOKK,BRSCH,MINDK,LNRZE,YWFW,JTDM,GSDM,YDLX"/>
+		<!--合同函数-->
+        <T id="HT" text="合同类" dobj="NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,KMMC,XMMC,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX" cobj="ZRZX,KMBH,HTLB,HTBH,GCBH,GCSX"/>
+    </FunctionTypes>
+    <Functions>
+        <BB>
+            <F id="BB"     ps="4" p0="YEAR" p1="MONTH" p2="BBBH" p3="BBREF" text="报表函数" des1="BB([年,月,][报表编号][单元格范围])" des2="直接从报表管理系统中取数"/>
+            <F id="FZBB"     ps="5" p0="YEAR" p1="MONTH" p2="BBBH" p3="BBREF" p4="COBJ" text="辅助报表函数" des1="BB([年,月,][报表编号][单元格范围][条件])" des2="直接从报表管理系统中取数"/>
+            <F id="XTBB"   ps="4" p0="YEAR" p1="MONTH" p2="BBBH" p3="BBREF" text="系统报表函数" des1="XTBB([年,月,][报表编号][单元格范围])" des2="取系统报表中的固定数据"/>
+            <F id="XYBB"   ps="6" p0="YEAR" p1="MONTH" p2="BBBH" p3="BBREF" p4="COFFSET" p5="ROFFSET" text="行列偏移函数" des1="XYBB([年，月，]报表编号，报表范围,[列偏移，行偏移])" des2="本函数用于取数单元格不固定的需求，如单元格范围需要根据月份变化而变化的取数需求，这时候可以指定行、列的偏移量。"/>
+            <F id="BD"     ps="4" p0="YEAR" p1="MONTH" p2="BBBH" p3="BBREF" text="变动报表汇总函数" des1="BD([年,月,][报表编号][单元格范围])" des2="直接从报表变动区中取汇总数"/>
+            <F id="BDBB"   ps="4" p0="YEAR" p1="MONTH" p2="BBBH" p3="BBREF" text="变动报表函数" des1="BDBB([年,月,][报表编号][单元格范围])" des2="直接从报表变动区中取数"/>
+            <F id="SHBB"   ps="4" p0="YEAR" p1="MONTH" p2="BBBH" p3="BBREF" text="行合计函数" des1="SHBB([年,月,][报表编号,]单元格范围)" des2="是块公式,将块区域中的每一行的数据求和后放在每一行的行首"/>
+            <F id="SLBB"   ps="4" p0="YEAR" p1="MONTH" p2="BBBH" p3="BBREF" text="列合计函数" des1="SLBB([年,月,][报表编号,]单元格范围)" des2="是块公式,将块区域中的每一列的数据求和后放在每一列的列头"/>
+            <F id="TJBB"   ps="4" p0="YEAR" p1="MONTH" p2="BBBH" p3="BBREF" text="报表统计函数" des1="TJBB([年,月份范围,][报表编号,]单元格范围)" des2="函数的月份范围不跨年度.当起始年月同终止年月不在同一年度时,则取终止年月所在年的1月份到终止月份的数据"/>
+            <!--F id="TJBB" ps="4" p0="YEAR" p1="MONTH" p2="BBBH" p3="BBREF" text="报表统计函数" des1="PJBB([年,月份范围,][报表编号,]单元格范围)$报表平均函数$函数的月份范围不跨年度.当起始年月同终止年月不在同一年度时,则取终止年月所在年的1月份到终止月份的数据"/-->
+            <F id="PJBB"   ps="4" p0="YEAR" p1="MONTH" p2="BBBH" p3="BBREF" text="报表平均函数" des1="PJBB([年,月份范围,][报表编号,]单元格范围)" des2="函数的月份范围不跨年度.当起始年月同终止年月不在同一年度时,则取终止年月所在年的1月份到终止月份的数据"/>
+            <F id="DWB"    ps="5" p0="YEAR" p1="MONTH" p2="BBBH" p3="DWBH" p4="BBREF" text="单位报表函数" des1="DWB([年,月,][报表编号,]单位编号,单元格范围)" des2="直接从单位报表系统中取数"/>
+            <F id="DWBDBB" ps="5" p0="YEAR" p1="MONTH" p2="BBBH" p3="DWBH" p4="BBREF" text="单位变动报表函数" des1="DWBDBB([年,月,][报表编号,]单位编号,单元格范围)" des2="直接从单位报表变动区中取数"/>
+            <F id="DWBD"   ps="5" p0="YEAR" p1="MONTH" p2="BBBH" p3="DWBH" p4="BBREF" text="单位变动报表函数" des1="DWBD([年,月,][报表编号,]单位编号,单元格范围)" des2="直接从单位报表变动区中取汇总数"/>
+            <F id="HZB"    ps="5" p0="YEAR" p1="MONTH" p2="BBBH" p3="LBBH" p4="BBREF" text="汇总报表函数" des1="HZB([年,月,][报表编号,]汇总类别编号,单元格范围)" des2="直接从汇总报表系统中取数"/>
+            <F id="HZBDBB" ps="5" p0="YEAR" p1="MONTH" p2="BBBH" p3="LBBH" p4="BBREF" text="汇总变动报表函数" des1="HZBDBB([年,月,][报表编号,]汇总类别编号,单元格范围)" des2="直接从汇总报表变动区中取数"/>
+            <F id="HZBD"   ps="5" p0="YEAR" p1="MONTH" p2="BBBH" p3="LBBH" p4="BBREF" text="汇总变动报表函数" des1="HZBD([年,月,][报表编号,]汇总类别编号,单元格范围)" des2="直接从汇总报表变动区中取汇总数"/>
+            <F id="SHDWB"  ps="5" p0="YEAR" p1="MONTH" p2="BBBH" p3="DWBH" p4="BBREF" text="行合计单位报表函数" des1="SHDWB([年,月,][报表编号,]汇总单位编号,单元格范围)" des2="行合计单位报表函数$是块公式,将块区域中的每一行的数据求和后放在每一行的行首"/>
+            <F id="SLDWB"  ps="5" p0="YEAR" p1="MONTH" p2="BBBH" p3="DWBH" p4="BBREF" text="列合计单位报表函数" des1="SLDWB([年,月,][报表编号,]汇总单位编号,单元格范围)" des2="是块公式,将块区域中的每一列的数据求和后放在每一列的列头"/>
+            <F id="SHHZB"  ps="5" p0="YEAR" p1="MONTH" p2="BBBH" p3="LBBH" p4="BBREF" text="行合计汇总报表函数" des1="SHHZB([年,月,][报表编号,]汇总类别编号,单元格范围)" des2="是块公式,将块区域中的每一行的数据求和后放在每一行的行首"/>
+            <F id="SLHZB"  ps="5" p0="YEAR" p1="MONTH" p2="BBBH" p3="LBBH" p4="BBREF" text="列合计汇总报表函数" des1="SLHZB([年,月,][报表编号,]汇总类别编号,单元格范围)" des2="是块公式,将块区域中的每一列的数据求和后放在每一列的列头"/>
+            <F id="TJDWB"  ps="5" p0="YEAR" p1="MONTH" p2="BBBH" p3="DWBH" p4="BBREF" text="单位报表统计函数" des1="TJDWB([年,月份范围,][报表编号,]汇总单位编号,单元格范围)" des2="函数的月份范围不跨年度.当起始年月同终止年月不在同一年度时,则取终止年月所在年的1月份到终止月份的数据"/>
+            <F id="TJHZB"  ps="5" p0="YEAR" p1="MONTH" p2="BBBH" p3="LBBH" p4="BBREF" text="汇总报表统计函数" des1="TJHZB([年,月份范围,][报表编号,]汇总类别编号,单元格范围)" des2="函数的月份范围不跨年度.当起始年月同终止年月不在同一年度时,则取终止年月所在年的1月份到终止月份的数据"/>
+            <F id="PJDWB"  ps="5" p0="YEAR" p1="MONTH" p2="BBBH" p3="DWBH" p4="BBREF" text="单位报表平均函数" des1="PJDWB([年,月份范围,][报表编号,]汇总单位编号,单元格范围)" des2="函数的月份范围不跨年度.当起始年月同终止年月不在同一年度时,则取终止年月所在年的1月份到终止月份的数据"/>
+            <F id="PJHZB"  ps="5" p0="YEAR" p1="MONTH" p2="BBBH" p3="LBBH" p4="BBREF" text="汇总报表平均函数" des1="PJHZB([年,月份范围,][报表编号,]汇总类别编号,单元格范围)" des2="函数的月份范围不跨年度.当起始年月同终止年月不在同一年度时,则取终止年月所在年的1月份到终止月份的数据"/>
+            <F id="BDFX"   ps="5" p0="YEAR" p1="MONTH" p2="BBBH" p3="BBREF" p4="SOBJ" text="变动行分析函数" des1="BDFX([年,月,][报表编号,]单元格范围,分析条件)" des2="从变动行中分析取数，可以按项目列内容进行分析，如BDFX(B5,A='北京') 表示分析变动行中A列是'北京'的变动数据"/>
+            <F id="DWBDFX" ps="6" p0="YEAR" p1="MONTH" p2="BBBH" p3="DWBH" p4="BBREF"  p5="SOBJ" text="单位变动行分析函数" des1="DWBDFX([年,月,][报表编号,]单位编号,单元格范围,分析条件)" des2="从变动行中分析取数，可以按项目列内容进行分析，如BDFX(B5,A='北京') 表示分析变动行中A列是'北京'的变动数据"/>
+            <F id="HZBDFX" ps="6" p0="YEAR" p1="MONTH" p2="BBBH" p3="LBBH" p4="BBREF"  p5="SOBJ" text="汇总变动行分析函数" des1="HZBDFX([年,月,][报表编号,]汇总类别编号,单元格范围,分析条件)" des2="从变动行中分析取数，可以按项目列内容进行分析，如BDFX(B5,A='北京') 表示分析变动行中A列是'北京'的变动数据"/>
+            <F id="BDHZ"   ps="7" p0="YEAR" p1="MONTH" p2="BBBH" p3="DATACOL" p4="HZCOL" p5="RANGECOL" p6="SOBJ" text="变动行汇总函数" des1="BDHZ([年,月,][报表编号,]取数列,分组列,范围列,汇总条件)" des2="从变动行中分析取数，按指定的分组列进行分组，适用于按多列进行汇总后取数的情况；多列时以#号分隔，比如想按A,B,C三列进行分组，则需要在分组列中输入A#B#C，取数范围和范围列类似。"/>
+            <F id="DWBDHZ" ps="8" p0="YEAR" p1="MONTH" p2="BBBH" p3="DWBH" p4="DATACOL"  p5="HZCOL"  p6="RANGECOL" p7="SOBJ" text="单位变动行汇总函数" des1="DWBDHZ([年,月,][报表编号,]单位编号,取数列,分组列,范围列,汇总条件)" des2="从变动行中分析取数，按指定的分组列进行分组，适用于按多列进行汇总后取数的情况；多列时以#号分隔，比如想按A,B,C三列进行分组，则需要在分组列中输入A#B#C，取数范围和范围列类似。"/>
+            <F id="HZBDHZ" ps="8" p0="YEAR" p1="MONTH" p2="BBBH" p3="LBBH" p4="DATACOL"  p5="HZCOL"  p6="RANGECOL" p7="SOBJ" text="汇总变动行汇总函数" des1="HZBDHZ([年,月,][报表编号,]汇总类别编号,取数列,分组列,范围列,汇总条件)" des2="从变动行中分析取数，按指定的分组列进行分组，适用于按多列进行汇总后取数的情况；多列时以#号分隔，比如想按A,B,C三列进行分组，则需要在分组列中输入A#B#C，取数范围和范围列类似。"/>
+            <F id="MJZD"     ps="4" p0="YEAR" p1="MONTH" p2="BBBH" p3="BBREF" text="枚举字典函数" des1="MJZD([年,月,][报表编号][单元格范围])" des2="直接从报表管理系统中取枚举字段的编号"/>
+        </BB>
+        <KM>
+            <F id="KMJE" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="DOBJ" p6="COBJ" text="科目金额函数" des1="KMJE([年,月,][核算主体,][业务范围,]科目编号,取数对象式[,条件])" des2="对于核算外币的科目,使用科目金额函数取到的是折合本位币的金额,使用科目外币函数取到的是外币金额。由于每一科目只能核算单一外币,因此在取有关外币的数据时所指定的科目范围应该全部核算同一种外币,否则将产生错误结果。以下凡有关外币的取数均同此则,不再赘述"/>
+            <F id="KMSL" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="DOBJ" p6="COBJ" text="科目数量函数" des1="KMSL([年,月,][核算主体,][业务范围,]科目编号,取数对象式[,条件])" des2="对于核算外币的科目,使用科目金额函数取到的是折合本位币的金额,使用科目外币函数取到的是外币金额。由于每一科目只能核算单一外币,因此在取有关外币的数据时所指定的科目范围应该全部核算同一种外币,否则将产生错误结果。以下凡有关外币的取数均同此则,不再赘述"/>
+            <F id="KMWB" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="WBBH" p6="DOBJ" p7="COBJ" text="科目外币函数" des1="KMWB([年,月,][核算主体,][业务范围,]科目编号,外币编号,取数对象式[,条件])" des2="对于核算外币的科目,使用科目金额函数取到的是折合本位币的金额,使用科目外币函数取到的是外币金额。由于每一科目只能核算单一外币,因此在取有关外币的数据时所指定的科目范围应该全部核算同一种外币,否则将产生错误结果。以下凡有关外币的取数均同此则,不再赘述"/>
+        </KM>
+        <GR>
+            <F id="GRJE" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="GRBH" p6="DOBJ" p7="COBJ" text="个人金额函数" des1="GRJE([年,月,][核算主体,][业务范围,]科目编号,个人编号,取数对象式[,条件])" des2="个人金额函数"/>
+        </GR>
+        <ZX>
+            <F id="XMJE" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="XMLB" p6="XMBH" p7="DOBJ" p8="COBJ" des1="XMJE([年,月,][核算主体,][业务范围,]科目编号,专项项目编号,取数对象式[,条件])" text="项目金额函数" des2="该函数每次只能取一个项目类别的项目,取数时按参数限定的科目范围中的第一个专项核算科目来确定项目类别,因此若科目范围中存在一个以上的项目类别则只有第一个类别的项目能够取出数据。"/>
+            <F id="XMSL" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="XMLB" p6="XMBH" p7="DOBJ" p8="COBJ" des1="XMSL([年,月,][核算主体,][业务范围,]科目编号,专项项目编号,取数对象式[,条件])" text="项目数量函数" des2="该函数每次只能取一个项目类别的项目,取数时按参数限定的科目范围中的第一个专项核算科目来确定项目类别,因此若科目范围中存在一个以上的项目类别则只有第一个类别的项目能够取出数据。"/>
+            <F id="XMWB" dobj_t="1" cobj_t="1" ps="10" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="XMLB" p6="XMBH" p7="WBBH" p8="DOBJ" p9="COBJ" des1="XMWB([年,月,][核算主体,][业务范围,]科目编号,专项项目编号,外币编号,取数对象式[,条件])" text="项目外币函数" des2="该函数每次只能取一个项目类别的项目,取数时按参数限定的科目范围中的第一个专项核算科目来确定项目类别,因此若科目范围中存在一个以上的项目类别则只有第一个类别的项目能够取出数据。"/>
+        </ZX>
+        <TZ>
+            <F id="TZJE" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="TZLB" p6="TZBH" p7="DOBJ" p8="COBJ" des1="TZJE([年,月,][核算主体,][业务范围,]台账类别,台账项目编号,取数对象式[,条件])" text="台账金额函数" des2="每次只能指定一个台账类别,不能指定台账类别的范围。"/>
+            <F id="TZSL" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="TZLB" p6="TZBH" p7="DOBJ" p8="COBJ" des1="TZSL([年,月,][核算主体,][业务范围,]台账类别,台账项目编号,取数对象式[,条件])" text="台账数量函数" des2="每次只能指定一个台账类别,不能指定台账类别的范围。"/>
+            <F id="TZWB" dobj_t="1" cobj_t="1" ps="10" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="TZLB" p6="TZBH" p7="WBBH" p8="DOBJ" p9="COBJ" des1="TZWB([年,月,][核算主体,][业务范围,]台账类别,台账项目编号,外币编号,取数对象式[,条件])" text="台账外币函数" des2="每次只能指定一个台账类别,不能指定台账类别的范围。"/>
+        </TZ>
+        <BM>
+            <F id="BMJE" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="BMBH" p6="DOBJ" p7="COBJ" des1="BMJE([年,月,][核算主体,][业务范围,]科目编号,责任成本中心编号,取数对象式[,条件])" text="责任成本中心金额函数" des2=""/>
+            <F id="BMSL" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="BMBH" p6="DOBJ" p7="COBJ" des1="BMSL([年,月,][核算主体,][业务范围,]科目编号,责任成本中心编号,取数对象式[,条件])" text="责任成本中心数量函数" des2=""/>
+            <F id="BMWB" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="BMBH" p6="WBBH" p7="DOBJ" p8="COBJ" des1="BMWB([年,月,][核算主体,][业务范围,]科目编号,责任成本中心编号,外币编号,取数对象式[,条件])" text="责任成本中心外币函数" des2=""/>
+        </BM>
+        <CP>
+            <F id="CPJE" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="CPBH" p6="DOBJ" p7="COBJ" des1="CPJE([年,月,][核算主体,][业务范围,]科目编号,产品编号,取数对象式[,条件])" text="产品金额函数" des2=""/>
+            <F id="CPSL" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="CPBH" p6="DOBJ" p7="COBJ" des1="CPSL([年,月,][核算主体,][业务范围,]科目编号,产品编号,取数对象式[,条件])" text="产品数量函数" des2=""/>
+            <F id="CPWB" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="CPBH" p6="WBBH" p7="DOBJ" p8="COBJ" des1="CPWB([年,月,][核算主体,][业务范围,]科目编号,产品编号,外币编号,取数对象式[,条件])" text="产品外币函数" des2=""/>
+            <F id="CPCYSL" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="CPBH" p6="DOBJ" p7="COBJ" des1="CPCYSL([年,月,][核算主体,][业务范围,]科目编号,产品编号,取数对象式[,条件])" text="产品常用数量函数" des2=""/>
+        </CP>
+        <CB>
+            <F id="CBJE" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="CBBH" p6="DOBJ" p7="COBJ" des1="CBJE([年,月,][核算主体,][业务范围,]科目编号,成本中心编号,取数对象式[,条件])" text="成本中心金额函数" des2=""/>
+            <F id="CBSL" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="CBBH" p6="DOBJ" p7="COBJ" des1="CBSL([年,月,][核算主体,][业务范围,]科目编号,成本中心编号,取数对象式[,条件])" text="成本中心数量函数" des2=""/>
+            <F id="CBWB" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="CBBH" p6="WBBH" p7="DOBJ" p8="COBJ" des1="CBWB([年,月,][核算主体,][业务范围,]科目编号,成本中心编号,外币编号,取数对象式[,条件])" text="成本中心外币函数" des2=""/>
+        </CB>
+        <XJ>
+            <F id="XJJE" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="XJBH" p6="DOBJ" p7="COBJ" des1="XJJE([年,月,][核算主体,][业务范围,]科目编号,现金流量编号,取数对象式[,条件])" text="现金流量金额函数" des2=""/>
+            <!--F id="XJSL" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="XJBH" p6="DOBJ" p7="COBJ" des1="XJSL([年,月,][核算主体,][业务范围,]科目编号,现金流量编号,取数对象式[,条件])" text="现金流量金额函数" des2=""/-->
+            <F id="XJWB" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="XJBH" p6="WBBH" p7="DOBJ" p8="COBJ" des1="XJWB([年,月,][核算主体,][业务范围,]科目编号,现金流量编号,外币编号,取数对象式[,条件])" text="现金流量金额函数" des2=""/>
+        </XJ>
+        <WL>
+            <F id="WLJE" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="WLBH" p6="DOBJ" p7="COBJ" des1="WLJE([年,月,][核算主体,][业务范围,]科目编号,往来单位编号,取数对象式[,条件])" text="往来金额函数" des2="由于往来单位的分类（往来类别）是分级结构,因此如果指定非明细级的类别,应使用like比较符,例如WLLB like ‘08%’。"/>
+            <F id="WLSL" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="WLBH" p6="DOBJ" p7="COBJ" des1="WLSL([年,月,][核算主体,][业务范围,]科目编号,往来单位编号,取数对象式[,条件])" text="往来数量函数" des2="由于往来单位的分类（往来类别）是分级结构,因此如果指定非明细级的类别,应使用like比较符,例如WLLB like ‘08%’。"/>
+            <F id="WLWB" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="WLBH" p6="WBBH" p7="DOBJ" p8="COBJ" des1="WLWB([年,月,][核算主体,][业务范围,]科目编号,往来单位编号,外币编号,取数对象式[,条件])" text="往来外币函数" des2="由于往来单位的分类（往来类别）是分级结构,因此如果指定非明细级的类别,应使用like比较符,例如WLLB like ‘08%’。"/>
+        </WL>
+        <ZF>
+            <F id="ZFJE" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="ZFLB" p6="ZFBH" p7="DOBJ" p8="COBJ" des1="WLJE([年,月,][核算主体,][业务范围,]科目编号,自定义辅助类别,自定义辅助编号,取数对象式[,条件])" text="自定义辅助金额函数" des2=""/>
+            <F id="ZFSL" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="ZFLB" p6="ZFBH" p7="DOBJ" p8="COBJ" des1="WLSL([年,月,][核算主体,][业务范围,]科目编号,自定义辅助类别,自定义辅助编号,取数对象式[,条件])" text="自定义辅助数量函数" des2=""/>
+            <F id="ZFWB" dobj_t="1" cobj_t="1" ps="10" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="ZFLB" p6="ZFBH" p7="WBBH" p8="DOBJ" p9="COBJ" des1="WLWB([年,月,][核算主体,][业务范围,]科目编号,自定义辅助类别，自定义辅助编号,外币编号,取数对象式[,条件])" text="自定义辅助外币函数" des2=""/>
+        </ZF>
+        <PZHJ>
+            <F id="PZHJJE" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="DOBJ" p6="COBJ" des1="PZHJJE([年,月,][核算主体,][业务范围,]科目编号,取数对象式[,条件])" text="凭证合计金额函数" des2="本类函数直接从凭证取数,返回取数对象式的合计数,包括所有已记账和未记账凭证。它的结果只有一条数。"/>
+            <F id="PZHJSL" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="DOBJ" p6="COBJ" des1="PZHJSL([年,月,][核算主体,][业务范围,]科目编号,取数对象式[,条件])" text="凭证合计数量函数" des2="本类函数直接从凭证取数,返回取数对象式的合计数,包括所有已记账和未记账凭证。它的结果只有一条数。"/>
+            <F id="PZCYSL" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="DOBJ" p6="COBJ" des1="PZHJSL([年,月,][核算主体,][业务范围,]科目编号,取数对象式[,条件])" text="凭证合计常用数量函数" des2="本类函数直接从凭证取数,返回取数对象式的合计数,包括所有已记账和未记账凭证。它的结果只有一条数。"/>
+            <F id="PZHJWB" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="WBBH" p6="DOBJ" p7="COBJ" des1="PZHJWB([年,月,][核算主体,][业务范围,]科目编号,外币编号,取数对象式[,条件])" text="凭证合计外币函数" des2="本类函数直接从凭证取数,返回取数对象式的合计数,包括所有已记账和未记账凭证。它的结果只有一条数。"/>
+        </PZHJ>
+        <YSYF>
+		<!--
+            <F id="YSZLJE" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="QJBH" p6="DOBJ" p7="COBJ" des1="YSZLJE([年,月,][核算主体,][业务范围,]科目编号,区间编号,取数对象式[,条件])" text="应收账龄分析金额" des2=""/>
+            <F id="YFZLJE" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="QJBH" p6="DOBJ" p7="COBJ" des1="YFZLJE([年,月,][核算主体,][业务范围,]科目编号,区间编号,取数对象式[,条件])" text="应付账龄分析金额" des2=""/>
+            <F id="YSZLWB" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="QJBH" p6="WBBH" p7="DOBJ" p8="COBJ" des1="YSZLWB([年,月,][核算主体,][业务范围,]科目编号,区间编号,外币编号,取数对象式[,条件])" text="应收款账龄分析外币" des2=""/>
+            <F id="YFZLWB" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="QJBH" p6="WBBH" p7="DOBJ" p8="COBJ" des1="YFZLWB([年,月,][核算主体,][业务范围,]科目编号,区间编号,外币编号,取数对象式[,条件])" text="应付款账龄分析外币" des2=""/>
+            <F id="YSSJJE" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="SJQJBH" p6="DOBJ" p7="COBJ" des1="YSSJJE([年,月,][核算主体,][业务范围,]科目编号,区间编号,取数对象式[,条件])" text="时间账龄分析金额" des2=""/>
+            <F id="YFSJJE" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="SJQJBH" p6="DOBJ" p7="COBJ" des1="YFSJJE([年,月,][核算主体,][业务范围,]科目编号,区间编号,取数对象式[,条件])" text="时间账龄分析金额" des2=""/>
+            <F id="YSSJWB" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="SJQJBH" p6="WBBH" p7="DOBJ" p8="COBJ" des1="YSSJWB([年,月,][核算主体,][业务范围,]科目编号,区间编号,外币编号,取数对象式[,条件])" text="时间账龄分析外币" des2=""/>
+            <F id="YFSJWB" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="SJQJBH" p6="WBBH" p7="DOBJ" p8="COBJ" des1="YFSJWB([年,月,][核算主体,][业务范围,]科目编号,区间编号,外币编号,取数对象式[,条件])" text="时间账龄分析外币" des2=""/>
+			-->
+            <F id="ZLFXJE" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="WLKMBH" p5="QJBH" p6="DOBJ" p7="COBJ" des1="YSZLJE([年,月,][核算主体,][业务范围,]科目编号,区间编号,取数对象式[,条件])" text="账龄分析金额" des2=""/>
+            <F id="ZLFXWB" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="WLKMBH" p5="QJBH" p6="WBBH" p7="DOBJ" p8="COBJ" des1="YSZLWB([年,月,][核算主体,][业务范围,]科目编号,区间编号,外币编号,取数对象式[,条件])" text="账龄分析外币" des2=""/>
+            <F id="DQFXJE" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="KMBH" p5="DOBJ" p6="COBJ" des1="DQFXJE([年,月,][核算主体,][业务范围,]科目编号,取数对象式[,条件])" text="到期日分析金额" des2=""/>
+            <F id="GRFXJE" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="WLKMBH" p5="QJBH" p6="DOBJ" p7="COBJ" des1="YSZLJE([年,月,][核算主体,][业务范围,]科目编号,区间编号,取数对象式[,条件])" text="个人账龄分析金额" des2=""/>
+
+		</YSYF>
+        <YJCB>
+            <F id="YJCB" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="YJGCBH" p5="YJCBBH" p6="YJSXBH" p7="DOBJ" p8="COBJ" des1="YJCB([年,月,][核算主体,][业务范围,]油建工程编号,油建成本中心编号,油建属性编号,取数对象[,条件])" text="油建成本函数" des2=""/>
+            <F id="YJGC" dobj_t="1" cobj_t="1" ps="8"  p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="YJGCBH" p5="YJSXBH" p6="DOBJ" p7="COBJ" des1="YJGC([年,月,][核算主体,][业务范围,]油建工程编号,油建属性编号,取数对象[,条件])" text="油建工程函数" des2=""/>
+            <F id="YJSX" dobj_t="1" cobj_t="1" ps="7"  p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="YJSXBH" p5="DOBJ"   p6="COBJ" des1="YJSX([年,月,][核算主体,][业务范围,]油建属性编号,取数对象[,条件])" text="油建属性函数" des2=""/>
+        </YJCB>
+        <ZJCB>
+            <F id="ZJCB"   dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="ZJGCBH" p5="ZJCBBH" p6="DOBJ" p7="COBJ" des1="ZJCB([年,月,][核算主体,][业务范围,]钻井工程编号,钻井成本中心编号,取数对象式[,条件])" text="钻井成本函数" des2="该函数用来取钻井成本子系统的工程成本账中的数量或者金额"/>
+            <F id="ZJZB"   dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="ZJGCBH" p5="ZJCBBH" p6="DOBJ" p7="COBJ" des1="ZJZB([年,月,][核算主体,][业务范围,]钻井工程编号,钻井指标编号,取数对象式[,条件])" text="钻井指标函数" des2="该函数用来取钻井成本子系统的经济指标的数"/>
+            <F id="ZJSXCB" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="ZJGCBH" p5="ZJCBBH" p6="DOBJ" p7="COBJ" des1="ZJSXCB([年,月,][核算主体,][业务范围,]钻井工程编号,钻井成本中心编号,取数对象[,条件])" text="钻井属性成本函数" des2="主要处理变动表 取钻井成本子系统的工程成本账中的数量或者金额"/>
+            <F id="ZJSXZB" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="ZJGCBH" p5="ZJCBBH" p6="DOBJ" p7="COBJ" des1="ZJSXZB([年,月,][核算主体,][业务范围,]钻井工程编号,钻井指标编号,取数对象[,条件])" text="钻井属性指标函数" des2="主要处理变动表 取钻井成本子系统的工程成本账中的数量或者金额"/>
+        </ZJCB>
+        <ZYCB>
+            <F id="ZYCB"   dobj_t="1" cobj_t="1" ps="10" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="ZYGCLB" p5="ZYXZBH" p6="ZYGCBH" p7="ZYCBBH" p8="DOBJ" p9="COBJ" des1="ZYCB([年,月,][核算主体,][业务范围,]作业性质编号,项目编号,费用要素编号,取数对象式[,条件])" text="项目成本函数" des2="该函数用来取工程成本账中的数量或者金额"/>
+            <!--F id="ZYSXCB" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="ZYXZBH" p5="ZYSXBH" p6="ZYCBBH" p7="DOBJ" p8="COBJ" des1="ZYSXCB([年,月,][核算主体,][业务范围,]作业性质编号,项目属性类别+编号,费用要素编号,取数对象式[,条件])" text="基建属性成本函数" des2="该函数用来取基建子系统的工程成本账中的数量或者金额"/-->
+			<F id="GCZZ"   dobj_t="1" cobj_t="1" ps="10" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="ZYGCLB" p5="ZYXZBH" p6="ZYGCBH" p7="ZYZZBH" p8="DOBJ" p9="COBJ" des1="GCZZ([年,月,][核算主体,][业务范围,]作业性质编号,项目编号,转资编号,取数对象式[,条件])" text="工程转资函数" des2=""/>
+            <!--F id="XDCB"   dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="ZYXZBH" p5="ZYGCBH" p6="ZYCBBH" p7="DOBJ" p8="COBJ"  des1="XDCB([年,月,][核算主体,][业务范围,]作业性质编号,作业工程编号,项目成本中心编号,作业小队编号,取数对象式[,条件])" text="小队成本函数" des2="该函数用来取项目成本子系统的小队成本账中的数量或者金额"/-->
+		</ZYCB>
+        <ZYZB>
+            <F id="ZYZB"   dobj_t="1" cobj_t="1" ps="10" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="ZYGCLB" p5="ZYXZBH" p6="ZYGCBH" p7="ZYZBBH" p8="DOBJ" p9="COBJ" des1="ZYZB([年,月,][核算主体,][业务范围,]作业性质编号,项目编号,基建指示编号,取数对象式[,条件])" text="基建指标函数" des2="该函数用来取基建子系统的经济指标的数"/>
+            <!--F id="ZYSXZB" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="ZYXZBH" p5="ZYSXBH" p6="ZYZBBH" p7="DOBJ" p8="COBJ" des1="ZYZB([年,月,][核算主体,][业务范围,]作业性质编号,项目属性类别+编号,基建指示编号,取数对象式[,条件])" text="基建属性指标函数" des2="该函数用来取基建子系统的经济指标的数"/-->
+        </ZYZB>
+        <SQL>
+            <F id="DSQL" ps="1" p0="SQL" des1="DSQL(SQL语句)" text="直接SQL函数" des2="直接输入SQL,从当前登录账套的任意子系统取数.SQL语句可以是多条,语句之间使用分号分隔;所有语句(包括回车换行、语句分隔符等)的总长度不能超过500个字符;不允许使用注释.公式在定义时不进行语法检查;执行时,非法SQL将导致没有结果."/>
+        </SQL>
+        <MACRO>
+            <F id="MACRO" dobj_t="1" cobj_t="1" ps="1" p0="MACRO" des1="MACRO(@MACRO@)" text="" des2="返回表达式,将其中的宏替换成宏的值."/>
+        </MACRO>
+        <DBF>
+            <F id="DBF" ps="3" p0="DBFFILE" p1="DOBJ" p2="COBJ" des1="DBF(文件名,取数对象式[,条件])" text="DBF取数函数" des2="直接从dBase 3.x、FoxBase或Foxpro 5.0及以下版本的.DBF文件中取数."/>
+        </DBF>
+        <BC>
+            <F id="ZTBB"  ps="5" p0="YEAR" p1="MONTH" p2="ZTBH" p3="BBBH" p4="BBREF" des1="ZTBB([年,月,][账套连接编号,][报表编号,]单元格范围)" text="跨账套报表函数" des2="直接跨账套从报表管理系统中取数"/>
+            <F id="ZTDWB" ps="6" p0="YEAR" p1="MONTH" p2="ZTBH" p3="BBBH" p4="DWBH" p5="BBREF" des1="ZTDWB([年,月,][账套连接编号,][报表编号,]汇总单位编号,单元格范围)" text="跨账套单位报表函数" des2="直接跨账套从汇总报表系统中取数"/>
+            <F id="ZTHZB" ps="6" p0="YEAR" p1="MONTH" p2="ZTBH" p3="BBBH" p4="LBBH" p5="BBREF" des1="ZTHZB([年,月,][账套连接编号,][报表编号,]汇总类别编号,单元格范围)" text="跨账套汇总报表函数" des2="直接跨账套从汇总报表系统中取数"/>
+        </BC>
+        <MB>
+            <F id="MB"   ps="5" p0="YEAR" p1="MONTH" p2="ZTBH" p3="JLBBBH" p4="JLBBREF" des1="MB([年,月,][账套连接编号,][兼容报表编号,]兼容单元格范围)" text="兼容报表函数" des2="直接从报表管理系统或汇总报表系统的V5.0以下版本中跨账套取数。"/>
+            <F id="MDWB" ps="5" p0="YEAR" p1="MONTH" p2="ZTBH" p3="JLBBBH" p4="JLBBREF" des1="MDWB([年,月,][账套连接编号,][兼容报表编号,]兼容汇总单位编号,兼容单元格范围)" text="兼容单位报表函数" des2="直接从报表管理系统或汇总报表系统的V5.0以下版本中跨账套取数。"/>
+            <F id="MHZB" ps="5" p0="YEAR" p1="MONTH" p2="ZTBH" p3="JLBBBH" p4="JLBBREF" des1="MHZB([年,月,][账套连接编号,][兼容报表编号,]兼容单元格范围)" text="兼容汇总报表函数" des2="直接从报表管理系统或汇总报表系统的V5.0以下版本中跨账套取数。"/>
+        </MB>
+        <TH>
+            <F id="TZHJ" dobj_t="1" ps="5" p0="ZRZX" p1="BKBH" p2="KMLB" p3="LBXM" p4="DOBJ" des1="TZHJ([核算主体,][业务范围,]科目列表,类别-项目,取数对象式)" text="台账合计函数" des2="本函数直接从凭证取数,日期为当前登录的会计期间,取已记账凭证的取数对象式的合计数,因此它的结果只有一条数,主要面向的是(现金流量表按对方科目)来形成这种方法来实现的.这种方法是在现金科目的对方科目定义一个台账,考虑到合并现金流量表的要求,台账项目主要设内部现金、外部现金、非现金三个项目.在出表时,根据定义的台账项目及科目确定现金流量表.为简化公式定义的功能,增加本函数."/>
+        </TH>
+        <YX>
+            <F id="YSJE" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="YSLB" p5="YSBH" p6="DOBJ" p7="COBJ" des1="YSJE([年,月,][核算主体,][业务范围,]预算类别,预算编号,取数对象式[,条件])" text="预算金额函数" des2="预算系统取数"/>
+            <F id="YSSL" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="YSLB" p5="YSBH" p6="DOBJ" p7="COBJ" des1="YSSL([年,月,][核算主体,][业务范围,]预算类别,预算编号,取数对象式[,条件])" text="预算数量函数" des2="预算系统取数"/>
+        </YX>
+        <FZ>
+            <F id="FZJE" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="FLDX" p5="FLBH" p6="DOBJ" p7="COBJ" des1="FZJE([年,月,][核算主体,][业务范围,]分类对象,分类编号,取数对象式[,条件])" text="辅助金额函数" des2="在辅助核算中,一个科目可同时设责任成本中心、往来、多类项目（最多5类）核算,该类函数就是针对此类科目取数的."/>
+            <F id="FZSL" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="FLDX" p5="FLBH" p6="DOBJ" p7="COBJ" des1="FZSL([年,月,][核算主体,][业务范围,]分类对象,分类编号,取数对象式[,条件])" text="辅助数量函数" des2="在辅助核算中,一个科目可同时设责任成本中心、往来、多类项目（最多5类）核算,该类函数就是针对此类科目取数的."/>
+            <F id="FZWB" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="FLDX" p5="FLBH" p6="WBBH" p7="DOBJ" p8="COBJ" des1="FZSL([年,月,][核算主体,][业务范围,]分类对象,分类编号,取数对象式[,条件])" text="辅助数量函数" des2="在辅助核算中,一个科目可同时设责任成本中心、往来、多类项目（最多5类）核算,该类函数就是针对此类科目取数的."/>
+            <F id="FZCYSL" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="FLDX" p5="FLBH" p6="DOBJ" p7="COBJ" des1="FZCYSL([年,月,][核算主体,][业务范围,]分类对象,分类编号,取数对象式[,条件])" text="辅助常用数量函数" des2="取设了辅助交叉的产品常用数量函数"/>
+       
+        </FZ>
+        
+       <!--add by lqk  
+       <FZGC>
+            <F id="FZGCWB" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="FLDX" p5="FLBH" p6="WBBH" p7="DOBJ" p8="COBJ" des1="FZSL([年,月,][核算主体,][业务范围,]分类对象,分类编号,取数对象式[,条件])" text="辅助数量函数" des2="在辅助核算中,一个科目可同时设责任成本中心、往来、多类项目（最多5类）核算,该类函数就是针对此类科目取数的."/>
+       </FZGC>-->
+        <BCB>
+            <F id="BCJE" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BCLX" p4="BCYWLX" p5="BCXMBH" p6="DCOL" p7="DOBJ" p8="COBJ" des1="BCJE([年,月,][核算主体,][备查类型,]业务类型,备查项目,[数据对象],取数对象式[,条件])" text="备查金额函数" des2="备查金额"/>
+            <F id="BCWB" dobj_t="1" cobj_t="1" ps="10" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BCLX" p4="BCYWLX" p5="BCXMBH" p6="DCOL" p7="WBBH" p8="DOBJ" p9="COBJ" des1="BCWB([年,月,][核算主体,][备查类型,]业务类型,备查项目,[数据对象],外币编号,取数对象式[,条件])" text="备查金额函数" des2="备查金额"/>
+        </BCB>
+        <BBZB>
+            <F id="ZBJE" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="ZBLB" p4="ZBBH" p5="BBZBDCOL"  p6="COBJ" des1="ZBJE([年,月,][核算主体,][指标类型,]指标编号,[数据对象],取数对象式[,条件])" text="报表指标函数" des2="报表指标"/>
+            <F id="ZBQS" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="ZBLB" p4="ZBBH" p5="BBZBDCOL"  p6="COBJ" des1="ZBQS([年,月,][核算主体,][指标类型,]指标编号,[数据对象],取数对象式[,条件])" text="指标取数函数" des2="指标取数"/>
+        </BBZB>
+        <DY>
+            <F id="DYJE" dobj_t="1" cobj_t="1" ps="6" p0="YEAR" p1="MONTH" p2="ZRZX" p3="DYXMBH" p4="DOBJ" p5="COBJ" des1="DYJE([年,月,][核算主体,],项目编号,取数对象式[,条件])" text="递延所得税金额" des2="递延所得税金额"/>
+        </DY>
+        <ZC>
+            <F id="ZCZJJE" dobj_t="1" cobj_t="1" ps="5" p0="YEAR" p1="MONTH" p2="ZRZX" p3="DOBJ" p4="COBJ" des1="ZCZJJE([年,月,][核算主体,]取数对象式[,条件])" text="资产折旧金额函数" des2=""/>
+            <F id="ZCYZJE" dobj_t="1" cobj_t="1" ps="5" p0="YEAR" p1="MONTH" p2="ZRZX" p3="DOBJ" p4="COBJ" des1="ZCYZJE([年,月,][核算主体,]取数对象式[,条件])" text="资产原值金额函数" des2=""/>
+            <F id="ZCYWJE" dobj_t="1" cobj_t="1" ps="6" p0="YEAR" p1="MONTH" p2="ZRZX" p3="ZCYWLX" p4="DOBJ" p5="COBJ" des1="ZCYWJE([年,月,][核算主体,],业务类型,取数对象式[,条件])" text="资产原值金额函数" des2=""/>
+            <F id="ZCJZJE" dobj_t="1" cobj_t="1" ps="5" p0="YEAR" p1="MONTH" p2="ZRZX" p3="DOBJ" p4="COBJ" des1="ZCJZJE([年,月,][核算主体,]取数对象式[,条件])" text="资产净值金额函数" des2=""/>
+        </ZC>
+<!-->
+        <SAP>
+            <F id="SAPBB" dobj_t="1" cobj_t="1" ps="8" p0="YEAR" p1="MONTH" p2="ZRZX" p3="BKBH" p4="SAPFUNCFL" p5="SAPFLBH" p6="DOBJ" p7="COBJ" des1="SAPBB([年,月,][核算主体,][版块编号,]分类对象,分类编号,取数对象式[,条件])" text="SAP报表函数" des2="SAP报表函数."/>
+            <F id="DSAP" dobj_t="0" cobj_t="0" ps="1" p0="HSDX" des1="DSAP(函数对象)" text="自定义SAP报表函数" des2="自定义SAP报表函数."/>
+        </SAP>
+<-->
+        <NBGS>
+            <F id="NBGS" dobj_t="1" cobj_t="1" ps="3" p0="FUNCXH" p1="DOBJ" p2="COBJ" des1="NBGS(预处理公式序号,取数对象,条件对象)" text="内部取数函数" des2="内部取数函数."/>
+        </NBGS>
+        <JY>
+            <F id="JYBB" dobj_t="1" cobj_t="1" ps="9" p0="YEAR" p1="MONTH" p2="ZJDW" p3="JYFUNCFL" p4="DBLB" p5="DBXM" p6="DBSJ" p7="DOBJ" p8="COBJ" des1="JYBB([年,月,][资金单位,]函数类别,调拨业务类别,调拨业务项目,数据项目,取数对象式[,条件])" text="交易平台报表函数" des2="交易平台报表函数."/>
+        </JY>
+		<!--ERP函数-->
+        <ZKM>
+            <F id="ZKMJE" dobj_t="1" cobj_t="1" ps="6" p0="YEAR" p1="MONTH" p2="ZRZX" p3="KMBH" p4="DOBJ" p5="COBJ" text="科目金额函数" des1="KMJE([年,月,][责任中心,]科目编号,取数对象式[,条件])" des2="对于核算外币的科目,使用科目金额函数取到的是折合本位币的金额,使用科目外币函数取到的是外币金额。由于每一科目只能核算单一外币,因此在取有关外币的数据时所指定的科目范围应该全部核算同一种外币,否则将产生错误结果。以下凡有关外币的取数均同此则,不再赘述"/>
+            <F id="ZKMSL" dobj_t="1" cobj_t="1" ps="6" p0="YEAR" p1="MONTH" p2="ZRZX" p3="KMBH" p4="DOBJ" p5="COBJ" text="科目数量函数" des1="KMSL([年,月,][责任中心,]科目编号,取数对象式[,条件])" des2="对于核算外币的科目,使用科目金额函数取到的是折合本位币的金额,使用科目外币函数取到的是外币金额。由于每一科目只能核算单一外币,因此在取有关外币的数据时所指定的科目范围应该全部核算同一种外币,否则将产生错误结果。以下凡有关外币的取数均同此则,不再赘述"/>
+            <F id="ZKMWB" dobj_t="1" cobj_t="1" ps="6" p0="YEAR" p1="MONTH" p2="ZRZX" p3="KMBH" p4="DOBJ" p5="COBJ" text="科目外币函数" des1="KMWB([年,月,][责任中心,]科目编号,取数对象式[,条件])" des2="对于核算外币的科目,使用科目金额函数取到的是折合本位币的金额,使用科目外币函数取到的是外币金额。由于每一科目只能核算单一外币,因此在取有关外币的数据时所指定的科目范围应该全部核算同一种外币,否则将产生错误结果。以下凡有关外币的取数均同此则,不再赘述"/>
+        </ZKM>
+        <ZKH>
+            <F id="ZKHJE" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="KMBH" p4="KHBH" p5="DOBJ" p6="COBJ" text="客户金额函数" des1="ZKHJE([年,月,][责任中心,]科目编号,客户编号,取数对象式[,条件])" des2=""/>
+            <F id="ZKHTS" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="KMBH" p4="KHBH" p5="DOBJ" p6="COBJ" text="客户特殊函数" des1="ZKHTS([年,月,][责任中心,]科目编号,客户编号,取数对象式[,条件])" des2=""/>
+            <F id="ZKHPZ" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="KMBH" p4="KHBH" p5="DOBJ" p6="COBJ" text="客户凭证函数" des1="ZKHPZ([年,月,][责任中心,]科目编号,客户编号,取数对象式[,条件])" des2=""/>
+            <F id="ZKHZL" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="KMBH" p4="KHBH" p5="DOBJ" p6="COBJ" text="客户账龄函数" des1="ZKHZL([年,月,][责任中心,]科目编号,客户编号,取数对象式[,条件])" des2=""/>
+        </ZKH>
+        <ZGY>
+            <F id="ZGYJE" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="KMBH" p4="GYBH" p5="DOBJ" p6="COBJ" text="供应商金额函数" des1="ZGYJE([年,月,][责任中心,]科目编号,供应商编号,取数对象式[,条件])" des2=""/>
+            <F id="ZGYTS" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="KMBH" p4="GYBH" p5="DOBJ" p6="COBJ" text="供应商特殊函数" des1="ZGYTS([年,月,][责任中心,]科目编号,供应商编号,取数对象式[,条件])" des2=""/>
+            <F id="ZGYPZ" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="KMBH" p4="GYBH" p5="DOBJ" p6="COBJ" text="供应商凭证函数" des1="ZGYPZ([年,月,][责任中心,]科目编号,供应商编号,取数对象式[,条件])" des2=""/>
+        </ZGY>
+        <ZZC>
+            <F id="ZZCYZ" dobj_t="1" cobj_t="1" ps="6" p0="YEAR" p1="MONTH" p2="ZRZX" p3="ZCFL" p4="DOBJ" p5="COBJ" text="资产原值函数" des1="ZZCYZ([年,月,][责任中心,]分类编号,取数对象式[,条件])" des2=""/>
+            <F id="ZZCZJ" dobj_t="1" cobj_t="1" ps="6" p0="YEAR" p1="MONTH" p2="ZRZX" p3="ZCFL" p4="DOBJ" p5="COBJ" text="资产折旧函数" des1="ZZCZJ([年,月,][责任中心,]分类编号,取数对象式[,条件])" des2=""/>
+        </ZZC>
+        <ZCB>
+            <F id="ZCBJE" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="CPDM" p4="CBYS" p5="DOBJ" p6="COBJ" text="成本金额函数" des1="ZGYJE([年,月,][责任中心,]产品编号,成本要素编号,取数对象式[,条件])" des2=""/>
+            <F id="ZCBSL" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="CPDM" p4="CBYS" p5="DOBJ" p6="COBJ" text="成本数量函数" des1="ZGYTS([年,月,][责任中心,]产品编号,成本要素编号,取数对象式[,条件])" des2=""/>
+        </ZCB>
+        <ZXS>
+            <F id="ZXSJE" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="KMBH" p4="XSBH" p5="DOBJ" p6="COBJ" text="销售金额函数" des1="ZGYJE([年,月,][责任中心,]科目编号,销售编号,取数对象式[,条件])" des2=""/>
+            <F id="ZXSSL" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="KMBH" p4="XSBH" p5="DOBJ" p6="COBJ" text="销售数量函数" des1="ZGYTS([年,月,][责任中心,]科目编号,销售编号,取数对象式[,条件])" des2=""/>
+        </ZXS>
+        <ZWL>
+            <F id="ZWLJE" dobj_t="1" cobj_t="1" ps="6" p0="YEAR" p1="MONTH" p2="ZRZX" p3="ZWLBH" p4="DOBJ" p5="COBJ" text="物料金额函数" des1="KMJE([年,月,][责任中心,]物料编号,取数对象式[,条件])" des2=""/>
+            <F id="ZWLSL" dobj_t="1" cobj_t="1" ps="6" p0="YEAR" p1="MONTH" p2="ZRZX" p3="ZWLBH" p4="DOBJ" p5="COBJ" text="物料数量函数" des1="KMSL([年,月,][责任中心,]物料编号,取数对象式[,条件])" des2=""/>
+            <F id="ZWLPZJE" dobj_t="1" cobj_t="1" ps="6" p0="YEAR" p1="MONTH" p2="ZRZX" p3="ZWLBH" p4="DOBJ" p5="COBJ" text="物料凭证金额函数" des1="KMJE([年,月,][责任中心,]物料编号,取数对象式[,条件])" des2=""/>
+            <F id="ZWLPZSL" dobj_t="1" cobj_t="1" ps="6" p0="YEAR" p1="MONTH" p2="ZRZX" p3="ZWLBH" p4="DOBJ" p5="COBJ" text="物料凭证数量函数" des1="KMSL([年,月,][责任中心,]物料编号,取数对象式[,条件])" des2=""/>
+            <F id="ZWLCBJE" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="ZWLBH" p4="ZCBZX" p5="DOBJ" p6="COBJ" text="物料成本凭证金额函数" des1="ZGYJE([年,月,][责任中心,]物料编号,成本中心,取数对象式[,条件])" des2=""/>
+            <F id="ZWLCBSL" dobj_t="1" cobj_t="1" ps="7" p0="YEAR" p1="MONTH" p2="ZRZX" p3="ZWLBH" p4="ZCBZX" p5="DOBJ" p6="COBJ" text="物料成本凭证数量函数" des1="ZGYTS([年,月,][责任中心,]物料编号,成本中心,取数对象式[,条件])" des2=""/>
+        </ZWL>		
+        <HT>
+            <F id="HTJE" dobj_t="1" cobj_t="1" ps="6" p0="YEAR" p1="MONTH" p2="ZRZX" p3="KMBH" p4="DOBJ" p5="COBJ" des1="HTJE([年,月,][核算主体,],科目编号,取数对象式[,条件])" text="合同金额" des2="合同金额"/>
+        </HT>
+    </Functions>
+</wizards>

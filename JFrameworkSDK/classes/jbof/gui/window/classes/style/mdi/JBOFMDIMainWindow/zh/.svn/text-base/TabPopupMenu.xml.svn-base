@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!-- edited with XML Spy v4.2 U (http://www.xmlspy.com) by xSkyline (Pansoft) -->
+<ModuleConfig>
+	<gui>
+		<menus>
+			<mainmenu name="menu">
+				<menuitem1 name="mnCloseCurrent" caption="关闭当前窗口(C)" icon="closeallwindows16.gif" selchar="C"/>
+				<menuitem1 name="mnCloseOther" caption="关闭其他窗口(O)" icon="" selchar="O"/>
+				<menuitem1 name="mnCloseAll" caption="关闭所有窗口(A)" icon="" selchar="A"/>
+				<menuitem1 name="mnWindowList" caption="窗口列表(L)..." icon="windowslist16.gif" selchar="L"/>
+			</mainmenu>
+		</menus>
+	</gui>
+</ModuleConfig>

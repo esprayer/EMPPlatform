@@ -1,0 +1,32 @@
+[PropertyInfo]
+cellEditorValue,Object,false,false, , ,true,<default>
+dataSet,com.efounder.builder.base.data.EFDataSet,false,false, , ,true,<default>
+dataSetColID,String,false,false, , ,true,<default>
+dataSetComponent,com.efounder.bz.dbform.datamodel.DataSetComponent,false,false, , ,true,<default>
+dataSetID,String,false,false, , ,true,<default>
+dateFormat,String,false,false, , ,true,<default>
+editMask,String,false,false, , ,true,<default>
+embedCellEditor,boolean,false,false, , ,true,<default>
+fkeyID,String,false,false, , ,true,<default>
+formContainer,com.efounder.bz.dbform.component.FormContainer,false,false, , ,true,<default>
+formulaOne,String,false,false, , ,true,<default>
+horizontalAlignment,int,false,false, , ,true,<default>
+internalDataSetID,String,false,false, , ,true,<default>
+JComponent,javax.swing.JComponent,false,false, , ,true,<default>
+mainRowSet,com.efounder.builder.base.data.ESPRowSet,false,false, , ,true,<default>
+metaData,boolean,false,false, , ,true,<default>
+numberFormat,String,false,false, , ,true,<default>
+regexPattern,String,false,false, , ,true,<default>
+rlglID,String,false,false, , ,true,<default>
+selflistener,com.efounder.bz.dbform.component.dc.FormColumnField.SelfFocusListener,false,false, , ,false,<default>
+textComponentColumn,com.efounder.bz.dbform.component.dc.JTextComponentColumn,false,false, , ,false,<default>
+useRegex,boolean,false,false, , ,true,<default>
+userInternalDataSetID,boolean,false,false, , ,true,<default>
+valueDataSetColID,String,false,false, , ,true,<default>
+viewDataSetColID,String,false,false, , ,true,<default>
+viewDataSetID,String,false,false, , ,true,<default>
+[IconNames]
+
+
+
+

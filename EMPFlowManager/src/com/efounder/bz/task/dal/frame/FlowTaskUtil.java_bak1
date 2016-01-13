@@ -1,0 +1,981 @@
+package com.efounder.bz.task.dal.frame;
+
+import java.beans.*;
+import java.io.*;
+import java.sql.*;
+import java.sql.Statement;
+import java.util.*;
+
+import com.efounder.builder.base.data.*;
+import com.efounder.builder.base.util.*;
+import com.efounder.builder.meta.*;
+import com.efounder.builder.meta.domodel.*;
+import com.efounder.bz.flow.*;
+import com.efounder.bz.flow.drive.*;
+import com.efounder.bz.flow.drive.dal.*;
+import com.efounder.bz.task.dal.*;
+import com.efounder.bz.task.model.*;
+import com.efounder.db.*;
+import com.efounder.eai.EAI;
+import com.efounder.eai.data.*;
+import com.efounder.eai.service.*;
+import com.efounder.sql.*;
+import com.pansoft.wf.flowmodel.flow.*;
+import com.pansoft.security.jdal.dbo.DBOSecurityObject;
+import com.pansoft.wf.flowmodel.vertice.IBIMVertice;
+import com.efounder.bz.flow.drive.dal.util.SubmitUtils;
+
+/**
+ * <p>Title: </p>
+ *
+ * <p>Description: </p>
+ *
+ * <p>Copyright: Copyright (c) 2009</p>
+ *
+ * <p>Company: </p>
+ *
+ * @author not attributable
+ * @version 1.0
+ */
+public class FlowTaskUtil {
+  /**
+   *
+   * @param PO JParamObject
+   * @param conn JConnection
+   * @param stmt Statement
+   * @return EFDataSet[]
+   * @throws Exception
+   */
+  public static EFDataSet[] loadFlowInfo(JParamObject PO, JConnection conn,
+                                         Statement stmt) throws Exception {
+    String flowid;
+    EFDataSet activeFlow = null;
+    EFDataSet stopFlow;
+    activeFlow = FlowTaskUtil.getRunFlow(PO, stmt,PO.GetValueByParamName("FLOW_ID",""));
+    String tab = DBTools.getDBAObject(PO, "FLOW_STATUS_LIST");
+    String sql = "select FLOW_ID,MAX(FLOW_MC) as FLOW_MC,max(OP_TIME) as OP_TIME,max(OP_USER) as OP_USER,max(OP_NAME) as OP_NAME ,max(FLOW_STATUS) as FLOW_STATUS from " +
+        tab + "  A where FLOW_STATUS=2 ";
+    sql += " and not exists (select 1 from " + tab +
+        " B where A.FLOW_ID=B.FLOW_ID and B.FLOW_STATUS=1)";
+    sql += " group by FLOW_ID";
+    ResultSet rs = stmt.executeQuery(sql);
+    stopFlow = EFDataSet.getInstance(FlowTaskModel._FLOWDATASET_);
+    stopFlow.setPrimeKey(new String[] {"FLOW_ID"});
+    DataSetUtils.resultSet2DataSet(rs, stopFlow);
+    rs.close();
+    sql = "select FLOW_BH AS FLOW_ID,FLOW_MC from SYS_FLOW where FLOW_TYPE='BIM' order by FLOW_BH";
+    rs = stmt.executeQuery(sql);
+    EFDataSet otherFlow = EFDataSet.getInstance(FlowTaskModel._FLOWDATASET_);
+    otherFlow.setPrimeKey(new String[] {"FLOW_ID"});
+    DataSetUtils.resultSet2DataSet(rs, otherFlow);
+    rs.close();
+    int count = otherFlow.getRowCount();
+    for (int i = 0; i < count; i++) {
+      flowid = otherFlow.getRowSet(i).getString("FLOW_ID", "");
+      if (stopFlow.getRowSet(flowid) == null && activeFlow.getRowSet(flowid) == null) {
+        stopFlow.insertRowSet(0, otherFlow.getRowSet(i));
+      }
+    }
+    return new EFDataSet[] {
+        activeFlow, stopFlow};
+  }
+  /**
+   *
+   * @param PO JParamObject
+   * @param conn JConnection
+   * @param stmt Statement
+   * @return EFDataSet
+   * @throws Exception
+   */
+  public static EFDataSet loadTaskInfo(JParamObject PO, JConnection conn, Statement stmt,EFDataSet floweds,String flowid,String nodeid) throws Exception {
+
+    ESPServerContext esc = ESPServerContext.getInstance(PO, conn);
+    esc.setStatement(stmt);
+    EFDataSet alltaskeds = null;
+    String node_bimbh=PO.GetValueByParamName("NODE_BIMID");
+    if (node_bimbh == null || node_bimbh.trim().length() == 0) {
+      String node_bh = PO.GetValueByParamName("NODE_ID");
+      if (node_bh != null && node_bh.trim().length() > 0) {
+          IBIMFlow bf = DALFlowDriverManager.loadBIMFlow(PO, conn, flowid);
+        if(bf!=null&&bf.getBIMVertice(node_bh)!=null)
+          PO.SetValueByParamName("NODE_BIMID",bf.getBIMVertice(node_bh).getBIMId());
+      }
+    }
+    String type = PO.GetValueByParamName("TASK_TYPE");
+    if (type.equals(TaskConstants.PENDING_TASK)) {
+      alltaskeds = getPenddingTask(PO, stmt,flowid,nodeid);
+    }
+    else {
+      alltaskeds = getProcessedTask(PO, stmt,flowid,nodeid);
+    }
+    //增加一个任务的过滤，从前台可以过滤
+    String obj=PO.GetValueByParamName("FILTER_OBJ", "");
+    String mtd=PO.GetValueByParamName("FILTER_MTD", "");
+    if(obj.trim().length()>0){
+    	EAI.DAL.IOM(obj, mtd,PO,alltaskeds);
+    }
+
+    int cflowDispType=PO.GetIntByParamName(FlowConstants.CHILD_FLOW_DISP_TYPE);
+    if (cflowDispType == FlowConstants._DISP_LIST_)
+      processTaskList(esc, floweds, alltaskeds);
+    else
+      processTaskList2(esc, floweds, alltaskeds);
+    for(int i=alltaskeds.getRowCount()-1;i>=0;i--)
+      alltaskeds.removeRowSet(i);
+    return floweds;
+  }
+  protected static void processTaskList(ESPServerContext esc,EFDataSet floweds,EFDataSet alltaskeds) throws Exception {
+    int count = floweds.getRowCount();
+    for (int i = count - 1; i >= 0; i--) {
+      EFRowSet flowers = floweds.getRowSet(i);
+      findFlowTask(esc, flowers, alltaskeds);
+      count = calcTaskCount(flowers, alltaskeds.getTableName());
+      if (count == 0)
+        floweds.removeRowSet(i);
+    }
+}
+  protected static void processTaskList2(ESPServerContext esc,EFDataSet floweds,EFDataSet alltaskeds) throws Exception {
+      List list=new ArrayList();
+      //先找出父流程
+      for (int i = 0; i < alltaskeds.getRowCount(); i++) {
+          EFRowSet ers = alltaskeds.getRowSet(i);
+          String id;
+          if (ers.getString("PFLOW_ID", "").trim().length() == 0)
+              id = ers.getString("FLOW_ID", "");
+          else
+              id = ers.getString("PFLOW_ID", "");
+          if (!list.contains(id))
+              list.add(id);
+      }
+      //再递归找子
+    for (int i=0;i<list.size();i++) {
+      EFRowSet flowers = (EFRowSet) floweds.getRowSet((String)list.get(i));
+      findFlowTask(esc,floweds, flowers, alltaskeds,"","");
+    }
+    int count=floweds.getRowCount();
+    for (int i = count - 1; i >= 0; i--) {
+        EFRowSet flowers = floweds.getRowSet(i);
+        count = calcTaskCount(flowers, alltaskeds.getTableName());
+        if (count == 0)
+            floweds.removeRowSet(i);
+    }
+
+}
+  //同时将node排序
+  protected static int calcTaskCount(EFRowSet flowers,String taskname){
+      EFDataSet nodeeds = flowers.getDataSet(FlowTaskModel._NODEDATASET_);
+      int taskcount = 0;
+      if(nodeeds==null)return 0;
+      for (int j = nodeeds.getRowCount()-1; j >=0 ; j--) {
+        int nodetaskcount=0;
+        EFRowSet nodeers = nodeeds.getRowSet(j);
+        EFDataSet eds = nodeers.getDataSet(taskname);
+        if(eds!=null)
+            nodetaskcount += eds.getRowCount();
+        if(nodeers.getDataSet(FlowTaskModel._FLOWDATASET_)!=null){
+            EFDataSet cfloweds=nodeers.getDataSet(FlowTaskModel._FLOWDATASET_);
+            for(int i=0;i<cfloweds.getRowCount();i++)
+                nodetaskcount+=calcTaskCount(cfloweds.getRowSet(i),taskname);
+        }
+        taskcount+=nodetaskcount;
+        nodeers.putString(taskname, String.valueOf(taskcount));
+        if(nodeers.getString("TASK_NAME_BAK", "").trim().length()==0)
+        	nodeers.putString("TASK_NAME_BAK",nodeers.getString("TASK_NAME", ""));
+        nodeers.putString("TASK_NAME",
+                          nodeers.getString("TASK_NAME", "") + " [共有任务" +
+                          nodetaskcount + "个]");
+        nodeers.setCaption(nodeers.getString("TASK_NAME", ""));
+        if(nodetaskcount==0)
+          nodeeds.removeRowSet(nodeers);
+      }
+      java.util.Collections.sort(nodeeds.getRowSetList(), new Comparator() {
+     public int compare(Object o1, Object o2) {
+       EFRowSet ers1=(EFRowSet)o1;
+       EFRowSet ers2=(EFRowSet)o2;
+       int order1=Integer.parseInt(ers1.getString("ORDER","0"));
+       int order2=Integer.parseInt(ers2.getString("ORDER","0"));
+       if(order1==order2)return 0;
+       return order1>order2?1:-1;
+     }
+   });
+      if(flowers.getString("TASK_NAME_BAK", "").trim().length()==0)
+    	  flowers.putString("TASK_NAME_BAK",flowers.getString("TASK_NAME", ""));
+      flowers.putString("TASK_NAME",
+                        flowers.getString("TASK_NAME", "") + " [共有任务" +
+                        taskcount + "个]");
+      flowers.putString(nodeeds.getTableName(),
+                        String.valueOf(nodeeds.getRowCount()));
+
+      //add by lchong at 2010-9-6:去掉合计行上的操作日期
+      flowers.putNumber("OP_TIME",null);
+
+
+
+      return taskcount;
+  }
+  protected static void findFlowTask(ESPServerContext esc,EFRowSet flowers,EFDataSet alltask) throws Exception {
+    String flowid,nodeid;
+    EFRowSet nodeers;
+    EFDataSet allnodeeds,nodeeds,taskeds;
+    flowid=flowers.getString("FLOW_ID","");
+    for(int i=0;i<alltask.getRowCount();i++){
+      EFRowSet taskers=alltask.getRowSet(i);
+      if(!taskers.getString("FLOW_ID","").equals(flowid))continue;
+      nodeid=taskers.getString("NODE_TAG","");
+      nodeeds=flowers.getDataSet(FlowTaskModel._NODEDATASET_);
+      if(nodeeds==null){
+        allnodeeds = getFLOWNode(esc.getParamObject(), esc.getConnection(),
+                         flowers);
+        esc.setDataSet(flowid + "-NODE", allnodeeds);
+        nodeeds= EFDataSet.getInstance(FlowTaskModel._NODEDATASET_);
+        nodeeds.setPrimeKey(new String[]{"NODE_ID"});
+        flowers.setDataSet(FlowTaskModel._NODEDATASET_, nodeeds);
+      }
+      nodeers=(EFRowSet) nodeeds.getRowSet(nodeid);
+      if(nodeers==null){
+        allnodeeds=esc.getDataSet(flowid + "-NODE");
+        nodeers=(EFRowSet) allnodeeds.getRowSet(nodeid);
+        if(nodeers!=null){
+           allnodeeds.removeRowSet(nodeers);
+           nodeeds.insertRowSet(nodeers);
+           EFDataSet eds = EFDataSet.getInstance(alltask.getTableName());
+           nodeers.setDataSet(alltask.getTableName(), eds);
+        }
+      }
+      taskeds=nodeers.getDataSet(alltask.getTableName());
+      taskeds.addRowSet(taskers);
+      taskers.setRowSetAppType(FlowConstants._ROWSETAPPTYPE_TASK_TYPE_);
+      taskers.putString("ICON", nodeers.getString("TASKICON", ""));
+      taskers.putString(TaskConstants.NODE_TYPE, TaskConstants.TASK);
+    }
+  }
+  protected static void findFlowTask(ESPServerContext esc,EFDataSet allfloweds,EFRowSet flowers,EFDataSet alltask,String pflow,String pnode) throws Exception {
+   String flowid,nodeid;
+   EFRowSet nodeers;
+   EFDataSet allnodeeds,nodeeds,taskeds;
+   if(flowers.getBoolean("PROCESSED",Boolean.FALSE))return;
+   flowers.putBoolean("PROCESSED",Boolean.TRUE);
+   flowid=flowers.getString("FLOW_ID","");
+   IBIMFlow flow = loadBIMFlow(esc.getParamObject(), esc.getConnection(), flowid);
+   allnodeeds = getFLOWNode(esc.getParamObject(), esc.getConnection(),
+                        flowers);
+   flowers.setDataSet(allnodeeds.getTableName(),allnodeeds);
+   for(int n=0;n<allnodeeds.getRowCount();n++){
+     nodeers=allnodeeds.getRowSet(n);
+      taskeds = EFDataSet.getInstance(alltask.getTableName());
+     nodeers.setDataSet(alltask.getTableName(), taskeds);
+     nodeid=nodeers.getString("NODE_ID","");
+     for (int i = 0; i < alltask.getRowCount(); i++) {
+       EFRowSet taskers = alltask.getRowSet(i);
+       if (!taskers.getString("FLOW_ID", "").equals(flowid))
+         continue;
+       if (!taskers.getString("NODE_TAG", "").equals(nodeid))
+         continue;
+       if (!taskers.getString("PFLOW_ID", "").equals(pflow))
+         continue;
+       if (!taskers.getString("PFLOW_NODE_ID", "").equals(pnode))
+         continue;
+       taskeds.addRowSet(taskers);
+       taskers.setRowSetAppType(FlowConstants._ROWSETAPPTYPE_TASK_TYPE_);
+       taskers.putString("ICON", nodeers.getString("TASKICON", ""));
+       taskers.putString(TaskConstants.NODE_TYPE, TaskConstants.TASK);
+     }
+     String childflowid=SubmitUtils.getChildFlowID(esc,flow.getBIMVerticeByBIMId(nodeid));
+     if(childflowid==null||childflowid.trim().length()==0)continue;
+     EFRowSet cflowers=(EFRowSet) allfloweds.getRowSet(childflowid);
+     if(cflowers!=null){
+         allfloweds.removeRowSet(cflowers);
+         findFlowTask(esc, allfloweds, cflowers, alltask, flowid, nodeid);
+         EFDataSet eds=EFDataSet.getInstance(allfloweds.getTableName());
+         eds.insertRowSet(cflowers);
+         nodeers.setDataSet(allfloweds.getTableName(),eds);
+     }
+   }
+ }
+
+
+  /**
+   *
+   * @param paramObject JParamObject
+   * @param conn JConnection
+   * @param FLOW_ID String
+   * @return IBIMFlow
+   * @throws Exception
+   */
+  public static IBIMFlow loadBIMFlow(JParamObject paramObject, JConnection conn,
+                                     String FLOW_ID) throws Exception {
+//    byte[] flowData = FlowIOServiceUtil.getBIMFlowData(paramObject, conn,
+//        FLOW_ID);
+//    IBIMFlow bimFlow = getBIMFlowByByte(flowData);
+    IBIMFlow bimFlow = DALFlowDriverManager.loadBIMFlow(paramObject, conn,
+        FLOW_ID);
+    return bimFlow;
+  }
+  /**
+   *
+   * @param flowData byte[]
+   * @return IBIMFlow
+   * @throws Exception
+   */
+  protected static IBIMFlow getBIMFlowByByte(byte[] flowData) throws Exception {
+    if (flowData == null || flowData.length == 0) {
+      return null;
+    }
+    Object object = null;
+    InputStream ins = new ByteArrayInputStream(flowData);
+//    XMLDecoder decoder = new XMLDecoder(ins);
+    XMLDecoder decoder = new XMLDecoder(ins, null, null,
+                                        IBIMFlow.class.getClassLoader());
+    object = decoder.readObject();
+    decoder.close();
+    ins.close();
+    return (IBIMFlow) object;
+  }
+  /**
+   *
+   * @param PO JParamObject
+   * @param stmt Statement
+   * @return EFDataSet
+   * @throws Exception
+   */
+  public static EFDataSet getRunFlow(JParamObject PO, Statement stmt,String flowid) throws
+      Exception {
+    String sql = " select * from " +
+        DBTools.getDBAObject(PO, "FLOW_STATUS_LIST");
+    sql += " where FLOW_STATUS='1'";
+    if (flowid != null && !"".equals(flowid.trim())) {
+      sql += " and " + StringToWhere("FLOW_ID", flowid);
+    }
+
+//    if(ischild)
+//      sql+=" and FLOW_CHILD='1'";
+//    else
+//      sql+=" and FLOW_CHILD='0'";
+    sql += " order by OP_ID";
+    ResultSet rs = stmt.executeQuery(sql);
+    EFDataSet eds = EFDataSet.getInstance(FlowTaskModel._FLOWDATASET_);
+    eds.setPrimeKey(new String[] {"FLOW_ID"});
+    DataSetUtils.resultSet2DataSet(rs, eds);
+    int count = eds.getRowCount();
+    for (int i = 0; i < count; i++) {
+      EFRowSet ers = eds.getRowSet(i);
+      ers.putString("OBJ_GUID", ers.getString("FLOW_ID", ""));
+      ers.putString("TASK_NAME", ers.getString("FLOW_MC", ""));
+    }
+    rs.close();
+    return eds;
+  }
+
+  /**
+   *
+   * @param PO JParamObject
+   * @param conn JConnection
+   * @param flowers EFRowSet
+   * @return EFDataSet
+   * @throws Exception
+   */
+  public static EFDataSet getFLOWNode(JParamObject PO, JConnection conn,
+                                      EFRowSet flowers) throws Exception {
+    String flowid = flowers.getString("FLOW_ID", "");
+    IBIMFlow flow = loadBIMFlow(PO, conn, flowid);
+    flowers.putString("ICON", flow.getFlowIcon());
+    // prepare Form id
+    flowers.putString("preformid",flow.getPrepareForm());
+    // prepare form ID
+    flowers.putString("formid",flow.getProcessForm());
+    // 设置为流程类型
+    flowers.setRowSetAppType(FlowConstants._ROWSETAPPTYPE_FLOW_TYPE_);
+    // 流程的扩展属性
+    flowers.setExtProperty("formProperty",flow.getFormProperty());
+    flowers.setExtProperty("formParams",flow.getFormParams());
+    //
+    EFDataSet eds = EFDataSet.getInstance(FlowTaskModel._NODEDATASET_);
+    eds.setPrimeKey(new String[]{"NODE_ID"});
+    String[] ids = flow.getBIMVerticeBIMIDs();
+    String s = PO.GetValueByParamName("NODE_BIMID");
+    java.util.List nodeList = new ArrayList();
+    String[] strs = s.split(",");
+    for (int i = 0; strs != null && i < strs.length; i++) {
+      if (strs[i].trim().length() > 0) {
+        nodeList.add(strs[i]);
+      }
+    }
+    for (int i = 0; i < ids.length; i++) {
+      if (nodeList.size() > 0 && !nodeList.contains(ids[i])) {
+        continue;
+      }
+      EFRowSet ers = EFRowSet.getInstance();
+      String name = flow.getBIMVerticeByBIMId(ids[i]).getName();
+      int order= flow.getBIMVerticeByBIMId(ids[i]).getOrder();
+      ers.putString("ORDER",String.valueOf(order));
+      ers.putString("FLOW_ID",flowid);
+      ers.putString("NODE_ID", ids[i]);
+      ers.putString("NODE_NC", name);
+      ers.putString("OBJ_GUID", ids[i]);
+      ers.putString("TASK_NAME", name);
+      ers.setRowSetAppType(FlowConstants._ROWSETAPPTYPE_NODE_TYPE_);
+      ers.putString("ICON", flow.getBIMVerticeByBIMId(ids[i]).getNodeIcon());
+      ers.putString("TASKICON", flow.getBIMVerticeByBIMId(ids[i]).getTaskIcon());
+      // 节点扩展属性
+      ers.setExtProperty("formProperty",flow.getBIMVerticeByBIMId(ids[i]).getFormProperty());
+      ers.setExtProperty("formParams",flow.getBIMVerticeByBIMId(ids[i]).getFormParams());
+      // 任务扩展属性
+      ers.setExtProperty("taskFormProperty",flow.getBIMVerticeByBIMId(ids[i]).getTaskFormProperty());
+      ers.setExtProperty("taskFormParams",flow.getBIMVerticeByBIMId(ids[i]).getTaskFormParams());
+      // prepare Form id
+      ers.putString("preformid",flow.getBIMVerticeByBIMId(ids[i]).getPrepareForm());
+      // prepare form ID
+      ers.putString("formid",flow.getBIMVerticeByBIMId(ids[i]).getProcessForm());
+
+      // prepare Form id
+      ers.putString("taskPreformid",flow.getBIMVerticeByBIMId(ids[i]).getTaskPrepareForm());
+      // prepare form ID
+      ers.putString("taskFormid",flow.getBIMVerticeByBIMId(ids[i]).getTaskProcessForm());
+      
+      // Flex表单属性(准备表单ID,执行表单ID,表单参数，表单属性)
+      // 任务扩展属性
+      ers.setExtProperty("flexFormProperty",flow.getBIMVerticeByBIMId(ids[i]).getFlexFormProperty());
+      ers.setExtProperty("flexFormParams",flow.getBIMVerticeByBIMId(ids[i]).getFlexFormParam());
+      // prepare Form id
+      ers.putString("flexPreformid",flow.getBIMVerticeByBIMId(ids[i]).getFlexPrepareForm());
+      // prepare form ID
+      ers.putString("flexFormid",flow.getBIMVerticeByBIMId(ids[i]).getFlexProcessForm());
+
+      // Html表单属性(准备表单ID,执行表单ID,表单参数，表单属性)
+      // 任务扩展属性
+      ers.setExtProperty("htmlFormProperty",flow.getBIMVerticeByBIMId(ids[i]).getHtmlFormProperty());
+      ers.setExtProperty("htmlFormParams",flow.getBIMVerticeByBIMId(ids[i]).getHtmlFormParam());
+      // prepare Form id
+      ers.putString("htmlPreformid",flow.getBIMVerticeByBIMId(ids[i]).getHtmlPrepareForm());
+      // prepare form ID
+      ers.putString("htmlFormid",flow.getBIMVerticeByBIMId(ids[i]).getHtmlProcessForm());
+      
+      // ipad表单属性(准备表单ID,执行表单ID,表单参数，表单属性)
+      // 任务扩展属性
+      ers.setExtProperty("padFormProperty",flow.getBIMVerticeByBIMId(ids[i]).getPadFormProperty());
+      ers.setExtProperty("padFormParams",flow.getBIMVerticeByBIMId(ids[i]).getPadFormParam());
+      // prepare Form id
+      ers.putString("padPreformid",flow.getBIMVerticeByBIMId(ids[i]).getPadPrepareForm());
+      // prepare form ID
+      ers.putString("padFormid",flow.getBIMVerticeByBIMId(ids[i]).getPadProcessForm());
+      
+      // Phone表单属性(准备表单ID,执行表单ID,表单参数，表单属性)
+      // 任务扩展属性
+      ers.setExtProperty("phoneFormProperty",flow.getBIMVerticeByBIMId(ids[i]).getPhoneFormProperty());
+      ers.setExtProperty("phoneFormParams",flow.getBIMVerticeByBIMId(ids[i]).getPhoneFormParam());
+      // prepare Form id
+      ers.putString("phonePreformid",flow.getBIMVerticeByBIMId(ids[i]).getPhonePrepareForm());
+      // prepare form ID
+      ers.putString("phoneFormid",flow.getBIMVerticeByBIMId(ids[i]).getPhoneProcessForm());
+      eds.addRowSet(ers);
+        
+        
+        
+        
+    }
+    return eds;
+  }
+  /**
+   *
+   * @param PO JParamObject
+   * @param stmt Statement
+   * @return String
+   * @throws Exception
+   */
+  protected static String getStatusColumn(JParamObject PO, Statement stmt) throws
+      Exception {
+    String tab = "FLOW_TASK_LIST";
+    ESPServerContext context = ESPServerContext.getInstance(PO, null);
+    context.setStatement(stmt);
+    DOMetaData dmd = (DOMetaData) MetaDataManager.getDODataManager().
+        getMetaData(context, tab);
+    String[] cols = dmd.getColumns();
+    String column = "FLOW_ID,NODE_TAG,OBJ_GUID";
+    for (int i = 0; i < cols.length; i++) {
+      if (!"FLOW_ID".equals(cols[i])&&!"NODE_TAG".equals(cols[i]) && !"OBJ_GUID".equals(cols[i])) {
+        column += ",max(" + cols[i] + ") as " + cols[i];
+      }
+    }
+    return column;
+  }
+  /**
+   *
+   * @param PO JParamObject
+   * @param stmt Statement
+   * @return EFDataSet
+   * @throws Exception
+   */
+  public static EFDataSet getPenddingTask(JParamObject PO, Statement stmt,
+      String flowid,String nodeid) throws
+      Exception {
+    String listtab = DBTools.getDBAObject(PO, "FLOW_STATUS_LIST");
+    EFDataSet eds = EFDataSet.getInstance(FlowTaskModel._TASKPENDINGDATASET_);
+    String tab = DBTools.getDBAObject(PO, "FLOW_TASK_LIST");
+    String gnzd = DBTools.getDBAObject(PO, "BSUSGN");
+    String rlzd = DBTools.getDBAObject(PO, "BSUSERROLE");
+    String zgbh = ParameterManager.getDefault().getUserName(PO);
+    String defcode=ParameterManager.getDefault().getZRZX(PO);
+    String code =  PO.GetValueByParamName("BIZ_UNIT",defcode);
+    String unitwhere="";
+    String models=PO.GetValueByParamName("MDL_UNIT_DCTIDS","");
+    //任务指派人 add by wujf at 20120607
+    String task_to_user = PO.GetValueByParamName("TASK_TO_USER", "");
+    
+    //各个模型的组织机构列
+    String[]mdldws=models.split(",");
+    for(int i=0;i<mdldws.length;i++){
+       String dw=PO.GetValueByParamName(mdldws[i],PO.GetValueByEnvName(mdldws[i]));
+       if(dw.trim().length()>0)
+         unitwhere+=" OR TASK_TO_UNIT='"+dw+"'";
+    }
+    if(unitwhere.trim().length()==0)
+      unitwhere = " and (TASK_TO_UNIT='" + code + "' OR TASK_TO_UNIT IS NULL)";
+    else
+      unitwhere=" and (TASK_TO_UNIT IS NULL "+unitwhere+")";
+    String flow_bh = PO.GetValueByParamName("FLOW_ID");
+    String node_bimbh= PO.GetValueByParamName("NODE_BIMID");
+    String res_bh = PO.GetValueByParamName("OBJ_GUID");
+    //add by lchong at 2010-8-15
+    String ISQX  =    PO.GetValueByParamName("ISQX","");
+    String qxBH  =    PO.GetValueByParamName("QXBH","");
+    String qxCol =    PO.GetValueByParamName("QXCOL","");
+    String bzw   =    PO.GetValueByParamName("QXBZW","");
+
+    String addWhere   =    PO.GetValueByParamName("ADDWHERE",null);
+    //add end
+
+    String where = "";
+    if (flow_bh != null && flow_bh.trim().length() > 0) {
+      where = StringToWhere("FLOW_ID", flow_bh);
+    }
+    else {
+      where = "EXISTS(select 1 from " + listtab +
+          " A where A.FLOW_STATUS='1'  and A.FLOW_ID=SJ.FLOW_ID) ";
+    }
+    if (node_bimbh != null && node_bimbh.trim().length() > 0) {
+      where += " and " + StringToWhere("NODE_TAG", node_bimbh);
+    }
+    if (res_bh != null && res_bh.trim().length() > 0) {
+      where += " and " + StringToWhere("OBJ_GUID", res_bh);
+    }
+    where += " and  TASK_STATUS='processing' and (RESR_STATUS='pending')";
+
+    //modified by lchong at 2010-8-15
+    if(ISQX == null || "".equals(ISQX.trim())){
+      where += unitwhere;
+    }else{//用户拥有的责任中心权限过滤
+      where += " AND " + getLimitSQL(PO,qxBH,qxCol,bzw);
+    }
+    //zhtbin (ADDWHERE 放到where最后)
+//    if(addWhere != null && addWhere.length() > 0){
+//      where += " AND " + addWhere;
+//    }
+    //zhtbin end
+    //modifed end
+    String gnqxwhere =
+        " (  OP_GNBH IS NOT NULL AND EXISTS(select 1 from " +
+        gnzd + " GN WHERE (GN.F_ZGBH='" + zgbh + "' OR exists(SELECT 1 FROM "+rlzd
+        +" RL WHERE F_ROLECODE=GN.F_ZGBH AND RL.F_ZGBH='"+zgbh+"')) ";
+    gnqxwhere += " AND GN.F_GNBH=OP_GNBH ))";
+    String userwhere =
+        " ( OP_RULE IS NOT NULL AND EXISTS(select 1 from " +
+        rlzd + " RULE WHERE RULE.F_ZGBH='" + zgbh + "' ";
+    userwhere += " AND RULE.F_ROLECODE=OP_RULE))";
+    //任务指派人 add by wujf at 20120607
+    String t2uwhere="";
+    if(!"".equals(task_to_user.trim())){
+    	t2uwhere = "TASK_TO_USER like '%"+task_to_user+"%' OR ";
+    }
+    where += " and (" + t2uwhere + gnqxwhere + " OR " + userwhere+" OR (OP_RULE IS NULL AND OP_GNBH IS NULL))";//或者是RULE和GNBH都是NULL
+    if (flowid != null && flowid.trim().length() > 0)
+      where += " and FLOW_ID='" + flowid + "'";
+
+    if (nodeid != null && nodeid.trim().length() > 0)
+      where += " and NODE_ID='" + nodeid + "'";
+    //NODE_SRC是' '表示是开始节点
+    //自己提交的任务自己不能看见
+//    where+=" and ((NODE_SRC<>' ' and OP_SUBMIT_USER<>'"+zgbh+"') OR(NODE_SRC=' ' and (OP_USER='"+zgbh+"' OR PFLOW_ID IS NOT NULL)))";
+    //zhtbin (自己取回的情况呢)
+    where+=" and ((NODE_SRC<>' ' and OP_SUBMIT_USER<>'"+zgbh+"' and RESR_IN_CAUSE<>'retake') OR((NODE_SRC=' ' OR RESR_IN_CAUSE='retake') and (OP_USER='"+zgbh+"' OR PFLOW_ID IS NOT NULL)))";
+    //zhtbin end
+    //回退的任务只能提交人能看见处理
+    where+="and (RESR_IN_CAUSE<>'rollback' OR (RESR_IN_CAUSE='rollback' and BIZ_SUBMIT_USER='"+zgbh+"'))";
+    String columns = getStatusColumn(PO, stmt);
+    //zhtbin (ADDWHERE 放到where最后)
+    if(addWhere != null && addWhere.length() > 0){
+      where += " AND " + addWhere;
+    }
+    
+    //zhtbin end
+    where += " group by FLOW_ID,NODE_TAG,OBJ_GUID";
+    where+=" order by FLOW_ID,BIZ_DJBH,OP_TIME";
+    String sql = "select " + columns + " from " + tab + " SJ where " + where;
+    ResultSet rs = stmt.executeQuery(sql);
+    DataSetUtils.resultSet2DataSet(rs, eds);
+    rs.close();
+    return eds;
+  }
+
+  public static String getLimitSQL(JParamObject PO,String qxbh,String qxCol,String qxbzw) throws Exception{
+      JConnection conn = JConnection.getInstance(PO);
+      PO.SetValueByParamName("pszgbh",PO.GetValueByEnvName("UserName"));
+      PO.SetValueByParamName("psqxbh",qxbh);
+      PO.SetValueByParamName("pscol",qxCol);
+      PO.SetValueByParamName("pibzw",qxbzw);
+      String qxwhere=DBOSecurityObject.CheckDataLimit2(conn,PO);
+      conn.close();
+
+      return qxwhere;
+  }
+
+  /**
+   *
+   * @param PO JParamObject
+   * @param stmt Statement
+   * @return EFDataSet
+   * @throws Exception
+   */
+  public static EFDataSet getProcessedTask(JParamObject PO, Statement stmt,
+      String flowid,String nodeid) throws
+      Exception {
+    String listtab = DBTools.getDBAObject(PO, "FLOW_STATUS_LIST");
+
+    EFDataSet eds = EFDataSet.getInstance(FlowTaskModel._TASKPROCESSEDDATASET);
+    String tab = DBTools.getDBAObject(PO, "FLOW_TASK_LIST");
+    String zgbh = ParameterManager.getDefault().getUserName(PO);
+    String defcode=ParameterManager.getDefault().getZRZX(PO);
+    String code =  PO.GetValueByParamName("BIZ_UNIT",defcode);
+
+  //add by lchong at 2010-8-15
+    String ISQX  =    PO.GetValueByParamName("ISQX","");
+    String qxBH  =    PO.GetValueByParamName("QXBH","");
+    String qxCol =    PO.GetValueByParamName("QXCOL","");
+    String bzw   =    PO.GetValueByParamName("QXBZW","");
+
+    String addWhere   =    PO.GetValueByParamName("ADDWHERE",null);
+    //add end
+    String flow_bh = PO.GetValueByParamName("FLOW_ID");
+    String where = "";
+    if (flow_bh != null && flow_bh.trim().length() > 0) {
+      where = " FLOW_ID='" + flow_bh + "'";
+    }
+    else {
+      where = "EXISTS(select 1 from " + listtab +
+          " A where A.FLOW_STATUS='1' and A.FLOW_ID=SJ.FLOW_ID)";
+    }
+    where += " and  TASK_STATUS='processing' and (RESR_STATUS='processed')";
+    //20111013
+//   String unitwhere = " and (TASK_TO_UNIT='" + code + "' OR TASK_TO_UNIT IS NULL)";
+    String unitwhere="";
+    String models=PO.GetValueByParamName("MDL_UNIT_DCTIDS","");
+    //各个模型的组织机构列
+    String[]mdldws=models.split(",");
+    for(int i=0;i<mdldws.length;i++){
+       String dw=PO.GetValueByParamName(mdldws[i],PO.GetValueByEnvName(mdldws[i]));
+       if(dw.trim().length()>0)
+         unitwhere+=" OR TASK_TO_UNIT='"+dw+"'";
+    }
+    if(unitwhere.trim().length()==0)
+      unitwhere = " and (TASK_TO_UNIT='" + code + "' OR TASK_TO_UNIT IS NULL)";
+    else
+      unitwhere=" and (TASK_TO_UNIT IS NULL "+unitwhere+")";
+    //20111013 end
+
+    //modified by lchong at 2010-8-15
+    if(ISQX == null || "".equals(ISQX.trim())){
+      where += unitwhere;
+    }else{//用户拥有的责任中心权限过滤
+      where += " AND " + getLimitSQL(PO,qxBH,qxCol,bzw);
+    }
+//    if(addWhere != null && addWhere.length() > 0){
+//      where += " AND " + addWhere;
+//    }
+    //modifed end
+
+
+    where += " and OP_PROC_USER='" + zgbh + "' and RESR_OUT_CAUSE='submit'";
+    if (flowid != null && flowid.trim().length() > 0)
+      where += " and FLOW_ID='" + flowid + "'";
+    if (nodeid != null && nodeid.trim().length() > 0)
+      where += " and NODE_ID='" + nodeid + "'";
+//    where+=" and (NODE_SRC<>' ' OR(NODE_SRC=' ' and OP_USER='"+zgbh+"'))";
+    String columns = getStatusColumn(PO, stmt);
+    if(addWhere != null && addWhere.length() > 0){
+      where += " AND " + addWhere;
+    }
+    where += " group by FLOW_ID,NODE_TAG,OBJ_GUID";
+      where+=" order by FLOW_ID,BIZ_DJBH,OP_TIME";
+    ResultSet rs = stmt.executeQuery("select " + columns + " from " + tab +
+                                     " SJ where " + where);
+    DataSetUtils.resultSet2DataSet(rs, eds);
+    rs.close();
+    return eds;
+  }
+  /**
+   *
+   * @param colid String
+   * @param s String
+   * @return String
+   */
+  protected static String StringToWhere(String colid, String s) {
+    String where = colid + " IN(";
+    String[] strs = s.split(",");
+    for (int i = 0; i < strs.length; i++) {
+      where += "'" + strs[i] + "',";
+    }
+    where = where.substring(0, where.length() - 1);
+    where += ")";
+    return where;
+  }
+  /**
+   *
+   * @param PO JParamObject
+   * @param stmt Statement
+   * @param ers EFRowSet
+   * @return FlowResult
+   * @throws Exception
+   */
+  public static FlowResult startFlow(JParamObject PO, Statement stmt,
+                                     EFRowSet ers) throws Exception {
+    String flowid = ers.getString("FLOW_ID", "");
+    String flowmc = ers.getString("FLOW_MC", "");
+    String userid = PO.GetValueByEnvName("UserName");
+    String username = PO.GetValueByEnvName("UserCaption");
+    PO.setValue("FLOW_ID", flowid);
+    FlowResult fr = FlowDriverManager.getDefault().startFlow(PO);
+    if (fr == null || fr.getCode() == FlowResult._FLOW_RESULT_SUCESS_) {
+      long id = System.currentTimeMillis();
+      String tab = DBTools.getDBAObject(PO, "FLOW_STATUS_LIST");
+      String cols = "OP_ID,FLOW_ID,FLOW_MC,OP_TIME,FLOW_STATUS,OP_USER,OP_NAME";
+      String values = id + ",'" + flowid + "','" + flowmc + "'," + id +
+          ",'1','" + userid + "','" + username + "'";
+      String sql = DBTools.insertSql(tab, cols, values);
+      stmt.executeUpdate(sql);
+    }
+    return fr;
+  }
+  /**
+   *
+   * @param PO JParamObject
+   * @param stmt Statement
+   * @param ers EFRowSet
+   * @return FlowResult
+   * @throws Exception
+   */
+  public static FlowResult stopFlow(JParamObject PO, Statement stmt,
+                                    EFRowSet ers) throws Exception {
+    String flowid = ers.getString("FLOW_ID", "");
+    String userid = PO.GetValueByEnvName("UserName");
+    String username = PO.GetValueByEnvName("UserCaption");
+    String id = ers.getString("OP_ID", null);
+    if (id == null) {
+      return FlowResult.getInstance( -555, "流程未启动!");
+    }
+    PO.setValue("FLOW_ID", flowid);
+    FlowResult fr = FlowDriverManager.getDefault().endFlow(PO);
+    if (fr == null || fr.getCode() == FlowResult._FLOW_RESULT_SUCESS_) {
+      String tab = DBTools.getDBAObject(PO, "FLOW_STATUS_LIST");
+      String cols[] = new String[] {
+          "FLOW_STATUS", "OP_USER", "OP_NAME", "OP_TIME"};
+      String values[] = new String[] {
+          "'2'", "'" + userid + "'", "'" + username + "'",
+          String.valueOf(System.currentTimeMillis())};
+      String sql = DBTools.updateSql(tab, cols, values, "OP_ID='" + id + "'");
+      stmt.executeUpdate(sql);
+    }
+    return fr;
+  }
+
+  public static EFDataSet getEndFlow(JParamObject PO, Statement stmt,
+                                     String sflowid) throws
+      Exception {
+    String optime = PO.GetValueByParamName("OP_TIME", "");
+    if (optime.equals("")) {
+      java.util.Date s = new java.util.Date();
+      optime = String.valueOf(s.getTime());
+    }
+    String zgbh = ParameterManager.getDefault().getUserName(PO);
+//        String defcode = ParameterManager.getDefault().getZRZX(PO);
+    String sflow = DBTools.getDBAObject(PO, "SYS_FLOW");
+    String slist = DBTools.getDBAObject(PO, "FLOW_TASK_END_LIST");
+    String sqlAll = " select FLOW_MC,EL.* from " + sflow + " SF ," + slist
+        + "   EL  where SF.FLOW_BH = EL.FLOW_ID AND EL.OP_TIME >="+optime
+        + " AND (OP_USER ='"+zgbh+"' OR OP_SUBMIT_USER ='"+zgbh+"' OR OP_PROC_USER ='"+zgbh+"') ";
+    if (sflowid != null && !"".equals(sflowid)){
+      sqlAll += " AND SF.FLOW_BH ='"+sflowid+"' ";
+    }
+     sqlAll += " ORDER BY FLOW_ID,BIZ_DJBH,OBJ_GUID,OP_TIME";
+    ResultSet rs = stmt.executeQuery(sqlAll);
+    EFDataSet allList = EFDataSet.getInstance(FlowTaskModel._NODEDATASET_);
+    EFDataSet flowDataSet = EFDataSet.getInstance(FlowTaskModel._FLOWDATASET_);
+    DataSetUtils.resultSet2DataSet(rs, allList);
+    HashMap flowMap = new HashMap();
+    HashMap finishMap = new HashMap();
+    rs.close();
+    String flowid = "", objGuid = "";
+    EFDataSet finishDataSet = null, listDataSet = null;
+    EFRowSet flowRow = null, finishRow = null;
+    int iflow = 0;
+    for (int i = 0; i < allList.getRowCount(); i++) {
+      EFRowSet ers = allList.getRowSet(i);
+      objGuid = ers.getString("OBJ_GUID", "");
+      flowid = ers.getString("FLOW_ID", "");
+      if (!flowMap.containsKey(flowid)) {
+        flowMap.put(flowid,ers.getString("FLOW_MC",""));
+        iflow = 0;
+        flowRow = EFRowSet.getInstance();
+        flowRow.putString("TASK_NAME",ers.getString("FLOW_MC",""));
+        flowDataSet.addRowSet(flowRow);
+        finishRow = EFRowSet.getInstance();
+        listDataSet = EFDataSet.getInstance(FlowTaskModel._NODEDATASET_);
+        finishDataSet = EFDataSet.getInstance(FlowTaskModel._TASKFINISHDATASET_);
+      }
+      if (!finishMap.containsKey(flowid + objGuid)) {
+        iflow++;
+        flowRow.putString("TASK_NAME",flowMap.get(flowid)+" 共 "+iflow+" 笔 ");
+        finishMap.put(flowid + objGuid,flowid + objGuid);
+        listDataSet = EFDataSet.getInstance(FlowTaskModel._NODEDATASET_);
+        finishRow = EFRowSet.getInstance();
+        finishRow.putString("TASK_NAME",ers.getString("TASK_NAME",""));
+        finishRow.putString("OP_NOTE",ers.getString("BIZ_DJBH",""));
+        finishDataSet.addRowSet(finishRow);
+        finishRow.setDataSet(FlowTaskModel._NODEDATASET_, listDataSet);
+        flowRow.setDataSet(FlowTaskModel._TASKFINISHDATASET_, finishDataSet);
+      }
+      if (finishMap.containsKey(flowid + objGuid)) {
+         ers.putString("TASK_NAME",ers.getString("NODE_TAG_NAME",""));
+         listDataSet.addRowSet(ers);
+      }
+    }
+    flowMap.clear();
+    finishMap.clear();
+    return flowDataSet;
+  }
+  
+  /**
+   * 获取指定用户的所有的代办任务的sql
+   * @param PO
+   * @param stmt
+   * @param flowid
+   * @param nodeid
+   * @param userName
+   * @return
+   * @throws Exception
+   */
+  public static String getUserPenddingSql(JParamObject PO, Statement stmt,
+		  String flowid,String nodeid, String userName) throws Exception{
+	  String sql = "";
+	  
+	  String listtab = DBTools.getDBAObject(PO, "FLOW_STATUS_LIST");
+	  String tab = DBTools.getDBAObject(PO, "FLOW_TASK_LIST");
+	  String gnzd = DBTools.getDBAObject(PO, "BSUSGN");
+	  String rlzd = DBTools.getDBAObject(PO, "BSUSERROLE");
+	  String BSUSSJ = DBTools.getDBAObject(PO, "BSUSSJ");
+	  String zgbh = userName;
+	  String unitwhere=" AND ((TASK_TO_UNIT IS NULL) ";
+	  String models=PO.GetValueByParamName("MDL_UNIT_DCTIDS","ACZRZX");
+	  //任务指派人
+	  String task_to_user = userName;//PO.GetValueByParamName("TASK_TO_USER", "");
+
+	  //各个模型的组织机构列
+	  String[]mdldws=models.split(",");
+	  for(int i=0;i<mdldws.length;i++){
+		  String dwzd=mdldws[i];
+		  if(dwzd.trim().length()>0)
+			  unitwhere+=" OR (TASK_TO_UNIT IS NOT NULL AND EXISTS(SELECT 1 FROM "+BSUSSJ+" WHERE F_ZGBH='"+zgbh+"' AND F_QXBH='"+dwzd+"' AND F_G2='1' AND F_SJBH = TASK_TO_UNIT)) ";
+	  }
+	  unitwhere += " ) ";
+	  
+	  String flow_bh = PO.GetValueByParamName("FLOW_ID");
+	  String node_bimbh= PO.GetValueByParamName("NODE_BIMID");
+	  String res_bh = PO.GetValueByParamName("OBJ_GUID");
+	  String ISQX  =    PO.GetValueByParamName("ISQX","");
+	  String qxBH  =    PO.GetValueByParamName("QXBH","");
+	  String qxCol =    PO.GetValueByParamName("QXCOL","");
+	  String bzw   =    PO.GetValueByParamName("QXBZW","");
+
+	  String addWhere   =    PO.GetValueByParamName("ADDWHERE",null);
+	  //add end
+
+	  String where = "";
+	  if (flow_bh != null && flow_bh.trim().length() > 0) {
+		  where = StringToWhere("FLOW_ID", flow_bh);
+	  }
+	  else {
+		  where = "EXISTS(select 1 from " + listtab +
+		  " A where A.FLOW_STATUS='1'  and A.FLOW_ID=SJ.FLOW_ID) ";
+	  }
+	  if (node_bimbh != null && node_bimbh.trim().length() > 0) {
+		  where += " and " + StringToWhere("NODE_TAG", node_bimbh);
+	  }
+	  if (res_bh != null && res_bh.trim().length() > 0) {
+		  where += " and " + StringToWhere("OBJ_GUID", res_bh);
+	  }
+	  where += " and  TASK_STATUS='processing' and (RESR_STATUS='pending')";
+
+	  if(ISQX == null || "".equals(ISQX.trim())){
+		  where += unitwhere;
+	  }else{//用户拥有的责任中心权限过滤
+		  where += " AND " + getLimitSQL(PO,qxBH,qxCol,bzw);
+	  }
+	
+	  String gnqxwhere =
+		  " (  OP_GNBH IS NOT NULL AND EXISTS(select 1 from " +
+		  gnzd + " GN WHERE (GN.F_ZGBH='" + zgbh + "' OR exists(SELECT 1 FROM "+rlzd
+		  +" RL WHERE F_ROLECODE=GN.F_ZGBH AND RL.F_ZGBH='"+zgbh+"')) ";
+	  gnqxwhere += " AND GN.F_GNBH=OP_GNBH ))";
+	  String userwhere =
+		  " ( OP_RULE IS NOT NULL AND EXISTS(select 1 from " +
+		  rlzd + " RULE WHERE RULE.F_ZGBH='" + zgbh + "' ";
+	  userwhere += " AND RULE.F_ROLECODE=OP_RULE))";
+	  //任务指派人 
+	  String t2uwhere="";
+	  if(!"".equals(task_to_user.trim())){
+		  t2uwhere = "TASK_TO_USER like '%"+task_to_user+"%' OR ";
+	  }
+	  where += " and (" + t2uwhere + gnqxwhere + " OR " + userwhere+" OR (OP_RULE IS NULL AND OP_GNBH IS NULL))";//或者是RULE和GNBH都是NULL
+	  if (flowid != null && flowid.trim().length() > 0)
+		  where += " and FLOW_ID='" + flowid + "'";
+
+	  if (nodeid != null && nodeid.trim().length() > 0)
+		  where += " and NODE_ID='" + nodeid + "'";
+	  //NODE_SRC是' '表示是开始节点
+	  //自己提交的任务自己不能看见
+	  //zhtbin (自己取回的情况呢)
+	  where+=" and ((NODE_SRC<>' ' and OP_SUBMIT_USER<>'"+zgbh+"' and RESR_IN_CAUSE<>'retake') OR((NODE_SRC=' ' OR RESR_IN_CAUSE='retake') and (OP_USER='"+zgbh+"' OR PFLOW_ID IS NOT NULL)))";
+	  //zhtbin end
+	  //回退的任务只能提交人能看见处理
+	  where+="and (RESR_IN_CAUSE<>'rollback' OR (RESR_IN_CAUSE='rollback' and BIZ_SUBMIT_USER='"+zgbh+"'))";
+	  String columns = getStatusColumn(PO, stmt);
+	  //zhtbin (ADDWHERE 放到where最后)
+	  if(addWhere != null && addWhere.length() > 0){
+		  where += " AND " + addWhere;
+	  }
+	  //zhtbin end
+	  where += " group by FLOW_ID,NODE_TAG,OBJ_GUID";
+	  where+=" order by FLOW_ID,TASK_TO_UNIT,BIZ_DJBH,OP_TIME";
+	  sql = "select " + columns + " from " + tab + " SJ where " + where;
+	  
+	  return sql;
+  }
+  
+  /**
+   * 获取指定用户的所有的代办任务
+   * @param PO JParamObject
+   * @param stmt Statement
+   * @return EFDataSet
+   * @throws Exception
+   */
+  public static EFDataSet getUserPenddingTask(JParamObject PO, Statement stmt,
+		  String flowid,String nodeid, String userName) throws
+		  Exception {
+	  EFDataSet eds = EFDataSet.getInstance(FlowTaskModel._TASKPENDINGDATASET_);
+	  
+	  String sql = getUserPenddingSql(PO, stmt, flowid, nodeid, userName);
+	  ResultSet rs = stmt.executeQuery(sql);
+	  DataSetUtils.resultSet2DataSet(rs, eds);
+	  rs.close();
+	  return eds;
+  }
+
+}

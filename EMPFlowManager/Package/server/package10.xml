@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="gb2312"?>
+<package id="" caption="装配清单">
+	<CLASSES id="" caption="流程服务">
+      <CLSID guid="00001000-2001-1004-0000000000000002" id="FlowIOService" name="流程服务" class="com.efounder.bz.flow.dal.FlowIOService" ver="1.0.0" type="CLSID_AbstractDataActiveObjectCategory" />
+      <CLSID guid="00001000-2001-1004-0000000000000002" id="TaskIOService" name="任务服务" class="com.efounder.bz.task.dal.frame.TaskIOService" ver="1.0.0" type="CLSID_AbstractDataActiveObjectCategory" />
+      <CLSID guid="00001000-2001-1004-0000000000000222" id="TaskService" name="任务服务" class="com.efounder.bz.task.dal.queue.DALTaskService" ver="1.0.0" type="CLSID_AbstractDataActiveObjectCategory" />
+  	</CLASSES>
+</package>

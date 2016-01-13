@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="dwz.persistence.mapper.SYS_OBJCOLMapper">
+	<resultMap id="rm" type="dwz.persistence.beans.SYS_OBJCOL">
+        <result property="OBJ_ID" jdbcType="VARCHAR" column="OBJ_ID"/>
+		<result property="COL_ID" jdbcType="VARCHAR" column="COL_ID"/>
+        <result property="COL_MC" jdbcType="VARCHAR" column="COL_MC"/>
+        <result property="COL_DES" jdbcType="VARCHAR" column="COL_DES"/>
+        <result property="COL_TYPE" jdbcType="VARCHAR" column="COL_TYPE"/>
+		<result property="COL_LEN" jdbcType="INTEGER" column="COL_LEN"/>
+		<result property="COL_PREC" jdbcType="INTEGER" column="COL_PREC"/>
+		<result property="COL_SCALE" jdbcType="INTEGER" column="COL_SCALE"/>
+        <result property="COL_ISKEY" jdbcType="VARCHAR" column="COL_ISKEY"/>
+        <result property="COL_ISNULL" jdbcType="VARCHAR" column="COL_ISNULL"/>
+		<result property="COL_VISIBLE" jdbcType="VARCHAR" column="COL_VISIBLE"/>
+		<result property="COL_EDITABLE" jdbcType="VARCHAR" column="COL_EDITABLE"/>
+		<result property="COL_EDIT" jdbcType="VARCHAR" column="COL_EDIT"/>
+        <result property="COL_VIEW" jdbcType="VARCHAR" column="COL_VIEW"/>
+        <result property="COL_DEFAULT" jdbcType="VARCHAR" column="COL_DEFAULT"/>
+		<result property="COL_DISP" jdbcType="INTEGER" column="COL_DISP"/>
+        <result property="COL_ISFKEY" jdbcType="VARCHAR" column="COL_ISFKEY"/>
+		<result property="COL_FOBJ" jdbcType="VARCHAR" column="COL_FOBJ"/>
+		<result property="F_STAU" jdbcType="INTEGER" column="F_STAU"/>
+        <result property="F_CRDATE" jdbcType="TIMESTAMP" column="F_CRDATE"/>
+        <result property="F_CHDATE" jdbcType="TIMESTAMP" column="F_CHDATE"/>
+	</resultMap>
+	
+	<select id="findAllObjectColumn" resultMap="rm">
+		SELECT 
+	        OBJ_ID,
+	        COL_ID,
+	        COL_MC,
+	        COL_DES,
+	        COL_TYPE,
+	        COL_LEN,
+	        COL_PREC,
+			COL_SCALE,
+	        COL_ISKEY,
+	        COL_ISNULL,
+	        COL_VISIBLE,
+	        COL_EDITABLE,
+	        COL_EDIT,
+	        COL_VIEW,
+			COL_DEFAULT,
+			COL_DISP,
+			COL_ISFKEY,
+			COL_FOBJ,
+			F_STAU,
+	        F_CRDATE,
+			F_CHDATE
+	    FROM SYS_OBJCOLS
+	    WHERE 
+	        OBJ_ID = #{OBJ_ID} 
+		ORDER BY F_CRDATE
+	</select>
+	
+	<select id="loadSYS_OBJCOL" resultMap="rm">
+		SELECT 
+	        OBJ_ID,
+	        COL_ID,
+	        COL_MC,
+	        COL_DES,
+	        COL_TYPE,
+	        COL_LEN,
+	        COL_PREC,
+			COL_SCALE,
+	        COL_ISKEY,
+	        COL_ISNULL,
+	        COL_VISIBLE,
+	        COL_EDITABLE,
+	        COL_EDIT,
+	        COL_VIEW,
+			COL_DEFAULT,
+			COL_DISP,
+			COL_ISFKEY,
+			COL_FOBJ,
+			F_STAU,
+	        F_CRDATE,
+			F_CHDATE
+	    FROM SYS_OBJCOLS
+	    WHERE 
+	        OBJ_ID = #{OBJ_ID} and COL_ID = #{COL_ID}
+	</select>
+	
+	<!-- 查询所有的ID -->
+	<select id="findAllIds" resultType="java.lang.Integer">
+		SELECT ID FROM res_book
+	</select>
+	
+	<!-- 更新列的使用状态 -->
+	<delete id="updateSYS_OBJCOL_STAU" parameterType="java.lang.Integer">
+        UPDATE SYS_OBJCOLS set F_STAU = #{F_STAU, ,jdbcType=INTEGER}
+        WHERE OBJ_ID = #{OBJ_ID} and COL_ID = #{COL_ID}
+    </delete>
+	
+	<!-- 按Id删除 -->
+	<delete id="deleteObject" parameterType="java.lang.Integer">
+        DELETE FROM SYS_OBJCOLS WHERE
+        OBJ_ID = #{OBJ_ID}
+    </delete>
+	
+     <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="OBJ_ID">
+        INSERT INTO SYS_OBJCOLS (
+        	OBJ_ID,
+	        COL_ID,
+	        COL_MC,
+	        COL_DES,
+	        COL_TYPE,
+	        COL_LEN,
+	        COL_PREC,
+			COL_SCALE,
+	        COL_ISKEY,
+	        COL_ISNULL,
+	        COL_VISIBLE,
+	        COL_EDITABLE,
+	        COL_EDIT,
+	        COL_VIEW,
+			COL_DEFAULT,
+			COL_DISP,
+			COL_ISFKEY,
+			COL_FOBJ,
+			F_STAU,
+	        F_CRDATE,
+			F_CHDATE
+        ) VALUES (
+			#{OBJ_ID} ,
+	        #{COL_ID} ,
+	        #{COL_MC} ,
+	        #{COL_DES} ,
+	        #{COL_TYPE} ,
+	        #{COL_LEN} ,
+	        #{COL_PREC} ,
+			#{COL_SCALE} ,
+	        #{COL_ISKEY} ,
+	        #{COL_ISNULL} ,
+	        #{COL_VISIBLE} ,
+	        #{COL_EDITABLE} ,
+	        #{COL_EDIT} ,
+	        #{COL_VIEW} ,
+			#{COL_DEFAULT} ,
+			#{COL_DISP} ,
+			#{COL_ISFKEY} ,
+			#{COL_FOBJ} ,
+			#{F_STAU} ,
+	        #{F_CRDATE} ,
+			#{F_CHDATE}
+        )
+	</insert>
+	
+	<select id="countAll" resultType="java.lang.Long">
+        SELECT count(ID) FROM res_book    
+    </select>
+    
+	<select id="findAll" resultMap="rm">
+    	SELECT 
+	        OBJ_ID,
+	        OBJ_MC,
+	        OBJ_DES,
+	        OBJ_TYPE,
+	        OBJ_APPTYPE,
+	        SYS_ID,
+	        F_STAU,
+	        F_CRDATE,
+			F_CHDATE
+	    FROM SYS_OBJECTS
+		ORDER BY F_CRDATE
+    </select>
+	
+	<select id="findObjectColByObjId" resultMap="rm">
+    	SELECT 
+	        OBJ_ID,
+	        COL_ID,
+	        COL_MC,
+	        COL_DES,
+	        COL_TYPE,
+	        COL_LEN,
+	        COL_PREC,
+			COL_SCALE,
+	        COL_ISKEY,
+	        COL_ISNULL,
+	        COL_VISIBLE,
+	        COL_EDITABLE,
+	        COL_EDIT,
+	        COL_VIEW,
+			COL_DEFAULT,
+			COL_DISP,
+			COL_ISFKEY,
+			COL_FOBJ,
+			F_STAU,
+	        F_CRDATE,
+			F_CHDATE
+	    FROM SYS_OBJCOLS
+		WHERE 
+	        OBJ_ID = #{OBJ_ID} and COL_ID like "%"#{COL_ID}"%"
+			<if test="typeKeywords!=null" >
+				and F_STAU = #{typeKeywords}
+			</if>
+		ORDER BY F_CRDATE
+    </select>
+	
+	<!-- 更新 -->
+	<update id="updateSelective" parameterType="dwz.persistence.beans.ResBook">
+        UPDATE res_book 
+        	<set>
+			        <if test="SN!=null" >
+			        SN = #{sn} ,
+					</if>
+			        <if test="NAME_CN!=null" >
+			        NAME_CN = #{nameCn} ,
+					</if>
+			        <if test="NAME_EN!=null" >
+			        NAME_EN = #{nameEn} ,
+					</if>
+			        <if test="PUBLISH!=null" >
+			        PUBLISH = #{publish} ,
+					</if>
+			        <if test="PUBLISH_DATE!=null" >
+			        PUBLISH_DATE = #{publishDate} ,
+					</if>
+			        <if test="INSERT_DATE!=null" >
+			        INSERT_DATE = #{insertDate} ,
+					</if>
+			        <if test="UPDATE_DATE!=null" >
+			        UPDATE_DATE = #{updateDate} 
+					</if>
+	        </set>
+        WHERE 
+	        ID = #{id} 
+	</update>
+	<update id="update" parameterType="dwz.persistence.beans.SYS_OBJCOL">
+        UPDATE SYS_OBJCOLS SET
+	        COL_MC = #{COL_MC},
+	        COL_DES = #{COL_DES},
+	        COL_TYPE = #{COL_TYPE},
+	        COL_LEN = #{COL_LEN},
+	        COL_PREC = #{COL_PREC},
+			COL_SCALE = #{COL_SCALE},
+	        COL_ISKEY = #{COL_ISKEY},
+	        COL_ISNULL = #{COL_ISNULL},
+	        COL_VISIBLE = #{COL_VISIBLE},
+	        COL_EDITABLE = #{COL_EDITABLE},
+	        COL_EDIT = #{COL_EDIT},
+	        COL_VIEW = #{COL_VIEW},
+			COL_DEFAULT = #{COL_DEFAULT},
+			COL_DISP = #{COL_DISP},
+			COL_ISFKEY = #{COL_ISFKEY},
+			COL_FOBJ = #{COL_FOBJ},
+			F_STAU = #{F_STAU},
+			F_CHDATE = #{F_CHDATE}	        
+        WHERE 
+	        OBJ_ID = #{OBJ_ID} and COL_ID = #{COL_ID}
+	</update>
+</mapper>
+

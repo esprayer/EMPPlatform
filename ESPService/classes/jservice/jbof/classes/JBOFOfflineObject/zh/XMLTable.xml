@@ -1,0 +1,782 @@
+<?xml version="1.0" encoding="gb2312"?>
+<TableDefine>
+	<T name="LSCONF" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="F_VKEY" QXBZW="" DNDATA="1" text="系统配置表">
+create table LSCONF
+  (F_VKEY  char(16)  not null,
+   F_VAL    char(30)   not null,
+   F_NOTE   char(14) default ''       null
+ );
+create unique index LSCONF on LSCONF(F_VKEY)
+ </T>
+	<T name="LSPASS" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="1" text="用户信息字典">
+create table LSPASS
+  (F_ZGBH  char( 4)  not null,
+   F_PASS  char( 8)      null,
+   F_NAME  char(12)      null,
+   F_SYKM  tinyint   not null,
+   F_SYBB  tinyint   not null,
+   F_TYBZ  char( 1)      null,
+   F_MANA  char( 1)      null)
+;
+create unique  index LSPASS on LSPASS(F_ZGBH)
+</T>
+	<T name="LSPZBH" F_CODE="0" CODE_TYPE="" F_SJQX="ZWPZLX" F_BHZD="LSPZBH.F_PZLX" QXBZW="1" DNDATA="1" text="凭证类型表">
+create table LSPZBH
+   (F_PZMC   varchar(20)  not null,
+    F_BHFS   char(6)      not null,
+    F_PZLX   char(6)      not null,
+    F_JZFX   char(1)          null,
+    F_KMBH   varchar(60)      null,
+    F_PZBH   char(8)      not null,
+    F_DATE   char(8)          null,
+    F_PZGS   char(2)          null,
+    F_PZYS   char(1)          null,
+    F_NOFX   char(1)          null,
+    F_NOKM   varchar(255)     null
+);
+create unique  index LSPZBH on LSPZBH(F_DATE,F_PZLX)
+</T>
+<T name="LSPZZX" F_CODE="1" CODE_TYPE="" F_SJQX="" F_BHZD="LSPZZX.F_PZLX" QXBZW="1" DNDATA="1" text="责任中心使用凭证类型表">
+create table LSPZZX
+    (F_CODE   varchar(30)      null,
+     F_PZLX   varchar(6)   not null,
+     F_KJZG   varchar(30)   default '' not null
+);
+create unique index LSPZZX on LSPZZX(F_PZLX)
+</T>
+	<T name="LSKMXX" F_CODE="" CODE_TYPE="" F_SJQX="ZWKMQX" F_BHZD="LSKMXX.F_KMBH" QXBZW="2" DNDATA="1" WHERE=" (exists(select 1 from LSKMZX where LSKMXX.F_KMBH LIKE LSKMZX.F_LIKE and F_CODE like '@F_ZRZX@%')) " text="科目信息字典">
+create table LSKMXX(
+    F_KMJS   char(1)       not null,
+    F_KMBH   varchar(30)   not null,
+    F_KZJM   varchar(30)   not null,
+    F_KMMC   varchar(60)   not null,
+    F_KMSX   char(2)       not null,
+    F_ZS     char(1)       not null,
+    F_LM     char(1)           null,
+    F_DW     Tinyint       not null,
+    F_GR     Tinyint       not null,
+    F_XJLL   Tinyint       not null,
+    F_CBZX   Tinyint       not null,
+    F_CPHS   Tinyint       not null,
+    F_BMHS   Tinyint       not null,
+    F_SYZT   char(1)       not null,
+    F_FLBH   char(2)           null,
+    F_YSLB   char(2)           null,
+    F_KJQJ   Tinyint       not null,
+    F_WBBH   char(4)           null,
+    F_RJZ    Tinyint       not null,
+    F_MX     Tinyint       not null,
+    F_DZ     Tinyint       not null,
+    F_DZOK   Tinyint       not null,
+    F_PZSY   Tinyint       not null,
+    F_DYKM   char(30)          null,
+    F_PJMC   varchar(10)       null,
+    F_SJLY   char(1)           null,
+    F_BZLB   char(2)           null,
+    F_BZBM   varchar(60)       null,
+    F_CROS   char(1)           null,
+    F_PHBZ   char(1)           null,
+    F_YEFX   char(1)           null
+);
+create unique  index LSKMXX on LSKMXX(F_KMBH);
+create unique  index LSKMXX1 ON LSKMXX(F_KMJS,F_KMBH);
+create  index LSKMXX2 ON LSKMXX(F_KZJM)
+</T>
+	<T name="ACZRZX" F_CODE="0" CODE_TYPE="" F_SJQX="ZWZRZX" F_BHZD="ACZRZX.F_CODE" QXBZW="2" DNDATA="1" text="责任中心字典">
+create table ACZRZX
+   (F_CODE   varchar(30)   not null,
+    F_STMC   varchar(60)   not null,
+    F_JS     char(1)       not null,
+    F_MX     Tinyint       not null,
+    F_SYZT   char(1)       not null,
+    F_USER   char(30)      not null,
+    F_CJBZ   char(1)           null,
+    F_QSBZ   char(1)           null,
+    F_TRUE   char(1)       not null,
+    F_BH1    varchar(250)  not null,
+    F_BH2    varchar(250)  not null,
+    F_BH3    varchar(250)  not null,
+    F_BH4    varchar(250)  not null,
+    F_WHERE1 varchar(250)  not null,
+    F_WHERE2 varchar(250)  not null,
+    F_WHERE3 varchar(250)  not null,
+    F_WHERE4 varchar(250)  not null,
+    F_PHJC char(1)         null,
+    F_BZLB char(2)         null,
+    F_BZBM varchar(60)     null
+);
+create unique  index ACZRZX on ACZRZX(F_CODE)
+</T>
+	<T name="LSCPZD" F_CODE="0" CODE_TYPE="" F_SJQX="ZWCPZD" F_BHZD="LSCPZD.F_CPBH" QXBZW="2" DNDATA="1" text="产品字典">
+create table LSCPZD
+   (F_CPBH   varchar(30)   not null,
+    F_CPMC   varchar(60)   not null,
+    F_JS     char(1)       not null,
+    F_MX     Tinyint       not null,
+    F_BZBM   varchar(60)       null,
+    F_SYZT   char(1)       not null,
+    F_CYDW   varchar(20)       null,
+    F_BZDW   varchar(20)       null,
+    F_HSBL   float          default 0,
+    F_DECN   int           default 3,
+    F_QSDW   char(1)           null,
+    F_BZLB   char(2)           null
+);
+create unique  index LSCPZD on LSCPZD(F_CPBH)
+</T>
+	<T name="ACBMZD" F_CODE="0" CODE_TYPE="" F_SJQX="ZWBMZD" F_BHZD="ACBMZD.F_BMBH" QXBZW="2" DNDATA="1" WHERE=" (F_CODE like '@F_ZRZX@%' or '@F_ZRZX@' like F_CODE + '%')" text="部门字典">
+create table ACBMZD
+   (F_BMBH   varchar(30)  not null,
+    F_BMMC   varchar(60)  not null,
+    F_CODE   varchar(30)  not null,
+    F_SYZT   char(1)      not null,
+    F_JS     char(1)      not null,
+    F_MX     Tinyint      not null,
+    F_BZLB   char(2)          null,
+    F_BZBM   varchar(60)      null,
+    F_SXBH   varchar(20)      null
+);
+create unique  index ACBMZD on ACBMZD(F_BMBH)
+</T>
+	<T name="ACXJLL" F_CODE="0" CODE_TYPE="" F_SJQX="ZWXJLL" F_BHZD="ACXJLL.F_XJBH" QXBZW="2" DNDATA="1" text="现金流量字典">
+create table ACXJLL
+   (F_XJBH   varchar(30)   not null,
+    F_XJMC   varchar(60)   not null,
+    F_SYZT   char(1)       not null,
+    F_JS     char(1)       not null,
+    F_MX     Tinyint       not null,
+    F_BZLB   char(2)           null,
+    F_BZBM   varchar(60)       null
+);
+create unique  index ACXJLL on ACXJLL(F_XJBH)
+</T>
+	<T name="ACCBZX" F_CODE="0" CODE_TYPE="" F_SJQX="ZWCBZX" F_BHZD="ACCBZX.F_CBBH" QXBZW="2" DNDATA="1" text="成本中心字典">
+create table ACCBZX
+   (F_CBBH   varchar(30)   not null,
+    F_CBMC   varchar(60)   not null,
+    F_CODE   varchar(30)   not null,
+    F_SYZT   char(1)       not null,
+    F_JS     char(1)       not null,
+    F_MX     Tinyint       not null,
+    F_BZLB   char(2)           null,
+    F_BZBM   varchar(60)       null
+);
+create unique  index ACCBZX on ACCBZX(F_CBBH)
+</T>
+	<T name="LSWBZD" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="F_WBBH" QXBZW="1" DNDATA="1" text="外币字典">
+create table LSWBZD
+   (F_WBBH   char( 4)    not null,
+    F_WBMC   char(10)    not null,
+    F_WBHL   float        default 0,
+    F_DATE   char( 8)        null,
+    F_HBFH   varchar(6)      null
+);
+create unique  index LSWBZD on LSWBZD(F_WBBH)
+</T>
+	<T name="LSKMZX" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="1" WHERE=" (F_CODE like '@F_ZRZX@%') " text="科目中心(责任中心与科目对应关系)表">
+create table LSKMZX
+   (F_CODE   varchar(30)   not null,
+    F_KMBH   varchar(30)   not null,
+    F_LIKE   varchar(30)   not null)
+;
+create unique  index LSKMZX on LSKMZX(F_CODE,F_KMBH)
+;
+create index LSKMZX1 on LSKMZX(F_LIKE)
+;
+</T>
+	<T name="LSHSZX" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="1" WHERE=" (F_CODE like '@F_ZRZX@%') " text="核算中心(责任中心与专项核算对应关系)表">
+create table LSHSZX
+   (F_CODE   varchar(30)    not null,
+    F_FLBH   varchar(2)     not null,
+    F_HSBH   varchar(12)    not null)
+;
+create unique  index LSHSZX on LSHSZX(F_CODE,F_FLBH,F_HSBH)
+</T>
+	<T name="LSACDW" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="1" WHERE=" (F_CODE like '@F_ZRZX@%' and F_SYZT = '1' ) " text="责任中心与往来单位对应关系表">
+create table LSACDW
+   (F_CODE   varchar(30)   not null,
+    F_DWBH   varchar(30)   not null,
+    F_SYZT   char(1)       null)
+;
+create unique  index LSACDW on LSACDW(F_CODE,F_DWBH)
+</T>
+	<T name="LSZGZD" F_CODE="0" CODE_TYPE="" F_SJQX="ZWGRWL" F_BHZD="LSZGZD.F_ZGBH" QXBZW="2" DNDATA="1" text="职工字典">
+create table LSZGZD
+   (F_ZGBH   varchar(12)  not null,
+    F_NAME   varchar(16)      null,
+    F_DWBH   varchar(30)  not null,
+    F_SYZT   char(1)      not null,
+    F_KMBH   varchar(250)     null,
+    F_BZLB   char(2)           null,
+    F_BZBM   varchar(60)       null
+);
+create unique  index LSZGZD on LSZGZD(F_ZGBH,F_DWBH)
+</T>
+	<T name="LSWLFL" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="F_FLBH" QXBZW="" DNDATA="1" text="往来单位类别字典">
+create table LSWLFL
+  (F_FLBH varchar(6)  not null,
+   F_FLJS char(1)     not null,
+   F_MX   tinyint     not null,
+   F_FLMC char(20)        null,
+   F_BZLB char(2)         null,
+   F_BZBM varchar(60)     null)
+;
+create unique  index LSWLFL on LSWLFL(F_FLBH)
+</T>
+	<T name="LSWLDW" F_CODE="0" CODE_TYPE="" F_SJQX="ZWWLDW" F_BHZD="LSWLDW.F_DWBH" QXBZW="2" DNDATA="1" WHERE="(exists(select 1 from LSACDW where LSACDW.F_DWBH = LSWLDW.F_DWBH and F_CODE like '@F_ZRZX@%' and LSACDW.F_SYZT = '1'))" text="往来单位字典">
+create table LSWLDW
+  (F_DWBH varchar(30)    not null,
+   F_DWMC varchar(60)        null,
+   F_FLBH char( 6)       not null,
+   F_LXR  varchar(16)        null,
+   F_TELE varchar(20)        null,
+   F_ADDR varchar(36)        null,
+   F_POST char( 6)           null,
+   F_BANK varchar(36)        null,
+   F_BANH varchar(20)        null,
+   F_XYZK varchar(16)        null,
+   F_NSDH varchar(36)        null,
+   F_MEM  varchar(36)        null,
+   F_WBBH char(4)            null,
+   F_KMBH varchar(250)       null,
+   F_BZLB char(2)            null,
+   F_BZBM varchar(60)        null,
+   F_SYZT char(1)        not null)
+;
+create unique  index LSWLDW on LSWLDW(F_DWBH)
+</T>
+	<T name="LSHSFL" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="F_FLBH" QXBZW="" DNDATA="1" text="专项核算分类字典">
+create table LSHSFL
+  (F_FLBH char( 2)    not null,
+   F_FLMC char(20)    not null)
+;
+create unique  index LSHSFL on LSHSFL(F_FLBH)
+</T>
+	<T name="LSHSZD" F_CODE="" CODE_TYPE="" F_SJQX="" F_BHZD="F_HSBH" QXBZW="2" DNDATA="1" WHERE=" (exists(select 1 from LSHSZX where LSHSZX.F_FLBH = LSHSZD.F_FLBH and LSHSZX.F_HSBH = LSHSZD.F_HSBH and LSHSZX.F_CODE like '@F_ZRZX@%'))" text="专项核算字典">
+create table LSHSZD
+  (F_HSBH varchar(12)    not null,
+   F_HSJS char(1)        not null,
+   F_MX   tinyint        not null,
+   F_HSMC varchar(30)        null,
+   F_FLBH char(2)        not null,
+   F_KMBH varchar(250)       null,
+   F_WBBH char(4)            null,
+   F_BZLB char(2)            null,
+   F_BZBM varchar(60)        null)
+;
+create unique  index LSHSZD on LSHSZD(F_FLBH,F_HSBH)
+</T>
+	<T name="LSYSLB" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="F_LBBH" QXBZW="" DNDATA="1" text="要素类别字典">
+create table LSYSLB
+  (F_LBBH  char( 2)    not null,
+   F_LBMC  char(20)    not null)
+;
+create unique  index LSYSLB ON LSYSLB(F_LBBH)
+</T>
+	<T name="LSYSZD" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="F_YSBH" QXBZW="2" DNDATA="1" text="台帐要素字典">
+create table LSYSZD
+  (F_LBBH  char( 2)    not null,
+   F_YSBH  varchar(12) not null,
+   F_YSMC  varchar(60) not null,
+   F_JS    char(1)     not null,
+   F_MX    Tinyint     not null,
+   F_SYZT  char(1)     not null)
+;
+create unique  index LSYSZD on LSYSZD(F_LBBH,F_YSBH)
+</T>
+	<T name="LSPZK1" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="0" text="凭证分录库">
+create table LSPZK1
+  (F_CODE varchar(30) not null,
+   F_KMBH varchar(30) not null,
+   F_DATE char( 8)    not null,
+   F_PZBH char( 9)    not null,
+   F_FLBH char( 4)    not null,
+   F_FDZS int         not null,
+   F_PZLX char( 6)    not null,
+   F_JY   varchar(60)     null,
+   F_JZFX char( 1)    not null,
+   F_JE   float        default 0,
+   F_SL   float        default 0,
+   F_WB   float        default 0,
+   F_ZDXM varchar(12)     null,
+   F_ZDBH char(4)         null,
+   F_SHXM varchar(12)     null,
+   F_SHBH char(4)         null,
+   F_JZXM varchar(12)     null,
+   F_ZGXM varchar(12)     null,
+   F_SH   tinyint     not null,
+   F_HZ   tinyint     not null,
+   F_JZ   tinyint     not null,
+   F_DZ   tinyint     not null,
+   F_DWBH varchar(30)     null,
+   F_ZGBH varchar(12)     null,
+   F_TZBH char(14)        null,
+   F_ZRZX varchar(30)     null,
+   F_CCZS int             null,
+   F_JWDW varchar(30)     null,
+   F_QTWB float        default 0,
+   F_DEWB char(4)         null,
+   F_QTXX varchar(30)     null,
+   F_FZXX varchar(250)    null,
+   F_JXBZ char(1)         null,
+   F_YWRQ varchar(8)      null,
+   F_QRBZ char(1)         null,
+   F_QRSJ char(8)         null,
+   F_QRRY char(10)        null,
+   F_QRXM varchar(20)     null,
+   F_QRYY varchar(200)    null)
+;
+create unique  index LSPZK1 on LSPZK1(F_DATE,F_PZBH,F_FLBH)
+;
+create index LSPZK11 on LSPZK1(F_DATE)
+;
+create index LSPZK12 on LSPZK1(F_PZBH)
+;
+create index LSPZK13 on LSPZK1(F_KMBH)
+</T>
+	<T name="LSHSPZ" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="0" text="凭证辅助分录库">
+create table LSHSPZ
+  (F_CODE varchar(30) not null,
+   F_DATE char(8)     not null,
+   F_PZBH char(9)     not null,
+   F_FLBH char(4)     not null,
+   F_FZBH char(4)     not null,
+   F_KMBH varchar(30) not null,
+   F_HSBH varchar(12) not null,
+   F_CBBH varchar(30) not null,
+   F_BMBH varchar(30) not null,
+   F_XJBH varchar(30) not null,
+   F_CPBH varchar(30) not null,
+   F_JZFX char(1)     not null,
+   F_JE   float        default 0,
+   F_SL   float        default 0,
+   F_ZYSL float        default 0,
+   F_WB   float        default 0,
+   F_YSBH  varchar(20)   null,
+   F_JY    varchar(60)   null,
+   F_QT    float        default 0,
+   F_DJ    float        default 0,
+   F_HL    float        default 0,
+   F_QTWB  float        default 0,
+   F_QTHL  float        default 0,
+   F_DW_BH varchar(30)     not null,
+   F_ZG_BH varchar(12)    not null,
+   F_TZ_BH char   (14)    not null,
+   F_JZ    tinyint(1)        default 0,
+   F_YWRQ  varchar(8)    null,
+   F_JSFS  varchar(4)    null
+)
+;
+create unique  index LSHSPZ on LSHSPZ(F_DATE,F_PZBH,F_FLBH,F_FZBH,F_HSBH)
+;
+create index LSHSPZ1 on LSHSPZ(F_DATE)
+;
+create index LSHSPZ2 on LSHSPZ(F_PZBH)
+;
+create index LSHSPZ3 on LSHSPZ(F_KMBH)
+</T>
+	<T name="LSJYZD" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="1" text="摘要字典">
+create table LSJYZD
+   (F_ZGBH  char( 4)     not null,
+    F_JYBH  char( 8)     not null,
+    F_JYMC  varchar(60)      null,
+    F_CODE  varchar(30)  default '' not null)
+;
+create unique  index LSJYZD on LSJYZD(F_ZGBH,F_JYBH)
+</T>
+	<T name="LSPOPL" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="1" text="凭证归集数据管道字典">
+create table LSPOPL
+  (F_XTMC  char(2)         null,
+   F_XTBM  char(12)        null,
+   F_DYKM  varchar(30)     null,
+   F_JEZD  char(12)        null,
+   F_SLZD  char(12)        null,
+   F_TS01  char(20)        null,
+   F_ZD01  char(12)        null,
+   F_DY01  char(12)        null,
+   F_BH01  char(12)        null,
+   F_MC01  char(12)        null,
+   F_JG01  char(5)         null,
+   F_TS02  char(20)        null,
+   F_ZD02  char(12)        null,
+   F_DY02  char(12)        null,
+   F_BH02  char(12)        null,
+   F_MC02  char(12)        null,
+   F_ZS02  char(12)        null,
+   F_JG02  char(12)        null,
+   F_KM02  char(12)        null,
+   F_TS03  char(20)        null,
+   F_ZD03  char(12)        null,
+   F_DY03  char(12)        null,
+   F_BH03  char(12)        null,
+   F_MC03  char(12)        null,
+   F_JG03  char(12)        null,
+   F_TS04  char(20)        null,
+   F_ZD04  char(12)        null,
+   F_DY04  char(12)        null,
+   F_BH04  char(12)        null,
+   F_MC04  char(12)        null,
+   F_JG04  char(12)        null,
+   F_TS05  char(20)        null,
+   F_ZD05  char(12)        null,
+   F_DY05  char(12)        null,
+   F_BH05  char(12)        null,
+   F_MC05  char(12)        null,
+   F_JG05  char(12)        null,
+   F_TS06  char(20)        null,
+   F_ZD06  char(12)        null,
+   F_DY06  char(12)        null,
+   F_BH06  char(12)        null,
+   F_MC06  char(12)        null,
+   F_JG06  char(12)        null,
+   F_DYSX  varchar(250)    null,
+   F_TS07  char(20)        null,
+   F_ZD07  char(12)        null,
+   F_DY07  char(12)        null,
+   F_BH07  char(12)        null,
+   F_MC07  char(12)        null,
+   F_JG07  char(12)        null,
+   F_TS08  char(20)        null,
+   F_ZD08  char(12)        null,
+   F_DY08  char(12)        null,
+   F_BH08  char(12)        null,
+   F_MC08  char(12)        null,
+   F_JG08  char(12)        null,
+   F_TS09  char(20)        null,
+   F_ZD09  char(12)        null,
+   F_DY09  char(12)        null,
+   F_BH09  char(12)        null,
+   F_MC09  char(12)        null,
+   F_JG09  char(12)        null,
+   F_TS10  char(20)        null,
+   F_ZD10  char(12)        null,
+   F_DY10  char(12)        null,
+   F_BH10  char(12)        null,
+   F_MC10  char(12)        null,
+   F_JG10  char(12)        null,
+   F_TS11  char(20)        null,
+   F_ZD11  char(12)        null,
+   F_DY11  char(12)        null,
+   F_BH11  char(12)        null,
+   F_MC11  char(12)        null,
+   F_JG11  char(12)        null,
+   F_TS12  char(20)        null,
+   F_ZD12  char(12)        null,
+   F_DY12  char(12)        null,
+   F_BH12  char(12)        null,
+   F_MC12  char(12)        null,
+   F_JG12  char(12)        null,
+   F_TS13  char(20)        null,
+   F_ZD13  char(12)        null,
+   F_DY13  char(12)        null,
+   F_BH13  char(12)        null,
+   F_MC13  char(12)        null,
+   F_JG13  char(12)        null,
+   F_TS14  char(20)        null,
+   F_ZD14  char(12)        null,
+   F_DY14  char(12)        null,
+   F_BH14  char(12)        null,
+   F_MC14  char(12)        null,
+   F_JG14  char(12)        null,
+   F_TS15  char(20)        null,
+   F_ZD15  char(12)        null,
+   F_DY15  char(12)        null,
+   F_BH15  char(12)        null,
+   F_MC15  char(12)        null,
+   F_JG15  char(12)        null,
+   F_TS16  char(20)        null,
+   F_ZD16  char(12)        null,
+   F_DY16  char(12)        null,
+   F_BH16  char(12)        null,
+   F_MC16  char(12)        null,
+   F_JG16  char(12)        null,
+   F_CODE  varchar(30)  default '' not null)
+;
+create unique  index LSPOPL on LSPOPL(F_XTMC,F_DYKM,F_CODE)
+</T>
+	<T name="LSBCXM" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="1" text="备查项目字典">
+create table LSBCXM
+   (F_KMBH  varchar(30)    not null,
+    F_XMBH  varchar(2)     not null,
+    F_TYPE  char(1)            null,
+    F_LSSG  varchar(20)        null,
+    F_XMKD  float               null,
+    F_DISP  char(2)            null,
+    F_XMSX  char(4)            null,
+    F_SYF   char(1)            null)
+;
+create unique  index LSBCXM on LSBCXM(F_KMBH,F_XMBH)
+</T>
+	<T name="LSBCXX" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="0" text="备查信息">
+create table LSBCXX
+  (F_DATE  char(8)      not null,
+   F_PZBH  char(9)      not null,
+   F_FLBH  char(4)      not null,
+   F_KMBH  varchar(30)  not null,
+   F_CS01  varchar(80)      null,
+   F_CS02  varchar(80)      null,
+   F_CS03  varchar(80)      null,
+   F_CS04  varchar(80)      null,
+   F_CS05  varchar(80)      null,
+   F_CS06  varchar(80)      null,
+   F_CS07  varchar(80)      null,
+   F_CS08  varchar(80)      null,
+   F_CS09  varchar(80)      null,
+   F_CS10  varchar(80)      null,
+   F_CS11  varchar(80)      null,
+   F_CS12  varchar(80)      null,
+   F_CS13  varchar(80)      null,
+   F_CS14  varchar(80)      null,
+   F_CS15  varchar(80)      null,
+   F_CS16  varchar(80)      null,
+   F_US01  float         default 0,
+   F_US02  float         default 0,
+   F_US03  float         default 0,
+   F_US04  float         default 0,
+   F_US05  float         default 0,
+   F_US06  float         default 0)
+;
+create index LSBCXX on LSBCXX(F_DATE,F_PZBH,F_FLBH)
+</T>
+	<T name="LSPZDRDC" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="0" text="凭证上报接受字典">
+create table LSPZDRDC
+ (F_DCRQ    char(8)      not null,
+  F_DRRQ    char(8)      not null,
+  F_PZBH_YL char(10)     not null,
+  F_PZBH_XZ char(10)     not null,
+  F_PZRQ_YL char(8)      not null,
+  F_PZRQ_XZ char(8)      not null,
+  F_DCQXBH  char(10)     not null,
+  F_DCQXMC  varchar(100) not null,
+  F_DRLYBH  char(10)     not null,
+  F_DRLYMC  varchar(100) not null,
+  F_BZ      varchar(255) not null)
+;
+create  index LSPZDC on LSPZDRDC (F_DCRQ, F_PZRQ_YL)
+;
+create  index LSPZDR on LSPZDRDC (F_DRRQ, F_PZRQ_XZ)
+</T>
+	<T name="LSACOK" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="1" WHERE="" text="不需确认的责任中心">
+create table LSACOK
+       (F_CODE varchar(30)   not null,
+        F_LIKE varchar(31)   not null,
+        F_NOTE varchar(255)      null)
+;
+Create Index LSACOK ON LSACOK(F_CODE)
+</T>
+	<T name="LSHBSX" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="1" WHERE="" text="备查簿定义">
+create table LSHBSX(
+F_KMBH varchar(30)    null,
+F_JYMC char(14)       null,
+F_GLJY char(1)       null,
+F_NBJY char(1)       null,
+F_BCKM char(1)       null,
+F_SJXM char(4)       null,
+F_DWIN char(1)       null,
+F_FXJC char(1)       null,
+F_MXJC char(1)       null,
+F_DWBH varchar(30)   null)
+;
+create unique index LSHBSX on LSHBSX (F_KMBH)
+</T>
+	<T name="LSDWKM" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="1" WHERE=" (exists(select 1 from LSKMZX where LSDWKM.F_KMBH LIKE LSKMZX.F_LIKE and F_CODE like '@F_ZRZX@%')) and (exists(select 1 from LSACDW where LSACDW.F_DWBH = LSDWKM.F_DWBH and F_CODE like '@F_ZRZX@%' and LSACDW.F_SYZT = '1')) " text="单位与科目对应表">
+create table LSDWKM(
+F_DWBH varchar(30) not null,
+F_KMBH varchar(30) not null)
+;
+create unique index LSDWKM on LSDWKM(F_DWBH,F_KMBH)
+</T>
+	<T name="LSPZZR" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="0" WHERE="" text="凭证接收记录">
+create table LSPZZR(
+F_ZRRQ  char   (8)  NULL,
+F_ZRR   char   (8)  NULL,
+F_DWBH  varchar(20)  NULL,
+F_DWMC  varchar(60)  NULL,
+F_PZZS  char   (9)  NULL,
+F_PZLX  char   (6)  NULL,
+F_PZBH  char   (9)  NULL,
+F_PZRQ  char   (8)  NULL,
+F_PZLXN char   (6)  NULL,
+F_PZBHN char   (9)  NULL,
+F_PZRQN char   (8)  NULL,
+F_BZ    varchar(255)  NULL
+)
+;
+create index LSPZZR on LSPZZR(F_PZLX, F_PZRQ, F_PZBH)
+;
+create index LSPZZR1 on LSPZZR(F_PZLXN, F_PZRQN, F_PZBHN)
+</T>
+	<T name="LSPZZC" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="0" WHERE="" text="凭证上报记录">
+create table LSPZZC(
+F_ZCRQ  char   (8)   NULL   ,
+F_ZCR   char   (8)   NULL   ,
+F_DWBH  varchar(20)    NULL  ,
+F_DWMC  varchar(60)    NULL  ,
+F_PZZS  char   (9)   NULL   ,
+F_PZLX  char   (6)   NULL   ,
+F_PZBH  char   (9)   NULL   ,
+F_PZRQ  char   (8)   NULL   ,
+F_BZ    varchar(255)     NULL
+)
+;
+create index LSPZZC on LSPZZC(F_PZLX, F_PZRQ, F_PZBH)
+</T>
+	<T name="LSHDSY" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="0" WHERE="" text="外部引用记录表">
+create table LSHDSY(
+F_RQ    char     (8)   NULL ,
+F_KMBH  varchar  (30)   NULL,
+F_PZBH  varchar  (30)   NULL
+)
+</T>
+	<T name="LSTYGX" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="1" WHERE="" text="统一凭证号定义">
+create table LSTYGX(
+F_PZLX varchar(6)  not null,
+F_BHLX varchar(6)  not null
+)
+;
+create index LSTYGX on LSTYGX(F_BHLX)
+</T>
+	<T name="LSTYBH" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="1" WHERE="" text="统一凭证类型定义">
+create table LSTYBH(
+F_DATE  char   (8)   NULL,
+F_PZLX  varchar(6)   NULL,
+F_PZMC  varchar(60)    NULL,
+F_BHFS  varchar(6)   NULL,
+F_PZBH  varchar(9)   NULL,
+F_PZGS  char   (2)   NULL
+)
+;
+create unique index LSTYBH on LSTYBH(F_DATE, F_PZLX)
+</T>
+	<!-- 作业成本数据表　-->
+	<T name="ZYXZZD" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="1" WHERE="" text="作业性质字典">
+create table ZYXZZD
+   (F_ZYBH   varchar(30)  not null,
+    F_ZYMC   varchar(60)  not null,
+    F_JS     char(1)     default ''   not null,
+    F_MX     int     default 0    not null ,
+    F_KMBH   varchar(30) default '' null
+)
+;
+create unique index ZYXZZD on ZYXZZD(F_ZYBH)
+</T>
+	<T name="ZYCBZD" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="1" WHERE="" text="成本项目字典">
+create table ZYCBZD
+   (F_CBBH   varchar(30)  not null,
+    F_MCXH   char(8)  default '' null,
+    F_CBMC   varchar(60)   default '' not null,
+    F_CBZS   char(1)  default 'J'  not null,
+    F_JS     char(1)  default ''   not null,
+    F_MX     int  default 0    not null ,
+    F_FPBZ   char(4)  default ''   null,
+    F_KMBH   varchar(30) default '' null,
+    F_HSBH   varchar(30) default '' null,
+    F_LBBH   char(2)     default '' null,
+    F_YSBH   varchar(4)  default '' null
+)
+;
+create unique index ZYCBZD on ZYCBZD(F_CBBH)
+</T>
+	<T name="ZYGCZD" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="1" WHERE="" text="工程项目字典">
+create table ZYGCZD
+   (F_GCBH   varchar(30)  not null,
+    F_GCMC   varchar(60)   default '' not null,
+    F_JS     char(1)     default ''   not null,
+    F_MX     int     default 0    not null ,
+    F_JLDW   varchar(30)  default ''   not null,
+    F_GGXH   varchar(60)  default ''       null,
+    F_XMGS    float       default 0    not null,
+    F_JHGZ    float       default 0    not null,
+    F_JHTZ    float       default 0    not null,
+    F_QSRQ   char(8)     default ''   not null,
+    F_WGBZ   int     default 0    not null,
+    F_WGRQ    char(8)    default ''   not null,
+    F_HSRQ    char(8)    default ''   not null,
+    F_HSBZ    int    default 0    not null,
+    F_FSBH    char(2)    default ''   not null,
+    F_SX01    varchar(30) default ''      null,
+    F_SX02    varchar(30) default ''      null,
+    F_SX03    varchar(30) default ''      null,
+    F_SX04    varchar(30) default ''      null,
+    F_SX05    varchar(30) default ''      null,
+    F_SX06    varchar(30) default ''      null,
+    F_SX07    varchar(30) default ''      null,
+    F_SX08    varchar(30) default ''      null,
+    F_SX09    varchar(30) default ''      null,
+    F_SX10    varchar(30) default ''      null,
+    F_SX11    varchar(30) default ''      null,
+    F_SX12    varchar(30) default ''      null,
+    F_SX13    varchar(30) default ''      null,
+    F_SX14    varchar(30) default ''      null,
+    F_SX15    varchar(30) default ''      null,
+    F_SX16    varchar(30) default ''      null,
+    F_SX17    varchar(30) default ''      null,
+    F_SX18    varchar(30) default ''      null,
+    F_SX19    varchar(30) default ''      null,
+    F_SX20    varchar(30) default ''      null
+    )
+;
+create unique index ZYGCZD on ZYGCZD(F_GCBH)
+</T>
+	<T name="ZYPZYS" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="0" WHERE="" text="成本核算凭证原始表">
+create table ZYPZYS
+   (F_DATE   char(8)                    not null,
+    F_PZBH   char(9)         default '' not null,
+    F_FLBH   char(4)         default '' not null,
+    F_FZBH   char(4)         default '' not null,
+    F_JZFX   char(1)         default '' not null,
+    F_ZYBH   varchar(30)     default '' not null,
+    F_GCBH   varchar(30)     default '' not null,
+    F_CBBH   varchar(30)     default '' not null,
+    F_SL     float            default 0  not null,
+    F_JE     float            default 0  not null,
+    F_JZ     int         default 0  not null,
+    F_CODE   varchar(30)     default '' not null
+    )
+;
+create unique index ZYPZYS on ZYPZYS(F_DATE,F_PZBH,F_FLBH,F_FZBH)
+</T>
+	<T name="ZYZXXZ" F_CODE="1" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="1" WHERE="" text="责任中心对应作业性质表">
+create table ZYZXXZ
+   (F_CODE   varchar(30)            not null,
+    F_ZYBH   varchar(30)     default '' not null
+    )
+;
+create unique index ZYZXXZ on ZYZXXZ(F_CODE ,F_ZYBH)
+</T>
+	<T name="ZYZXGC" F_CODE="1" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="1" WHERE="" text="责任中心使用工程表">
+create table ZYZXGC
+   (F_CODE   varchar(30)     default '' not null,
+    F_GCBH   varchar(30)     default '' not null,
+    F_WGBZ   int     default 0    not null,
+    F_WGRQ    char(8)    default ''   not null,
+    F_HSRQ    char(8)    default ''   not null,
+    F_HSBZ    int    default 0    not null,
+    F_FSBH    char(2)    default ''   not null
+    )
+;
+create unique index ZYZXGC on ZYZXGC(F_CODE,F_GCBH)
+</T>
+	<T name="ZYXZCB" F_CODE="0" CODE_TYPE="" F_SJQX="" F_BHZD="" QXBZW="" DNDATA="1" WHERE="" text="作业性质使用成本项目表">
+create table ZYXZCB
+   (F_ZYBH   varchar(30)            not null,
+    F_CBBH   varchar(30)     default '' not null
+    )
+;
+create unique index ZYXZCB on ZYXZCB(F_ZYBH,F_CBBH)
+</T>
+<LB>
+<L name="基本配制表" 	table="LSCONF,LSPASS,ACZRZX,LSACOK,LSHDSY,LSWBZD"/>
+<L name="科目" 		table="LSKMXX,LSKMZX"/>
+<L name="产品" 		table="LSCPZD"/>
+<L name="部门" 		table="ACBMZD"/>
+<L name="现金流量" 	table="ACXJLL"/>
+<L name="成本中心" 	table="ACCBZX"/>
+<L name="专项核算" 	table="LSHSZX,LSHSFL,LSHSZD"/>
+<L name="单位往来" 	table="LSACDW,LSWLDW,LSWLFL,LSDWKM"/>
+<L name="个人往来" 	table="LSZGZD"/>
+<L name="要素台帐" 	table="LSYSLB,LSYSZD"/>
+<L name="凭证类" 	table="LSPZBH,LSPZZX,LSPZK1,LSHSPZ,LSJYZD,LSPOPL,LSPZDRDC,LSPZZR,LSPZZC,LSTYGX,LSTYBH,ZYPZYS,LSBCXM,LSBCXX,LSHBSX"/>
+<L name="作业成本" 	table="ZYXZZD,ZYCBZD,ZYGCZD,ZYZXXZ,ZYZXGC,ZYXZCB"/>
+</LB>
+</TableDefine>

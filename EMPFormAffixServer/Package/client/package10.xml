@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="gb2312"?>
+<package id="" caption="装配清单">
+	<AffixType>
+		<item id="1" caption="图片"            clazz = "com.efounder.form.client.component.plugins.JOpenPicAffix"       fileSuffix="bmp,gif,jpg,jpeg,png"/>
+      	<item id="2" caption="Excel文件"       clazz = "com.efounder.form.client.component.plugins.JOpenExcelAffix"     fileSuffix="xls" openClazz="com.efounder.custombill.client.app.thread.WaitOpenCusBillFormatAppWin" />
+		<item id="3" caption="PDF文件"         clazz = "com.efounder.form.client.component.plugins.JOpenPDFAffix"       fileSuffix="pdf"/>
+		<item id="4" caption="Word文件"        clazz = "com.efounder.form.client.component.plugins.JOpenWordAffix"      fileSuffix="doc"/>
+     	<item id="5" caption="纯文本文件"      clazz = "com.efounder.form.client.component.plugins.JOpenTxtAffix"       fileSuffix="txt"/>
+     	<item id="7" caption="Excel2007文件"   clazz = "com.efounder.form.client.component.plugins.JOpenExcel2007Affix" fileSuffix="xlsx" openClazz="com.efounder.custombill.client.app.thread.WaitOpenCusBillFormatAppWin" />
+     	<item id="8" caption="Word2007文件"    clazz = "com.efounder.form.client.component.plugins.JOpenWord2007Affix"  fileSuffix="docx"/>
+	</AffixType>
+</package>

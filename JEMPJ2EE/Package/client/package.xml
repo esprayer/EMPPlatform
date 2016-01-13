@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="gb2312"?>
+<package id="" caption="装配清单">
+  <CLASSES id="" caption="可以在此注册对象，无需修改注册表文件">
+      <!-- JDAL 抽象数据对象 -->
+      <CLSID guid="SessionManager" id="SessionManager"     name="Session管理" class="com.efounder.eai.service.SessionManager" ver="1.0.0" type="CLSID_AbstractDataActiveObjectCategory" />
+  </CLASSES>
+</package>

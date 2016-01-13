@@ -1,0 +1,31 @@
+[PropertyInfo]
+borderLayout1,BorderLayout,false,false, , ,false,<default>
+BottomMargin,double,false,false, , ,false,<default>
+EndX,int,false,false, , ,false,<default>
+EndY,int,false,false, , ,false,<default>
+HeaderMargin,double,false,false, , ,false,<default>
+jScrollPane1,JScrollPane,false,false, , ,false,<default>
+LeftMargin,double,false,false, , ,false,<default>
+mBook,JBook,false,false, , ,false,<default>
+mExitBtn,JButton,false,false, , ,false,<default>
+mNextPageBtn,JButton,false,false, , ,false,<default>
+mPageSetupBtn,JButton,false,false, , ,false,<default>
+mPrevPageBtn,JButton,false,false, , ,false,<default>
+mPrintBtn,JButton,false,false, , ,false,<default>
+mZoomBtn,JButton,false,false, , ,false,<default>
+Offset,int,false,false, , ,false,<default>
+PageHeight,double,false,false, , ,false,<default>
+PageWidth,double,false,false, , ,false,<default>
+PanelHeight,double,false,false, , ,false,<default>
+PanelWidth,double,false,false, , ,false,<default>
+pnDraw,com.pansoft.pub.comp.JCustomPanel,false,false, , ,false,<default>
+RightMargin,double,false,false, , ,false,<default>
+scale,double,false,false, , ,false,<default>
+StartX,int,false,false, , ,false,<default>
+StartY,int,false,false, , ,false,<default>
+tpPrintView,JTabbedPane,false,false, , ,false,<default>
+[IconNames]
+
+
+
+

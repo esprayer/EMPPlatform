@@ -1,0 +1,18 @@
+package com.pansoft.report.table;
+import java.util.*;
+public class Language_en extends com.eai.toolkit.languages.TInternationallResource {
+  private static final Object[][] contents = new String[][]{
+{ "STR_MAKE", "PANSOFT" },
+{ "String_11" ,"Inquiry by Levels"},
+{ "String_27" ,"Report Test"},
+{ "String_42" ,"Cancel"},
+{ "String_46" ,"Getting ready to print......"},
+{ "String_49" ,"Last Page"},
+{ "String_50" ,"Next Page"},
+{ "String_51" ,"Suitable View"},
+{ "String_48" ,"Print Review"},
+{ "String_47" ,"Print Review"},
+{ "String_62" ,"Page"},
+{ "String_65" ,"Page"},
+{ "String_64" ,"All"}};
+  public Object[][] getContents() {  return contents; }}

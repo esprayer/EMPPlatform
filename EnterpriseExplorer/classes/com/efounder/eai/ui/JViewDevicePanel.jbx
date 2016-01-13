@@ -1,0 +1,35 @@
+[PropertyInfo]
+action,javax.swing.Action,false,false, , ,true,<default>
+borderLayout1,java.awt.BorderLayout,false,false, , ,false,<default>
+contentView,com.efounder.pfc.window.IView,false,false, , ,true,<default>
+ContentView,com.efounder.pfc.window.IView,false,false, , ,false,<default>
+deviceComponent,javax.swing.JComponent,false,false, , ,true,<default>
+explorerView,com.efounder.pfc.window.IView,false,false, , ,true,<default>
+ExplorerView,com.efounder.pfc.window.IView,false,false, , ,false,<default>
+GROUP_View,javax.swing.Action,false,false, , ,false,<default>
+maxView,com.efounder.pfc.window.IView,false,false, , ,true,<default>
+MaxView,com.efounder.pfc.window.IView,false,false, , ,false,<default>
+messageView,com.efounder.pfc.window.IView,false,false, , ,true,<default>
+MessageView,com.efounder.pfc.window.IView,false,false, , ,false,<default>
+propertyView,com.efounder.pfc.window.IView,false,false, , ,true,<default>
+PropertyView,com.efounder.pfc.window.IView,false,false, , ,false,<default>
+SIZE_SPBOTTOM,int,false,false, , ,false,<default>
+SIZE_SPLEFT,int,false,false, , ,true,<default>
+SIZE_SPLEFTTOP,int,false,false, , ,false,<default>
+SIZE_SPRIGHT,int,false,false, , ,false,<default>
+SIZE_SPTOP,int,false,false, , ,false,<default>
+spBottom,javax.swing.JSplitPane,false,false, , ,false,<default>
+spContainer,javax.swing.JSplitPane,false,false, , ,false,<default>
+spLeft,javax.swing.JSplitPane,false,false, , ,false,<default>
+spRight,javax.swing.JSplitPane,false,false, , ,false,<default>
+spTop,javax.swing.JSplitPane,false,false, , ,false,<default>
+structView,com.efounder.pfc.window.IView,false,false, , ,true,<default>
+StructView,com.efounder.pfc.window.IView,false,false, , ,false,<default>
+topView,com.efounder.pfc.window.IView,false,false, , ,true,<default>
+TopView,com.efounder.pfc.window.IView,false,false, , ,false,<default>
+VisibleViewList,java.util.Vector,false,false, , ,false,<default>
+[IconNames]
+
+
+
+

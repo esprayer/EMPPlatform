@@ -1,0 +1,51 @@
+package com.efounder.dctbuilder.event.plugin;
+
+import com.borland.dx.dataset.*;
+import com.efounder.dbc.*;
+import com.efounder.dctbuilder.data.*;
+import com.efounder.dctbuilder.event.*;
+import com.efounder.dctbuilder.mdl.*;
+import com.efounder.dbc.swing.treetable.*;
+import com.efounder.dctbuilder.view.DictTreeTableView;
+
+/**
+ * <p>Title: </p>
+ *
+ * <p>Description: </p>
+ *
+ * <p>Copyright: Copyright (c) 2006</p>
+ *
+ * <p>Company: </p>
+ *
+ * @author not attributable
+ * @version 1.0
+ */
+public class DataSetProperyProcess extends DataLoaderCltAdapter {
+    public DataSetProperyProcess() {
+    }
+    public void beforeDataLoad(DictModel dm, DctContext context) throws
+            Exception {
+         ClientDataSet cds = dm.getDataSet();
+        if(cds.hasColumn("ZD_BH_OLD")!=null)
+            cds.dropColumn("ZD_BH_OLD");
+    }
+    public void afterDataLoad(DictModel dm, DctContext context) throws
+            Exception {
+        ClientDataSet cds = dm.getDataSet();
+
+        if(cds.hasColumn("ZD_BH_OLD")==null){
+            Column bakColumn = new Column();
+            bakColumn.setDataType(com.borland.dx.dataset.Variant.STRING);
+            bakColumn.setColumnName("ZD_BH_OLD");
+            bakColumn.setVisible(0);
+            bakColumn.setResolvable(false);
+            cds.addColumn(bakColumn);
+        }
+    }
+
+    public boolean canProcess(DictModel o1, DctContext context) throws
+            Exception {
+        return !context.isReadOnly()&&o1.getView() instanceof DictTreeTableView;
+    }
+}
+

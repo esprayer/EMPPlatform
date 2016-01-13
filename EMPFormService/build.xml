@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="EMPFormservice" default="copy" basedir=".">
+	
+    <!--初始化任务-->
+	<target name="init">
+		<tstamp />
+		<property name="Name"    value="EMPFormservice" />
+		<property name="version" value="0.1" />
+		<property name="year"    value="2011" />
+
+		<property name="debug"       value="on" />
+		<property name="optimize"    value="on" />
+		<property name="deprecation" value="on" />
+
+		<property name="src"     value="./src" />
+		<property name="public"  value="D:\HyeclWorkSpace\HyeclEmp\WebRoot\WEB-INF\lib" />
+		<property name="classes" value="./classes" />
+		
+		<property name="server_public" value="D:\HouseLeaseWorkSpace\EnterpriseServer\WebRoot\WEB-INF\lib" />
+       <!--定义classpath-->
+		<path id="compile.classpath">
+			<fileset dir="${public}">
+				<include name="*.jar" />
+			</fileset>
+			<pathelement location="${classes}" />
+		</path>
+		<mkdir dir="${classes}" />
+	</target>
+    <!--编译-->
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${classes}" fork="true" memorymaximumsize="1024m">
+			<classpath refid="compile.classpath" />
+		</javac>
+	</target>
+
+	<target name="clean" depends="compile">
+		<delete>
+			<fileset dir="${public}">
+				<include name="JDataReport.jar" />
+			</fileset>
+			<fileset dir="${public}">
+				<include name="JForms.jar" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="package" depends="clean">
+		<jar jarfile="${public}/JDataReport.jar">
+			<fileset dir="${classes}">
+				<include name="jdatareport/**"/>
+		    </fileset>
+		</jar>
+		<jar jarfile="${public}/JForms.jar">
+			<fileset dir="${classes}">
+				<include name="jformservice/**"/>
+			</fileset>
+			<fileset dir="./">
+				<include name="_FormServiceCfg.xml"/>
+				<include name="extendpoints.xml"/>
+			</fileset>
+		</jar>
+	</target>
+	<target name="copy" depends="package">	
+		<copy todir="${server_public}">
+			<fileset dir="${public}">
+				<include name="JDataReport.jar" />
+			</fileset>
+		</copy>
+		<copy todir="${server_public}">
+			<fileset dir="${public}">
+				<include name="JForms.jar" />
+			</fileset>
+		</copy>
+	</target>
+
+</project>

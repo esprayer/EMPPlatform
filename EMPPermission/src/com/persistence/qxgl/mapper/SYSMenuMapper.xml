@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.persistence.qxgl.mapper.SYSMenuMapper">
+	<resultMap id="rm" type="com.persistence.qxgl.beans.SYSMenu">
+        <result property="MENU_BH"     jdbcType="VARCHAR" column="MENU_BH"/>
+        <result property="MENU_MC"     jdbcType="VARCHAR" column="MENU_MC"/>
+        <result property="MODULE_BH"   jdbcType="INTEGER" column="MODULE_BH"/>
+        <result property="APP_ID"      jdbcType="VARCHAR" column="APP_ID"/>
+		<result property="F_JS"        jdbcType="INTEGER" column="F_JS"/>
+		<result property="F_MX"        jdbcType="VARCHAR" column="F_MX"/>
+		<result property="F_PARENT"    jdbcType="VARCHAR" column="F_PARENT"/>
+        <result property="F_DISP"      jdbcType="VARCHAR" column="F_DISP"/>
+        <result property="URL"         jdbcType="VARCHAR" column="URL"/>
+        <result property="IMAGE"       jdbcType="VARCHAR" column="IMAGE"/>
+		<result property="SHORTCUT"    jdbcType="VARCHAR" column="SHORTCUT"/>
+		<result property="F_TARGET"    jdbcType="VARCHAR" column="F_TARGET"/>
+		<result property="F_REL"       jdbcType="VARCHAR" column="F_REL"/>
+		<result property="F_ATTR"      jdbcType="VARCHAR" column="F_ATTR"/>
+		<result property="F_CRDATE"    jdbcType="TIMESTAMP" column="F_CRDATE"/>
+		<result property="F_CHDATE"    jdbcType="TIMESTAMP" column="F_CHDATE"/>		
+	</resultMap>
+	
+	<select id="findAllMenu" resultMap="rm">
+		SELECT
+		    MENU_BH,
+		    MENU_MC,
+		    MODULE_BH,
+		    APP_ID,
+		    F_JS,
+		    F_MX,
+		    F_PARENT,
+		    F_DISP,
+		    URL,
+		    IMAGE,
+		    SHORTCUT,
+		    F_CRDATE,
+		    F_CHDATE,
+		    F_TARGET,
+		    F_REL,
+		    F_ATTR
+		FROM sys_menu
+		WHERE  APP_ID = #{APP_ID}
+	    ORDER BY MENU_BH ;
+	</select>
+	<select id="getSubMenuCount" resultType="java.lang.Integer">
+		SELECT
+		    count(1)
+		FROM sys_menu
+		WHERE MENU_BH LIKE #{MENU_BH,jdbcType=VARCHAR}"%" AND APP_ID = #{APP_ID} 
+	</select>
+	
+	<select id="findSubMenuByBh" resultMap="rm">
+		SELECT
+		    MENU_BH,
+		    MENU_MC,
+		    MODULE_BH,
+		    APP_ID,
+		    F_JS,
+		    F_MX,
+		    F_PARENT,
+		    F_DISP,
+		    URL,
+		    IMAGE,
+		    SHORTCUT,
+		    F_CRDATE,
+		    F_CHDATE,
+		    F_TARGET,
+		    F_REL,
+		    F_ATTR
+		FROM sys_menu
+		WHERE
+		<if test="MENU_BH == 'ROOT'">
+		  F_JS = 1 AND
+		</if>
+		<if test="MENU_BH != 'ROOT'">
+		MENU_BH LIKE #{MENU_BH,jdbcType=VARCHAR}"%" AND F_JS = #{js} AND
+		</if>
+		APP_ID = #{APP_ID}
+	    ORDER BY MENU_BH ;
+	</select>
+	
+	<select id="findMenuByBh" resultMap="rm">
+		SELECT
+		    MENU_BH,
+		    MENU_MC,
+		    MODULE_BH,
+		    APP_ID,
+		    F_JS,
+		    F_MX,
+		    F_PARENT,
+		    F_DISP,
+		    URL,
+		    IMAGE,
+		    SHORTCUT,
+		    F_CRDATE,
+		    F_CHDATE,
+		    F_TARGET,
+		    F_REL,
+		    F_ATTR
+		FROM sys_menu
+		WHERE MENU_BH = #{MENU_BH} AND APP_ID = #{APP_ID}
+	    ORDER BY MENU_BH ;
+	</select>
+	
+	<insert id="insert" useGeneratedKeys="false" keyProperty="OBJ_ID">
+        INSERT INTO sys_menu (
+        	MENU_BH,
+		    MENU_MC,
+		    MODULE_BH,
+		    APP_ID,
+		    F_JS,
+		    F_MX,
+		    F_PARENT,
+		    F_DISP,
+		    URL,
+		    IMAGE,
+		    SHORTCUT,
+		    F_CRDATE,
+		    F_CHDATE,
+		    F_TARGET,
+		    F_REL,
+		    F_ATTR
+        ) VALUES (
+        	#{MENU_BH},
+		    #{MENU_MC},
+		    #{MODULE_BH},
+		    #{APP_ID},
+		    #{F_JS},
+		    #{F_MX},
+		    #{F_PARENT},
+		    #{F_DISP},
+		    #{URL},
+		    #{IMAGE},
+		    #{SHORTCUT},
+		    #{F_CRDATE},
+		    #{F_CHDATE},
+		    #{F_TARGET},
+		    #{F_REL},
+		    #{F_ATTR}
+        )
+	</insert>
+	<update id="update" parameterType="com.persistence.qxgl.beans.SYSMenu">
+        UPDATE sys_menu SET
+	        MENU_MC = #{MENU_MC},
+		    F_DISP = #{F_DISP},
+		    URL = #{URL},
+		    IMAGE = #{IMAGE},
+		    SHORTCUT = #{SHORTCUT},
+		    F_CHDATE = #{F_CHDATE},
+		    F_TARGET = #{F_TARGET},
+		    F_REL = #{F_REL},
+		    F_ATTR = #{F_ATTR},
+        WHERE 
+	        MENU_BH = #{MENU_BH}  AND APP_ID = #{APP_ID} 
+	</update>
+	<!-- 添加子菜单更新子节点为非明细 -->
+    <!-- 删除所有子节点更新父节点为明细-->
+	<update id="updateParent" parameterType="java.lang.String">
+        UPDATE sys_menu SET
+	        F_MX = #{F_MX}
+        WHERE 
+	        MENU_BH = #{MENU_BH}  AND APP_ID = #{APP_ID} 
+	</update>
+	<delete id="delete" parameterType="java.lang.String">
+        DELETE FROM sys_menu WHERE
+           MENU_BH LIKE #{MENU_BH,jdbcType=VARCHAR}"%" AND APP_ID = #{APP_ID} 
+    </delete>
+</mapper>
+
+

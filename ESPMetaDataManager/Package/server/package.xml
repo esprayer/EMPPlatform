@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="gb2312"?>
+<package id="" caption="装配清单">
+	<classes id="" caption="可以在此注册对象，无需修改注册表文件">
+		<!-- 每个对象的详细定义 公用服务数据对象 -->
+      	<CLSID guid="00000000-0002-0001-0000000000000009" id="BZMetaDataService" name="元数据服务" class="com.efounder.manager.meta.server.service.DALMetaDataService" ver="1.0.0" type="CLSID_AbstractDataActiveObjectCategory" />
+    </classes>
+  
+    <com.efounder.builder.meta.MetaDataManager>
+    	<!-- 数据对象的元数据管理 -->
+    	<item implement="com.efounder.manager.meta.server.domodel.DALDOMetaManager" id="DataObject_DAL"/>
+    	<!-- 数据字典的元数据管理 -->
+    	<item implement="com.efounder.manager.meta.server.dctmodel.DALDCTMetaDataManager" id="DCTObject_DAL"/>
+    	<!-- 事实表的元数据管理 -->
+    	<item implement="com.efounder.manager.meta.server.fctmodel.DALFCTMetaDataManager" id="FCTObject_DAL"/>
+    	<!-- 业务模型管理 -->
+    	<item implement="com.efounder.manager.meta.server.bizmodel.DALBIZMetaDataManager" id="BIZModel_DAL"/>
+    	<!-- 数据对象的接口元数据管理 -->
+    	<item implement="com.efounder.manager.meta.server.iomodel.DALIOMetaManager" id="IObject"/>
+ 	 </com.efounder.builder.meta.MetaDataManager>
+</package>

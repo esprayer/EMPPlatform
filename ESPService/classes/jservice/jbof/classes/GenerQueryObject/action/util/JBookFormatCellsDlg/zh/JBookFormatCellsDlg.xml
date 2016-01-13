@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!-- edited with XML Spy v4.4 U (http://www.xmlspy.com) by Skyline (Pansoft) -->
+<Resources lang="zh">
+    <_OK text="确定"/>
+	<_Cancel text="取消"/>
+	<_Apply text="应用(A)"/>
+	<com.f1j.swing.ss.FormatCellsDlg text="单元格格式"/>
+	<_Number text="数字"/>
+    <_Category_ text="目录："/>
+    <_Number_format_ text="数字格式："/>
+    <_Sample text="示例："/>
+    <_LST_All text="全部"/>
+    <_LST_Number text="数字"/>
+    <_LST_Currency text="货币"/>
+    <_LST_Date text="日期"/>
+    <_LST_Time text="时间"/>
+    <_LST_Percent text="百分比"/>
+    <_LST_Fraction text="分数"/>
+    <_LST_Scientific text="科学计数"/>
+    <_LST_Text text="文本"/>
+
+    <_Alignment text="对齐"/>
+    <_Horizontal_ text="水平"/>
+    <_LST_General text="常规"/>
+    <_LST_Left text="靠左"/>
+    <_LST_Center text="居中"/>
+    <_LST_Right text="靠右"/>
+    <_LST_Fill text="填充"/>
+    <_LST_Justify text="两端对齐"/>
+    <_LST_Across_Cells text="跨列居中"/>
+    <_Vertical_ text="垂直"/>
+    <_LST_Top text="靠上"/>
+    <_LST_Center text="居中"/>
+    <_LST_Bottom text="靠下"/>
+    <_Wrap_text text="自动换行"/>
+    <_Merge_cells text="合并单元格"/>
+    <_None text="无"/>
+	<_Top_to_bottom text="从上至下"/>
+    <_Counter_clockwise text="逆时针"/>
+    <_Clockwise text="顺时针"/>
+    <_Custom text="自定义"/>
+
+	<_Font text="字体"/>
+    <_Font_ text="字体:"/>
+    <_Size_ text="字号:"/>
+    <_Bold text="粗体"/>
+    <_Italic text="斜体"/>
+    <_Strikeout text="删除线"/>
+    <_Underline text="下划线"/>
+    <_Color text="颜色"/>
+
+	<_Border text="边框"/>
+    <_Automatic text="自动"/>
+
+	<_Fill text="填充"/>
+    <_Transparent text="透明"/>
+    <_Solid text="不透明"/>
+    <_Pattern_ text="图案"/>
+    <_Fill_color text="填充颜色"/>
+    <_Pattern_color text="图案颜色"/>
+
+	<_Protection text="保护"/>
+    <_Locked text="锁定"/>
+    <_Hidden text="隐藏"/>
+	<_Validation text="校验"/>
+    <_Rule_ text="规则:"/>
+    <_Text_ text="文本:"/>
+</Resources>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="EMPMetaDataBuilder" default="copy" basedir=".">
+
+	<target name="init">
+		<tstamp />
+		<property name="Name" value="EMPMetaDataBuilder" />
+		<property name="version" value="0.1" />
+		<property name="year" value="2011" />
+
+
+		<property name="debug" value="on" />
+		<property name="optimize" value="on" />
+		<property name="deprecation" value="on" />
+
+		<property name="src" value="./src" />
+		<property name="root" value="D:\HLWorkSpace\ESPLib" />
+		<property name="client" value="E:\NewFrameworkSpace\NewFrameworkLib\JEnterprise\client" />
+		<property name="server" value="E:\NewFrameworkSpace\NewFrameworkLib\JEnterprise\server" />
+		<property name="lib" value="${root}" />
+		<property name="classes" value="./classes" />
+
+		<property name="server_lib" value="E:\NewFrameworkSpace\EnterpriseServerWeb\WebRoot\CodeSpace\JEnterprise\public" />
+		<property name="server_weblib" value="E:\NewFrameworkSpace\EnterpriseServerWeb\WebRoot\WEB-INF\lib" />
+		
+		<path id="compile.classpath">
+			<fileset dir="${root}">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${client}">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${server}">
+				<include name="*.jar" />
+			</fileset>
+			<pathelement location="${classes}" />
+		</path>
+		<mkdir dir="${classes}" />
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${classes}" fork="true" memorymaximumsize="1024m">
+			<classpath refid="compile.classpath" />
+		</javac>
+	</target>
+
+	<target name="clean" depends="compile">
+		<delete>
+			<fileset dir="${lib}">
+				<include name="EMPMetaDataBuilder.jar" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="package" depends="clean">
+		<jar jarfile="${lib}/EMPMetaDataBuilder.jar">
+			<fileset dir="${classes}">
+				<include name="**/*.*" />
+			</fileset>
+		</jar>
+
+	</target>
+
+	<target name="copy" depends="package">
+	</target>
+
+</project>

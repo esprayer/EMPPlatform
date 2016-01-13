@@ -1,0 +1,634 @@
+package com.efounder.bz.dbform.component;
+
+import java.text.*;
+import java.util.*;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
+
+import com.efounder.builder.base.data.*;
+import com.efounder.bz.dbform.datamodel.*;
+import com.efounder.pub.util.*;
+
+/**
+ * <p>Title: </p>
+ *
+ * <p>Description: </p>
+ *
+ * <p>Copyright: Copyright (c) 2008</p>
+ *
+ * <p>Company: </p>
+ *
+ * @author not attributableimplements CellEditor
+ * @version 1.0
+ */
+public class FormTextField extends JTextField implements DataSetListener,FormComponent,DMComponent,DMColComponent,CellEditor {
+  /**
+   *
+   */
+  protected DataSetComponent dataSetComponent = null;
+  /**
+   *
+   * @return DataSetComponent
+   */
+  public DataSetComponent getDataSetComponent() {
+    return dataSetComponent;
+  }
+  /**
+   *
+   * @param dsc DataSetComponent
+   */
+  public void setDataSetComponent(DataSetComponent dsc) {
+    if ( dataSetComponent != dsc ) {
+      if ( dataSetComponent != null ) dataSetComponent.removeDMComponent(this);
+      dataSetComponent =  dsc;
+      if ( dataSetComponent != null ) dataSetComponent.insertDMComponent(this);
+    }
+  }
+  /**
+   *
+   */
+  protected String dataSetID = null;
+  /**
+   *
+   * @param dataSetID String
+   */
+  public void setDataSetID(String dataSetID) {
+    this.dataSetID = dataSetID;
+    if ( dataSetComponent != null )
+      setDataSet(dataSetComponent.getDataSet(dataSetID));
+  }
+  /**
+   *
+   * @return String
+   */
+  public String getDataSetID() {
+    return dataSetID;
+  }
+  /**
+   *
+   */
+  protected String dataSetColID = null;
+  /**
+   *
+   * @return String
+   */
+  public String getDataSetColID() {
+    return this.dataSetColID;
+  }
+  /**
+   *
+   * @param dataSetColID String
+   */
+  public void setDataSetColID(String dataSetColID) {
+    this.dataSetColID = dataSetColID;
+  }
+  /**
+   *
+   */
+  protected String internalDataSetID = null;
+  /**
+   *
+   * @return String
+   */
+  public String getInternalDataSetID() {
+    return internalDataSetID;
+  }
+  /**
+   *
+   * @param dataSetID String
+   */
+  public void setInternalDataSetID(String dataSetID) {
+    this.internalDataSetID = dataSetID;
+  }
+  /**
+   *
+   */
+  protected EFDataSet dataSet = null;
+  /**
+   *
+   * @return EFDataSet
+   */
+  public EFDataSet getDataSet() {
+    return dataSet;
+  }
+  /**
+   *
+   * @param dataSet EFDataSet
+   */
+  public void setDataSet(EFDataSet ds) {
+    if ( dataSet != ds ) {
+      //
+      if ( dataSet != null ) dataSet.removeDataSetListener(this);
+      dataSet = ds;
+      //
+      if ( dataSet != null ) dataSet.addDataSetListener(this);
+      //
+    }
+  }
+  /**
+   *
+   */
+  protected boolean metaData = false;
+  /**
+   *
+   * @return boolean
+   */
+  public boolean getMetaData() {
+    return metaData;
+  }
+  /**
+   *
+   * @param v boolean
+   */
+  public void setMetaData(boolean v) {
+    metaData = v;
+  }
+  /**
+   *
+   */
+  protected String viewDataSetID = null;
+  /**
+   *
+   * @param viewDataSetID String
+   */
+  public void   setViewDataSetID(String viewDataSetID) {
+    this.viewDataSetID = viewDataSetID;
+  }
+  /**
+   *
+   * @return String
+   */
+  public String getViewDataSetID() {
+    return viewDataSetID;
+  }
+  /**
+   *
+   */
+  protected String viewDataSetColID = null;
+  /**
+   *
+   * @param viewDataSetColID String
+   */
+  public void   setViewDataSetColID(String viewDataSetColID) {
+    this.viewDataSetColID = viewDataSetColID;
+  }
+  /**
+   *
+   * @return String
+   */
+  public String getViewDataSetColID() {
+    return viewDataSetColID;
+  }
+  /**
+   *
+   */
+  protected ESPRowSet mainRowSet = null;
+  /**
+   *
+   * @param e DataSetEvent
+   */
+  public void dataSetChanged(DataSetEvent e) {
+    EFDataSet dataSet = e.getDataSet();
+    if ( dataSet == null ) return;
+    mainRowSet = dataSet.getRowSet();
+    String value = null;
+    if ( mainRowSet != null )
+      value = RowSetValueUtils.getValueCaption(mainRowSet,this);
+//    value = (String)RowSetValueUtils.getObject(rowSet,this.internalDataSetID,this.dataSetColID);
+    this.setText(value);
+  }
+  /**
+   *
+   */
+  protected String valueDataSetColID = null;
+  /**
+   *
+   * @param valueDataSetColID String
+   */
+  public void setValueDataSetColID(String valueDataSetColID) {
+    this.valueDataSetColID = valueDataSetColID;
+  }
+  /**
+   *
+   * @return String
+   */
+  public String getValueDataSetColID() {
+    return valueDataSetColID;
+  }
+  /**
+   *
+   * @param dataSetComponentEvent DataSetComponentEvent
+   */
+  public void dataSetComponentListener(DataSetComponentEvent
+                                       dataSetComponentEvent) {
+    if ( dataSetComponentEvent.getEventType() == DataSetComponentEvent.DSC_EVENT_START_EDIT ) {
+      this.setEnabled(true);return;
+    }
+    if ( dataSetComponentEvent.getEventType() == DataSetComponentEvent.DSC_EVENT_STOP_EDIT ) {
+      this.setEnabled(false);return;
+    }
+  }
+  /**
+   *
+   * @return ESPRowSet
+   */
+  public ESPRowSet getMainRowSet() {
+    return mainRowSet;
+  }
+  /**
+   *
+   */
+  protected boolean userInternalDataSetID = false;
+  /**
+   *
+   * @return boolean
+   */
+  public boolean isUserInternalDataSetID() {
+    return userInternalDataSetID;
+  }
+  /**
+   *
+   * @param v boolean
+   */
+  public void setUserInternalDataSetID(boolean v) {
+    userInternalDataSetID = v;
+  }
+  /**
+   *
+   */
+  protected String fkeyID = null;
+  /**
+   *
+   * @return String
+   */
+  public String getFkeyID() {
+    return fkeyID;
+  }
+  /**
+   *
+   * @param fkey String
+   */
+  public void setFkeyID(String fkey) {
+    this.fkeyID = fkey;
+  }
+  /**
+   *
+   */
+  protected String rlglID = null;
+  /**
+   *
+   * @return String
+   */
+  public String getRlglID() {
+    return rlglID;
+  }
+  /**
+   *
+   * @param rlglID String
+   */
+  public void setRlglID(String rlglID) {
+    this.rlglID = rlglID;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /**
+   *
+   */
+  private String editMask;
+  /**
+   *
+   */
+  private boolean useRegex;
+  /**
+   *
+   */
+  private String regexPattern;
+  /**
+   *
+   * @param        mask String
+   */
+  public FormTextField(String mask) throws ParseException {
+      this(mask, false, null);
+  }
+  /**
+   *
+   * @param         mask String
+   * @param regexPattern String
+   */
+  public FormTextField(String mask, String regexPattern) throws
+      ParseException {
+      this(mask, true, regexPattern);
+  }
+  /**
+   *
+   * @param         mask String
+   * @param     useRegex boolean
+   * @param regexPattern String
+   */
+  public FormTextField(String mask, boolean useRegex, String regexPattern) throws
+      ParseException {
+      try {
+          this.editMask = mask;
+          this.useRegex = useRegex;
+          this.regexPattern = regexPattern;
+          initRegexListener();
+          addFocusListener();
+      } catch (Exception ex) {
+          ex.printStackTrace();
+      }
+  }
+  /**
+   *
+   */
+  private void initRegexListener() {
+      if (!isUseRegex()) return;
+      this.addKeyListener(new KeyAdapter() {
+          public void keyTyped(KeyEvent e) {
+//              setDefaultColor();
+              if (e.getKeyChar() == e.VK_ENTER) {
+                  checkRegex();
+              }
+          }
+      });
+  }
+  /**
+   *
+   */
+  public void checkRegex() {
+      String text = getText();
+      if (RegexUtil.isMatch(getRegexPattern(), text)) return;
+      //��ݷǷ���������ʾ��ɫ��ͬʱ��ʾtooltips
+      setForeground(Color.RED);
+  }
+
+  /**
+   *
+   * @return boolean
+   */
+  public boolean isUseRegex() {
+      return useRegex;
+  }
+
+  /**
+   *
+   * @param useRegex boolean
+   */
+  public void setUseRegex(boolean useRegex) {
+      this.useRegex = useRegex;
+      initRegexListener();
+      this.addFocusListener();
+  }
+
+  /**
+   *
+   * @return String
+   */
+  public String getRegexPattern() {
+      return regexPattern;
+  }
+
+  /**
+   *
+   * @param pattern String
+   */
+  public void setRegexPattern(String pattern) {
+      regexPattern = pattern;
+  }
+
+  /**
+   *
+   * @return String
+   */
+  public String getEditMask() {
+      return editMask;
+  }
+
+  /**
+   *
+   * @param pattern String
+   */
+  public void setEditMask(String mask) {
+      this.editMask = mask;
+  }
+  /**
+   *
+   */
+  private SelfFocusListener selflistener;
+  /**
+   *
+   */
+  private void addFocusListener() {
+      if (!isUseRegex()) return;
+      if (selflistener == null) selflistener = new SelfFocusListener();
+      if (!isHaveSelfFocusListener()) addFocusListener(selflistener);
+  }
+
+  /**
+   *
+   * @return boolean
+   */
+  private boolean isHaveSelfFocusListener(){
+      FocusListener[] listeners = getFocusListeners();
+      if (listeners != null) {
+          for (int i = 0, n = listeners.length; i < n; i++) {
+              if (listeners[i] instanceof SelfFocusListener) {
+                  return true;
+              }
+          }
+      }
+      return false;
+  }
+
+  /**
+   * ���������
+   *
+   * @version 1.0
+   */
+  class SelfFocusListener implements FocusListener {
+      public void focusGained(FocusEvent e) {
+      }
+
+      public void focusLost(FocusEvent e) {
+        checkRegex();
+      }
+  }
+
+
+
+
+
+  /**
+   *
+   * @return Object
+   */
+  public Object getCellEditorValue() {
+    return this.getText();
+  }
+  /**
+   *
+   * @param anEvent EventObject
+   * @return boolean
+   */
+  public boolean isCellEditable(EventObject anEvent) {
+    return false;
+  }
+  /**
+   *
+   * @param anEvent EventObject
+   * @return boolean
+   */
+  public boolean shouldSelectCell(EventObject anEvent) {
+    return false;
+  }
+  /**
+   *
+   * @return boolean
+   */
+  public boolean stopCellEditing() {
+    return false;
+  }
+  /**
+   *
+   */
+  public void cancelCellEditing() {
+  }
+  /**
+   *
+   * @param l CellEditorListener
+   */
+  public void addCellEditorListener(CellEditorListener l) {
+  }
+  /**
+   *
+   * @param l CellEditorListener
+   */
+  public void removeCellEditorListener(CellEditorListener l) {
+  }
+
+  /**
+   * 默认构造函数
+   */
+  public FormTextField() {
+  }
+  /**
+   *
+   * @return FormContainer
+   */
+  public FormContainer getFormContainer() {
+    return null;
+  }
+  /**
+   *
+   * @return JComponent
+   */
+  public JComponent getJComponent() {
+    return this;
+  }
+  /**
+   *
+   */
+  protected int horizontalAlignment = -1;
+  /**
+   *
+   * @return int
+   */
+  public int getHorizontalAlignment() {
+    return horizontalAlignment;
+  }
+  /**
+   *
+   * @param horizontalAlignment int
+   */
+  public void setHorizontalAlignment(int horizontalAlignment) {
+    this.horizontalAlignment = horizontalAlignment;
+    if(horizontalAlignment!=-1){
+    	super.setHorizontalAlignment(horizontalAlignment);
+    }
+  }
+  /**
+   *
+   */
+  protected String numberFormat = null;
+  /**
+   *
+   * @return String
+   */
+  public String getNumberFormat() {
+    return numberFormat;
+  }
+  /**
+   *
+   * @param numberFormat String
+   */
+  public void setNumberFormat(String numberFormat) {
+    this.numberFormat = numberFormat;
+  }
+  /**
+   *
+   */
+  protected String dateFormat = null;
+  /**
+   *
+   * @return String
+   */
+  public String getDateFormat() {
+    return this.dateFormat;
+  }
+  /**
+   *
+   * @param dateFormat String
+   */
+  public void setDateFormat(String dateFormat) {
+    this.dateFormat = dateFormat;
+  }
+  /**
+   *
+   */
+  protected String formulaOne = null;
+  /**
+   *
+   * @return String
+   */
+  public String getFormulaOne() {
+    return this.formulaOne;
+  }
+  /**
+   *
+   * @param formulaOne String
+   */
+  public void setFormulaOne(String formulaOne) {
+    this.formulaOne = formulaOne;
+  }
+}

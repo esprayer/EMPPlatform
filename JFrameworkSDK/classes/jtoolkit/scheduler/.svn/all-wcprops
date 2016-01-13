@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/CVSpace/!svn/ver/7738/SinopecFMISSDK/JFrameworkSDK/src/jtoolkit/scheduler
+END
+ScheduleTask.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/CVSpace/!svn/ver/7738/SinopecFMISSDK/JFrameworkSDK/src/jtoolkit/scheduler/ScheduleTask.java
+END
+ScheduleIterator.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/CVSpace/!svn/ver/7738/SinopecFMISSDK/JFrameworkSDK/src/jtoolkit/scheduler/ScheduleIterator.java
+END
+DailyIterator.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/CVSpace/!svn/ver/7738/SinopecFMISSDK/JFrameworkSDK/src/jtoolkit/scheduler/DailyIterator.java
+END
+TemporalTaskDispatcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/CVSpace/!svn/ver/7738/SinopecFMISSDK/JFrameworkSDK/src/jtoolkit/scheduler/TemporalTaskDispatcher.java
+END
+IntervalIterator.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/CVSpace/!svn/ver/7738/SinopecFMISSDK/JFrameworkSDK/src/jtoolkit/scheduler/IntervalIterator.java
+END
+Scheduler.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/CVSpace/!svn/ver/7738/SinopecFMISSDK/JFrameworkSDK/src/jtoolkit/scheduler/Scheduler.java
+END

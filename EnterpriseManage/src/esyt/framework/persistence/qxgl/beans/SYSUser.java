@@ -1,0 +1,127 @@
+package esyt.framework.persistence.qxgl.beans;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import dwz.dal.object.AbstractDO;
+/**
+ * 用户bean
+ * @author frog
+ *
+ */
+public class SYSUser extends AbstractDO{
+	private String USER_ID        = "";
+	private String USER_NAME      = "";
+	private String USER_TYPE      = "";
+	private String USER_ORGID     = "";
+	private String USER_PASS      = "";
+	private String USER_DISABLE   = "";
+	private String USER_ISADMIN   = "";
+	private String USER_MAIL1     = "";
+	private String USER_MAIL2     = "";
+	private String USER_PHONE1    = "";
+	private String USER_PHONE2    = "";
+	private String USER_ADDRESSS1 = "";
+	private String USER_ADDRESSS2 = "";
+	private String USER_T01       = "";  
+	private Date   F_CRDATE;
+	private Date   F_CHDATE;
+	
+	public String getUSER_ID() {
+		return USER_ID;
+	}
+	public void setUSER_ID(String uSER_ID) {
+		USER_ID = uSER_ID;
+	}
+	public String getUSER_NAME() {
+		return USER_NAME;
+	}
+	public void setUSER_NAME(String uSER_NAME) {
+		USER_NAME = uSER_NAME;
+	}
+	public String getUSER_TYPE() {
+		return USER_TYPE;
+	}
+	public void setUSER_TYPE(String uSER_TYPE) {
+		USER_TYPE = uSER_TYPE;
+	}
+	public String getUSER_ORGID() {
+		return USER_ORGID;
+	}
+	public void setUSER_ORGID(String uSER_ORGID) {
+		USER_ORGID = uSER_ORGID;
+	}
+	public String getUSER_PASS() {
+		return USER_PASS;
+	}
+	public void setUSER_PASS(String uSER_PASS) {
+		USER_PASS = uSER_PASS;
+	}
+	public String getUSER_DISABLE() {
+		return USER_DISABLE;
+	}
+	public void setUSER_DISABLE(String uSER_DISABLE) {
+		USER_DISABLE = uSER_DISABLE;
+	}
+	public String getUSER_ISADMIN() {
+		return USER_ISADMIN;
+	}
+	public void setUSER_ISADMIN(String uSER_ISADMIN) {
+		USER_ISADMIN = uSER_ISADMIN;
+	}
+	public String getUSER_MAIL1() {
+		return USER_MAIL1;
+	}
+	public void setUSER_MAIL1(String uSER_MAIL1) {
+		USER_MAIL1 = uSER_MAIL1;
+	}
+	public String getUSER_MAIL2() {
+		return USER_MAIL2;
+	}
+	public void setUSER_MAIL2(String uSER_MAIL2) {
+		USER_MAIL2 = uSER_MAIL2;
+	}
+	public String getUSER_PHONE1() {
+		return USER_PHONE1;
+	}
+	public void setUSER_PHONE1(String uSER_PHONE1) {
+		USER_PHONE1 = uSER_PHONE1;
+	}
+	public String getUSER_PHONE2() {
+		return USER_PHONE2;
+	}
+	public void setUSER_PHONE2(String uSER_PHONE2) {
+		USER_PHONE2 = uSER_PHONE2;
+	}
+	public String getUSER_ADDRESSS1() {
+		return USER_ADDRESSS1;
+	}
+	public void setUSER_ADDRESSS1(String uSER_ADDRESSS1) {
+		USER_ADDRESSS1 = uSER_ADDRESSS1;
+	}
+	public String getUSER_ADDRESSS2() {
+		return USER_ADDRESSS2;
+	}
+	public void setUSER_ADDRESSS2(String uSER_ADDRESSS2) {
+		USER_ADDRESSS2 = uSER_ADDRESSS2;
+	}
+	public String getUSER_T01() {
+		return USER_T01;
+	}
+	public void setUSER_T01(String uSER_T01) {
+		USER_T01 = uSER_T01;
+	}
+	public Date getF_CRDATE() {
+		return F_CRDATE;
+	}
+	public void setF_CRDATE(Date f_CRDATE) {
+		F_CRDATE = f_CRDATE;
+	}
+	public Date getF_CHDATE() {
+		return F_CHDATE;
+	}
+	public void setF_CHDATE(Date f_CHDATE) {
+		F_CHDATE = f_CHDATE;
+	}
+}

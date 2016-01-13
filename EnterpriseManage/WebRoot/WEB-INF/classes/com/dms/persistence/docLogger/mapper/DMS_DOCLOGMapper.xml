@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.dms.persistence.docLogger.mapper.DMS_DOCLOGMapper">
+	<resultMap id="rm" type="com.dms.persistence.docLogger.bean.DMS_DOCLOG">
+		<result property="F_OPID" jdbcType="VARCHAR" column="F_OPID"/>
+        <result property="F_DOCID" jdbcType="VARCHAR" column="F_DOCID"/>
+		<result property="F_DOCNAME" jdbcType="VARCHAR" column="F_DOCNAME"/>
+        <result property="F_OPERATORNAME" jdbcType="VARCHAR" column="F_OPERATORNAME"/>
+		<result property="F_OPTYPE" jdbcType="INTEGER" column="F_OPTYPE"/>        
+        <result property="F_OPERATOR" jdbcType="VARCHAR" column="F_OPERATOR"/>
+        <result property="F_IP" jdbcType="VARCHAR" column="F_IP"/>
+		<result property="F_MSG" jdbcType="VARCHAR" column="F_MSG"/>
+        <result property="F_CRDATE" jdbcType="TIMESTAMP" column="F_CRDATE"/>
+	</resultMap>
+	
+	<select id="DOCLogList" resultMap="rm">
+		SELECT 
+			DMS_DOCLOG.F_OPID,
+	        DMS_DOCLOG.F_DOCID,
+			DMS_DOC.F_NAME AS F_DOCNAME,		
+	        DMS_DOCLOG.F_OPTYPE,
+			DMS_DOCLOG.F_OPERATOR,
+			BSUSER.USER_NAME AS F_OPERATORNAME,
+			DMS_DOCLOG.F_IP,
+			DMS_DOCLOG.F_MSG,       
+	        DMS_DOCLOG.F_CRDATE
+	    FROM DMS_DOCLOG, DMS_DOC, BSUSER
+		WHERE 
+			DMS_DOC.F_DOCID = DMS_DOCLOG.F_DOCID AND 
+			DMS_DOCLOG.F_DOCID = #{F_DOCID} AND 
+			DMS_DOCLOG.F_OPERATOR = BSUSER.USER_ID 
+			<if test="F_OPERATOR!=null" >
+				AND F_OPERATOR = #{F_OPERATOR}
+			</if>		
+		ORDER BY DMS_DOCLOG.F_CRDATE DESC
+	</select>
+	
+     <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="OBJ_ID">
+        INSERT INTO DMS_DOCLOG (
+        	F_OPID,
+	        F_DOCID,			
+	        F_OPTYPE,
+			F_OPERATOR,
+			F_IP,
+			F_MSG,       
+	        F_CRDATE
+        ) VALUES (
+        	#{F_OPID} ,
+        	#{F_DOCID} ,
+        	#{F_OPTYPE} ,
+        	#{F_OPERATOR} ,
+			#{F_IP} ,
+        	#{F_MSG} ,
+			#{F_CRDATE}
+        )
+	</insert>
+	
+	<!-- 按Id删除 -->
+	<delete id="deleteDocLog" parameterType="java.lang.Integer">
+        DELETE FROM DMS_DOCLOG
+        WHERE 
+	        F_DOCID = #{F_DOCID}
+	</delete>
+</mapper>
+

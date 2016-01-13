@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="gb2312"?>
+<package id="" caption="装配清单">
+  <NodeContextActionProvider>
+    <!-- 通用数据字典视图的ActionProvider -->
+    <ActionProvider clazz="com.efounder.dataobject.action.GenerDCTDataActionProvider" key="DCT_VIEW" order="0"/>
+  </NodeContextActionProvider>
+
+  <org.openide.ErrorManager>
+    <item implement="com.error.HelpErrorManager"/>
+  </org.openide.ErrorManager>
+
+  <org.openide.WaitingManager>
+    <item implement="com.wait.EAIWaitingManager"/>
+  </org.openide.WaitingManager>
+
+  <classes id="" caption="可以在此注册对象，无需修改注册表文件">
+      <!-- 每个对象的详细定义 -->
+      <!-- 公用服务数据对象 -->
+      <CLSID guid="SecurityObject" id="SecurityObject" name="系统安全管理对象" class="com.efounder.eai.service.dof.JDOFSecurityObject" ver="1.0.0" type="CLSID_DataActiveObjectCategory" />
+      <CLSID guid="CommObject" id="CommObject" name="系统通信对象" class="com.efounder.eai.service.dof.JDOFCommObject" ver="1.0.0" type="CLSID_DataActiveObjectCategory"/>
+      <CLSID guid="ResourceObject" id="ResourceObject" name="系统资源管理对象" class="com.efounder.eai.service.dof.JDOFResourceObject" ver="1.0.0" type="CLSID_DataActiveObjectCategory" />
+  </classes>
+  
+  <DataBases>
+	<database id="mysql" caption="MySql数据库" class="com.mysql.jdbc.Driver" url="jdbc:mysql://${host}:${port}/${database}" dbclass="com.efounder.eai.service.dal.DALDBManagerObject.mysql.JDALMySqlDBObject"/>  
+	<database id="oracle" caption="Oracle数据库" class="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@:${host}:${port}:${database}" dbclass="com.efounder.eai.service.dal.DALDBManagerObject.oracle.JDALOracleDBObject"/>
+  </DataBases>
+  
+  <Resources>
+    <Resource id="zh_CN" language="zh" country="CN" caption="简体中文" fontname="宋体"    fontsize="12" dateformat="YYYY年MM月DD日" money="￥" charset="GBK" icon="substance/flag_china.png"/>
+    <Resource id="en_US" language="en" country="US" caption="English" fontname="宋体"    fontsize="12" dateformat="YYYY年MM月DD日" money="$" charset="UTF8" icon="substance/flag_united_states.png"/>
+  </Resources>
+</package>

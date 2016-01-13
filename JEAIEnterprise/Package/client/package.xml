@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="gb2312"?>
+<package id="" caption="装配清单">
+
+  <clihandles caption="命令行处理器可以有多个">
+    <clihandle id="" caption="" class=""/>
+  </clihandles>
+
+  <mains caption="主程序,系统可以有多个,但是公用同一个EAI，说明哪一个是主线程">
+    <main id="JEnterprise" caption="企业应用集成环境" class="com.efounder.eai.main.JEAIEntry"/>
+  </mains>
+
+  <begins caption="初始化开始时执行的类">
+  </begins>
+
+  <startups caption="初始化时执行的类">
+  </startups>
+
+  <ends caption="初始化结束时执行的类">
+  </ends>
+
+  <nodes id="" caption="节点注册表">
+  </nodes>
+
+  <!-- StatusComponentFactory>
+    <factory id="Offline" caption="在线状态切换" clazz="com.efounder.view.SwitchStatus" />
+  </StatusComponentFactory -->
+
+  <StatusContainerFactory>
+    <!-- factory id="CommandList" caption="命令输入行" clazz="com.efounder.view.JCommandPanel" / -->
+  </StatusContainerFactory>
+
+  <objects id="" caption="可以在此注册对象，无需修改注册表文件">
+  </objects>
+
+  <classes id="" caption="可以在此注册对象，无需修改注册表文件">
+      <!-- 每个对象的详细定义 -->
+      <CLSID guid="00000000-0001-0001-0000000000000001" id="JEnterprise" name="企业应用集成环境" class="com.efounder.JEnterprise.bof.JBOFEnterprise" ver="1.0.0" type="CLSID_BusinessActiveObjectCategory" />
+  </classes>
+
+  <applications id="" caption="">
+    <JApplication name="JEnterprise" des="普联企业应用集成环境" ver="2.0.0" icon="JEnterprise.png" mainwindow="com.efounder.eai.EnterpriseDockExplorer" application="com.efounder.eai.EnterpriseFounder" />
+  </applications>
+
+  <frameworks id="" caption="可以在此向框架中增加对象，无需修改注册表文件">
+  </frameworks>
+  <NodeContextActionProvider>
+    <ActionProvider clazz="com.efounder.node.action.GenerNodeActionProvider" key="InfoServiceExplorer" order="0"/>
+  </NodeContextActionProvider>
+  <NodeViewerFactory>
+    <ViewerFactory id="document" caption="文档" clazz="com.efounder.node.view.NodeDocumentViewFactory" icon="ICON_JBPROJECT"/>
+    <ViewerFactory id="help" caption="帮助" clazz="com.efounder.node.view.NodeHelpViewFactory" icon="ICON_WARNING"/>
+  </NodeViewerFactory>
+  <finallys caption="系统结束时执行的类">
+
+  </finallys>
+</package>

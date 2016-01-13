@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="gb2312"?>
+<guiresource>
+  <actions>
+    	<action/>
+    	<action/>
+  </actions>
+  <toolbars>
+    	<toolbar name="SystemToolbar" layout="1" visible="1"/>
+  </toolbars>
+  <menus>
+  	<mainmenu name="menu">
+    		<menuitem1 name="mnFile" caption="文件(F)" action="" ischild="false" icon="" selchar="F" />
+      		<menuitem1 name="mnEdit" caption="编辑(E)" action="" ischild="false" icon="" selchar="E"/>
+        	<menuitem1 name="mnView" caption="视图(V)" action="" ischild="false" icon="" selchar="V"/>
+    	</mainmenu>
+  </menus>
+</guiresource>

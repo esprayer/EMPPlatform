@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.dms.persistence.folder.mapper.DMS_FOLDERMapper">
+	<resultMap id="rm" type="com.dms.persistence.folder.bean.DMS_FOLDER">
+		<result property="F_FOLDERID" jdbcType="VARCHAR" column="F_FOLDERID"/>
+        <result property="F_CREATOR" jdbcType="VARCHAR" column="F_CREATOR"/>
+		<result property="F_ZGMC" jdbcType="VARCHAR" column="F_ZGMC"/>
+        <result property="F_DESC" jdbcType="VARCHAR" column="F_DESC"/>
+		<result property="F_TYPE" jdbcType="VARCHAR" column="F_TYPE"/>        
+        <result property="F_NAME" jdbcType="VARCHAR" column="F_NAME"/>
+        <result property="F_PARENTID" jdbcType="VARCHAR" column="F_PARENTID"/>
+		<result property="F_PERMISSION" jdbcType="VARCHAR" column="F_PERMISSION"/>
+		<result property="F_DEL_USERID" jdbcType="VARCHAR" column="F_DEL_USERID"/>	
+		<result property="F_DEL_USERNAME" jdbcType="VARCHAR" column="F_DEL_USERNAME"/>
+		<result property="F_DELDATE" jdbcType="TIMESTAMP" column="F_DELDATE"/>				
+        <result property="F_CRDATE" jdbcType="TIMESTAMP" column="F_CRDATE"/>
+        <result property="F_CHDATE" jdbcType="TIMESTAMP" column="F_CHDATE"/>
+	</resultMap>
+	
+	<select id="searchDirectory" resultMap="rm">
+		SELECT 
+			DMS_FOLDER.F_FOLDERID,
+			DMS_FOLDER.F_CREATOR,
+			D.USER_NAME AS F_ZGMC,
+			DMS_FOLDER.F_DESC,
+			'folder' AS F_TYPE,			
+	        DMS_FOLDER.F_NAME,
+			DMS_FOLDER.F_CREATOR,
+	        DMS_FOLDER.F_PARENTID,
+			DMS_FOLDER.F_CRDATE,
+			DMS_FOLDER.F_CHDATE
+	    FROM DMS_FOLDER 		
+		LEFT JOIN BSUSER D ON DMS_FOLDER.F_CREATOR = D.USER_ID 
+		WHERE 
+			F_FOLDERID = #{F_FOLDERID} AND 
+			F_DELETE = #{F_DELETE}
+	</select>
+	
+	<select id="searchFolderByPermission" resultMap="rm">
+		SELECT 
+			F_FOLDERID,
+			F_CREATOR,
+			F_DESC,
+			'folder' AS F_TYPE,			
+	        F_NAME,
+	        F_PARENTID			
+	    FROM DMS_FOLDER 		
+		WHERE 
+			F_TYPE = #{F_TYPE} AND 
+			F_DELETE = #{F_DELETE}
+		    AND EXISTS(SELECT 1 FROM DMS_FOLDER_PERMISSION where DMS_FOLDER_PERMISSION.F_FOLDERID = DMS_FOLDER.F_FOLDERID
+		    AND DMS_FOLDER_PERMISSION.F_PERMISSION like '%L%')
+		ORDER BY F_DESC ASC
+	</select>
+	
+	<select id="loadFolder" resultMap="rm">
+		SELECT 
+			F_FOLDERID,
+			F_CREATOR,
+			F_DESC,	
+			'folder' AS F_TYPE,				
+	        F_NAME,
+	        F_PARENTID			
+	    FROM DMS_FOLDER 		
+		WHERE 
+			<if test="F_PARENTID!=null" >
+				F_PARENTID = #{F_PARENTID} AND 
+			</if>
+			<if test="F_NAME!=null" >
+				F_NAME = #{F_NAME} AND 
+			</if>
+			F_DELETE = #{F_DELETE}
+	</select>
+	
+	<select id="loadDeleteFolder" resultMap="rm">
+		SELECT 
+			F_FOLDERID,
+			F_CREATOR,
+			D.USER_NAME AS F_ZGMC,
+			F_DESC,	
+			'folder' AS F_TYPE,				
+	        F_NAME,
+	        F_PARENTID,
+			F_DELDATE	
+	    FROM DMS_FOLDER 		
+		LEFT JOIN BSUSER D ON DMS_FOLDER.F_DEL_USERID = D.USER_ID		
+		WHERE 			
+			F_DEL_USERID = #{F_DEL_USERID}
+		ORDER BY F_DELDATE
+	</select>
+	
+	<select id="load" resultMap="rm">
+		SELECT 
+			F_FOLDERID,
+			F_CREATOR,
+			USER_NAME AS F_ZGMC,
+			F_DESC,
+			'folder' AS F_TYPE,	
+	        F_NAME,
+	        F_PARENTID,
+			DMS_FOLDER.F_CRDATE,
+			DMS_FOLDER.F_CHDATE		
+	    FROM DMS_FOLDER 
+		LEFT JOIN BSUSER C ON C.USER_ID  = DMS_FOLDER.F_CREATOR
+		WHERE 
+			F_FOLDERID = #{F_FOLDERID}
+	</select>
+	
+	<select id="loadFolderList" resultMap="rm">
+		SELECT 
+			F_FOLDERID,
+			F_CREATOR,
+			USER_NAME AS F_ZGMC,
+			F_DESC,
+			'folder' AS F_TYPE,	
+	        F_NAME,
+	        F_PARENTID,
+			DMS_FOLDER.F_CRDATE,
+			DMS_FOLDER.F_CHDATE		
+	    FROM DMS_FOLDER 
+		LEFT JOIN BSUSER C ON C.USER_ID = DMS_FOLDER.F_CREATOR		
+		WHERE 
+			F_PARENTID = #{F_PARENTID} AND 
+			F_DELETE = #{F_DELETE}		
+		ORDER BY F_NAME
+	</select>
+	
+	<!-- 按Id删除 -->
+	<delete id="deleteHYRKMX" parameterType="java.lang.Integer">
+        DELETE FROM HYCLRK WHERE
+        HYCLRK.F_KJQJ = #{F_KJQJ} AND HYCLRK.F_DJBH = #{F_DJBH} AND 
+		HYCLRK.F_GUID = #{F_GUID} AND HYCLRK.F_FLBH = #{F_FLBH}
+    </delete>
+     <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="OBJ_ID">
+        INSERT INTO DMS_FOLDER (
+        	F_FOLDERID,
+			F_CREATOR,
+			F_DESC,		
+	        F_NAME,
+			F_TYPE,
+	        F_PARENTID,
+			F_CRDATE,
+			F_CHDATE
+        ) VALUES (
+        	#{F_FOLDERID} ,
+        	#{F_CREATOR} ,
+        	#{F_DESC} ,
+        	#{F_NAME} ,
+			#{F_TYPE} ,
+			#{F_PARENTID} ,
+        	#{F_CRDATE} ,
+			#{F_CHDATE}
+        )
+	</insert>
+
+	<update id="update" parameterType="com.mrp.persistence.sysConfigure.deport.bean.HYCKZD">
+        UPDATE DMS_FOLDER SET
+			F_NAME = #{F_NAME} ,	  
+			F_DESC = #{F_DESC} ,	          	       
+	        F_CHDATE = #{F_CHDATE}
+        WHERE 
+	        F_FOLDERID = #{F_FOLDERID}
+	</update>
+	
+	<update id="deleteFolder" parameterType="com.mrp.persistence.sysConfigure.deport.bean.HYCKZD">
+        UPDATE DMS_FOLDER SET
+			F_DELETE = #{F_DELETE} ,	          	       
+	        F_DEL_USERID = #{F_DEL_USERID} ,
+			F_DELDATE = #{F_DELDATE}
+        WHERE 
+	        F_FOLDERID = #{F_FOLDERID}
+	</update>
+	
+	<!-- 按Id删除 -->
+	<delete id="completelyDelete" parameterType="java.lang.Integer">
+        DELETE FROM DMS_FOLDER
+        WHERE 
+	        F_FOLDERID = #{F_FOLDERID}
+	</delete>
+</mapper>
+

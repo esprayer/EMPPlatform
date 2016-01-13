@@ -1,0 +1,66 @@
+package com.efounder.dctbuilder.event.plugin;
+
+import javax.swing.*;
+
+import com.borland.dx.dataset.*;
+import com.core.xml.*;
+import com.efounder.dbc.swing.tree.*;
+import com.efounder.dctbuilder.data.*;
+import com.efounder.dctbuilder.event.*;
+import com.efounder.dctbuilder.mdl.*;
+import com.efounder.dctbuilder.view.*;
+import com.efounder.db.*;
+import com.efounder.dctbuilder.util.DictUtil;
+
+/**
+ * <p>Title: </p>
+ *
+ * <p>Description: </p>
+ *
+ * <p>Copyright: Copyright (c) 2006</p>
+ *
+ * <p>Company: </p>
+ *
+ * @author not attributable
+ * @version 1.0
+ */
+public class EventDeleteTreeNode implements IClientEvent {
+    public EventDeleteTreeNode() {
+    }
+    public void deleting(DictModel dm, StubObject param) throws Exception {
+
+        DictTreeTableView dv = (DictTreeTableView)dm.getView();
+        DataRow dr=new DataRow(dm.getDataSet());
+        dm.getDataSet().getDataRow(dr);
+        String bh=dr.getString(dm.getMetaData().getDctBmCol());
+        Variant v = new Variant();
+        dr.getVariant(dm.getMetaData().getDctMxCol(), v);
+        String mx = DictUtil.getString(v);
+        dr.getVariant(dm.getMetaData().getDctJsCol(), v);
+        int sjs = DictUtil.getInt(v);
+        int js = sjs + 1;
+        DatasetTreeModel dtm = (DatasetTreeModel) dv.getTree().getModel();
+        DataSetTreeNode dst = dtm.getTreeNode(bh);
+        if(dst==null)return;
+        if(dst.getChildCount()>0){
+          String mess="请先删除下级节点！";
+          JOptionPane.showMessageDialog(com.efounder.eai.EAI.EA.getMainWindow(),mess,"错误信息",
+                                        JOptionPane.ERROR_MESSAGE);
+          throw new Exception(mess);
+        }
+    }
+    public void deleted(DictModel dm, StubObject param) {
+        DictTreeTableView dv = (DictTreeTableView)dm.getView();
+        DataRow dr = dm.getLastDataRow();
+        if (dr == null)
+            return;
+        dv.delTreeNode();
+    }
+
+    public boolean canProcess(DictModel dm, DctContext context) throws
+            Exception {
+        if (dm.getView() != null && dm.getView() instanceof DictTreeTableView)
+            return true;
+        return false;
+    }
+}

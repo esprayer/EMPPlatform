@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='gb2312'?>
+<XML_ROOT>
+<FMDM>
+	<L n='单位编号' i='DWBH' t='字符' m='' />
+	<L n='单位名称' i='DWMC' t='字符' m='' />
+	<L n='单位级数' i='DWJS' t='数值' m='' />
+	<L n='单位明细' i='DWMX' t='数值' m='' />
+	<L n='唯一主代码' i='WYDM' t='字符' m='' />
+	<L n='单位负责人' i='FDDB' t='字符' m='' />
+	<L n='主管会计工作负责人' i='CWFZ' t='字符' m='' />
+	<L n='总会计师' i='ZKJS' t='字符' m='' />
+	<L n='会计机构负责人' i='KGFZ' t='字符' m='' />
+	<L n='填表人' i='TBR' t='字符' m='' />
+	<L n='通讯地址' i='TXDZ' t='字符' m='' />
+	<L n='邮政编码' i='YZBM' t='字符' m='' />
+	<L n='电话号码(区号)' i='CTQH' t='字符' m='' />
+	<L n='电话号码' i='DHH' t='字符' m='' />
+	<L n='分机号' i='FJH' t='字符' m='' />
+	<L n='负责审计事务所' i='SJS' t='字符' m='' />
+	<L n='签字会计师' i='KJS' t='字符' m='' />
+	<L n='本企业代码' i='QYDM' t='字符' m='' />
+	<L n='上一级企业（单位）代码' i='SJDM' t='字符' m='' />
+	<L n='集团企业（公司）总部代码' i='JTDM' t='字符' m='' />
+	<L n='行政隶属关系代码' i='LSGX' t='字符' m='' />
+	<L n='部门标识代码' i='BMBS' t='字符' m='' />
+	<L n='所在地区' i='XZQH' t='字符' m='' />
+	<L n='国民经济行业分类与代码' i='HYDM' t='字符' m='' />
+	<L n='行业会计制度代码' i='KJDM' t='字符' m='' />
+	<L n='组织形式' i='ZZXS' t='字符' m='' />
+	<L n='工效挂钩标识码' i='GXGG' t='字符' m='' />
+	<L n='养老统筹标识码' i='YLTC' t='字符' m='' />
+	<L n='补充指标代码' i='BCBM' t='字符' m='' />
+	<L n='注册会计师审计意见类型' i='YJLX' t='字符' m='' />
+	<L n='成立年份' i='CLNF' t='字符' m='' />
+	<L n='新报因素' i='XBYS' t='字符' m='' />
+	<L n='备用码' i='BYM' t='字符' m='' />
+	<L n='报表类型' i='BBLX' t='数值' m='' />
+	<L n='经营规模' i='JYGM' t='字符' m='' />
+	<L n='上年代码' i='SNDM' t='字符' m='' />
+	<L n='经济类型' i='JJLX' t='字符' m='' />
+	<L n='股票代码' i='GPDM' t='字符' m='' />
+	<L n='注册地点' i='ZCDD' t='字符' m='' />
+	<L n='国家和地区' i='GJH' t='字符' m='' />
+	<L n='企业类型' i='QYLX' t='字符' m='' />
+	<L n='经营形式' i='JYXS' t='字符' m='' />
+	<L n='核算方法' i='HSFF' t='字符' m='' />
+	<L n='州别' i='ZB' t='字符' m='' />
+	<L n='国家代码' i='GJDM' t='字符' m='' />
+	<L n='企业类别' i='QYLB' t='字符' m='' />
+</FMDM>
+<FUNC>
+	<L f='ABS()'/>
+	<L f='AND()'/>
+	<L f='AVERAGE()'/>
+	<L f='DATE(,,)'/>
+	<L f='DATEVALUE()'/>
+	<L f='DAY()'/>
+	<L f='FMDM()'/>
+	<L f='IF(,,)'/>
+	<L f='INLIST(,)'/>
+	<L f='INT()'/>
+	<L f='LEFT(,)'/>
+	<L f='LEN()'/>
+	<L f='MAX()'/>
+	<L f='MID(,,)'/>
+	<L f='MIN()'/>
+	<L f='MOD()'/>
+	<L f='MONTH()'/>
+	<L f='NOT()'/>
+	<L f='OR()'/>
+	<L f='POWER()'/>
+	<L f='RIGHT(,)'/>
+	<L f='ROUND()'/>
+	<L f='SUM()'/>
+	<L f='VALUE()'/>
+	<L f='VER9()'/>
+	<L f='YEAR()'/>
+</FUNC>
+</XML_ROOT>

@@ -1,0 +1,222 @@
+package jframework.foundation.classes;
+import java.io.*;
+import java.net.*;
+import java.util.*;
+import jtoolkit.net.classes.*;
+/**
+ * <p>Title: Java Framework</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2002</p>
+ * <p>Company: </p>
+ * @author Skyline
+ * @version 1.0
+ */
+//--------------------------------------------------------------------------------------------------
+//描述: 自定ClassLoader,可以完成从URL地址处动态装入一个类
+//设计: Skyline(2001.12.29)
+//实现: Skyline
+//修改:
+//--------------------------------------------------------------------------------------------------
+public class JFrameworkClassLoader extends ClassLoader {
+  //定义哈希表（Hashtable）类型的变量，用于保存被载入的类数据.
+  Hashtable   loadedClasses;
+  ClassLoader ParentClassLoader=null;
+  String      Codebase;
+  //------------------------------------------------------------------------------------------------
+  //描述: 自定ClassLoader的构造函数
+  //设计: Skyline(2001.12.29)
+  //实现: Skyline
+  //修改:
+  //------------------------------------------------------------------------------------------------
+  public JFrameworkClassLoader(ClassLoader P,String codebase) {
+      // 创建Hash表,用来存放已经装入过的类信息
+       loadedClasses = new Hashtable();
+       ParentClassLoader = P;
+       Codebase = codebase;
+  }
+  //------------------------------------------------------------------------------------------------
+  //描述: 自定ClassLoader的构造函数
+  //设计: Skyline(2001.12.29)
+  //实现: Skyline
+  //修改:
+  //------------------------------------------------------------------------------------------------
+  public JFrameworkClassLoader() {
+      // 创建Hash表,用来存放已经装入过的类信息
+       loadedClasses = new Hashtable();
+  }
+  //------------------------------------------------------------------------------------------------
+  //描述: 自定ClassLoader中最重要的函数,它将从远程URL处读入的类信息创建指定的类
+  //设计: Skyline(2001.12.29)
+  //实现: Skyline
+  //修改:
+  //------------------------------------------------------------------------------------------------
+  public synchronized Class loadClass(String className,boolean resolve) throws ClassNotFoundException {
+    Class newClass=null;byte[] classData;String DefineClassName;
+    //if ( !className.endsWith("JBOFSecurityObject") ) {
+      if ( ParentClassLoader != null ) {
+        try {
+            newClass = ParentClassLoader.loadClass(className);
+        } catch ( Exception e ) {
+            newClass = null;
+            //e.printStackTrace();
+            //System.out.println(e.getMessage());
+        }
+      }
+      //DefineClassName = GetDefineClassName(className);
+      //检查要载入的类数据是否已经被保存在哈希表中。
+      if ( newClass == null )
+        newClass = (Class) loadedClasses.get(className);
+      //newClass = (Class) findLoadedClass( DefineClassName );
+      //如果类数据已经存在且resolve值为true，则解析它。
+      if ( newClass != null ) {
+          if ( resolve ) resolveClass(newClass);
+          return newClass;
+      }
+      // 首先试图从本地系统类组中载入指定类。这是必须的，因为虚拟机将这个类载入后，在解析和执行它时
+      // 所用到的任何其他类，如java.lang.System类等，均不再使用虚拟机的类载入器，而是调用我们自制的
+      // 类载入器来加载。
+      try {
+          // 试图从本地系统中装入本地的类(原因同上)
+          newClass = findSystemClass(className);
+          if ( newClass != null ) {
+              if ( resolve ) resolveClass(newClass);
+              loadedClasses.put(className, newClass);
+              return newClass;
+          }
+      } catch (ClassNotFoundException e) {
+        //e.printStackTrace();
+        //System.out.println(e.getMessage());
+          //System.out.println(className+" is not a system class!");
+      }
+    //}
+      //如果不是系统类，则试图从网络中指定的URL地址载入类。
+      try {
+          //用自定义方法载入类数据，存放于字节数组classData中。
+          //使用Http/Https协议,从Web上获取类信息数据,到指定的数组
+    classData = getData(className);
+    //由字节数组所包含的数据建立一个class类型的对象。
+//    newClass  = defineClass(/*DefineClassName,*/classData,0,classData.length);
+    if ( newClass == null ) throw new ClassNotFoundException(className);
+      } catch (Exception e) {
+          //e.printStackTrace();
+          //System.out.println(e.getMessage());
+          throw new ClassNotFoundException(className);
+      }
+      //如果类被正确载入，则将类数据保存在哈希表中，以备再次使用。
+      loadedClasses.put(className, newClass);
+      String CN = newClass.getName();
+      if ( className.compareTo(CN) != 0 )
+        loadedClasses.put(CN,newClass);
+      //如果resolve值为true，则解析类数据。
+      if ( resolve ) resolveClass(newClass);
+      return newClass;
+  }
+  //------------------------------------------------------------------------------------------------
+  //描述: 通过URL获取类的原始数据
+  //设计: Skyline(2001.12.29)
+  //实现: Skyline
+  //修改:
+  //------------------------------------------------------------------------------------------------
+  protected byte[] getClassData(String className) {
+    byte[] data=null;int length;
+            try {
+                // 形成合法的URL型式
+          URL url = new URL(className.endsWith(".class") ?className : className + ".class");
+                // 根据形成的URL创建一个连接
+                URLConnection connection = url.openConnection();
+
+                // 从连接处获取数据
+          InputStream inputStream = connection.getInputStream();
+                // 得到数据长度
+                //length = inputStream.available();
+          length = connection.getContentLength();
+                // 获取特定长度的数组
+          data = new byte[length];
+                // 将类数据读入数据中
+          inputStream.read(data);
+                // 关闭URL连接
+          inputStream.close();
+                // 返回类数据
+            } catch(Exception e) {
+                //e.printStackTrace();
+                //System.out.println(e.getMessage());
+            }
+            return data;
+  }
+    //----------------------------------------------------------------------------------------------
+    //描述: 通过URL获取类的原始数据
+    //设计: Skyline(2001.12.29)
+    //实现: Skyline
+    //修改:
+    //----------------------------------------------------------------------------------------------
+    protected byte[] getData(String className) throws IOException {
+      int i,Count;String CN,strTemp;Vector CodebaseList;byte[] data=null;
+        CN = className.toUpperCase();
+        if ( CN.startsWith("HTTP://") ) { // 是绝对地址直接获取类数据
+            //data = getClassData(className);
+            data = JHttpDownLoadFile.getFileData(className);
+        } else {    // 从Codebase中获取数据
+            className = GetDefineClassName(className);
+            strTemp = Codebase;
+                if ( !strTemp.endsWith("/") ) strTemp += "/";
+                CN = strTemp +"Codebase/" + className;
+                CN = CN.endsWith(".class") ?CN : CN + ".class";
+                //System.out.println("ClassLoad from:"+CN);
+                data = JHttpDownLoadFile.getFileData(CN);
+                //getClassData(CN);
+                //if ( data != null ) {
+                    //System.out.println("getdata:"+CN);
+                    //break;
+                //}
+            //}
+        }
+        if ( data == null ) throw new IOException(className);
+        return data;
+
+
+
+    // 此处是从列表中查找的版本
+      //int i,Count;String CN,strTemp;Vector CodebaseList;byte[] data=null;
+      //JHttpDownLoadFile hdf = new JHttpDownLoadFile();
+        //CN = className.toUpperCase();
+        //if ( CN.startsWith("HTTP://") ) { // 是绝对地址直接获取类数据
+            ////data = getClassData(className);
+            //hdf.SetURI(className);
+            //data = hdf.getFileData();
+        //} else {    // 从Codebase中获取数据
+            //className = GetDefineClassName(className);
+            //CodebaseList = JBusinessObjectFramework.CodebaseList;
+            //Count = CodebaseList.size();
+            //for(i=0;i<Count;i++) {
+                //strTemp = (String)CodebaseList.elementAt(i);
+                //CN = strTemp + className;
+                //CN = CN.endsWith(".class") ?CN : CN + ".class";
+                //hdf.SetURI(CN);
+                //data = hdf.getFileData();
+                ////getClassData(CN);
+                //if ( data != null ) {
+                    ////System.out.println("getdata:"+CN);
+                    //break;
+                //}
+            //}
+        //}
+        //if ( data == null ) throw new IOException(className);
+        //return data;
+    }
+    //----------------------------------------------------------------------------------------------
+    //描述: 通过URL获取类的原始数据
+    //设计: Skyline(2001.12.29)
+    //实现: Skyline
+    //修改:
+    //----------------------------------------------------------------------------------------------
+    protected String GetDefineClassName(String name) {
+    return name.replace('.','/');
+      //int Index;
+        //Index = name.lastIndexOf(".class");
+        //if ( Index == -1 ) {
+            //Index = name.lastIndexOf(".");
+            //name = name.substring(Index+1);
+        //}
+        //return name;
+    }
+}

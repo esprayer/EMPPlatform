@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.mrp.persistence.dailyBusiness.excelStatements.detail.mapper.HYXMMXMapper">
+	<resultMap id="rm" type="com.mrp.persistence.dailyBusiness.excelStatements.detail.bean.HYXMMX">
+        <result property="F_XMBH" jdbcType="VARCHAR" column="F_XMBH"/>
+        <result property="F_CLBH" jdbcType="VARCHAR" column="F_CLBH"/>
+		<result property="F_CLMC" jdbcType="VARCHAR" column="F_CLMC"/>
+        <result property="F_SL" jdbcType="DECIMAL" column="F_SL"/>
+		<result property="F_BZ" jdbcType="VARCHAR" column="F_BZ"/>
+        <result property="F_KCQK" jdbcType="VARCHAR" column="F_KCQK"/>
+		<result property="F_CRDATE" jdbcType="TIMESTAMP" column="F_CRDATE"/>
+        <result property="F_CHDATE" jdbcType="TIMESTAMP" column="F_CHDATE"/>
+	</resultMap>
+	
+	<select id="findClByXm" resultMap="rm">
+		SELECT 
+	        F_XMBH,
+	        HYXMMX.F_XMBH,
+			HYXMMX.F_CLBH,
+			HYCLZD.F_CLMC,
+	        F_SL,
+			F_BZ,
+			F_KCQK,
+			HYXMMX.F_CRDATE,
+			HYXMMX.F_CHDATE
+	    FROM HYXMMX LEFT JOIN HYCLZD ON HYXMMX.F_CLBH = HYCLZD.F_CLBH
+	    WHERE 
+	        HYXMMX.F_XMBH = #{F_XMBH} and HYXMMX.F_CLBH = #{F_CLBH}
+		ORDER BY HYXMMX.F_CLBH
+	</select>
+	
+	<select id="loadHYXMMX" resultMap="rm">
+		SELECT 
+	        HYXMMX.F_XMBH,
+			HYXMMX.F_CLBH,
+			HYCLZD.F_CLMC,
+	        F_SL,
+			F_BZ,
+			F_KCQK,
+			HYXMMX.F_CRDATE,
+			HYXMMX.F_CHDATE
+	    FROM HYXMMX LEFT JOIN HYCLZD ON HYXMMX.F_CLBH = HYCLZD.F_CLBH
+	    WHERE 
+	        HYXMMX.F_XMBH = #{F_XMBH}
+		ORDER BY HYXMMX.F_CLBH
+	</select>
+
+	<!-- 按Id删除 -->
+	<delete id="deleteHYXMMX" parameterType="java.lang.Integer">
+        DELETE FROM HYXMMX WHERE
+        F_CLBH = #{F_CLBH} AND F_XMBH = #{F_XMBH}
+    </delete>
+	
+	<!-- 按Id删除 -->
+	<delete id="deleteHYXMMXS" parameterType="java.lang.Integer">
+        DELETE FROM HYXMMX WHERE
+        F_XMBH = #{F_XMBH}
+    </delete>
+	
+     <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="OBJ_ID">
+        INSERT INTO HYXMMX (
+        	F_XMBH,	        
+	        F_CLBH,
+	        F_SL,	        
+			F_BZ,  
+			F_KCQK,      
+	        F_CRDATE,
+			F_CHDATE
+        ) VALUES (
+        	#{F_XMBH} ,
+        	#{F_CLBH} ,
+        	#{F_SL} ,
+        	#{F_BZ} ,
+			#{F_KCQK} ,
+        	#{F_CRDATE} ,
+			#{F_CHDATE}
+        )
+	</insert>
+
+	<insert id="insertbatch" parameterType="java.util.List">
+		  INSERT INTO HYXMMX (
+        	F_XMBH,	        
+	        F_CLBH,
+	        F_SL,	        
+			F_BZ,  
+			F_KCQK,      
+	        F_CRDATE,
+			F_CHDATE
+        ) values
+		  <foreach collection="list" item="item" index="index" separator=",">
+			  ( 
+				#{item.F_XMBH} ,
+				#{item.F_CLBH} ,
+				#{item.F_SL} ,
+				#{item.F_BZ} ,
+				#{item.F_KCQK} ,
+				#{item.F_CRDATE} ,
+				#{item.F_CHDATE}
+			  )
+		  </foreach>
+	</insert>
+	
+	<update id="update" parameterType="com.mrp.persistence.dailyBusiness.excelStatements.detail.bean.HYXMMX">
+        UPDATE HYXMMX SET
+	        F_SL = #{F_SL} ,
+	        F_BZ = #{F_BZ} ,	        
+	        F_KCQK = #{F_KCQK} ,
+	        F_CHDATE = #{F_CHDATE}
+        WHERE 
+	        F_XMBH = #{F_XMBH} AND F_CLBH = #{F_CLBH}
+	</update>
+	
+	<update id="updateXMBH" parameterType="com.mrp.persistence.dailyBusiness.excelStatements.detail.bean.HYXMMX">
+        UPDATE HYXMMX SET
+	        F_XMBH = #{F_XMBH}
+        WHERE 
+	        F_XMBH = #{UUID}
+	</update>
+	
+	<select id="findClByXms" resultMap="rm">
+		SELECT
+			F_XMBH,
+	        HYXMMX.F_XMBH,
+			HYXMMX.F_CLBH,
+			HYCLZD.F_CLMC,
+	        F_SL,
+			F_BZ,
+			F_KCQK,
+			HYXMMX.F_CRDATE,
+			HYXMMX.F_CHDATE
+	    FROM HYXMMX LEFT JOIN HYCLZD ON HYXMMX.F_CLBH = HYCLZD.F_CLBH
+	    WHERE 
+	        HYXMMX.F_CLBH like "%"#{F_CLBH,jdbcType=VARCHAR}"%" AND HYXMMX.F_XMBH = #{F_XMBH}
+		ORDER BY HYXMMX.F_CLBH    	
+    </select>
+</mapper>
+

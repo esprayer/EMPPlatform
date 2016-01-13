@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!-- edited with XML Spy v4.2 U (http://www.xmlspy.com) by xSkyline (Pansoft) -->
+<ModuleConfig>
+	<gui>
+		<menus>
+			<mainmenu name="menu">
+				<menuitem1 name="mnCloseCurrent" caption="Close active" icon="closeallwindows16.gif" selchar="C"/>
+				<menuitem1 name="mnCloseOther" caption="Close others" icon="" selchar="O"/>
+				<menuitem1 name="mnCloseAll" caption="Close all" icon="" selchar="A"/>
+			</mainmenu>
+		</menus>
+	</gui>
+</ModuleConfig>

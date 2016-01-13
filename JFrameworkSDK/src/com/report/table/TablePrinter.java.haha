@@ -1,0 +1,332 @@
+package com.pansoft.report.table;
+
+import java.awt.*;
+import java.awt.print.*;
+import javax.swing.*;
+import javax.swing.table.*;
+
+public class TablePrinter implements Printable, Pageable {
+
+    /**
+     * These constants indicate which pages should include column headers
+     */
+    public final static int ALL_PAGES = 0;
+    public final static int FIRST_PAGE_ONLY = 1;
+    public final static int NO_PAGES = 2;
+
+    protected JPanel title;
+    protected JTable table;
+    protected PageFormat pageFormat;
+
+    protected int titleStatus = FIRST_PAGE_ONLY;
+    protected int headerStatus = ALL_PAGES;
+
+    boolean pageDone = false;
+    boolean fontDone = false;
+
+    Font printFont = null;
+    int recallCounts = 1;
+
+    JTableHeader tableHeader = null;
+
+    int[] subTableSplit = null;
+    int subTableSplitSize = 0;
+    int subPageIndex = 0;
+    int prevPageIndex = 0;
+    int m_pages = 1;
+    int rowHeight = 12;
+    int rowMargin = 4;
+
+    int fontHeight = 18;
+    int fontDesent;
+
+    int pageHeight;
+    int pageWidth;
+
+    int headerWidth;
+    int headerHeight;
+
+    int titleWidth;
+    int titleHeight;
+
+    int tableWidthOnPage;
+    int tableHeight;
+    int tableWidth;
+    int tableHeightOnFullPage;
+    int tableHeightOnLastPage;
+
+    public TablePrinter(JTable tbl, PageFormat pf) {
+        table = tbl;
+        pageFormat = pf;
+    }
+
+    public TablePrinter(JPanel jp, JTable tbl, PageFormat pf) {
+        title = jp;
+        table = tbl;
+        pageFormat = pf;
+    }
+    public void setHeaderStatus(int headerStatus_){
+        this.headerStatus = headerStatus_;
+    }
+    public void setTitleStatus(int titleStatus_){
+        this.titleStatus = titleStatus_;
+    }
+    /**
+     * Determine whether or not to paint the headers on the current page
+     */
+    protected boolean displayHeaderOnPage(int positionY) {
+        return ((headerStatus == ALL_PAGES) || ((headerStatus == FIRST_PAGE_ONLY) && positionY == titleHeight));
+    }
+    protected boolean displayTitleOnPage(int positionY) {
+        return ((titleStatus == ALL_PAGES) || ((titleStatus == FIRST_PAGE_ONLY) && positionY == 0));
+    }
+    /**
+     * Calculate the number of pages it will take to print the entire table
+     */
+    public int getNumberOfPages() {
+        if(!pageDone)
+            getPageInfo();
+        return m_pages;
+    }
+
+    public PageFormat getPageFormat(int index) {
+        return pageFormat;
+    }
+    protected void getFontInfo(Graphics g){
+        printFont = g.getFont();
+        g.setFont(printFont);
+        g.setColor(Color.black);
+
+        FontMetrics fm = g.getFontMetrics();
+
+        fontHeight = fm.getHeight();
+        fontDesent = fm.getDescent();
+        fontDone = true;
+    }
+    protected void getPageInfo() {
+        tableHeader = table.getTableHeader();
+        if(tableHeader == null){
+            headerWidth = 0;
+            headerHeight = 0;
+        }else{
+            headerWidth = tableHeader.getWidth();
+            headerHeight = tableHeader.getHeight() + table.getRowMargin();
+        }
+
+        if(title == null){
+            titleWidth = 0;
+            titleHeight = 0;
+        }else{
+            titleWidth = (int) title.getPreferredSize().getWidth();
+            titleHeight = (int) title.getPreferredSize().getHeight();
+        }
+
+        pageHeight = (int) pageFormat.getImageableHeight();
+        pageWidth = (int) pageFormat.getImageableWidth();
+
+        tableWidth = (int) table.getColumnModel().getTotalColumnWidth();
+
+        //tableWidthOnPage= tableWidth;
+        tableHeight = table.getHeight();
+        tableHeightOnFullPage =
+            (int) (pageHeight - (titleStatus == ALL_PAGES ? titleHeight : 0)
+                              - (headerStatus == ALL_PAGES ? headerHeight : 0)
+                              - (fontHeight * 2));
+        rowHeight = table.getRowHeight() + table.getRowMargin();
+        // make sure each page holds full lines;
+        tableHeightOnFullPage = tableHeightOnFullPage / rowHeight * rowHeight;
+
+        getSubTableSplit();
+        getMaxPages();
+
+        pageDone = true;
+
+        System.out.println("tableHeight:= "
+                + tableHeight
+                + ", tableWidth:= "
+                + tableWidth
+                + ", pageHeight:= "
+                + pageHeight
+                + ", pageWidth:= "
+                + pageWidth
+                + ", pages:= "
+                + m_pages
+                + ", headerHeight:= "
+                + headerHeight
+                + ", headerWidth:= "
+                + headerWidth
+                + ", titleHeight:= "
+                + titleHeight
+                + ", titleWidth:= "
+                + titleWidth);
+    }
+
+    protected void getSubTableSplit(){
+        subTableSplit = null;
+        subTableSplitSize = 0;
+        subPageIndex = 0;
+        prevPageIndex = 0;
+
+        TableColumnModel tableColumnModel = tableHeader.getColumnModel();
+        int columns = tableColumnModel.getColumnCount();
+        TableColumn tableColumn = null;
+        int columnMargin = tableColumnModel.getColumnMargin();
+
+        int[] temp = new int[100];
+        int columnIndex = 0;
+
+        temp[0] = 0;
+
+        int columnWidth;
+        int length = 0;
+        subTableSplitSize = 0;
+        while (columnIndex < columns) {
+            tableColumn = tableColumnModel.getColumn(columnIndex);
+            columnWidth = tableColumn.getWidth();
+            if (length + columnWidth + columnMargin > pageWidth) {
+                temp[subTableSplitSize + 1] = temp[subTableSplitSize] + length;
+                length = columnWidth;
+                subTableSplitSize++;
+            } else
+                length += columnWidth + columnMargin;
+            columnIndex++;
+        }
+
+        if (length > 0) {// if there is more columns
+            temp[subTableSplitSize + 1] = temp[subTableSplitSize] + length;
+            subTableSplitSize++;
+        }
+
+        subTableSplitSize++;
+        subTableSplit = new int[subTableSplitSize];
+        for (int i = 0; i < subTableSplitSize; i++) {
+            subTableSplit[i] = temp[i];
+            System.out.println("subTableSplit[" + i +"] = " + temp[i]);
+        }
+    }
+    protected void getMaxPages(){
+        //处理第一页
+        int firstHeight = 0;
+        if(titleStatus != NO_PAGES){
+            firstHeight += titleHeight;
+        }
+        if(headerStatus != NO_PAGES){
+            firstHeight += headerHeight;
+        }
+        int height = tableHeight - (pageHeight - firstHeight - fontHeight * 2);
+        if(height < 0){
+            m_pages = 1;
+        }else{
+            m_pages = height / tableHeightOnFullPage + 1;
+        }
+        //处理最后一页
+        if (height % tableHeightOnFullPage >= rowHeight) {// at least 1 more row left
+            m_pages++;
+        }
+        m_pages *= (subTableSplitSize - 1);
+        System.out.println("pages:= " + m_pages);
+    }
+
+    public Printable getPrintable(int index) {
+        return this;
+    }
+    /**
+     * Perform the printing here
+     */
+    public int print(Graphics g, PageFormat pf, int pageIndex) {
+        if(!fontDone)
+            getFontInfo(g);
+        //Get the table's preferred size
+        if ((table.getWidth() == 0) || (table.getHeight() == 0)) {
+            table.setSize(table.getPreferredSize());
+        }
+        //Get the title's preferred size
+        if(title.getWidth() != table.getColumnModel().getTotalColumnWidth()){
+            title.setSize(table.getColumnModel().getTotalColumnWidth(),(int)title.getPreferredSize().getHeight());
+        }
+        if (pageIndex >= m_pages)
+            return NO_SUCH_PAGE;
+
+        if (prevPageIndex != pageIndex) {
+            subPageIndex++;
+            if (subPageIndex == subTableSplitSize - 1) {
+                subPageIndex = 0;
+            }
+        }
+
+        int X = (int) pageFormat.getImageableX();
+        int Y = (int) pageFormat.getImageableY();
+
+        g.translate(X, Y);
+        int rowIndex = pageIndex / (subTableSplitSize - 1);
+        //关闭双缓冲
+        RepaintManager manager = RepaintManager.currentManager(table);
+        boolean wasEnabled = manager.isDoubleBufferingEnabled();
+        manager.setDoubleBufferingEnabled(false);
+
+        printSubTable(g, rowIndex, subPageIndex);
+
+        //打开双缓冲
+        manager.setDoubleBufferingEnabled(true);
+
+        prevPageIndex = pageIndex;
+
+        return Printable.PAGE_EXISTS;
+    }
+    protected void printSubTable(Graphics g,int rowIndex,int columnIndex) {
+        int ipY = 0;//指针
+
+        String pageNumber = "页: " + (rowIndex + 1);
+        if (subTableSplitSize > 1)
+            pageNumber += "-" + (columnIndex + 1);
+        pageNumber += " 共" + m_pages/(subTableSplitSize-1) + "页";
+        g.drawString(pageNumber, pageWidth / 2 - 35, pageHeight - fontHeight);
+
+        int pageLeft = subTableSplit[columnIndex];
+        int pageRight = subTableSplit[columnIndex + 1];
+
+        int pageWidth = subTableSplit[columnIndex + 1] - subTableSplit[columnIndex];
+
+        int clipHeight =
+            Math.min(tableHeightOnFullPage, tableHeight - rowIndex * tableHeightOnFullPage);
+
+        if(rowIndex == 0){//第一页
+            g.translate(-subTableSplit[columnIndex], 0);
+            g.setClip(pageLeft, 0, pageWidth, titleHeight);
+        Font font = g.getFont();
+        FontMetrics fm = g.getFontMetrics();
+
+//            title.paint(g); // drawing the header on every page
+            g.drawRect(0,0,50,50);
+            g.drawRect(50,0,50,50);
+            g.drawLine(20,20,40,40);
+            g.translate(0, titleHeight);
+            g.translate(subTableSplit[columnIndex], 0);
+            clipHeight -= titleHeight;
+        }
+
+        //g.drawLine(0, 0, 0, clipHeight + headerHeight);
+        g.translate(-subTableSplit[columnIndex], 0);
+        g.setClip(pageLeft, 0, pageWidth, headerHeight);
+        tableHeader.paint(g); // drawing the header on every page
+        g.translate(0, headerHeight);
+
+        g.translate(0, -tableHeightOnFullPage * rowIndex);
+        // cut table image and draw on the page
+        g.setClip(pageLeft, tableHeightOnFullPage * rowIndex, pageWidth, clipHeight);
+        table.paint(g);
+        // draw the board
+        int pageTop = tableHeightOnFullPage * rowIndex - headerHeight;
+        int pageBottom = pageTop + clipHeight + headerHeight;
+        //g.drawLine(subTableSplit[columnIndex], tableHeightOnFullPage*rowIndex, subTableSplit[columnIndex], tableHeightOnFullPage*rowIndex + clipHeight + headerHeight);
+        //g.drawLine(subTableSplit[columnIndex+1], tableHeightOnFullPage*rowIndex, subTableSplit[columnIndex+1], tableHeightOnFullPage*rowIndex + clipHeight + headerHeight);
+
+        g.drawRect(pageLeft, pageTop, pageWidth, clipHeight + headerHeight);
+
+        //g.drawLine(pageLeft, pageTop, pageRight, pageTop);
+        //g.drawLine(pageLeft, pageTop, pageLeft, pageBottom);
+        //g.drawLine(pageRight, pageTop, pageRight, pageBottom);
+        //g.drawLine(pageLeft, pageBottom, pageRight, pageBottom);
+
+    }
+}

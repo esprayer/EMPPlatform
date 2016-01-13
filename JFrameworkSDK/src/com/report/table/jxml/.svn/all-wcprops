@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/CVSpace/!svn/ver/7738/SinopecFMISSDK/JFrameworkSDK/src/com/pansoft/report/table/jxml
+END
+XmlLabel.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/CVSpace/!svn/ver/6293/SinopecFMISSDK/JFrameworkSDK/src/com/pansoft/report/table/jxml/XmlLabel.java
+END
+XmlTitle.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/CVSpace/!svn/ver/6293/SinopecFMISSDK/JFrameworkSDK/src/com/pansoft/report/table/jxml/XmlTitle.java
+END
+XmlTable.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/CVSpace/!svn/ver/7738/SinopecFMISSDK/JFrameworkSDK/src/com/pansoft/report/table/jxml/XmlTable.java
+END
+XmlTail.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/CVSpace/!svn/ver/7738/SinopecFMISSDK/JFrameworkSDK/src/com/pansoft/report/table/jxml/XmlTail.java
+END
+XmlElement.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/CVSpace/!svn/ver/6293/SinopecFMISSDK/JFrameworkSDK/src/com/pansoft/report/table/jxml/XmlElement.java
+END
+TableDataManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/CVSpace/!svn/ver/7738/SinopecFMISSDK/JFrameworkSDK/src/com/pansoft/report/table/jxml/TableDataManager.java
+END
+XmlGroup.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/CVSpace/!svn/ver/6293/SinopecFMISSDK/JFrameworkSDK/src/com/pansoft/report/table/jxml/XmlGroup.java
+END
+XmlColumn.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/CVSpace/!svn/ver/6293/SinopecFMISSDK/JFrameworkSDK/src/com/pansoft/report/table/jxml/XmlColumn.java
+END
+XmlItem.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/CVSpace/!svn/ver/6293/SinopecFMISSDK/JFrameworkSDK/src/com/pansoft/report/table/jxml/XmlItem.java
+END
+TableManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/CVSpace/!svn/ver/7738/SinopecFMISSDK/JFrameworkSDK/src/com/pansoft/report/table/jxml/TableManager.java
+END
+XmlPhysicalObject.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/CVSpace/!svn/ver/7738/SinopecFMISSDK/JFrameworkSDK/src/com/pansoft/report/table/jxml/XmlPhysicalObject.java
+END
+XmlViewCol.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/CVSpace/!svn/ver/6293/SinopecFMISSDK/JFrameworkSDK/src/com/pansoft/report/table/jxml/XmlViewCol.java
+END
+XmlManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/CVSpace/!svn/ver/7738/SinopecFMISSDK/JFrameworkSDK/src/com/pansoft/report/table/jxml/XmlManager.java
+END
+XMLAttr.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/CVSpace/!svn/ver/6293/SinopecFMISSDK/JFrameworkSDK/src/com/pansoft/report/table/jxml/XMLAttr.java
+END
+TreeTableDataManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/CVSpace/!svn/ver/7738/SinopecFMISSDK/JFrameworkSDK/src/com/pansoft/report/table/jxml/TreeTableDataManager.java
+END

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0_45" class="java.beans.XMLDecoder"> 
+ <object class="esyt.framework.com.component.EMPComposeFormInfo"> 
+  <void property="dataContainerStub"> 
+   <object class="esyt.framework.com.component.EMPComponentStub"> 
+    <void property="refCompStubMap"> 
+     <object class="java.util.HashMap"> 
+      <void method="put"> 
+       <string>3</string> 
+       <object class="java.util.ArrayList"> 
+        <void method="add"> 
+         <object class="esyt.framework.com.component.EMPComponentStub"> 
+          <void property="compClazz"> 
+           <string>com.mrp.biz.dailybusiness.plugins.EMPFormDataCLJZOCK</string> 
+          </void> 
+          <void property="compID"> 
+           <string>3-formDataCLJZOCK-0</string> 
+          </void> 
+          <void property="compName"> 
+           <string>出库表单数据保存插件</string> 
+          </void> 
+          <void property="compScope"> 
+           <string>3</string> 
+          </void> 
+         </object> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="put"> 
+       <string>2</string> 
+       <object class="java.util.ArrayList"> 
+        <void method="add"> 
+         <object class="esyt.framework.com.component.EMPComponentStub"> 
+          <void property="compClazz"> 
+           <string>com.mrp.biz.server.plugins.resolver.FormHeadDataResolver</string> 
+          </void> 
+          <void property="compID"> 
+           <string>2-formHeadDataResolver-0</string> 
+          </void> 
+          <void property="compName"> 
+           <string>表单头信息保存插件</string> 
+          </void> 
+          <void property="compScope"> 
+           <string>2</string> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="esyt.framework.com.component.EMPComponentStub"> 
+          <void property="compClazz"> 
+           <string>com.mrp.biz.server.plugins.resolver.FormItemDataResolver</string> 
+          </void> 
+          <void property="compID"> 
+           <string>2-formItemDataResolver-1</string> 
+          </void> 
+          <void property="compName"> 
+           <string>表单分录信息保存插件</string> 
+          </void> 
+          <void property="compScope"> 
+           <string>2</string> 
+          </void> 
+         </object> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="put"> 
+       <string>1</string> 
+       <object class="java.util.ArrayList"> 
+        <void method="add"> 
+         <object class="esyt.framework.com.component.EMPComponentStub"> 
+          <void property="compClazz"> 
+           <string>com.mrp.biz.server.plugins.resolver.FormDataProvider</string> 
+          </void> 
+          <void property="compID"> 
+           <string>1-formDataProvider-0</string> 
+          </void> 
+          <void property="compName"> 
+           <string>表单数据加载插件</string> 
+          </void> 
+          <void property="compScope"> 
+           <string>1</string> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="esyt.framework.com.component.EMPComponentStub"> 
+          <void property="compClazz"> 
+           <string>com.mrp.biz.dailybusiness.plugins.EMPCheckFormDataCLCKD</string> 
+          </void> 
+          <void property="compID"> 
+           <string>1-CheckFormDataCLCKD-1</string> 
+          </void> 
+          <void property="compName"> 
+           <string>材料出库单数据检查插件</string> 
+          </void> 
+          <void property="compScope"> 
+           <string>1</string> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="esyt.framework.com.component.EMPComponentStub"> 
+          <void property="compClazz"> 
+           <string>com.mrp.biz.server.plugins.resolver.FormSubmitCheckValue</string> 
+          </void> 
+          <void property="compID"> 
+           <string>1-formSubmitCheckValue-2</string> 
+          </void> 
+          <void property="compName"> 
+           <string>表单提交数据检查插件</string> 
+          </void> 
+          <void property="compScope"> 
+           <string>1</string> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="esyt.framework.com.component.EMPComponentStub"> 
+          <void property="compClazz"> 
+           <string>com.mrp.biz.server.plugins.resolver.FormDefValueSet</string> 
+          </void> 
+          <void property="compID"> 
+           <string>1-formDefValue-3</string> 
+          </void> 
+          <void property="compName"> 
+           <string>默认值设置插件</string> 
+          </void> 
+          <void property="compScope"> 
+           <string>1</string> 
+          </void> 
+         </object> 
+        </void> 
+        <void method="add"> 
+         <object class="esyt.framework.com.component.EMPComponentStub"> 
+          <void property="compClazz"> 
+           <string>com.mrp.biz.server.plugins.resolver.FormDataDeleter</string> 
+          </void> 
+          <void property="compID"> 
+           <string>1-formDataDeleter-4</string> 
+          </void> 
+          <void property="compName"> 
+           <string>表单数据删除插件</string> 
+          </void> 
+          <void property="compScope"> 
+           <string>1</string> 
+          </void> 
+         </object> 
+        </void> 
+       </object> 
+      </void> 
+     </object> 
+    </void> 
+   </object> 
+  </void> 
+  <void property="formID"> 
+   <string>SubmitCKDResolver</string> 
+  </void> 
+  <void property="formName"> 
+   <string>出库单提交服务</string> 
+  </void> 
+ </object> 
+</java> 

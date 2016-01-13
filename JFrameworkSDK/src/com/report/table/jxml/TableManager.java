@@ -1,0 +1,835 @@
+package com.report.table.jxml;
+
+import org.jdom.*;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Vector;
+import java.awt.Font;
+
+/**
+ * <p>Title: </p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @author not attributable
+ * @version 1.0
+ */
+
+public class TableManager
+    extends XmlManager {
+  protected Element Table;
+  protected Element TableTitle;
+  //增加 表尾 2007-8-28 fengbo
+  protected Element TableTail;
+  protected Element TableFormate;
+  public Element Cols;
+  public Element Groups;
+  public Element TableView;
+  protected Element AttrExt;
+
+  /**
+   * 单元格内容换行标志符
+   */
+  public final static String NEW_LINE = "__NL__";
+  /**
+   * 是否打印表头的属性ID
+   */
+  public final static String ATTR_PRINT_HEAD_ID = "__PRINT_HEAD__";
+  public final static String ATTR_VALUE_YES = "1";
+  public final static String ATTR_VALUE_NO = "0";
+
+  String mRptID, mRptName;
+  Vector columns = null;
+  Vector groups = null;
+  Vector titles = null;
+  Vector tails = null;
+  Vector tableView = null;
+  Vector attrExts = null;
+
+  public TableManager() {
+    super();
+    init();
+  }
+
+  public TableManager(InputStream is) {
+    super();
+
+    super.InitXMLStream(is);
+    init();
+  }
+
+  public TableManager(String s) {
+    super(s);
+
+    init();
+  }
+
+  private void init() {
+    /*
+         List TableList = super.getElementsByTagName("Table");
+         if(TableList != null && TableList.size() > 0){
+      Table = (Element)TableList.get(0);
+         }else{
+      Table =  super.CreateElement("Table");
+      super.getRootElement().addContent(Table);
+         }
+     */
+    Element TT = super.getRootElement();
+    if (TT == null) {
+      TT = super.CreateElement("Table");
+      super.Root = TT;
+    }
+
+    Table = TT;
+
+    //表头
+    List TableTitleList = super.getElementsByTagName("TableTitle");
+    if (TableTitleList != null && TableTitleList.size() > 0) {
+      TableTitle = (Element) TableTitleList.get(0);
+    }
+    else {
+      TableTitle = super.CreateElement("TableTitle");
+      super.getRootElement().addContent(TableTitle);
+    }
+
+    //表体
+    List TableFormateList = super.getElementsByTagName("TableFormate");
+    if (TableFormateList != null && TableFormateList.size() > 0) {
+      TableFormate = (Element) TableFormateList.get(0);
+    }
+    else {
+      TableFormate = super.CreateElement("TableFormate");
+      super.getRootElement().addContent(TableFormate);
+    }
+
+    //表尾
+    List TableTailList = super.getElementsByTagName("TableTail");
+    if (TableTailList != null && TableTailList.size() > 0) {
+      TableTail = (Element) TableTailList.get(0);
+    }
+    else {
+      TableTail = super.CreateElement("TableTail");
+      super.getRootElement().addContent(TableTail);
+    }
+
+    //属性扩展
+    List AttrExtList = super.getElementsByTagName("AttrExt");
+    if (AttrExtList != null && AttrExtList.size() > 0) {
+      AttrExt = (Element) AttrExtList.get(0);
+    }
+    else {
+      AttrExt = super.CreateElement("AttrExt");
+      super.getRootElement().addContent(AttrExt);
+    }
+
+    List ColsList = super.getChildrenNodes(TableFormate, "Cols");
+    if (ColsList != null && ColsList.size() > 0) {
+      Cols = (Element) ColsList.get(0);
+    }
+    else {
+      Cols = super.CreateElement("Cols");
+      TableFormate.addContent(Cols);
+    }
+
+    List GroupsList = super.getChildrenNodes(TableFormate, "Groups");
+    if (GroupsList != null && GroupsList.size() > 0) {
+      Groups = (Element) GroupsList.get(0);
+    }
+    else {
+      Groups = super.CreateElement("Groups");
+      TableFormate.addContent(Groups);
+    }
+
+    List TableViewList = super.getChildrenNodes(TableFormate, "TableView");
+    if (TableViewList != null && TableViewList.size() > 0) {
+      TableView = (Element) TableViewList.get(0);
+    }
+    else {
+      TableView = super.CreateElement("TableView");
+      TableFormate.addContent(TableView);
+    }
+  }
+
+  /**
+   * 增加标题。
+   * @param t XmlTitle
+   */
+  public void addTitle(XmlTitle t) {
+    Element Title;
+    Title = super.CreateElement("Title");
+    Title.setAttribute("id", t.getId());
+    Title.setAttribute("name", t.getName());
+    Title.setAttribute("align", t.getAlign());
+    Title.setAttribute("fontname", t.getFontname());
+    Title.setAttribute("fontstyle", t.getFontstyle());
+    Title.setAttribute("fontsize", t.getFontsize());
+    Vector labels = t.getLabels();
+    for (int i = 0; i < labels.size(); i++) {
+      XmlLabel label = (XmlLabel) labels.elementAt(i);
+      Element Label = super.CreateElement("Label");
+      Label.setAttribute("id", label.getId());
+      Label.setAttribute("name", label.getName());
+      Label.setAttribute("caption", label.getCaption());
+      Title.addContent(Label);
+    }
+    TableTitle.addContent(Title);
+  }
+
+  /**
+   * 增加表尾。
+   * @param t XmlTitle
+   */
+  public void addTail(XmlTail t) {
+    Element Tail;
+    Tail = super.CreateElement("Tail");
+    Tail.setAttribute("id", t.getId());
+    Tail.setAttribute("name", t.getName());
+    Tail.setAttribute("align", t.getAlign());
+    Tail.setAttribute("fontname", t.getFontname());
+    Tail.setAttribute("fontstyle", t.getFontstyle());
+    Tail.setAttribute("fontsize", t.getFontsize());
+    Vector labels = t.getLabels();
+    for (int i = 0; i < labels.size(); i++) {
+      XmlLabel label = (XmlLabel) labels.elementAt(i);
+      Element Label = super.CreateElement("Label");
+      Label.setAttribute("id", label.getId());
+      Label.setAttribute("name", label.getName());
+      Label.setAttribute("caption", label.getCaption());
+      Tail.addContent(Label);
+    }
+    TableTail.addContent(Tail);
+  }
+
+  /**
+   * 增加属性。
+   * @param t XMLAttr
+   */
+  public void addAttr(XMLAttr t) {
+    Element attr;
+    attr = super.CreateElement("Attr");
+    attr.setAttribute("id", t.getId());
+    attr.setAttribute("name", t.getName());
+    attr.setAttribute("value", t.getValue());
+    AttrExt.addContent(attr);
+  }
+
+  public void addColumn(XmlColumn c) {
+    Element Column;
+    Column = super.CreateElement("Col");
+
+    Column.setAttribute("align", c.getAlign());
+    Column.setAttribute("caption", c.getCaption());
+    Column.setAttribute("change", c.getChange());
+    Column.setAttribute("datatype", c.getDatatype());
+    Column.setAttribute("editctrl", c.getEditctrl());
+    Column.setAttribute("fontname", c.getFontname());
+    Column.setAttribute("fontstyle", c.getFontstyle());
+    Column.setAttribute("fontsize", c.getFontsize());
+    Column.setAttribute("format", c.getFormat());
+    Column.setAttribute("id", c.getId());
+    Column.setAttribute("lock", c.getLock());
+    Column.setAttribute("name", c.getName());
+    Column.setAttribute("no", c.getNo());
+    Column.setAttribute("viewctrl", c.getViewctrl());
+    Column.setAttribute("width", c.getWidth());
+    Column.setAttribute("showmask", c.getShowMask());
+    Cols.addContent(Column);
+
+  }
+
+  //在index之前插入一个Cols节点,by God
+  public void addColumn(XmlColumn c, int index) {
+    Element Column;
+    Column = super.CreateElement("Col");
+
+    Column.setAttribute("align", c.getAlign());
+    Column.setAttribute("caption", c.getCaption());
+    Column.setAttribute("change", c.getChange());
+    Column.setAttribute("datatype", c.getDatatype());
+    Column.setAttribute("editctrl", c.getEditctrl());
+    Column.setAttribute("fontname", c.getFontname());
+    Column.setAttribute("fontstyle", c.getFontstyle());
+    Column.setAttribute("fontsize", c.getFontsize());
+    Column.setAttribute("format", c.getFormat());
+    Column.setAttribute("id", c.getId());
+    Column.setAttribute("lock", c.getLock());
+    Column.setAttribute("name", c.getName());
+    Column.setAttribute("no", c.getNo());
+    Column.setAttribute("viewctrl", c.getViewctrl());
+    Column.setAttribute("width", c.getWidth());
+    Column.setAttribute("showmask", c.getShowMask());
+    super.InsertBefore(Cols, Column, index);
+  }
+
+  //删除一个Col节点,by God
+  public void removeColumn(int index) {
+    super.RemoveAt(super.getRootElement(), index);
+  }
+
+  public void addGroup(XmlGroup g) {
+    Element Group;
+    Group = super.CreateElement("Group");
+
+    Group.setAttribute("caption", g.getCaption());
+    Group.setAttribute("fontname", g.getFontname());
+    Group.setAttribute("fontstyle", g.getFontstyle());
+    Group.setAttribute("fontsize", g.getFontsize());
+    Group.setAttribute("id", g.getId());
+    Group.setAttribute("name", g.getName());
+    Group.setAttribute("no", g.getNo());
+
+    Vector items = g.getItems();
+    for (int i = 0; i < items.size(); i++) {
+      XmlItem item = (XmlItem) items.elementAt(i);
+      Element Item = super.CreateElement("Item");
+      Item.setAttribute("id", item.getId());
+      Item.setAttribute("type", item.getType());
+      Group.addContent(Item);
+    }
+
+    Groups.addContent(Group);
+
+  }
+
+  public void addViewCol(XmlViewCol v) {
+    Element ViewCol;
+    ViewCol = super.CreateElement("ViewCol");
+
+    ViewCol.setAttribute("id", v.getId());
+    ViewCol.setAttribute("type", v.getType());
+
+    TableView.addContent(ViewCol);
+  }
+
+  //在index之前插入一个ViewCol节点
+  public void addViewCol(XmlViewCol v, int index) {
+    Element ViewCol;
+    ViewCol = super.CreateElement("ViewCol");
+
+    ViewCol.setAttribute("id", v.getId());
+    ViewCol.setAttribute("type", v.getType());
+
+//      TableView.appendChild(ViewCol);
+    super.InsertBefore(TableView, ViewCol, index);
+
+  }
+
+  //删除一个ViewCol节点
+  public void removeViewCol(int index) {
+    super.RemoveAt(TableView, index);
+  }
+
+  public Object[] getColId() {
+    Vector cols = getColumns();
+    XmlColumn col = null;
+    Object[] cc = new Object[cols.size()];
+    for (int i = 0; i < cols.size(); i++) {
+      col = (XmlColumn) cols.get(i);
+      cc[i] = col.getId();
+    }
+    return cc;
+  }
+
+  public Vector getColumns() {
+//    if ( columns != null ) return columns;
+    columns = new Vector();
+
+    List Nodes = super.getChildrenNodes(Cols, "Col");
+    if (Nodes == null || Nodes.size() == 0) {
+      return columns;
+    }
+
+    ////System.out.println("len = "+ colList.getLength());
+    for (int i = 0; i < Nodes.size(); i++) {
+      XmlColumn col = new XmlColumn();
+      Element colNode = (Element) Nodes.get(i);
+
+      //现在不需要判断
+      //if (colNode.getNodeType() == Node.ELEMENT_NODE) {
+      //printNode(colNode);
+      col.setId(getAttribute(colNode, "id"));
+      col.setName(getAttribute(colNode, "name"));
+      col.setNo(getAttribute(colNode, "no"));
+      col.setCaption(getAttribute(colNode, "caption"));
+      col.setFontname(getAttribute(colNode, "fontname"));
+      col.setFontstyle(getAttribute(colNode, "fontstyle"));
+      col.setFontsize(getAttribute(colNode, "fontsize"));
+      col.setWidth(getAttribute(colNode, "width"));
+      col.setViewctrl(getAttribute(colNode, "viewctrl"));
+      col.setEditctrl(getAttribute(colNode, "editctrl"));
+      col.setLock(getAttribute(colNode, "lock"));
+      col.setChange(getAttribute(colNode, "change"));
+      col.setFormat(getAttribute(colNode, "format"));
+      col.setAlign(getAttribute(colNode, "align"));
+      col.setDatatype(getAttribute(colNode, "datatype"));
+      col.setShowMask(getAttribute(colNode, "showmask"));
+      columns.addElement(col);
+      //}
+
+    }
+
+    return columns;
+
+  }
+
+  public Vector getGroups() {
+//    if ( groups != null ) return groups;
+    groups = new Vector();
+    List Nodes = super.getChildrenNodes(Groups, "Group");
+    if (Nodes == null || Nodes.size() == 0) {
+      return groups;
+    }
+
+    for (int i = 0; i < Nodes.size(); i++) {
+      XmlGroup element = new XmlGroup();
+      Element node = (Element) Nodes.get(i);
+
+      //if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+      element.setId(getAttribute(node, "id"));
+      element.setName(getAttribute(node, "name"));
+      element.setNo(getAttribute(node, "no"));
+      element.setCaption(getAttribute(node, "caption"));
+      element.setFontname(getAttribute(node, "fontname"));
+      element.setFontstyle(getAttribute(node, "fontstyle"));
+      element.setFontsize(getAttribute(node, "fontsize"));
+
+      //获得Group下的Ｉtems
+      List itemLists = super.getChildrenNodes(node, "Item");
+      Vector items = new Vector();
+      for (int j = 0; j < itemLists.size(); j++) {
+        XmlItem item = new XmlItem();
+        Element itemNode = (Element) itemLists.get(j);
+
+        //if (itemNode.getNodeType() == Node.ELEMENT_NODE) {
+
+        item.setId(getAttribute(itemNode, "id"));
+        //item.setName(getAttribute(itemNode, "name"));
+        item.setType(getAttribute(itemNode, "type"));
+        items.addElement(item);
+
+        //}
+
+      }
+      element.setItems(items);
+      groups.addElement(element);
+      //}
+
+    }
+
+    return groups;
+  }
+
+  public Vector getTitles() {
+    titles = new Vector();
+
+    List Nodes = super.getChildrenNodes(TableTitle, "Title");
+    if (Nodes == null || Nodes.size() == 0) {
+      return titles;
+    }
+
+    for (int i = 0; i < Nodes.size(); i++) {
+      Element tempTitle = (Element) Nodes.get(i);
+      XmlTitle title = new XmlTitle();
+      title.setAlign(getAttribute(tempTitle, "align"));
+      title.setFontname(getAttribute(tempTitle, "fontname"));
+      title.setFontstyle(getAttribute(tempTitle, "fontstyle"));
+      title.setFontsize(getAttribute(tempTitle, "fontsize"));
+
+      List labelList = super.getChildrenNodes(tempTitle, "Label");
+      Vector vLabels = new Vector();
+      for (int j = 0; j < labelList.size(); j++) {
+        Element tempLabel = (Element) labelList.get(j);
+        XmlLabel label = new XmlLabel();
+        label.setCaption(getAttribute(tempLabel, "caption"));
+        vLabels.addElement(label);
+      }
+      title.setLabels(vLabels);
+      titles.addElement(title);
+    }
+    return titles;
+  }
+
+  public Vector getTails() {
+    tails = new Vector();
+    List Nodes = super.getChildrenNodes(TableTail, "Tail");
+    if (Nodes == null || Nodes.size() == 0) {
+      return tails;
+    }
+    for (int i = 0; i < Nodes.size(); i++) {
+      Element tempTail = (Element) Nodes.get(i);
+      XmlTail tail = new XmlTail();
+      tail.setAlign(getAttribute(tempTail, "align"));
+      tail.setFontname(getAttribute(tempTail, "fontname"));
+      tail.setFontstyle(getAttribute(tempTail, "fontstyle"));
+      tail.setFontsize(getAttribute(tempTail, "fontsize"));
+
+      List labelList = super.getChildrenNodes(tempTail, "Label");
+      Vector vLabels = new Vector();
+      for (int j = 0; j < labelList.size(); j++) {
+        Element tempLabel = (Element) labelList.get(j);
+        XmlLabel label = new XmlLabel();
+        label.setCaption(getAttribute(tempLabel, "caption"));
+        vLabels.addElement(label);
+      }
+      tail.setLabels(vLabels);
+      tails.addElement(tail);
+    }
+    return tails;
+  }
+
+  public Vector getAttrExt() {
+    attrExts = new Vector();
+    List Nodes = super.getChildrenNodes(AttrExt, "Attr");
+    if (Nodes == null || Nodes.size() == 0) {
+      return attrExts;
+    }
+    for (int i = 0; i < Nodes.size(); i++) {
+      XMLAttr attr = new XMLAttr();
+      Element node = (Element) Nodes.get(i);
+      attr.setId(getAttribute(node, "id"));
+      attr.setValue(getAttribute(node, "value"));
+      attr.setName(getAttribute(node, "name"));
+      attrExts.addElement(attr);
+    }
+    return attrExts;
+  }
+
+  public Vector getTableView() {
+//    if ( tableView != null ) return tableView;
+    tableView = new Vector();
+
+    List Nodes = super.getChildrenNodes(TableView, "ViewCol");
+
+    if (Nodes == null || Nodes.size() == 0) {
+      return tableView;
+    }
+
+    for (int i = 0; i < Nodes.size(); i++) {
+      XmlViewCol view = new XmlViewCol();
+      Element viewNode = (Element) Nodes.get(i);
+      //if (viewNode.getNodeType() == Node.ELEMENT_NODE) {
+      //printNode(viewNode);
+
+      view.setId(getAttribute(viewNode, "id"));
+      view.setType(getAttribute(viewNode, "type"));
+      tableView.addElement(view);
+      //}
+
+    }
+
+    return tableView;
+  }
+
+  public static Font getFont(String fontname, String fontstyle, String fontsize) {
+    int iStyle;
+    int iSize = Integer.parseInt(fontsize);
+    if (fontstyle.equalsIgnoreCase("b")) {
+      iStyle = Font.BOLD;
+    }
+    else if (fontstyle.equalsIgnoreCase("i")) {
+      iStyle = Font.ITALIC;
+    }
+    else if (fontstyle.equalsIgnoreCase("r")) {
+      iStyle = Font.ROMAN_BASELINE;
+    }
+    else {
+      iStyle = Font.PLAIN;
+    }
+    Font font = new Font(fontname, iStyle, iSize);
+    return font;
+  }
+
+  public XmlViewCol getViewColById(String id) {
+    XmlElement XE = getElementById(getTableView(), id);
+    return (XmlViewCol) XE;
+  }
+
+  public XmlTitle getTitleById(String id) {
+    XmlElement XE = getElementById(getTitles(), id);
+    return (XmlTitle) XE;
+  }
+
+  public XmlColumn getColumnById(String id) {
+    return (XmlColumn) getElementById(this.getColumns(), id);
+  }
+
+  public XmlGroup getGroupById(String id) {
+    return (XmlGroup) getElementById(this.getGroups(), id);
+  }
+
+  /**
+   * 更新一个GROUP,如果没有，新加之。有，更新除ID之外的所有属性。
+   * @param id
+   * @return
+   */
+  public boolean UpdateGroup(XmlGroup g) {
+
+    List ChildGroups = super.getChildrenNodes(Groups, "Group");
+
+    for (int i = 0; i < ChildGroups.size(); i++) {
+      Element Group = (Element) ChildGroups.get(i);
+      if (Group.getAttribute("id").getValue().equals(g.getId())) {
+        Group.setAttribute("caption", g.getCaption());
+        Group.setAttribute("fontname", g.getFontname());
+        Group.setAttribute("fontstyle", g.getFontstyle());
+        Group.setAttribute("fontsize", g.getFontsize());
+        Group.setAttribute("id", g.getId());
+        Group.setAttribute("name", g.getName());
+        Group.setAttribute("no", g.getNo());
+
+        //因为是更新，先删除原来的子结点。
+        Group.removeChildren();
+
+        //加入子结点。
+        Vector items = g.getItems();
+        for (int j = 0; j < items.size(); j++) {
+          XmlItem item = (XmlItem) items.elementAt(j);
+          Element Item = super.CreateElement("Item");
+          Item.setAttribute("id", item.getId());
+          Item.setAttribute("type", item.getType());
+          Group.addContent(Item);
+        }
+
+        return true;
+      }
+    } //for
+
+    //新加
+    addGroup(g);
+
+    return true;
+
+  }
+
+  /**
+   * 更新一个GROUP,如果没有，新加之。有，更新除ID之外的所有属性。
+   * @param id
+   * @return
+   */
+  public boolean UpdateColumn(XmlColumn c) {
+
+    List ChildCols = super.getChildrenNodes(Cols, "Col");
+
+    for (int i = 0; i < ChildCols.size(); i++) {
+      Element Column = (Element) ChildCols.get(i);
+      if (Column.getAttribute("id").getValue().equals(c.getId())) {
+
+        Column.setAttribute("align", c.getAlign());
+        Column.setAttribute("caption", c.getCaption());
+        Column.setAttribute("change", c.getChange());
+        Column.setAttribute("datatype", c.getDatatype());
+        Column.setAttribute("editctrl", c.getEditctrl());
+        Column.setAttribute("fontname", c.getFontname());
+        Column.setAttribute("fontstyle", c.getFontstyle());
+        Column.setAttribute("fontsize", c.getFontsize());
+        Column.setAttribute("format", c.getFormat());
+        Column.setAttribute("id", c.getId());
+        Column.setAttribute("lock", c.getLock());
+        Column.setAttribute("name", c.getName());
+        Column.setAttribute("no", c.getNo());
+        Column.setAttribute("viewctrl", c.getViewctrl());
+        Column.setAttribute("width", c.getWidth());
+        Column.setAttribute("showmask", c.getShowMask());
+        return true;
+      }
+    } //for
+
+    //新加
+    addColumn(c);
+
+    return true;
+
+  }
+
+  public void setCaptionByGroupId(String id, String caption) {
+    setCaptionById(Groups, "Group", id, caption);
+  }
+
+  public void setCaptionByColumnId(String id, String caption) {
+    setCaptionById(Cols, "Col", id, caption);
+  }
+
+  public void setCaptionById(Element parent, String nodeName, String id,
+                             String caption) {
+    // List Nodes = super.getChildrenNodes(super.getRootElement(),nodeName);
+    List Nodes = super.getChildrenNodes(parent, nodeName);
+    if (Nodes == null) {
+      return;
+    }
+    for (int i = 0; i < Nodes.size(); i++) {
+      Element node = (Element) Nodes.get(i);
+
+      if (node.getAttribute("id").getValue().equals(id)) {
+        node.setAttribute("caption", caption);
+      }
+    }
+  }
+
+  public void setCaptionByTitleIdAndLabelId(String titleId, String labelId,
+                                            String caption) {
+    List list = super.getChildrenNodes(TableTitle, "Title");
+    if (list == null) {
+      return;
+    }
+    for (int i = 0; i < list.size(); i++) {
+
+      Element node = (Element) list.get(i);
+
+      if (node.getAttribute("id").getValue().equals(titleId)) {
+        List list1 = super.getChildrenNodes(node, "Label");
+        if (list1 == null) {
+          return;
+        }
+        for (int j = 0; j < list1.size(); j++) {
+          Element node1 = (Element) list1.get(j);
+
+          if (node1.getAttribute("id").getValue().equals(labelId)) {
+            node1.setAttribute("caption", caption);
+          }
+        }
+      }
+    }
+  }
+
+  public void setCaptionByTailIdAndLabelId(String tailId, String labelId,
+                                           String caption) {
+    List list = super.getChildrenNodes(TableTail, "Tail");
+    if (list == null) {
+      return;
+    }
+    for (int i = 0; i < list.size(); i++) {
+      Element node = (Element) list.get(i);
+      if (node.getAttribute("id").getValue().equals(tailId)) {
+        List list1 = super.getChildrenNodes(node, "Label");
+        if (list1 == null) {
+          return;
+        }
+        for (int j = 0; j < list1.size(); j++) {
+          Element node1 = (Element) list1.get(j);
+          if (node1.getAttribute("id").getValue().equals(labelId)) {
+            node1.setAttribute("caption", caption);
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * 设置标题属性。
+   * @param titleId String   标题ID
+   * @param attribute String 属性名
+   * @param value String     属性值
+   */
+  public void setTitleAttributeById(String titleId,
+                                    String attribute,
+                                    String value) {
+    List list = super.getChildrenNodes(TableTitle, "Title");
+    if (list == null) {
+      return;
+    }
+    for (int i = 0; i < list.size(); i++) {
+      Element node = (Element) list.get(i);
+      if (node.getAttribute("id").getValue().equals(titleId)) {
+        node.setAttribute(attribute, value);
+      }
+    }
+  }
+
+  /**
+   * 设置表尾属性。
+   * @param tailId String    表尾ID
+   * @param attribute String 属性名
+   * @param value String     属性值
+   */
+  public void setTailAttributeById(String tailId,
+                                   String attribute,
+                                   String value) {
+    List list = super.getChildrenNodes(TableTail, "Tail");
+    if (list == null) {
+      return;
+    }
+    for (int i = 0; i < list.size(); i++) {
+      Element node = (Element) list.get(i);
+      if (node.getAttribute("id").getValue().equals(tailId)) {
+        node.setAttribute(attribute, value);
+      }
+    }
+  }
+
+  /**
+   * 2007-9-18 fengbo
+   * 删除列ViewCol
+   * @param id String ViewCol 的ID
+   */
+  public void removeViewElementByID( String id) {
+    List list = TableView.getChildren();
+    Element node=null;
+    for (int i = 0; i < list.size(); i++) {
+      node = (Element) list.get(i);
+      if (node.getAttribute("id").getValue().equals(id)) {
+        TableView.removeContent(node);
+      }
+    }
+  }
+
+  public String getRptID() {
+    if (mRptID == null) {
+      try {
+        mRptID = Table.getAttribute("name").getValue();
+      }
+      catch (Exception E) {
+        mRptID = "Default";
+      }
+    }
+    return mRptID;
+  }
+
+  public String getRptName() {
+    if (mRptName == null) {
+      try {
+        mRptName = Table.getAttribute("name").getValue();
+      }
+      catch (Exception E) {
+        mRptName = "Default";
+      }
+    }
+    return mRptName;
+  }
+
+  public void setRptID(String rtpid) {
+    if (rtpid != null) {
+      try {
+        Table.setAttribute("name", rtpid);
+      }
+      catch (Exception E) {
+      }
+    }
+  }
+
+  public void setRptName(String rptname) {
+    if (rptname != null) {
+      try {
+        Table.setAttribute("name", rptname);
+      }
+      catch (Exception E) {
+      }
+    }
+  }
+
+  public static void main(String[] args) {
+//    TableManager tm = new TableManager();
+//    XMLAttr attr=new XMLAttr();
+//    attr.setId("k1");
+//    attr.setValue("123");
+//    tm.addAttr(attr);
+//    tm.printDOMTree();
+//    Vector v=tm.getAttrExt();
+//    v.size();
+
+    TableManager tm = new TableManager("D:/tm5.xml");
+    tm.printDOMTree();
+    Vector v=tm.getAttrExt();
+    v.size();
+  }
+}

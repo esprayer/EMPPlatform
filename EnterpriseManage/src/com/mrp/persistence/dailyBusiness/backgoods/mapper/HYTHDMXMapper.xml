@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.mrp.persistence.dailyBusiness.backgoods.mapper.HYTHDMXMapper">
+	<resultMap id="rm" type="com.mrp.persistence.dailyBusiness.backgoods.bean.HYTHDMX">
+		<result property="F_KJQJ" jdbcType="VARCHAR" column="F_KJQJ"/>
+        <result property="F_DJBH" jdbcType="VARCHAR" column="F_DJBH"/>
+        <result property="F_GUID" jdbcType="VARCHAR" column="F_GUID"/>
+		<result property="F_FLBH" jdbcType="VARCHAR" column="F_FLBH"/>
+		<result property="F_DYKJQJ" jdbcType="VARCHAR" column="F_DYKJQJ"/>
+        <result property="F_DYDJBH" jdbcType="VARCHAR" column="F_DYDJBH"/>        
+		<result property="F_DYFLBH" jdbcType="VARCHAR" column="F_DYFLBH"/>
+        <result property="F_CLBH" jdbcType="VARCHAR" column="F_CLBH"/>
+        <result property="F_CLMC" jdbcType="VARCHAR" column="F_CLMC"/>
+        <result property="F_SSXMBH" jdbcType="VARCHAR" column="F_SSXMBH"/>
+		<result property="F_SSXMMC" jdbcType="VARCHAR" column="F_SSXMMC"/>
+        <result property="F_SSCPBH" jdbcType="VARCHAR" column="F_SSCPBH"/>
+		<result property="F_SSCPMC" jdbcType="VARCHAR" column="F_SSCPMC"/>
+		<result property="F_YYXMBH" jdbcType="VARCHAR" column="F_YYXMBH"/>
+		<result property="F_YYXMMC" jdbcType="VARCHAR" column="F_YYXMMC"/>
+        <result property="F_YYCPBH" jdbcType="VARCHAR" column="F_YYCPBH"/>
+		<result property="F_YYCPMC" jdbcType="VARCHAR" column="F_YYCPMC"/>
+		<result property="F_DWBH" jdbcType="VARCHAR" column="F_DWBH"/>
+		<result property="F_DWMC" jdbcType="VARCHAR" column="F_DWMC"/>
+		<result property="F_CSBH" jdbcType="VARCHAR" column="F_CSBH"/>
+		<result property="F_CSMC" jdbcType="VARCHAR" column="F_CSMC"/>
+		<result property="EXT_BIZ_KJQJ" jdbcType="VARCHAR" column="EXT_BIZ_KJQJ"/>
+		<result property="EXT_BIZ_DJBH" jdbcType="VARCHAR" column="EXT_BIZ_DJBH"/>
+		<result property="EXT_BIZ_FLBH" jdbcType="VARCHAR" column="EXT_BIZ_FLBH"/>
+		<result property="EXT_BIZ_FLGUID" jdbcType="VARCHAR" column="EXT_BIZ_FLGUID"/>
+        <result property="F_CLDJ" jdbcType="DECIMAL" column="F_CLDJ"/>		
+		<result property="F_THSL" jdbcType="DECIMAL" column="F_THSL"/>
+		<result property="F_CKSL" jdbcType="DECIMAL" column="F_CKSL"/>
+		<result property="F_BCSL" jdbcType="DECIMAL" column="F_BCSL"/>
+        <result property="F_CRDATE" jdbcType="TIMESTAMP" column="F_CRDATE"/>
+        <result property="F_CHDATE" jdbcType="TIMESTAMP" column="F_CHDATE"/>
+	</resultMap>
+	
+	<select id="loadHYTHDMX" resultMap="rm">
+		SELECT 
+			HYTHDMX.F_DJBH,
+			HYTHDMX.F_KJQJ,
+			HYTHDMX.F_GUID,
+			HYTHDMX.F_FLBH,
+			HYTHDMX.F_FLGUID,
+	        HYTHDMX.F_CLBH,
+	        HYCLZD.F_CLMC,
+	        HYTHDMX.F_SSXMBH,
+	        SSXM.F_XMMC as F_SSXMMC,
+	        HYTHDMX.F_SSCPBH,	
+			SSCP.F_CPMC as F_SSCPMC,
+			HYTHDMX.F_YYXMBH,
+	        YYXM.F_XMMC as F_YYXMMC,
+	        HYTHDMX.F_YYCPBH,	
+			YYCP.F_CPMC as F_YYCPMC,
+			HYTHDMX.F_DWBH,	
+			HYDWZD.F_DWMC,
+			HYTHDMX.F_CSBH,	
+			HYCSZD.F_CSMC,
+			HYTHDMX.F_SSCKBH,
+			SSCK.F_CKMC as F_SSCKMC,
+			HYTHDMX.F_YYCKBH,
+			YYCK.F_CKMC as F_YYCKMC,
+	        HYTHDMX.F_CLDJ,		
+	        HYCKDMX.F_CKSL as F_CKSL, 
+			F_THSL as F_BCSL,  
+			sum(TH.F_CLSL) as F_THSL,
+			HYTHDMX.EXT_BIZ_KJQJ, 
+			HYTHDMX.EXT_BIZ_DJBH,
+			HYTHDMX.EXT_BIZ_FLBH,
+			HYTHDMX.EXT_BIZ_FLGUID,
+			HYTHDMX.F_CRDATE,
+			HYTHDMX.F_CHDATE
+	    FROM HYTHDMX
+		LEFT JOIN HYCLZD ON HYTHDMX.F_CLBH = HYCLZD.F_CLBH 
+		LEFT JOIN HYXMZD SSXM ON HYTHDMX.F_SSXMBH = SSXM.F_XMBH 
+		LEFT JOIN HYCPZD SSCP ON HYTHDMX.F_SSCPBH = SSCP.F_CPBH 
+		LEFT JOIN HYCKZD SSCK ON HYTHDMX.F_SSCKBH = SSCK.F_CKBH 
+		LEFT JOIN HYDWZD ON HYTHDMX.F_DWBH = HYDWZD.F_DWBH 
+		LEFT JOIN HYXMZD YYXM ON HYTHDMX.F_YYXMBH = YYXM.F_XMBH
+		LEFT JOIN HYCPZD YYCP ON HYTHDMX.F_YYCPBH = YYCP.F_CPBH
+		LEFT JOIN HYCKZD YYCK ON HYTHDMX.F_YYCKBH = YYCK.F_CKBH
+		LEFT JOIN HYCSZD ON HYTHDMX.F_CSBH = HYCSZD.F_CSBH
+	    LEFT JOIN HYXMCK TH ON HYTHDMX.EXT_BIZ_KJQJ = TH.EXT_BIZ_KJQJ and HYTHDMX.EXT_BIZ_DJBH = TH.EXT_BIZ_DJBH and
+							   HYTHDMX.EXT_BIZ_FLBH = TH.EXT_BIZ_FLBH and TH.F_CRFX = 'T'	
+		LEFT JOIN HYCKDMX ON  HYTHDMX.EXT_BIZ_KJQJ = HYCKDMX.F_KJQJ AND HYTHDMX.EXT_BIZ_DJBH = HYCKDMX.F_DJBH AND 
+                              HYTHDMX.EXT_BIZ_FLBH = HYCKDMX.F_FLBH AND HYTHDMX.EXT_BIZ_FLGUID = HYCKDMX.F_FLGUID AND 
+							  HYTHDMX.F_CLDJ = HYCKDMX.F_CLDJ
+	    WHERE 
+	        HYTHDMX.F_KJQJ = #{F_KJQJ} AND HYTHDMX.F_DJBH = #{F_DJBH} 
+		group by HYTHDMX.F_KJQJ,HYTHDMX.F_DJBH,HYTHDMX.F_FLBH,
+			     HYTHDMX.F_CLBH,HYTHDMX.F_SSXMBH,HYTHDMX.F_DWBH,  HYTHDMX.F_SSCPBH,
+				 HYTHDMX.F_YYXMBH, HYTHDMX.F_YYCPBH,HYTHDMX.F_CLDJ
+		ORDER BY F_FLBH
+	</select>
+</mapper>
+

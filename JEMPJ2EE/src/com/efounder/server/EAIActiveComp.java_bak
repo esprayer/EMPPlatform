@@ -1,0 +1,209 @@
+package com.efounder.server;
+
+import com.core.servlet.InitBootObject;
+import com.core.servlet.JVMStub;
+import com.efounder.bz.task.timer.TimerManager;
+import com.efounder.eai.EAI;
+import com.efounder.eai.EAIServer;
+import com.efounder.eai.application.JManagerApplication;
+import com.efounder.eai.framework.IActiveFramework;
+import com.efounder.eai.framework.JManagerActiveObject;
+import com.efounder.eai.framework.bof.JBusinessActiveFramework;
+import com.efounder.eai.framework.dal.JAbstractDataActiveFramework;
+import com.efounder.eai.framework.dof.JDataActiveFramework;
+import com.efounder.eai.registry.IRegistry;
+import com.efounder.eai.registry.JRegistry;
+import com.efounder.eai.service.ParameterManager;
+import com.efounder.eai.service.command.AsyncCommandManager;
+import com.efounder.eai.service.command.AsyncCommandUtil;
+import com.efounder.util.GUID;
+import com.efounder.util.JResource;
+import java.io.PrintStream;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
+import java.net.URL;
+import java.util.Map;
+import jframework.sdkplus.dal.classes.TDALAutoModuleManager;
+import org.openide.TopLogging;
+
+public class EAIActiveComp extends EAI
+{
+  public static ClassLoader loader = null;
+
+  private static void InitOldFramework(JDComDM DComDM)
+  {
+    if (JDComDM.BofXmlFile == null) {
+      String BofXmlFile = "registry.xml";
+      URL url = EAIActiveComp.class.getResource("/Registry/registry.xml");
+      BofXmlFile = url.toString();
+      JDComDM.BofXmlFile = BofXmlFile;
+      JDComDM.International = "zh";
+      JDComDM.Company = "Pansoft";
+      JDComDM.Product = "JPublic";
+      JDComDM.Tier = "Middle";
+      DComDM.Initialize(null, null, null, null);
+
+      TDALAutoModuleManager.getDefault().StartAll();
+    }
+  }
+
+  public static void InitEAIComp()
+    throws Exception
+  {
+    if (EAI.Registry == null) {
+      EAIActiveComp activeComp = new EAIActiveComp();
+      activeComp.initFramework(activeComp);
+      JDComDM dcomDM = new JDComDM();
+      InitOldFramework(dcomDM);
+    }
+  }
+
+  private void initFramework(EAIActiveComp DComDM)
+    throws Exception
+  {
+    Tier = "Middle";
+    Company = "efounder";
+    Tier = "Middle";
+    Product = "JPublic";
+    setLanguage("zh", "CN");
+    DComDM.InitEAI();
+  }
+
+  public void InitEAI()
+    throws Exception
+  {
+    initLocal();
+    initLog();
+    InitRegistry();
+    InitObject();
+
+    InitDAL();
+    InitMA();
+    EAIServer.initEAIServer();
+
+    initJVMStub();
+
+    initTimerManager();
+
+    initCommandManager();
+  }
+
+  protected void initJVMStub()
+  {
+    String pidName = ManagementFactory.getRuntimeMXBean().getName();
+
+    String PID = ""; String SVR = "";
+    if (pidName.indexOf("@") > 0) {
+      PID = pidName.substring(0, pidName.indexOf("@"));
+      SVR = pidName.substring(pidName.indexOf("@") + 1);
+    }
+
+    JVMStub jvmStub = new JVMStub();
+    jvmStub.setGUID(GUID.randomGUID().toString());
+    jvmStub.setHOST(AsyncCommandUtil.getHostAddress());
+    jvmStub.setServerName(AsyncCommandUtil.getServerName());
+    jvmStub.setString("PID", PID);
+    jvmStub.setString("SVR", SVR);
+    EAI.putEnv("JVMStub", jvmStub);
+
+    System.setProperty("JVMGuid", jvmStub.getGUID());
+    System.setProperty("JVMHost", jvmStub.getHOST());
+    System.setProperty("JVMPID", jvmStub.getString("PID", ""));
+  }
+
+  private void initTimerManager()
+  {
+    TimerManager.getDefault().loadTimerTask();
+    TimerManager.getDefault().startTimer();
+  }
+
+  private void initCommandManager()
+  {
+    try
+    {
+      String start = ParameterManager.getDefault().getSystemParam("StartCommand");
+      if ((!("yes".equalsIgnoreCase(start))) && (!("1".equals(start))))
+        return;
+      AsyncCommandManager.getDefault().initAsyncCommandManager();
+    } catch (Exception ex) {
+      System.out.println("- |||| CommandManager init exceptioned.");
+      ex.printStackTrace();
+    }
+  }
+
+  private void initLocal()
+  {
+    LocalUserHome = (String)InitBootObject.EASystem.get("LocalUserHome");
+  }
+
+  private void initLog()
+  {
+    TopLogging.getDefault();
+  }
+
+  private void InitRegistry()
+    throws Exception
+  {
+    JRegistry reg = new JRegistry();
+    URL url = JResource.getResource(this, "/Registry/", "root.xml", null);
+    reg.InitXMLURL(url);
+    Registry = reg;
+    Registry.InitRegistry();
+  }
+
+  private static void InitObject()
+    throws Exception
+  {
+    JManagerActiveObject.LoadAcitveObjects();
+  }
+
+  private static void InitDAL()
+    throws Exception
+  {
+    DAL = new JAbstractDataActiveFramework();
+    DAL.setCompany(Company);
+    DAL.setProduct(Product);
+    DAL.setTier(Tier);
+    DAL.Initialize(null, null, null, null);
+  }
+
+  private static void InitBOF()
+    throws Exception
+  {
+    try
+    {
+      BOF = new JBusinessActiveFramework();
+      BOF.setCompany(Company);
+      BOF.setProduct(Product);
+      BOF.setTier(Tier);
+      BOF.Initialize(null, null, null, null);
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  private static void InitDOF()
+    throws Exception
+  {
+    try
+    {
+      DOF = new JDataActiveFramework();
+      DOF.setCompany(Company);
+      DOF.setProduct(Product);
+      DOF.setTier(Tier);
+      DOF.Initialize(null, null, null, null);
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  private static void InitMA()
+    throws Exception
+  {
+    JManagerApplication Manager = new JManagerApplication();
+    Manager.InitManager();
+    MA = Manager;
+  }
+}

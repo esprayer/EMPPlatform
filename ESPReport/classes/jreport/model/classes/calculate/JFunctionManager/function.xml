@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!-- mess="是否需要汇总数据+是否包括其它的取数对象" -->
+<Functions>
+	<!--ERP报表接口函数begin -->
+	<param id = "ZKMJE"   num="6" mess="11" dataobj ="*,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,JFFX,DFFX" condobj = "*,KMBH,YWFW,HBDM,JTDM,GSDM,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,JFFX,DFFX"/>
+	<param id = "ZKMSL"   num="6" mess="11" dataobj ="*,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,JFFX,DFFX" condobj = "*,KMBH,YWFW,HBDM,JTDM,GSDM,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,JFFX,DFFX"/>
+	<param id = "ZKMWB"   num="6" mess="11" dataobj ="*,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,JFFX,DFFX" condobj = "*,KMBH,YWFW,HBDM,JTDM,GSDM,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,JFFX,DFFX"/>
+													
+	<param id = "ZKHJE"   num="7" mess="11" dataobj ="*,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,JFFX,DFFX" condobj = "*,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,JFFX,DFFX,KMBH,KHBH,KUKLA,BRSCH,MINDK,KNRZE,JTDM,GSDM"/>
+	<param id = "ZKHTS"   num="7" mess="11" dataobj ="*,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,JFFX,DFFX" condobj = "*,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,JFFX,DFFX,KMBH,KHBH,JTDM,GSDM,YWFW"/>
+	<param id = "ZKHPZ"   num="7" mess="11" dataobj ="*,JFFS,DFFS,JFLJ,DFLJ" condobj = "*,JFFS,DFFS,JFLJ,DFLJ,KMBH,KHBH,KUKLA,BRSCH,MINDK,KNRZE,JTDM,GSDM,KUKLA"/>
+	<param id = "ZKHZL"   num="7" mess="11" dataobj ="*,JFZL,DFZL" condobj = "*,JFZL,DFZL,KMBH,KHBH,KUKLA,BRSCH,MINDK,KNRZE,JTDM,GSDM,KUKLA"/>
+
+	<param id = "ZGYJE"   num="7" mess="11" dataobj ="*,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,JFFX,DFFX" condobj = "*,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,JFFX,DFFX,KMBH,GYBH,KTOKD,BRSCH,MINDK,KNRZE,JTDM,GSDM"/>
+	<param id = "ZGYTS"   num="7" mess="11" dataobj ="*,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,JFFX,DFFX" condobj = "*,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,JFFX,DFFX,KMBH,GYBH,JTDM,GSDM,YWFW"/>
+	<param id = "ZGYPZ"   num="7" mess="11" dataobj ="*,JFFS,DFFS,JFLJ,DFLJ" condobj = "*,JFFS,DFFS,JFLJ,DFLJ,KMBH,GYBH,KUKLA,BRSCH,MINDK,KNRZE,JTDM,GSDM"/>
+	<param id = "ZGYZL"   num="7" mess="11" dataobj ="*,JFZL,DFZL" condobj = "*,JFZL,DFZL,KMBH,GYBH,KUKLA,BRSCH,MINDK,LNRZE,JTDM,GSDM,KOTKK"/>
+
+	<param id = "ZZCYZ"   num="6" mess="11" dataobj ="*,NCYZ,DQYZ,BYZJYZ,LJZJYZ,BYZJZJ,LJZJZJ,KANSW,ANSWL,AUFWM,KNAFA,NAFAG,ANFAV,NAFAL,ZUSNA,KSAFA,KAAFA,SAFAG,AAFAG,NAFAM,SAFAM,ZUSSA,ZUSAA" condobj = "NCYZ,DQYZ,BYZJYZ,LJZJYZ,BYZJZJ,LJZJZJ,KANSW,ANSWL,AUFWM,KNAFA,NAFAG,ANFAV,NAFAL,ZUSNA,KSAFA,KAAFA,SAFAG,AAFAG,NAFAM,SAFAM,ZUSSA,ZUSAA,JTDM,GSDM,YWLX,SX1,SX2,SX3,SX4,SX5,CQGS"/>
+	<param id = "ZZCZJ"   num="6" mess="11" dataobj ="*,NCZJ,DQZJ,BYJTZJ,BYJSZJ,LJJTZJ,LJJSZJ" condobj = "*,NCZJ,DQZJ,BYJTZJ,BYJSZJ,LJJTZJ,LJJSZJ,JTDM,GSDM,YWLX,CQGS,SX1,SX2,SX3,SX4,SX5"/>
+
+	<param id = "ZCBJE"   num="7" mess="11" dataobj ="*,JFFS,DFFS,JFLJ,DFLJ" condobj = "*,JFFS,DFFS,JFLJ,DFLJ,CPDM,CBYS,KOKRS,JTDM,GSDM"/>
+	<param id = "ZCBSL"   num="7" mess="11" dataobj ="*,JFFS,DFFS,JFLJ,DFLJ" condobj = "*,JFFS,DFFS,JFLJ,DFLJ,CPDM,CBYS,KOKRS,JTDM,GSDM"/>
+
+	<param id = "ZXSJE"   num="7" mess="11" dataobj ="*,DFFS,JFFS,DFLJ,JFLJ,BYJD,BYDJ,BNJD,BNDJ" condobj = "*,DFFS,JFFS,DFLJ,JFLJ,BYJD,BYDJ,BNJD,BNDJ,KHBH,KHZHZ,KUKLA,BRSCH,MINDK,KNRZE,CPFL,SGROUP,SBGS,XSDQ,FXQD,SPART,Factory,YWFW,JTDM,GSDM"/>
+	<param id = "ZXSSL"   num="7" mess="11" dataobj ="*,DFFS,JFFS,DFLJ,JFLJ,BYJD,BYDJ,BNJD,BNDJ" condobj = "*,DFFS,JFFS,DFLJ,JFLJ,BYJD,BYDJ,BNJD,BNDJ,KHBH,KHZHZ,KUKLA,BRSCH,MINDK,KNRZE,CPFL,SGROUP,SBGS,XSDQ,FXQD,SPART,Factory,YWFW,JTDM,GSDM"/>
+
+	<param id = "ZWLJE"   num="6" mess="11" dataobj ="*,DQYE" condobj = "*,DQYE,WLBH,MATNR,BWKEY,BWTAR,JTDM,GSDM"/>
+	<param id = "ZWLSL"   num="6" mess="11" dataobj ="*,DQYE" condobj = "*,DQYE,WLBH,MATNR,BWKEY,BWTAR,JTDM,GSDM"/>
+	<param id = "ZWLPZJE"   num="6" mess="11" dataobj ="*,DFFS,JFFS,DFLJ,JFLJ" condobj = "*,DFFS,JFFS,DFLJ,JFLJ,WLBH,MATNR,BWART,GRUND,BUKRS,KTOKK,BRSCH,MINDK,LNRZE,YWFW,JTDM,GSDM,YDLX"/>
+	<param id = "ZWLPZSL"   num="6" mess="11" dataobj ="*,DFFS,JFFS,DFLJ,JFLJ" condobj = "*,DFFS,JFFS,DFLJ,JFLJ,WLBH,MATNR,BWART,GRUND,BUKRS,KTOKK,BRSCH,MINDK,LNRZE,YWFW,JTDM,GSDM,YDLX"/>
+	<param id = "ZWLCBJE"   num="7" mess="11" dataobj ="*,DQYE" condobj = "*,DQYE,WLBH,WLFL,MATNR,BWKEY,BWTAR,BUKRS,JTDM,GSDM"/>
+	<param id = "ZWLCBSL"   num="7" mess="11" dataobj ="*,DQYE" condobj = "*,DQYE,WLBH,WLFL,MATNR,BWKEY,BWTAR,BUKRS,JTDM,GSDM"/>
+	<!--ERP报表接口函数end -->
+	
+
+	<param id = "BCJE"   num="9" mess="11" dataobj ="BCXMBH,BCXMMC,BCNCYE,BCQMYE,BQZJ,BQJS,BNZJLJ,BNJSLJ,ZJLJ,JSLJ,BCDCOL,BCMCCOL,BCDCOLLJ,ZZJG" condobj = "BCLX,BCYWLX,BCXMBH"/>
+	<param id = "BCWB"   num="10" mess="11" dataobj ="BCXMBH,BCXMMC,BCNCYE,BCQMYE,BQZJ,BQJS,BNZJLJ,BNJSLJ,ZJLJ,JSLJ,BCDCOL,BCMCCOL,ZZJG" condobj = "BCLX,BCYWLX,BCXMBH,WBBH"/>
+	<param id = "ZBJE"   num="7" mess="11" dataobj ="*" condobj = "ZBJS,ZBMX,ZBLB,ZBBH"/>
+	<param id = "DYJE"   num="6" mess="11" dataobj ="DYXMMC,ZMJZQC,ZMJZQM,JSJCQC,JSJCQM,KDKQC,KDKQM,KDKQCWQR,KDKQMWQR,KDKQCQR,KDKQMQR,YNSQC,YNSQM,NSSLQC,NSSLQM,DYZCQC,DYZCCS,DYZCHB,DYZCZH,DYZCQM,DYFZQC,DYFZCS,DYFZHB,DYFZZH,DYFZQM,JRZBGJ,JRSDFY,DYZCSY,DYZCQY,DYFZSY,DYFZQY,WBCY" condobj = "DYXMBH,DYXMLX,DYXMLB,DYHZBZ,DYWLDW"/>
+	<param id = "HTJE"   num="6" mess="11" dataobj ="NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,KMMC,XMMC,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,GCBH,GCMC,SXMC01,SXMC02,SXMC03,SXMC04,SXMC05,SXMC06,SXMC07,SXMC08,SXMC09,SXMC10,SXMC11,SXMC12,SXMC13,SXMC14,SXMC15,SXMC16,SXMC17,SXMC18,SXMC19,SXMC20,QSRQ,WGRQ" condobj = "ZRZX,KMBH,HTLB,HTBH,GCBH,GCSX"/>
+    <param id = "KMJE"   num="7" mess="11" dataobj ="HSZTBH,HSZTMC,KMMC" condobj = "HSZTMC,KMBH,KMJS,KMMX,KMGP,WBBH"/>
+	<param id = "KMSL"   num="7" mess="11" dataobj ="KMMC" condobj = "KMBH,KMJS,KMMX,KMGP"/>
+	<param id = "KMWB"   num="8" mess="11" dataobj ="KMMC" condobj = "KMBH,KMJS,KMMX,KMGP"/>
+	<param id = "XMJE"   num="9" mess="11" dataobj ="KMMC,XMMC" condobj="KMBH,KMJS,KMMX,XMBH,XMJS,KMGP,WBBH"/>
+	<param id = "XMSL"   num="9" mess="11" dataobj ="KMMC,XMMC" condobj="KMBH,KMJS,KMMX,XMBH,XMJS,KMGP"/>
+	<param id = "XMWB"   num="10" mess="11" dataobj ="KMMC,XMMC" condobj="KMBH,KMJS,KMMX,XMBH,XMJS,KMGP"/>
+	<param id = "WLJE"   num="8" mess="11" dataobj ="KMMC,DWMC" condobj= "KMBH,KMJS,KMMX,WLLB,WLBH,KMGP,DWGP,WBBH"/>
+	<param id = "WLSL"   num="8" mess="11" dataobj ="KMMC,DWMC" condobj= "KMBH,KMJS,KMMX,WLLB,WLBH,KMGP,DWGP"/>
+	<param id = "WLWB"   num="9" mess="11" dataobj ="KMMC,DWMC" condobj= "KMBH,KMJS,KMMX,WLLB,WLBH,KMGP,DWGP"/>
+	<param id = "JYQRJE"   num="8" mess="11" dataobj ="ZMJE,ZMLJJE" condobj = "BDW,DFDW,KMBH,QRLX"/>
+	<!--自定义辅助类函数-->
+    <param id = "ZFJE"   num="9" mess="11" dataobj ="KMMC,ZFMC,TZZE" condobj= "KMBH,KMJS,KMMX,ZFLB,ZFBH,KMGP,ZFGP,WBBH"/>
+	<param id = "ZFSL"   num="9" mess="11" dataobj ="KMMC,ZFMC,TZZE" condobj= "KMBH,KMJS,KMMX,ZFLB,ZFBH,KMGP,ZFGP"/>
+	<param id = "ZFWB"   num="10" mess="11" dataobj ="KMMC,ZFMC" condobj= "KMBH,KMJS,KMMX,ZFLB,ZFBH,KMGP,ZFGP"/>
+	<!-- ADD BY LQK 2013-11-18 -->
+	<param id = "ZFGCWB"   num="10" mess="11" dataobj ="KMMC,ZFMC" condobj= "KMBH,KMJS,KMMX,ZFLB,ZFBH,KMGP,ZFGP"/>
+   
+  	<param id = "GRJE"   num="8" mess="11" dataobj ="KMMC,GRMC" condobj= "KMBH,KMJS,KMMX,BMBH,GRBH,KMGP,GRGP,WBBH"/>
+	<param id = "BMJE"   num="8" mess="11" dataobj ="KMMC,BMMC" condobj= "KMBH,KMJS,KMMX,BMBH,BMJS,KMGP,BMGP"/>
+	<param id = "BMSL"   num="8" mess="11" dataobj ="KMMC,BMMC" condobj= "KMBH,KMJS,KMMX,BMBH,BMJS,KMGP,BMGP"/>
+	<param id = "BMWB"   num="9" mess="11" dataobj ="KMMC,BMMC" condobj= "KMBH,KMJS,KMMX,BMBH,BMJS,KMGP,BMGP"/>
+	<param id = "CBJE"   num="8" mess="11" dataobj ="KMMC,CBMC" condobj= "KMBH,KMJS,KMMX,CBBH,CBJS,KMGP,CBGP,WBBH"/>
+	<param id = "CBSL"   num="8" mess="11" dataobj ="KMMC,CBMC" condobj= "KMBH,KMJS,KMMX,CBBH,CBJS,KMGP,CBGP"/>
+	<param id = "CBWB"   num="9" mess="11" dataobj ="KMMC,CBMC" condobj= "KMBH,KMJS,KMMX,CBBH,CBJS,KMGP,CBGP"/>
+	<param id = "CPJE"   num="8" mess="11" dataobj ="KMMC,CPMC" condobj= "KMBH,KMJS,KMMX,CPBH,CPJS,KMGP,CPGP,WBBH"/>
+	<param id = "CPSL"   num="8" mess="11" dataobj ="KMMC,CPMC" condobj= "KMBH,KMJS,KMMX,CPBH,CPJS,KMGP,CPGP"/>
+	<param id = "CPCYSL"   num="8" mess="11" dataobj ="KMMC,CPMC" condobj= "KMBH,KMJS,KMMX,CPBH,CPJS,KMGP,CPGP"/>
+	<param id = "CPWB"   num="9" mess="11" dataobj ="KMMC,CPMC" condobj= "KMBH,KMJS,KMMX,CPBH,CPJS,KMGP,CPGP"/>
+	<param id = "XJJE"   num="8" mess="11" dataobj ="KMMC,XJMC" condobj= "KMBH,KMJS,KMMX,XJBH,XJJS,KMGP,XJGP,WBBH"/>
+	<param id = "XJSL"   num="8" mess="11" dataobj ="KMMC,XJMC" condobj= "KMBH,KMJS,KMMX,XJBH,XJJS,KMGP,XJGP"/>
+	<param id = "XJWB"   num="9" mess="11" dataobj ="KMMC,XJMC" condobj= "KMBH,KMJS,KMMX,XJBH,XJJS,KMGP,XJGP"/>
+	<param id = "TMPXJJE"   num="8" mess="11" dataobj ="KMMC,XJMC" condobj= "KMBH,KMJS,KMMX,XJBH,XJJS,KMGP,XJGP,WBBH"/>
+	<param id = "TZJE"   num="9" mess="11" dataobj ="KMMC,TZMC,TZZE" condobj = "KMBH,KMJS,TZBH,TZJS,KMGP"/>
+	<param id = "TZSL"   num="9" mess="11" dataobj ="KMMC,TZMC,TZZE" condobj = "KMBH,KMJS,TZBH,TZJS,KMGP"/>
+	<param id = "TZWB"   num="10" mess="11" dataobj ="KMMC,TZMC" condobj = "KMBH,KMJS,TZBH,TZJS,KMGP"/>
+	<param id = "ZCZJJE"   num="6" mess="11" dataobj ="JFLJ,DFLJ,JFFS,DFFS,NCYE,QCYE,DQYE,TZZJ,BTZJ,TQZJ,LJTZ,LJBT,LJTQ" condobj = "ZCBH,ZCLB,ZCSYDW,ZCGLFL,ZCCQGS,ZCJJYT,ZCLY,ZCSYQK,ZCJSZT,ZCJZYY,ZCJSFS,ZCJSYY,ZCZJFF,ZCXZYY"/>
+	<param id = "ZCYZJE"   num="5" mess="11" dataobj ="ZCSL,ZCXS,NCYZ,NCLJZJ,NCJZZB,ZCYZYE,LJZJYE,JZZBYE,JFYZLJ,DFYZLJ,JFYZ,DFYZ,JFZJ,DFZJ,JFZJLJ,DFZJLJ,SJZJ,SJZJLJ,JSZJ,TZZJ,JFJZLJ,DFJZLJ,JFJZ,DFJZ,BNZLSR,BYZLSR" condobj = "ZCYWLX,ZCBH,ZCSYR,ZCDLQY,ZCJWBZ,ZCJWYW,ZCKMLB,ZCGBLB,ZCSCGB,ZCSL,ZCSYBH,ZCZBH,ZCZLDW,ZCZTBH,ZCBKFB,ZCCCBZ,ZCFWBZ,ZCJSFS,ZCCQBH,ZCLBBH,ZCLYBH,ZCSYBH,ZCXZQX,ZCXZYY,ZCYTBH,ZCZJCBZX,ZCZJQD,ZCJYLX"/>
+	<param id = "ZCJZJE"   num="6" mess="11" dataobj ="NCYE,DQYE" condobj = "ZCBH,ZCLB,ZCSYDW,ZCGLFL,ZCCQGS,ZCJJYT,ZCLY,ZCSYQK,ZCJSZT,ZCJZYY,ZCJSFS,ZCJSYY,ZCZJFF,ZCXZYY"/>
+	<param id = "ZCYWJE"   num="6" mess="11" dataobj ="BQYZ,LJYZ,BQKLYZ,LJKLYZ,BQZJ,LJZJ,BQKLZJ,LJKLZJ,BQJZ,LJJZ,BQKLJZ,LJKLJZ,ZCXS,ZCSL,PGJG,ZRJG,JYFY,JSY" condobj = "ZCYWLX,ZCBH,ZCSYR,ZCDLQY,ZCJWBZ,ZCJWYW,ZCKMLB,ZCGBLB,ZCSCGB,ZCSL,ZCSYBH,ZCZBH,ZCZLDW,ZCZTBH,ZCBKFB,ZCCCBZ,ZCFWBZ,ZCJSFS,ZCCQBH,ZCLBBH,ZCLYBH,ZCSYBH,ZCXZQX,ZCXZYY,ZCYTBH,ZCZJCBZX,ZCZJQD,ZCJYLX"/>
+	<param id = "PZHJJE" num="7" mess="10" dataobj ="JFLJ,DFLJ,JFFS,DFFS" condobj= "KMBH,TZXM,GRBH,BMBH,XMBH,WLLB,WLBH,PZBH,PZRQ,PZJY,PZZD,PZFH,PZJZ,BMBH,CPBH,XJBH,CBBH"/>
+	<param id = "PZHJSL" num="7" mess="10" dataobj ="JFLJ,DFLJ,JFFS,DFFS" condobj= "KMBH,TZXM,GRBH,BMBH,XMBH,WLLB,WLBH,PZBH,PZRQ,PZJY,PZZD,PZFH,PZJZ,BMBH,CPBH,XJBH,CBBH"/>
+	<param id = "PZCYSL" num="7" mess="10" dataobj ="JFLJ,DFLJ,JFFS,DFFS" condobj= "KMBH,TZXM,GRBH,BMBH,XMBH,WLLB,WLBH,PZBH,PZRQ,PZJY,PZZD,PZFH,PZJZ,BMBH,CPBH,XJBH,CBBH"/>
+	<param id = "PZHJWB" num="8" mess="10" dataobj ="JFLJ,DFLJ,JFFS,DFFS" condobj= "KMBH,TZXM,GRBH,BMBH,XMBH,WLLB,WLBH,PZBH,PZRQ,PZJY,PZZD,PZFH,PZJZ,BMBH,CPBH,XJBH,CBBH"/>
+	<param id = "YSJE"   num="8" mess="10" dataobj ="BNYS,BYYS,LJYS,BYFS,LJFS,YSCE,YSMC" condobj = "YSLB,YSXM,YSJS,YSMX,ZRZX,CBBH,BMBH"/>
+	<param id = "YSSL"   num="8" mess="10" dataobj ="BNYS,BYYS,LJYS,BYFS,LJFS,YSCE,YSMC" condobj = "YSLB,YSXM,YSJS,YSMX,ZRZX,CBBH,BMBH"/>
+	<param id = "TZHJ"   num="5" mess="10" dataobj ="JFLJ,DFLJ,JFFS,DFFS" condobj = ""/>
+	<param id = "YSZLJE"   num="8" mess="10" dataobj ="GRMC,DWMC,YSZK,YFZK,JDCE,DJCE,YCJF,YCDF,NCJF,NCDF,QMYE,-QMYE" condobj = "XSBL,XSSL,WLLB,GLKM,DATE,GRKM,WLBH,DWGP"/>
+	<param id = "YFZLJE"   num="8" mess="10" dataobj ="GRMC,DWMC,YSZK,YFZK,JDCE,DJCE,YCJF,YCDF,NCJF,NCDF,QMYE,-QMYE" condobj = "XSBL,XSSL,WLLB,GLKM,DATE,GRKM,WLBH,DWGP"/>
+	<param id = "YSZLWB"   num="9" mess="10" dataobj ="GRMC,DWMC,YSZK,YFZK,JDCE,DJCE,YCJF,YCDF,NCJF,NCDF,QMYE,-QMYE" condobj = "XSBL,XSSL,WLLB,GLKM,DATE,GRKM,WLBH,DWGP"/>
+	<param id = "YFZLWB"   num="9" mess="10" dataobj ="GRMC,DWMC,YSZK,YFZK,JDCE,DJCE,YCJF,YCDF,NCJF,NCDF,QMYE,-QMYE" condobj = "XSBL,XSSL,WLLB,GLKM,DATE,GRKM,WLBH,DWGP"/>
+	<param id = "YSSJJE" num="8" mess="10" dataobj ="GRMC,DWMC,YSZK,YFZK,JDCE,DJCE,YCJF,YCDF,NCJF,NCDF,QMYE,-QMYE" condobj = "XSBL,XSSL,WLLB,GLKM,DATE,GRKM,WLBH,DWGP"/>
+	<param id = "YFSJJE" num="8" mess="10" dataobj ="GRMC,DWMC,YSZK,YFZK,JDCE,DJCE,YCJF,YCDF,NCJF,NCDF,QMYE,-QMYE" condobj = "XSBL,XSSL,WLLB,GLKM,DATE,GRKM,WLBH,DWGP"/>
+	<param id = "YSSJWB" num="9" mess="10" dataobj ="GRMC,DWMC,YSZK,YFZK,JDCE,DJCE,YCJF,YCDF,NCJF,NCDF,QMYE,-QMYE" condobj = "XSBL,XSSL,WLLB,GLKM,DATE,GRKM,WLBH,DWGP"/>
+	<param id = "YFSJWB" num="9" mess="10" dataobj ="GRMC,DWMC,YSZK,YFZK,JDCE,DJCE,YCJF,YCDF,NCJF,NCDF,QMYE,-QMYE" condobj = "XSBL,XSSL,WLLB,GLKM,DATE,GRKM,WLBH,DWGP"/>
+	<param id = "ZLFXJE"   num="8" mess="10" dataobj ="DWMC,YSZK,YSZKQC,YSZKQM,YSZKGB,YSZKGBQC,YSZKGBQM,YSZKZL,YSZKZLQC,YSZKZLQM,HZZB,HZZBQC,HZZBQM,HZZBGB,HZZBGBQC,HZZBGBQM,HZZBZL,HZZBZLQC,HZZBZLQM" condobj = "WLLB,GLKM,WLBH,DWGP,SFJT,SFJN,SSSYB,GJBH,DQBH"/>
+	<param id = "ZLFXWB"   num="9" mess="10" dataobj ="DWMC,YSZK,YSZKQC,YSZKQM,YSZKGB,YSZKGBQC,YSZKGBQM,YSZKZL,YSZKZLQC,YSZKZLQM,HZZB,HZZBQC,HZZBQM,HZZBGB,HZZBGBQC,HZZBGBQM,HZZBZL,HZZBZLQC,HZZBZLQM" condobj = "WLLB,GLKM,WLBH,DWGP,SFJT,SFJN,SSSYB,GJBH,DQBH"/>
+	<param id = "DQFXJE"   num="7" mess="10" dataobj ="*,YNNDQ,YNWDQ,DQ01,DQ02,DQ03,DQ04,DQ05,DQ06,DQ07,DQ08,DQ09,DQ10,DQ11,DQ12,DQ13,DQ14,DQ15" condobj = "WLLB,GLKM,DATE,GRKM,WLBH,DWGP"/>
+	<param id = "GRFXJE"   num="8" mess="10" dataobj ="DWMC,YSZK,YSZKQC,YSZKQM,YSZKGB,YSZKGBQC,YSZKGBQM,YSZKZL,YSZKZLQC,YSZKZLQM,HZZB,HZZBQC,HZZBQM,HZZBGB,HZZBGBQC,HZZBGBQM,HZZBZL,HZZBZLQC,HZZBZLQM" condobj = "WLLB,GLKM,WLBH,DWGP,SFJT,SFJN,SSSYB,GJBH,DQBH"/>
+	<param id = "FZJE"   num="8" mess="10" dataobj ="NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,JFFS,DFFS,JFYE,DFYE,FLMC,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,TZZE" condobj= "KMBH,FLJS,WLLB,WLBH,GRBH,BMBH,CPBH,XJBH,CBBH,XMLB,XMBH,TZLB,TZBH,ZFLBBH,JFYE,DFYE,JFFS,DFFS,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,KMJG,BMGP,CPGP,CBGP,XJGP,DWGP,GRGP,ZFGP,ZTBH"/>
+	<param id = "FZSL"   num="8" mess="10" dataobj ="NCJF,NCDF,YCJF,YCDF,JFLJ,DFLJ,JFFS,DFFS,JFYE,DFYE,FLMC,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX,TZZE" condobj= "KMBH,FLJS,WLLB,WLBH,GRBH,BMBH,CPBH,XJBH,CBBH,XMLB,XMBH,TZLB,TZBH,ZFLBBH,JFYE,DFYE,JFFS,DFFS,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,KMJG,BMGP,CPGP,CBGP,XJGP,DWGP,GRGP,ZFGP,ZTBH"/>
+	<param id = "FZCYSL"   num="8" mess="10" dataobj ="NCJF,NCDF,YCJF,YCDF,JFLJ,DFLJ,JFFS,DFFS,JFYE,DFYE,FLMC,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX" condobj= "KMBH,FLJS,WLLB,WLBH,GRBH,BMBH,CPBH,XJBH,CBBH,XMLB,XMBH,TZLB,TZBH,ZFLBBH,JFYE,DFYE,JFFS,DFFS,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,KMJG,BMGP,CPGP,CBGP,XJGP,DWGP,GRGP,ZFGP,ZTBH"/>
+	<param id = "FZWB"   num="9" mess="10" dataobj ="NCJF,NCDF,YCJF,YCDF,JFLJ,DFLJ,JFFS,DFFS,JFYE,DFYE,FLMC,BNJD,BNDJ,BYJD,BYDJ,NJFX,NDFX,YJFX,YDFX" condobj= "KMBH,FLJS,WLLB,WLBH,GRBH,BMBH,CPBH,XJBH,CBBH,XMLB,XMBH,TZLB,TZBH,ZFLBBH,JFYE,DFYE,JFFS,DFFS,NCJF,NCDF,JFLJ,DFLJ,YCJF,YCDF,KMJG,BMGP,CPGP,CBGP,XJGP,DWGP,GRGP,ZFGP,ZTBH"/>
+	<param id = "ZYCB"   num="10" mess="10" dataobj ="BYJE,BYSL,FSJE,FSSL,LJJE,LJSL,FSJE,FSSL,SNJE,SNSL,JEYE,SLYE,GCBH,GCMC,CBMC,ZYMC,SXMC01,SXMC02,SXMC03,SXMC04,SXMC05,SXMC06,SXMC07,SXMC08,SXMC09,SXMC10,SXMC11,SXMC12,SXMC13,SXMC14,SXMC15,SXMC16,SXMC17,SXMC18,SXMC19,SXMC20,QSRQ,WGRQ" condobj="ZYXZ,GCBH,ZYCBBH,LBSX,WGBZ,BYJE,BYSL,LJJE,LJSL,SNJE,SNSL,JEYE,SLYE,ZTBH,XDBH"/>
+	<param id = "ZYSXCB" num="9" mess="10" dataobj = "BYJE,BYSL,FSJE,FSSL,LJJE,LJSL,FSJE,FSSL,SNJE,SNSL,JEYE,SLYE,SXMC,CBMC,ZYMC,SXMC01,SXMC02,SXMC03,SXMC04,SXMC05,SXMC06,SXMC07,SXMC08,SXMC09,SXMC10,SXMC11,SXMC12,SXMC13,SXMC14,SXMC15,SXMC16,SXMC17,SXMC18,SXMC19,SXMC20" condobj="ZYXZ,GCBH,ZYCBBH,LBSX,WGBZ,BYJE,BYSL,LJJE,LJSL,SNJE,SNSL,JEYE,SLYE,ZTBH"/>
+	<param id = "GCZZ"   num="10" mess="10" dataobj ="BYJE,BYSL,FSJE,FSSL,LJJE,LJSL,FSJE,FSSL,SNJE,SNSL,GCMC,ZZMC,ZYMC,SXMC01,SXMC02,SXMC03,SXMC04,SXMC05,SXMC06,SXMC07,SXMC08,SXMC09,SXMC10,SXMC11,SXMC12,SXMC13,SXMC14,SXMC15,SXMC16,SXMC17,SXMC18,SXMC19,SXMC20" condobj="ZYXZ,GCBH,ZYZZBH,LBSX,WGBZ,BYJE,BYSL,LJJE,LJSL,SNJE,SNSL,ZTBH"/>
+	<param id = "XDCB"   num="9" mess="10" dataobj ="BYJE,BYSL,FSJE,FSSL,LJJE,LJSL,FSJE,FSSL,SNJE,SNSL,XDMC,CBMC,ZYMC" condobj="GCBH,CBBH,GCSX,WGBZ,CBJS,GCJS,ZYJS,BYJE,BYSL,LJJE,LJSL,SNJE,SNSL,ZYXZ,XDBH"/>
+	<param id = "ZYZB"   num="10" mess="10" dataobj ="BYZB,LJZB,FSZB,SNZB,ZBMC,SXMC01,SXMC02,SXMC03,SXMC04,SXMC05,SXMC06,SXMC07,SXMC08,SXMC09,SXMC10,SXMC11,SXMC12,SXMC13,SXMC14,SXMC15,SXMC16,SXMC17,SXMC18,SXMC19,SXMC20" condobj="ZYXZ,GCBH,ZBBH,LBSX,WGBZ,BYZB,LJZB,SNZB,ZBJS,ZTBH"/>
+	<param id = "ZYSXZB" num="9" mess="10" dataobj ="BYZB,LJZB,FSZB,SNZB,ZBMC,SXMC01,SXMC02,SXMC03,SXMC04,SXMC05,SXMC06,SXMC07,SXMC08,SXMC09,SXMC10,SXMC11,SXMC12,SXMC13,SXMC14,SXMC15,SXMC16,SXMC17,SXMC18,SXMC19,SXMC20" condobj="ZYXZ,GCBH,ZYCBBH,LBSX,WGBZ,BYJE,BYSL,LJJE,LJSL,SNJE,SNSL,ZTBH"/>
+	<param id = "BB"     num="4" mess="00" dataobj ="" condobj="0"/>
+	<param id = "FZBB"     num="5" mess="00" dataobj ="" condobj="0"/>
+	<param id = "XTBB"   num="4" mess="00" dataobj ="" condobj="0"/>
+	<param id = "XYBB"   num="6" mess="00" dataobj ="" condobj="0"/>
+	<param id = "BDBB"   num="4" mess="00" dataobj ="" condobj="0"/>
+	<param id = "BD"     num="4" mess="00" dataobj ="" condobj="0"/>
+	<param id = "DWB"    num="5" mess="00" dataobj="" condobj="1"/>
+	<param id = "DWBDBB" num="5" mess="00" dataobj="" condobj="1"/>
+	<param id = "DWBD"   num="5" mess="00" dataobj="" condobj="1"/>
+	<param id = "HZB"    num="5" mess="00" dataobj="" condobj="2"/>
+	<param id = "HZBDBB" num="5" mess="00" dataobj="" condobj="2"/>
+	<param id = "HZBD"   num="5" mess="00" dataobj="" condobj="2"/>
+	<param id = "SHBB"   num="4" mess="00" dataobj="" condobj="0"/>
+	<param id = "SHDWB"  num="5" mess="00" dataobj="" condobj="1"/>
+	<param id = "SHHZB"  num="5" mess="00" dataobj="" condobj="2"/>
+	<param id = "SLBB"   num="4" mess="00" dataobj="" condobj="0"/>
+	<param id = "SLDWB"  num="5" mess="00" dataobj="" condobj="1"/>
+	<param id = "SLHZB"  num="5" mess="00" dataobj="" condobj="2"/>
+        <param id = "ZTBB"   num="5" mess="00" dataobj="" condobj="0"/>
+	<param id = "ZTDWB"  num="6" mess="00" dataobj="" condobj="1"/>
+	<param id = "ZTHZB"  num="6" mess="00" dataobj="" condobj="2"/>
+	<param id = "TJBB"   num="4" mess="00" dataobj="" condobj="0"/>
+	<param id = "TJDWB"  num="5" mess="00" dataobj="" condobj="1"/>
+	<param id = "TJHZB"  num="5" mess="00" dataobj="" condobj="2"/>
+	<param id = "PJBB"   num="4" mess="00" dataobj="" condobj="0"/>
+	<param id = "PJDWB"  num="5" mess="00" dataobj="" condobj="1"/>
+	<param id = "PJHZB"  num="5" mess="00" dataobj="" condobj="2"/>
+	<param id = "BDFX"   num="5" mess="00" dataobj ="" condobj="0"/>
+	<param id = "DWBDFX"   num="6" mess="00" dataobj ="" condobj="1"/>
+	<param id = "HZBDFX"   num="6" mess="00" dataobj ="" condobj="2"/>
+	<param id = "BDGL"   num="5" mess="00" dataobj ="" condobj="0"/>
+	<param id = "DWBDGL"   num="6" mess="00" dataobj ="" condobj="1"/>
+	<param id = "HZBDGL"   num="6" mess="00" dataobj ="" condobj="2"/>
+	<param id = "BMBDGL"   num="6" mess="00" dataobj ="" condobj="3"/>
+	<param id = "CBBDGL"   num="6" mess="00" dataobj ="" condobj="4"/>
+	<param id = "MJZD"     num="4" mess="00" dataobj ="" condobj="0"/>
+	<param id = "VER9"     num="4" mess="00" dataobj ="" condobj="0"/>
+	<param id = "INLIST"     num="5" mess="00" dataobj ="" condobj="0"/>
+        <!--变动汇总 函数-->
+	<param id = "BDHZ"     num="7" mess="00" dataobj ="" condobj="0"/>
+	<param id = "DWBDHZ"   num="8" mess="00" dataobj ="" condobj="1"/>
+	<param id = "HZBDHZ"   num="8" mess="00" dataobj ="" condobj="2"/>
+        <!--固定资产 函数-->
+	<param id = "QR"  num="7" mess="01" dataobj="" condobj=""/>
+        <!--宏函数-->
+	<param id = "MACRO"  num="1" mess="01" dataobj="" condobj=""/>
+        <!--DSQL函数-->
+	<param id = "DSQL"  num="1" mess="01" dataobj="" condobj=""/>
+	<param id = "ZDSQL"  num="1" mess="01" dataobj="" condobj=""/>
+        <!--SAP 函数-->
+	<param id = "SAPBB"  num="8" mess="01" dataobj="" condobj=""/>
+        <!-- 内部公式-->
+	<param id = "NBGS"   num="3" mess="01" dataobj="" condobj=""/>
+        <!-- JY 函数-->
+	<param id = "JYBB"   num="9" mess="01" dataobj="" condobj=""/>
+        <!--指标函数-->
+        <param id = "ZBQS"   num="7" mess="11" dataobj ="*" condobj = "ZBJS,ZBMX,ZBLB,ZBBH"/>
+
+</Functions>

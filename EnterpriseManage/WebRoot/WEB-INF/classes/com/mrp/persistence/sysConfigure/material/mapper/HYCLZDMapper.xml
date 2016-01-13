@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.mrp.persistence.sysConfigure.material.mapper.HYCLZDMapper">
+	<resultMap id="rm" type="com.mrp.persistence.sysConfigure.material.bean.HYCLZD">
+        <result property="F_CLBH" jdbcType="VARCHAR" column="F_CLBH"/>
+        <result property="F_CLMC" jdbcType="VARCHAR" column="F_CLMC"/>
+        <result property="F_GGXH" jdbcType="VARCHAR" column="F_GGXH"/>
+        <result property="F_JLDW" jdbcType="VARCHAR" column="F_JLDW"/>
+		<result property="F_DWBH" jdbcType="VARCHAR" column="F_DWBH"/>
+		<result property="F_DWMC" jdbcType="VARCHAR" column="F_DWMC"/>
+		<result property="F_CSBH" jdbcType="VARCHAR" column="F_CSBH"/>
+		<result property="F_CSMC" jdbcType="VARCHAR" column="F_CSMC"/>
+		<result property="F_LRR" jdbcType="VARCHAR" column="F_LRR"/>
+		<result property="F_LRRXM" jdbcType="VARCHAR" column="F_LRRXM"/>
+        <result property="F_SYZT" jdbcType="INTEGER" column="F_SYZT"/>
+        <result property="F_CRDATE" jdbcType="TIMESTAMP" column="F_CRDATE"/>
+        <result property="F_CHDATE" jdbcType="TIMESTAMP" column="F_CHDATE"/>
+	</resultMap>
+	
+	<select id="load" resultMap="rm">
+		SELECT 
+	        F_CLBH,
+	        F_CLMC,
+	        F_GGXH,
+	        F_JLDW,
+	        HYCLZD.F_DWBH,
+			HYDWZD.F_DWMC,
+			HYCLZD.F_CSBH,
+			HYCSZD.F_CSMC,
+	        HYCLZD.F_LRR,
+	        BSUSER.USER_NAME AS F_LRRXM,
+			HYCLZD.F_SYZT,
+	        HYCLZD.F_CRDATE,
+			HYCLZD.F_CHDATE
+	    FROM HYCLZD
+		LEFT JOIN HYDWZD ON HYCLZD.F_DWBH = HYDWZD.F_DWBH
+		LEFT JOIN BSUSER ON HYCLZD.F_LRR = BSUSER.USER_ID 	
+		LEFT JOIN HYCSZD ON HYCLZD.F_CSBH = HYCSZD.F_CSBH 
+	    WHERE 
+	        F_CLBH = #{F_CLBH}
+		ORDER BY F_CLBH
+	</select>
+	<!-- 按Id删除 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM HYCLZD WHERE
+        F_CLBH = #{F_CLBH} 
+    </delete>
+     <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="F_DWBH">
+        INSERT INTO HYCLZD (
+        	F_CLBH,
+	        F_CLMC,
+	        F_GGXH,
+	        F_JLDW,
+	        F_DWBH,
+	        F_CSBH,
+	        F_LRR,
+			F_SYZT,
+	        F_CRDATE,
+			F_CHDATE
+        ) VALUES (
+        	#{F_CLBH} ,
+        	#{F_CLMC} ,
+        	#{F_GGXH} ,
+        	#{F_JLDW} ,
+        	#{F_DWBH} ,
+			#{F_CSBH} ,
+        	#{F_LRR} ,
+        	#{F_SYZT} ,
+        	#{F_CRDATE} ,
+			#{F_CHDATE}
+        )
+	</insert>
+
+	<select id="findAll" resultMap="rm">
+    	SELECT 
+	        F_CLBH,
+	        F_CLMC,
+	        F_GGXH,
+	        F_JLDW,
+	        HYCLZD.F_DWBH,
+			HYDWZD.F_DWMC,
+			HYCLZD.F_CSBH,
+			HYCSZD.F_CSMC,
+	        HYCLZD.F_LRR,
+			BSUSER.USER_NAME AS F_LRRXM,
+			HYCLZD.F_SYZT,
+	        HYCLZD.F_CRDATE,
+			HYCLZD.F_CHDATE
+	    FROM HYCLZD 
+		LEFT JOIN HYDWZD ON HYCLZD.F_DWBH = HYDWZD.F_DWBH
+		LEFT JOIN BSUSER ON HYCLZD.F_LRR = BSUSER.USER_ID 	
+		LEFT JOIN HYCSZD ON HYCLZD.F_CSBH = HYCSZD.F_CSBH 		
+		ORDER BY F_CLBH
+    </select>
+	
+	<select id="findByKey" resultMap="rm">
+    	SELECT 
+	        F_CLBH,
+	        F_CLMC,
+	        F_GGXH,
+	        F_JLDW,
+	        HYCLZD.F_DWBH,
+			HYDWZD.F_DWMC,
+			HYCLZD.F_CSBH,
+			HYCSZD.F_CSMC,
+	        HYCLZD.F_LRR,
+			BSUSER.USER_NAME AS F_LRRXM,
+			HYCLZD.F_SYZT,
+	        HYCLZD.F_CRDATE,
+			HYCLZD.F_CHDATE
+	    FROM HYCLZD
+		LEFT JOIN HYDWZD ON HYCLZD.F_DWBH = HYDWZD.F_DWBH
+		LEFT JOIN BSUSER ON HYCLZD.F_LRR = BSUSER.USER_ID 	
+		LEFT JOIN HYCSZD ON HYCLZD.F_CSBH = HYCSZD.F_CSBH 	    	    
+		WHERE 
+	        exists(select 1 from HYXMMX, HYXMZD where HYCLZD.F_CLBH=HYXMMX.F_CLBH and 
+			HYXMZD.F_XMBH = HYXMMX.F_XMBH and HYXMZD.F_XMZT='0' and HYXMMX.F_XMBH=#{F_XMBH})
+		ORDER BY F_CLBH
+    </select>
+	
+	<select id="findByObjId" resultMap="rm">
+    	SELECT 
+	        F_CLBH,
+	        F_CLMC,
+	        F_GGXH,
+	        F_JLDW,
+	        HYCLZD.F_DWBH,
+			HYDWZD.F_DWMC,
+			HYCLZD.F_CSBH,
+			HYCSZD.F_CSMC,
+	        HYCLZD.F_LRR,
+			BSUSER.USER_NAME AS F_LRRXM,
+			HYCLZD.F_SYZT,
+	        HYCLZD.F_CRDATE,
+			HYCLZD.F_CHDATE
+	    FROM HYCLZD
+		LEFT JOIN HYDWZD ON HYCLZD.F_DWBH = HYDWZD.F_DWBH
+		LEFT JOIN BSUSER ON HYCLZD.F_LRR = BSUSER.USER_ID 	
+		LEFT JOIN HYCSZD ON HYCLZD.F_CSBH = HYCSZD.F_CSBH 	  	    
+		WHERE 
+	        F_CLBH like "%"#{keywords,jdbcType=VARCHAR}"%"
+		ORDER BY F_CLBH
+    </select>
+	
+	<update id="update" parameterType="dwz.persistence.beans.ResBook">
+        UPDATE HYCLZD SET
+	        F_CLMC = #{F_CLMC} ,
+	        F_GGXH = #{F_GGXH} ,
+	        F_JLDW = #{F_JLDW} ,
+	        F_DWBH = #{F_DWBH} ,
+			F_CSBH = #{F_CSBH} ,
+			F_LRR = #{F_LRR} ,
+	        F_SYZT = #{F_SYZT} ,
+	        F_CHDATE = #{F_CHDATE}
+        WHERE 
+	        F_CLBH = #{F_CLBH} 
+	</update>
+</mapper>

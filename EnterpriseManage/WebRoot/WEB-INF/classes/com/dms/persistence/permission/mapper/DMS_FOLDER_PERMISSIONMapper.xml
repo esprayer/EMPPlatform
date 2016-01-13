@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.dms.persistence.permission.mapper.DMS_FOLDER_PERMISSIONMapper">
+	<resultMap id="rm" type="com.dms.persistence.permission.bean.DMS_FOLDER_PERMISSION">
+		<result property="F_ID" jdbcType="VARCHAR" column="F_ID"/>
+        <result property="F_FOLDERID" jdbcType="VARCHAR" column="F_FOLDERID"/>
+        <result property="F_PERMISSION" jdbcType="VARCHAR" column="F_PERMISSION"/>
+		<result property="F_BMBH" jdbcType="VARCHAR" column="F_BMBH"/>   
+		<result property="F_BMMC" jdbcType="VARCHAR" column="F_BMMC"/>        
+        <result property="F_USERID" jdbcType="VARCHAR" column="F_USERID"/>
+		<result property="F_USERNAME" jdbcType="VARCHAR" column="F_USERNAME"/>
+		<result property="F_CREATOR" jdbcType="VARCHAR" column="F_CREATOR"/>		
+        <result property="F_CRDATE" jdbcType="TIMESTAMP" column="F_CRDATE"/>
+        <result property="F_CHDATE" jdbcType="TIMESTAMP" column="F_CHDATE"/>
+	</resultMap>
+	
+	<select id="searchPermit" resultMap="rm">
+		SELECT 
+			DMS_FOLDER_PERMISSION.F_ID,
+	        DMS_FOLDER_PERMISSION.F_FOLDERID,
+	        DMS_FOLDER_PERMISSION.F_PERMISSION,
+	        DMS_FOLDER_PERMISSION.F_BMBH,
+			BM.F_BMMC,				
+	        DMS_FOLDER_PERMISSION.F_USERID,
+			ZG.USER_NAME as F_USERNAME,
+			DMS_FOLDER_PERMISSION.F_CREATOR,
+			DMS_FOLDER_PERMISSION.F_CRDATE,
+			DMS_FOLDER_PERMISSION.F_CHDATE
+	    FROM DMS_FOLDER_PERMISSION 
+		LEFT JOIN HYBMZD BM ON DMS_FOLDER_PERMISSION.F_BMBH = BM.F_BMBH 
+		LEFT JOIN BSUSER ZG ON DMS_FOLDER_PERMISSION.F_USERID = ZG.USER_ID AND DMS_FOLDER_PERMISSION.F_BMBH = ZG.USER_ORGID and ZG.USER_DISABLE='1'
+		WHERE 
+			<if test="F_BMBH!=null" >
+				DMS_FOLDER_PERMISSION.F_BMBH = #{F_BMBH} AND 
+			</if>
+			<if test="F_USERID!=null" >
+				DMS_FOLDER_PERMISSION.F_USERID = #{F_USERID} AND 				
+			</if>
+			DMS_FOLDER_PERMISSION.F_FOLDERID = #{F_FOLDERID}
+		ORDER BY DMS_FOLDER_PERMISSION.F_BMBH,DMS_FOLDER_PERMISSION.F_USERID
+	</select>
+	
+	<select id="loadPermit" resultMap="rm">
+		SELECT 
+			DMS_FOLDER_PERMISSION.F_ID,
+	        DMS_FOLDER_PERMISSION.F_FOLDERID,
+	        DMS_FOLDER_PERMISSION.F_PERMISSION,
+	        DMS_FOLDER_PERMISSION.F_BMBH,
+			BM.F_BMMC,				
+	        DMS_FOLDER_PERMISSION.F_USERID,
+			ZG.USER_NAME as F_USERNAME,
+			DMS_FOLDER_PERMISSION.F_CREATOR,
+			DMS_FOLDER_PERMISSION.F_CRDATE,
+			DMS_FOLDER_PERMISSION.F_CHDATE
+	    FROM DMS_FOLDER_PERMISSION 
+		LEFT JOIN HYBMZD BM ON DMS_FOLDER_PERMISSION.F_BMBH = BM.F_BMBH 
+		LEFT JOIN BSUSER ZG ON DMS_FOLDER_PERMISSION.F_USERID = ZG.USER_ID AND DMS_FOLDER_PERMISSION.F_BMBH = ZG.USER_ORGID and ZG.USER_DISABLE='1'
+		WHERE 
+			DMS_FOLDER_PERMISSION.F_ID = #{F_ID} AND 
+			DMS_FOLDER_PERMISSION.F_FOLDERID = #{F_FOLDERID}
+		ORDER BY DMS_FOLDER_PERMISSION.F_BMBH,DMS_FOLDER_PERMISSION.F_USERID
+	</select>
+	
+	<select id="searchDepartmentPermit" resultMap="rm">
+		SELECT 
+			DMS_FOLDER_PERMISSION.F_ID,
+	        DMS_FOLDER_PERMISSION.F_FOLDERID,
+	        DMS_FOLDER_PERMISSION.F_PERMISSION,
+	        DMS_FOLDER_PERMISSION.F_BMBH,
+			BM.F_BMMC,				
+	        DMS_FOLDER_PERMISSION.F_USERID,
+			DMS_FOLDER_PERMISSION.F_CREATOR,
+			DMS_FOLDER_PERMISSION.F_CRDATE,
+			DMS_FOLDER_PERMISSION.F_CHDATE
+	    FROM DMS_FOLDER_PERMISSION 
+		LEFT JOIN HYBMZD BM ON DMS_FOLDER_PERMISSION.F_BMBH = BM.F_BMBH 
+		WHERE 
+			DMS_FOLDER_PERMISSION.F_BMBH = #{F_BMBH} AND  	
+			DMS_FOLDER_PERMISSION.F_USERID = '' AND 
+			DMS_FOLDER_PERMISSION.F_FOLDERID = #{F_FOLDERID}
+		ORDER BY DMS_FOLDER_PERMISSION.F_BMBH,DMS_FOLDER_PERMISSION.F_USERID
+	</select>
+	
+	<select id="searchUserPermit" resultMap="rm">
+		SELECT 
+			DMS_FOLDER_PERMISSION.F_ID,
+	        DMS_FOLDER_PERMISSION.F_FOLDERID,
+	        DMS_FOLDER_PERMISSION.F_PERMISSION,
+	        DMS_FOLDER_PERMISSION.F_BMBH,
+			BM.F_BMMC,				
+	        DMS_FOLDER_PERMISSION.F_USERID,
+			ZG.USER_NAME as F_USERNAME,
+			DMS_FOLDER_PERMISSION.F_CREATOR,
+			DMS_FOLDER_PERMISSION.F_CRDATE,
+			DMS_FOLDER_PERMISSION.F_CHDATE
+	    FROM DMS_FOLDER_PERMISSION 
+		LEFT JOIN HYBMZD BM ON DMS_FOLDER_PERMISSION.F_BMBH = BM.F_BMBH 
+		LEFT JOIN BSUSER ZG ON DMS_FOLDER_PERMISSION.F_USERID = ZG.USER_ID AND DMS_FOLDER_PERMISSION.F_BMBH = ZG.USER_ORGID and ZG.USER_DISABLE='1'
+		WHERE 
+			<if test="F_USERID!=null" >
+				DMS_FOLDER_PERMISSION.F_BMBH = #{F_BMBH} AND 
+				DMS_FOLDER_PERMISSION.F_USERID = #{F_USERID} AND 				
+			</if>
+			DMS_FOLDER_PERMISSION.F_FOLDERID = #{F_FOLDERID}
+		ORDER BY DMS_FOLDER_PERMISSION.F_BMBH,DMS_FOLDER_PERMISSION.F_USERID
+	</select>
+	
+	<select id="load" resultMap="rm">
+		SELECT 
+			DMS_FOLDER_PERMISSION.F_ID,
+	        DMS_FOLDER_PERMISSION.F_FOLDERID,
+	        DMS_FOLDER_PERMISSION.F_PERMISSION,
+	        DMS_FOLDER_PERMISSION.F_BMBH,			
+	        DMS_FOLDER_PERMISSION.F_USERID,
+			DMS_FOLDER_PERMISSION.F_CREATOR,
+			DMS_FOLDER_PERMISSION.F_CRDATE,
+			DMS_FOLDER_PERMISSION.F_CHDATE
+	    FROM DMS_FOLDER_PERMISSION 
+		WHERE 
+			DMS_FOLDER_PERMISSION.F_ID = #{F_ID}
+	</select>
+
+	<insert id="insertbatch" parameterType="java.util.List">
+		  INSERT INTO DMS_FOLDER_PERMISSION (
+        	F_ID,
+	        F_FOLDERID,
+	        F_PERMISSION,
+	        F_BMBH,				
+	        F_USERID,
+			F_CREATOR,
+			F_CRDATE,
+			F_CHDATE
+        ) values
+		  <foreach collection="list" item="item" index="index" separator=",">
+			  ( 
+				  #{item.F_ID}, 
+				  #{item.F_FOLDERID}, 
+				  #{item.F_PERMISSION},
+				  #{item.F_BMBH}, 
+				  #{item.F_USERID},
+				  #{item.F_CREATOR}, 				  
+				  #{item.F_CRDATE} , 
+				  #{item.F_CHDATE} 
+			  )
+		  </foreach>
+	</insert>
+	
+	<!-- 按Id删除 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+        DELETE 
+		FROM DMS_FOLDER_PERMISSION 
+		WHERE
+			DMS_FOLDER_PERMISSION.F_ID = #{F_ID}
+    </delete>
+     <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="OBJ_ID">
+        INSERT INTO DMS_FOLDER_PERMISSION (
+        	F_ID,
+	        F_FOLDERID,
+	        F_PERMISSION,
+	        F_BMBH,				
+	        F_USERID,
+			F_CREATOR,
+			F_CRDATE,
+			F_CHDATE
+        ) VALUES (
+        	#{F_ID} ,
+        	#{F_FOLDERID} ,
+        	#{F_PERMISSION} ,
+        	#{F_BMBH} ,
+        	#{F_USERID},
+			#{F_CREATOR} ,
+        	#{F_CRDATE} ,
+        	#{F_CHDATE}		
+        )
+	</insert>
+
+	<update id="update" parameterType="com.dms.persistence.permission.bean.DMS_FOLDER_PERMISSION">
+        UPDATE DMS_FOLDER_PERMISSION SET
+			F_PERMISSION = #{F_PERMISSION} ,         	       
+	        F_CHDATE = #{F_CHDATE}
+        WHERE 
+	        DMS_FOLDER_PERMISSION.F_ID = #{F_ID}
+	</update>
+</mapper>
+

@@ -1,0 +1,20 @@
+[PropertyInfo]
+BhCol,String,false,false, , ,false,<default>
+bmStru,String,false,false, , ,true,<default>
+BmStru,String,false,false, , ,false,<default>
+ID,String,false,false, , ,false,<default>
+mcCol,String,false,false, , ,true,<default>
+McCol,String,false,false, , ,false,<default>
+slTable,String,false,false, , ,true,<default>
+SlTable,String,false,false, , ,false,<default>
+wbTable,String,false,false, , ,true,<default>
+WbTable,String,false,false, , ,false,<default>
+yeTable,String,false,false, , ,true,<default>
+YeTable,String,false,false, , ,false,<default>
+zdTable,String,false,false, , ,true,<default>
+ZdTable,String,false,false, , ,false,<default>
+[IconNames]
+
+
+
+

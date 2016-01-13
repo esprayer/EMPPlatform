@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.mrp.persistence.sysConfigure.user.mapper.HYZGZDMapper">
+	<resultMap id="rm" type="com.mrp.persistence.sysConfigure.user.bean.HYZGZD">
+        <result property="F_ZGBH" jdbcType="VARCHAR" column="F_ZGBH"/>
+        <result property="F_ZGMC" jdbcType="VARCHAR" column="F_ZGMC"/>
+        <result property="F_SJHM" jdbcType="VARCHAR" column="F_SJHM"/>
+        <result property="F_BGDH" jdbcType="VARCHAR" column="F_BGDH"/>
+		<result property="F_YHYX" jdbcType="VARCHAR" column="F_YHYX"/>
+        <result property="F_SFGLY" jdbcType="INTEGER" column="F_SFGLY"/>
+        <result property="F_SXBM" jdbcType="VARCHAR" column="F_SXBM"/>        
+        <result property="F_SYZT" jdbcType="INTEGER" column="F_SYZT"/>
+        <result property="F_CRDATE" jdbcType="TIMESTAMP" column="F_CRDATE"/>
+        <result property="F_CHDATE" jdbcType="TIMESTAMP" column="F_CHDATE"/>
+	</resultMap>
+	
+	<select id="load" resultMap="rm">
+		SELECT 
+	        F_ZGBH,
+	        F_ZGMC,
+	        F_SJHM,
+	        F_BGDH,
+	        F_YHYX,	
+			F_SFGLY,
+	        F_SXBM,		
+			F_SYZT,        
+	        F_CRDATE,
+			F_CHDATE
+	    FROM HYZGZD
+	    WHERE 
+	        F_SXBM = #{F_SXBM} 
+		ORDER BY F_CRDATE
+	</select>
+	
+	<select id="loadHYZGByBh" resultMap="rm">
+		SELECT 
+	        F_ZGBH,
+	        F_ZGMC,
+	        F_SJHM,
+	        F_BGDH,
+	        F_YHYX,	
+			F_SFGLY,
+	        F_SXBM,		
+			F_SYZT,        
+	        F_CRDATE,
+			F_CHDATE
+	    FROM HYZGZD
+	    WHERE 
+	        F_ZGBH = #{F_ZGBH} 
+		ORDER BY F_CRDATE
+	</select>
+	
+	
+	<select id="loadHYZG" resultMap="rm">
+		SELECT 
+	        F_ZGBH,
+	        F_ZGMC,
+	        F_SJHM,
+	        F_BGDH,
+	        F_YHYX,	
+			F_SFGLY,
+	        F_SXBM,		
+			F_SYZT,        
+	        F_CRDATE,
+			F_CHDATE
+	    FROM HYZGZD
+	    WHERE 
+	    	<if test="F_SXBM!=null" >
+				F_SXBM = #{F_SXBM} AND
+			</if>
+	         F_ZGBH = #{F_ZGBH}
+		ORDER BY F_CRDATE
+	</select>
+	
+	<select id="findZgByBm" resultMap="rm">
+		SELECT 
+	        F_ZGBH,
+	        F_ZGMC,
+	        F_SJHM,
+	        F_BGDH,
+	        F_YHYX,	
+			F_SFGLY,
+	        F_SXBM,		
+			F_SYZT,        
+	        F_CRDATE,
+			F_CHDATE
+	    FROM HYZGZD
+	    WHERE 
+	    	<if test="F_SYZT!=null" >
+				F_SYZT = #{F_SYZT} AND
+			</if>
+	        F_SXBM = #{F_SXBM} 
+		ORDER BY F_CRDATE
+	</select>
+	
+	<!-- 按Id删除 -->
+	<delete id="deleteHYZG" parameterType="java.lang.Integer">
+        DELETE FROM HYZGZD WHERE
+        F_ZGBH = #{F_ZGBH} AND F_SXBM = #{F_SXBM}
+    </delete>
+     <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="OBJ_ID">
+        INSERT INTO HYZGZD (
+        	F_ZGBH,
+	        F_ZGMC,
+	        F_SJHM,
+	        F_BGDH,
+			F_YHYX,
+	        F_SFGLY,
+	        F_SXBM,
+	        F_SYZT,	        
+	        F_CRDATE,
+			F_CHDATE
+        ) VALUES (
+        	#{F_ZGBH} ,
+        	#{F_ZGMC} ,
+        	#{F_SJHM} ,
+        	#{F_BGDH} ,
+        	#{F_YHYX} ,
+			#{F_SFGLY} ,
+        	#{F_SXBM} ,
+        	#{F_SYZT} ,
+        	#{F_CRDATE} ,
+			#{F_CHDATE}
+        )
+	</insert>
+
+	<select id="findAll" resultMap="rm">
+    	SELECT 
+	        F_ZGBH,
+	        F_ZGMC,
+	        F_SJHM,
+	        F_BGDH,
+	        F_YHYX,	
+			F_SFGLY,
+	        F_SXBM,		
+			F_SYZT,        
+	        F_CRDATE,
+			F_CHDATE
+	    FROM HYZGZD
+		ORDER BY F_CRDATE
+    </select>
+	
+	<select id="findZgByBms" resultMap="rm">
+    	SELECT 
+	        F_ZGBH,
+	        F_ZGMC,
+	        F_SJHM,
+	        F_BGDH,
+	        F_YHYX,	
+			F_SFGLY,
+	        F_SXBM,		
+			F_SYZT,        
+	        F_CRDATE,
+			F_CHDATE
+	    FROM HYZGZD
+		WHERE 
+			<if test="F_SYZT!=null" >
+				F_SYZT = #{F_SYZT} AND
+			</if>
+	        F_ZGBH like "%"#{F_ZGBH,jdbcType=VARCHAR}"%" AND F_SXBM = #{F_SXBM} 
+		ORDER BY F_CRDATE
+    </select>
+	
+	<update id="update" parameterType="dwz.persistence.beans.ResBook">
+        UPDATE HYZGZD SET
+	        F_ZGMC = #{F_ZGMC} ,
+	        F_SJHM = #{F_SJHM} ,
+	        F_BGDH = #{F_BGDH} ,
+	        F_YHYX = #{F_YHYX} ,
+			F_SFGLY = #{F_SFGLY} ,
+	        F_SXBM = #{F_SXBM} ,
+	        F_SYZT = #{F_SYZT} ,
+	        F_CHDATE = #{F_CHDATE}
+        WHERE 
+	        F_ZGBH = #{F_ZGBH} AND F_SXBM = #{F_SXBM}
+	</update>
+</mapper>
+

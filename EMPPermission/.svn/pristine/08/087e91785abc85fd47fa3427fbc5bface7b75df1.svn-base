@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.persistence.qxgl.mapper.SYSYhjsqxMapper">
+	<resultMap id="rmuser" type="com.persistence.qxgl.beans.SYSUser">
+        <result property="USER_ID"         jdbcType="VARCHAR" column="USER_ID"/>
+        <result property="USER_NAME"       jdbcType="VARCHAR" column="USER_NAME"/>
+        <result property="USER_TYPE"       jdbcType="INTEGER" column="USER_TYPE"/>
+        <result property="USER_ORGID"      jdbcType="VARCHAR" column="USER_ORGID"/>
+		<result property="USER_PASS"       jdbcType="VARCHAR" column="USER_PASS"/>
+		<result property="USER_ISADMIN"    jdbcType="VARCHAR" column="USER_ISADMIN"/>
+		<result property="USER_MAIL1"      jdbcType="VARCHAR" column="USER_MAIL1"/>
+		<result property="USER_MAIL2"      jdbcType="VARCHAR" column="USER_MAIL2"/>
+		<result property="USER_PHONE1"     jdbcType="VARCHAR" column="USER_PHONE1"/>
+		<result property="USER_PHONE2"     jdbcType="VARCHAR" column="USER_PHONE2"/>		
+		<result property="USER_ADDRESSS1"  jdbcType="VARCHAR" column="USER_ADDRESSS1"/>	
+     	<result property="USER_ADDRESSS2"  jdbcType="VARCHAR" column="USER_ADDRESSS2"/>
+		<result property="USER_T01"        jdbcType="VARCHAR" column="USER_T01"/>		
+	</resultMap>
+	<resultMap id="rmrole" type="com.persistence.qxgl.beans.SYSRole">
+        <result property="roleId"   jdbcType="VARCHAR" column="ROLE_ID"/>
+        <result property="roleName" jdbcType="VARCHAR" column="ROLE_NAME"/>
+        <result property="js"       jdbcType="INTEGER" column="F_JS"/>
+        <result property="mx"       jdbcType="VARCHAR" column="F_MX"/>
+		<result property="parent"   jdbcType="VARCHAR" column="F_PARENT"/>
+		<result property="note"     jdbcType="VARCHAR" column="F_NOTE"/>
+	</resultMap>
+	<!--  查询用户是否具有业务系统权限 -->
+	<select id="isExistsYwxtQx" resultType="INTEGER" parameterType="java.lang.String">
+		select count(1) from bsusqx where F_ID = #{qxid}
+	</select>
+	
+	<!--  查询用户角色 -->
+	<select id="queryUserRole" resultMap="rmrole" parameterType="java.lang.String">
+		select ROLE.ROLE_ID,ROLE.ROLE_NAME,ROLE.F_JS,ROLE.F_MX,ROLE.F_PARENT,ROLE.F_NOTE 
+          from BSROLE ROLE,BSUSROLE GX
+         where ROLE.ROLE_ID = GX.ROLE_ID AND GX.USER_ID = #{USER_ID} 
+         order by ROLE.ROLE_ID ;
+	</select>
+	<!-- 查询用户未分配角色 -->
+	<select id="queryWfpRole" resultMap="rmrole" parameterType="java.lang.String">
+		select ROLE.ROLE_ID,ROLE.ROLE_NAME,ROLE.F_JS,ROLE.F_MX,ROLE.F_PARENT,ROLE.F_NOTE 
+          from BSROLE ROLE
+         where NOT EXISTS  (SELECT 1 FROM BSUSROLE GX WHERE ROLE.ROLE_ID = GX.ROLE_ID AND GX.USER_ID = #{USER_ID} )
+         order by ROLE.ROLE_ID ;
+	</select>
+	
+	<!--  查询角色用户 -->
+	<select id="queryRoleUser" resultMap="rmuser" parameterType="java.lang.String">
+		SELECT
+		   BSUSER.USER_ID,
+		   BSUSER.USER_NAME,
+		   BSUSER.USER_TYPE,
+		   BSUSER.USER_ORGID,
+		   BSUSER.USER_PASS,
+		   BSUSER.USER_DISABLE,
+		   BSUSER.USER_ISADMIN,
+		   BSUSER.USER_MAIL1,
+		   BSUSER.USER_MAIL2,
+		   BSUSER.USER_PHONE1,
+		   BSUSER.USER_PHONE2,
+		   BSUSER.USER_ADDRESSS1,
+		   BSUSER.USER_ADDRESSS2,
+		   BSUSER.USER_T01,
+		   BSUSER.F_CRDATE,
+		   BSUSER.F_CHDATE
+		FROM
+		   bsuser,
+		   bsusrole GX
+		WHERE
+		   bsuser.USER_ID = GX.USER_ID
+	   <if test="USER_ORGID != null">
+    	AND bsuser.USER_ORGID like #{USER_ORGID}
+  	   </if>
+		AND GX.ROLE_ID = #{ROLE_ID}
+	</select>
+	<!-- 查询不是该角色的用户 -->
+	<select id="queryWfpUser" resultMap="rmuser" parameterType="java.lang.String">
+		SELECT
+		   BSUSER.USER_ID,
+		   BSUSER.USER_NAME,
+		   BSUSER.USER_TYPE,
+		   BSUSER.USER_ORGID,
+		   BSUSER.USER_PASS,
+		   BSUSER.USER_DISABLE,
+		   BSUSER.USER_ISADMIN,
+		   BSUSER.USER_MAIL1,
+		   BSUSER.USER_MAIL2,
+		   BSUSER.USER_PHONE1,
+		   BSUSER.USER_PHONE2,
+		   BSUSER.USER_ADDRESSS1,
+		   BSUSER.USER_ADDRESSS2,
+		   BSUSER.USER_T01,
+		   BSUSER.F_CRDATE,
+		   BSUSER.F_CHDATE
+		FROM
+		   bsuser
+		where NOT EXISTS  (SELECT 1 FROM BSUSROLE GX WHERE bsuser.USER_ID = GX.USER_ID AND GX.ROLE_ID = #{ROLE_ID} )
+		<if test="USER_ORGID != null">
+    	 AND bsuser.USER_ORGID like #{USER_ORGID}
+  	    </if>
+		 order by bsuser.USER_ID;
+	</select>
+	
+	<delete id="deleteUserRoles" parameterType="java.lang.String">
+        DELETE FROM BSUSROLE WHERE
+        USER_ID = #{USER_ID} 
+    </delete>
+    
+      <!-- 插入 -->
+    <insert id="saveUserRoles" parameterType="com.persistence.qxgl.beans.BaseUSRole">
+        INSERT INTO BSUSROLE (
+        	USER_ID,
+	        ROLE_ID
+        ) VALUES (
+        	#{USER_ID} ,
+        	#{ROLE_ID}
+        )
+	</insert>
+	<!-- 删除对应关系 -->
+	<delete id="deleteUserVsRole" parameterType="com.persistence.qxgl.beans.BaseUSRole">
+        DELETE FROM BSUSROLE WHERE
+        USER_ID = #{USER_ID} AND ROLE_ID = #{ROLE_ID}
+    </delete>
+	<!-- 查询用户已分配功能 -->
+	<select id="queryMenuTree" resultType="hashmap" parameterType="java.lang.String">
+		SELECT
+		menu.MENU_BH,
+		menu.MENU_MC,
+		menu.MODULE_BH,
+		menu.APP_ID,
+		menu.F_JS,
+		menu.F_MX,
+		menu.F_PARENT,
+		menu.F_DISP,
+		menu.URL,
+		menu.IMAGE,
+		menu.SHORTCUT,
+		menu.F_CRDATE,
+		menu.F_CHDATE
+		FROM SYS_MENU  menu
+	   WHERE APP_ID = #{APP_ID}
+		ORDER BY menu.MENU_BH
+	</select>
+	<!-- 查询子菜单 根据用户-->
+	<select id="querySubMenu" resultType="hashmap" >
+		SELECT
+		menu.MENU_BH,
+		menu.MENU_MC,
+		menu.MODULE_BH,
+		menu.APP_ID,
+		menu.F_JS,
+		menu.F_MX,
+		menu.F_PARENT,
+		menu.F_DISP,
+		menu.URL,
+		menu.IMAGE,
+		menu.SHORTCUT,
+		menu.F_CRDATE,
+		menu.F_CHDATE,
+		bsusqx.F_OP
+		FROM SYS_MENU menu  LEFT JOIN bsusqx
+				  ON  menu.MENU_BH=bsusqx.ACCESS_VALUE
+				 AND  bsusqx.F_OP = '1'
+				 AND  bsusqx.MASTER_VALUE = #{USER_ID}
+				 AND  bsusqx.F_ACCESS = #{YWXT_ID}+'MENU'
+				 AND  bsusqx.F_MASTER ='USER'
+			   WHERE  menu.F_JS = #{JS}+1 AND menu.MENU_BH LIKE #{MENU_BH} '%' 
+		ORDER BY menu.MENU_BH
+	</select>
+		<!-- 查询子菜单 根据角色-->
+	<select id="querySubMenuByRole" resultType="hashmap" >
+		SELECT
+		menu.MENU_BH,
+		menu.MENU_MC,
+		menu.MODULE_BH,
+		menu.APP_ID,
+		menu.F_JS,
+		menu.F_MX,
+		menu.F_PARENT,
+		menu.F_DISP,
+		menu.URL,
+		menu.IMAGE,
+		menu.SHORTCUT,
+		menu.F_CRDATE,
+		menu.F_CHDATE,
+		bsusqx.F_OP
+		FROM SYS_MENU menu  LEFT JOIN bsusqx
+				  ON  menu.MENU_BH=bsusqx.ACCESS_VALUE
+				 AND  bsusqx.F_OP = '1'
+				 AND  bsusqx.MASTER_VALUE = #{ROLE_ID}
+				 AND  bsusqx.F_ACCESS = #{YWXT_ID}+'MENU'
+				 AND  bsusqx.F_MASTER ='ROLE'
+			   WHERE  menu.F_JS = #{JS}+1 AND menu.MENU_BH LIKE #{MENU_BH} '%' 
+		ORDER BY menu.MENU_BH
+	</select>
+	<!-- 保存用户功能权限n-->
+	<insert id="saveGnqx" parameterType="java.util.Map">
+		 INSERT INTO bsusqx (
+        	bsusqx.F_ID,
+			bsusqx.F_MASTER,
+			bsusqx.MASTER_VALUE,
+			bsusqx.F_ACCESS,
+			bsusqx.ACCESS_VALUE,
+			bsusqx.F_OP
+        ) VALUES (
+        	#{F_ID} ,
+        	#{F_MASTER},
+        	#{MASTER_VALUE},
+        	#{F_ACCESS},
+        	#{ACCESS_VALUE},
+        	#{F_OP}
+        )
+	</insert>
+	<delete id="delGnqxById" parameterType="java.lang.String">
+		 DELETE FROM bsusqx WHERE F_ID=#{F_ID}
+	</delete>
+</mapper>
+
+

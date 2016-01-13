@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.dms.persistence.document.mapper.DMS_DOCMapper">
+	<resultMap id="rm" type="com.dms.persistence.document.bean.DMS_DOC">
+		<result property="F_DOCID" jdbcType="VARCHAR" column="F_DOCID"/>
+        <result property="F_NAME" jdbcType="VARCHAR" column="F_NAME"/>
+        <result property="F_FOLDERID" jdbcType="VARCHAR" column="F_FOLDERID"/>
+		<result property="F_TYPE" jdbcType="VARCHAR" column="F_TYPE"/>        
+        <result property="F_CREATOR" jdbcType="VARCHAR" column="F_CREATOR"/>
+		<result property="F_CREATORNAME" jdbcType="VARCHAR" column="F_CREATORNAME"/>
+        <result property="F_DELETE" jdbcType="VARCHAR" column="F_DELETE"/>
+		<result property="F_DEL_USERID" jdbcType="VARCHAR" column="F_DEL_USERID"/>
+		<result property="F_DEL_USERNAME" jdbcType="VARCHAR" column="F_DEL_USERNAME"/>
+        <result property="F_DELDATE" jdbcType="TIMESTAMP" column="F_DELDATE"/>	
+		<result property="F_SIZE" jdbcType="BIGINT" column="F_SIZE"/>
+        <result property="F_LOCKED" jdbcType="VARCHAR" column="F_LOCKED"/>	
+		<result property="F_LOCKED_USERID" jdbcType="VARCHAR" column="F_LOCKED_USERID"/>
+		<result property="F_LOCKED_USERNAME" jdbcType="VARCHAR" column="F_LOCKED_USERNAME"/>
+        <result property="F_LOCKEDDATE" jdbcType="TIMESTAMP" column="F_LOCKEDDATE"/>	
+        <result property="F_CRDATE" jdbcType="TIMESTAMP" column="F_CRDATE"/>
+        <result property="F_CHDATE" jdbcType="TIMESTAMP" column="F_CHDATE"/>
+	</resultMap>
+	
+	<select id="loadFOLDERDOCS" resultMap="rm">
+		SELECT 
+			F_DOCID,
+	        F_NAME,
+	        F_FOLDERID,
+	        F_TYPE,				
+	        F_SIZE,
+			F_CREATOR,
+			USER_NAME AS F_CREATORNAME,
+			F_DELETE,
+			F_DEL_USERID,
+			F_DELDATE,	 
+			F_LOCKED,
+			F_LOCKED_USERID,
+			F_LOCKEDDATE,       
+	        DMS_DOC.F_CRDATE,
+			DMS_DOC.F_CHDATE
+	    FROM DMS_DOC 
+		LEFT JOIN BSUSER ON DMS_DOC.F_CREATOR = BSUSER.USER_ID			
+		WHERE 
+			F_FOLDERID = #{F_FOLDERID} and 
+			F_DELETE = #{F_DELETE}
+		ORDER BY F_NAME
+	</select>
+	
+	<select id="loadDoc" resultMap="rm">
+		SELECT 
+			F_DOCID,
+	        F_NAME,
+	        F_FOLDERID,
+	        F_TYPE,				
+	        F_SIZE,
+			F_CREATOR,
+			C.USER_NAME AS F_CREATORNAME,
+			F_DELETE,
+			F_DEL_USERID,
+			F_DELDATE,	 
+			F_LOCKED,
+			F_LOCKED_USERID,
+			L.USER_NAME AS F_LOCKED_USERNAME,
+			F_LOCKEDDATE,       
+	        DMS_DOC.F_CRDATE,
+			DMS_DOC.F_CHDATE
+	    FROM DMS_DOC 
+			LEFT JOIN BSUSER C ON DMS_DOC.F_CREATOR = C.USER_ID
+			LEFT JOIN BSUSER L ON DMS_DOC.F_CREATOR = L.USER_ID				
+		WHERE 
+			F_DOCID = #{F_DOCID}
+	</select>
+
+	<select id="loadDeleteDoc" resultMap="rm">
+		SELECT 
+			F_DOCID,
+	        F_NAME,
+	        F_FOLDERID,
+	        F_TYPE,				
+	        F_SIZE,
+			F_CREATOR,
+			C.USER_NAME AS F_CREATORNAME,
+			F_DELETE,
+			F_DEL_USERID,
+			D.USER_NAME AS F_DEL_USERNAME,
+			F_DELDATE,	 
+			F_LOCKED,
+			F_LOCKED_USERID,
+			L.USER_NAME AS F_LOCKED_USERNAME,
+			F_LOCKEDDATE,       
+	        DMS_DOC.F_CRDATE,
+			DMS_DOC.F_CHDATE
+	    FROM DMS_DOC 
+			LEFT JOIN BSUSER C ON DMS_DOC.F_CREATOR = C.USER_ID
+			LEFT JOIN BSUSER L ON DMS_DOC.F_CREATOR = L.USER_ID 	
+			LEFT JOIN BSUSER D ON DMS_DOC.F_CREATOR = D.USER_ID 					
+		WHERE 
+			F_DEL_USERID = #{F_DEL_USERID}
+		ORDER BY F_DELDATE, F_NAME
+	</select>
+	
+	<!-- 按Id删除 -->
+	<delete id="deleteHYRKMX" parameterType="java.lang.Integer">
+        DELETE FROM HYCLRK WHERE
+        HYCLRK.F_KJQJ = #{F_KJQJ} AND HYCLRK.F_DJBH = #{F_DJBH} AND 
+		HYCLRK.F_GUID = #{F_GUID} AND HYCLRK.F_FLBH = #{F_FLBH}
+    </delete>
+	
+     <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="OBJ_ID">
+        INSERT INTO DMS_DOC (
+        	F_DOCID,
+	        F_NAME,
+	        F_FOLDERID,
+	        F_TYPE,				
+	        F_SIZE,
+			F_CREATOR,
+			F_DELETE,
+			F_DEL_USERID,
+			F_DELDATE,	 
+			F_LOCKED,
+			F_LOCKED_USERID,
+			F_LOCKEDDATE,       
+	        F_CRDATE,
+			F_CHDATE
+        ) VALUES (
+        	#{F_DOCID} ,
+        	#{F_NAME} ,
+        	#{F_FOLDERID} ,
+        	#{F_TYPE} ,
+        	#{F_SIZE} ,
+        	#{F_CREATOR} ,
+			#{F_DELETE} ,
+        	#{F_DEL_USERID} ,
+			#{F_DELDATE} ,
+			#{F_LOCKED} ,
+			#{F_LOCKED_USERID} ,
+			#{F_LOCKEDDATE} ,
+        	#{F_CRDATE} ,
+			#{F_CHDATE}
+        )
+	</insert>
+
+	<update id="update" parameterType="com.mrp.persistence.sysConfigure.deport.bean.HYCKZD">
+        UPDATE DMS_DOC SET
+			F_NAME = #{F_NAME} ,    
+			F_SIZE = #{F_SIZE} ,          	       
+	        F_CHDATE = #{F_CHDATE}
+        WHERE 
+	        F_DOCID = #{F_DOCID}
+	</update>
+	
+	<update id="lockedDoc" parameterType="com.mrp.persistence.sysConfigure.deport.bean.HYCKZD">
+        UPDATE DMS_DOC SET
+			F_LOCKED = #{doc.F_LOCKED} ,
+			F_LOCKED_USERID = #{doc.F_LOCKED_USERID} ,
+			F_LOCKEDDATE = #{doc.F_LOCKEDDATE}
+        WHERE 
+	        F_DOCID = #{doc.F_DOCID}
+	</update>
+	
+	<update id="deleteDoc" parameterType="com.mrp.persistence.sysConfigure.deport.bean.HYCKZD">
+        UPDATE DMS_DOC SET
+			F_DELETE = #{F_DELETE} ,	          	       
+	        F_DEL_USERID = #{F_DEL_USERID} ,
+			F_DELDATE = #{F_DELDATE}
+        WHERE 
+	        F_DOCID = #{F_DOCID}
+	</update>
+	
+	<!-- 按Id删除 -->
+	<delete id="completelyDelete" parameterType="java.lang.Integer">
+        DELETE FROM DMS_DOC
+        WHERE 
+	        F_DOCID = #{F_DOCID}
+	</delete>
+	
+</mapper>
+

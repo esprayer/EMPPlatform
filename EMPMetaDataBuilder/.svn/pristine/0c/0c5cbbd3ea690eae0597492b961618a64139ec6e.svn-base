@@ -1,0 +1,5 @@
+package com.efounder.builder.meta;
+
+public class MetaDataManager {
+
+}

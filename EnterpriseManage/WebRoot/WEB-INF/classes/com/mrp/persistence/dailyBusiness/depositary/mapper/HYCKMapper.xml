@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.mrp.persistence.dailyBusiness.depositary.mapper.HYCKMapper">
+	<resultMap id="rm" type="com.mrp.persistence.dailyBusiness.depositary.bean.HYCK">
+		<result property="F_CLBH" jdbcType="VARCHAR" column="F_CLBH"/>
+        <result property="F_CLMC" jdbcType="VARCHAR" column="F_CLMC"/>
+        <result property="F_DWBH" jdbcType="VARCHAR" column="F_DWBH"/>
+		<result property="F_DWMC" jdbcType="VARCHAR" column="F_DWMC"/>        
+        <result property="F_CKBH" jdbcType="VARCHAR" column="F_CKBH"/>
+        <result property="F_CKMC" jdbcType="VARCHAR" column="F_CKMC"/>
+		<result property="F_CLDJ" jdbcType="DECIMAL" column="F_CLDJ"/>		
+		<result property="F_CLSL" jdbcType="DECIMAL" column="F_CLSL"/>
+	</resultMap>
+	
+	<select id="load" resultMap="rm">
+		SELECT 
+			HYCK.F_CLBH,
+			HYCLZD.F_CLMC,
+			HYCK.F_DWBH,
+			HYDWZD.F_DWMC,			
+	        HYCK.F_CKBH,
+	        HYCKZD.F_CKMC,		
+			F_CLDJ,     
+			F_CLSL
+	    FROM HYCK
+		LEFT JOIN HYCKZD ON HYCK.F_CKBH = HYCKZD.F_CKBH
+		LEFT JOIN HYCLZD ON HYCK.F_CLBH = HYCLZD.F_CLBH
+		LEFT JOIN HYDWZD ON HYCK.F_DWBH = HYDWZD.F_DWBH
+	    WHERE 
+			HYCK.F_CLBH = #{F_CLBH} AND HYCK.F_DWBH = #{F_DWBH} AND 
+			HYCK.F_CKBH = #{F_CKBH} AND 
+			HYCK.F_CLDJ = #{F_CLDJ}
+		ORDER BY HYCK.F_CKBH, HYCK.F_CLBH, HYCK.F_DWBH
+	</select>
+	
+	<select id="loadHYCK" resultMap="rm">
+		SELECT 
+			HYCK.F_CLBH,
+			HYCK.F_DWBH,
+			HYCK.F_CKBH,
+			F_CLDJ,     
+			F_CLSL
+	    FROM HYCK
+	    WHERE 
+	        HYCK.F_CLBH = #{F_CLBH} AND HYCK.F_DWBH = #{F_DWBH} AND HYCK.F_CKBH = #{F_CKBH} AND 
+		    F_CLDJ = #{F_CLDJ}
+	</select>
+
+     <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="OBJ_ID">
+        INSERT INTO HYCK (
+        	F_CLBH,
+	        F_DWBH,
+	        F_CKBH,
+	        F_CLDJ,				
+	        F_CLSL
+        ) VALUES (
+        	#{F_CLBH} ,
+        	#{F_DWBH} ,
+        	#{F_CKBH} ,
+        	#{F_CLDJ} ,
+        	#{F_CLSL}
+        )
+	</insert>
+
+	<update id="update" parameterType="com.mrp.persistence.sysConfigure.deport.bean.HYCKZD">
+        UPDATE HYCK SET
+			F_CLSL = #{F_CLSL}
+        WHERE 
+	        F_CLBH = #{F_CLBH} AND F_DWBH = #{F_DWBH} AND F_CKBH = #{F_CKBH} AND F_CLDJ = #{F_CLDJ}
+	</update>
+</mapper>
+

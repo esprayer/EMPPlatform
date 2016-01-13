@@ -1,0 +1,46 @@
+package com.report.table;
+
+import java.util.ResourceBundle;
+
+/**
+ * <p>Title: </p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @author not attributable
+ * @version 1.0
+ */
+
+public class QueryNode {
+    static ResourceBundle res = ResourceBundle.getBundle("com.report.table.Language");
+  private Object[] Datas = null;
+    private Object   Data  = null;
+    QueryNode ParentNode  = null;;
+    protected QueryNode[] ChildQueryNode = null;
+    public QueryNode(Object data,QueryNode pn,Object[] ds) {
+      Data = data;
+      ParentNode = pn;
+      Datas = ds;
+    }
+    public void setChildQueryNode(QueryNode[] cd) {
+      ChildQueryNode = cd;
+    }
+    public Object[] getDatas() {
+      return Datas;
+    }
+    /**
+     * Returns the the string to be used to display this leaf in the JTree.
+     */
+    public String toString() {
+      if ( Data != null )
+        return Data.toString();
+      else
+        return "";
+    }
+    /**
+     * Loads the children, caching the results in the children ivar.
+     */
+    public QueryNode[] getChildren() {
+      return ChildQueryNode;
+    }
+}

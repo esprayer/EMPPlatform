@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.mrp.persistence.sysConfigure.project.mapper.HYXMZDMapper">
+	<resultMap id="rm" type="com.mrp.persistence.sysConfigure.project.bean.HYXMZD">
+        <result property="F_XMBH" jdbcType="VARCHAR" column="F_XMBH"/>
+        <result property="F_XMMC" jdbcType="VARCHAR" column="F_XMMC"/>
+        <result property="F_SQSJ" jdbcType="VARCHAR" column="F_SQSJ"/>
+        <result property="F_SQDW" jdbcType="VARCHAR" column="F_SQDW"/>
+		<result property="F_SQR" jdbcType="VARCHAR" column="F_SQR"/>
+		<result property="F_SQRMC" jdbcType="VARCHAR" column="F_SQRMC"/>
+		<result property="F_GYZX" jdbcType="VARCHAR" column="F_GYZX"/>
+		<result property="F_DWLD" jdbcType="VARCHAR" column="F_DWLD"/>
+		<result property="F_FGLD" jdbcType="VARCHAR" column="F_FGLD"/>
+		<result property="F_ZGLD" jdbcType="VARCHAR" column="F_ZGLD"/>
+		<result property="F_GYZXMC" jdbcType="VARCHAR" column="F_GYZXMC"/>
+		<result property="F_DWLDMC" jdbcType="VARCHAR" column="F_DWLDMC"/>
+		<result property="F_FGLDMC" jdbcType="VARCHAR" column="F_FGLDMC"/>
+		<result property="F_ZGLDMC" jdbcType="VARCHAR" column="F_ZGLDMC"/>
+		<result property="F_XMZT" jdbcType="VARCHAR" column="F_XMZT"/>
+        <result property="F_CLXQSJ" jdbcType="TIMESTAMP" column="F_CLXQSJ"/>
+		<result property="F_WGSJ" jdbcType="TIMESTAMP" column="F_WGSJ"/>
+		<result property="F_WCRBH" jdbcType="VARCHAR" column="F_WCRBH"/>
+		<result property="F_WCRMC" jdbcType="VARCHAR" column="F_WCRMC"/>
+        <result property="F_CRDATE" jdbcType="TIMESTAMP" column="F_CRDATE"/>
+        <result property="F_CHDATE" jdbcType="TIMESTAMP" column="F_CHDATE"/>
+	</resultMap>
+	
+	<select id="loadXM" resultMap="rm">
+		SELECT 
+	        F_XMBH,
+	        F_XMMC,
+	        F_SQSJ,
+	        F_SQDW,
+	        F_SQR,
+			F_SQRMC,
+			F_GYZX,
+	        F_DWLD,
+	        F_FGLD,
+			F_ZGLD,
+			F_GYZXMC,
+			F_DWLDMC,
+	        F_FGLDMC,
+			F_ZGLDMC,
+			F_CLXQSJ,
+	        F_WGSJ,
+			F_WCRBH,
+			F_WCRMC,
+			F_XMZT,
+			F_CRDATE,
+			F_CHDATE
+	    FROM HYXMZD
+	    WHERE 
+			<if test="F_XMZT!=null" >
+				F_XMZT = #{F_XMZT} AND 
+			</if>
+	        (F_SQSJ &gt;= #{beginDate} AND F_SQSJ &lt;= #{endDate})
+		ORDER BY F_XMBH
+	</select>
+	
+	<select id="loadRKXM" resultMap="rm">
+		SELECT 
+	        F_XMBH,
+	        F_XMMC,
+	        F_SQSJ,
+	        F_SQDW,
+	        F_SQR,
+			F_SQRMC,
+			F_GYZX,
+	        F_DWLD,
+	        F_FGLD,
+			F_ZGLD,
+			F_GYZXMC,
+			F_DWLDMC,
+	        F_FGLDMC,
+			F_ZGLDMC,
+			F_CLXQSJ,
+	        F_WGSJ,
+			F_WCRBH,
+			F_WCRMC,
+			F_XMZT,
+			F_CRDATE,
+			F_CHDATE
+	    FROM HYXMZD
+	    WHERE 
+			<if test="F_XMZT!=null" >
+				F_XMZT = #{F_XMZT} AND 
+			</if>
+			HYXMZD.F_XMBH like "%"#{F_XMBH,jdbcType=VARCHAR}"%" and 
+		    exists(select 1 from HYXMCK where HYXMCK.F_CKBH like "%"#{F_CKBH,jdbcType=VARCHAR}"%"
+			and HYXMCK.F_CRFX = 'R' and HYXMCK.F_XMBH = HYXMZD.F_XMBH and 	HYXMCK.F_CLBH like "%"#{F_CLBH,jdbcType=VARCHAR}"%") and		
+	        (F_SQSJ &gt;= #{beginDate} AND F_SQSJ &lt;= #{endDate})
+		ORDER BY F_XMBH
+	</select>
+	
+	<select id="loadCKXM" resultMap="rm">
+		SELECT 
+	        F_XMBH,
+	        F_XMMC,
+	        F_SQSJ,
+	        F_SQDW,
+	        F_SQR,
+			F_SQRMC,
+			F_GYZX,
+	        F_DWLD,
+	        F_FGLD,
+			F_ZGLD,
+			F_GYZXMC,
+			F_DWLDMC,
+	        F_FGLDMC,
+			F_ZGLDMC,
+			F_CLXQSJ,
+	        F_WGSJ,
+			F_WCRBH,
+			F_WCRMC,
+			F_XMZT,
+			F_CRDATE,
+			F_CHDATE
+	    FROM HYXMZD
+	    WHERE 
+			<if test="F_XMZT!=null" >
+				F_XMZT = #{F_XMZT} AND 
+			</if>
+			HYXMZD.F_XMBH like "%"#{F_XMBH,jdbcType=VARCHAR}"%" and 
+		    exists(select 1 from HYXMCK where HYXMCK.F_YYCKBH like "%"#{F_CKBH,jdbcType=VARCHAR}"%"
+			and HYXMCK.F_CRFX = 'C' and HYXMCK.F_YYXMBH = HYXMZD.F_XMBH and HYXMCK.F_CLBH like "%"#{F_CLBH,jdbcType=VARCHAR}"%") and		
+	        (F_SQSJ &gt;= #{beginDate} AND F_SQSJ &lt;= #{endDate})
+		ORDER BY F_XMBH
+	</select>
+	
+	<select id="loadXMByKey" resultMap="rm">
+		SELECT 
+	        F_XMBH,
+	        F_XMMC,
+	        F_SQSJ,
+	        F_SQDW,
+	        F_SQR,
+			F_SQRMC,
+			F_GYZX,
+	        F_DWLD,
+	        F_FGLD,
+			F_ZGLD,
+			F_GYZXMC,
+			F_DWLDMC,
+	        F_FGLDMC,
+			F_ZGLDMC,
+			F_CLXQSJ,
+	        F_WGSJ,
+			F_WCRBH,
+			F_WCRMC,
+			F_XMZT,
+			F_CRDATE,
+			F_CHDATE
+	    FROM HYXMZD
+	    WHERE 
+			<if test="F_XMZT!=null" >
+				F_XMZT = #{F_XMZT} AND 
+			</if>
+	        F_XMBH like "%"#{keywords,jdbcType=VARCHAR}"%" AND (F_SQSJ &gt;= #{beginDate} AND F_SQSJ &lt;= #{endDate})
+		ORDER BY F_XMBH
+	</select>
+	
+	<select id="load" resultMap="rm">
+		SELECT 
+	        F_XMBH,
+	        F_XMMC,
+	        F_SQSJ,
+	        F_SQDW,
+	        F_SQR,
+			F_SQRMC,
+			F_GYZX,
+	        F_DWLD,
+	        F_FGLD,
+			F_ZGLD,
+			F_GYZXMC,
+			F_DWLDMC,
+	        F_FGLDMC,
+			F_ZGLDMC,
+			F_CLXQSJ,
+	        F_WGSJ,
+			F_WCRBH,
+			F_WCRMC,
+			F_XMZT,
+			F_CRDATE,
+			F_CHDATE
+	    FROM HYXMZD
+	    WHERE 			
+	        F_XMBH = #{F_XMBH}
+		ORDER BY F_XMBH
+	</select>
+	
+	<!-- 按Id删除 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM HYXMZD WHERE
+        F_XMBH = #{F_XMBH} 
+    </delete>
+  
+	 <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="F_DWBH">
+        INSERT INTO HYXMZD (
+        	F_XMBH,
+	        F_XMMC,
+	        F_SQSJ,
+	        F_SQDW,
+	        F_SQR,
+	        F_GYZX,
+	        F_DWLD,
+			F_FGLD,
+			F_ZGLD,
+			F_CLXQSJ,
+			F_WGSJ,
+			F_SQRMC,
+			F_XMZT,
+			F_DWLDMC,
+			F_FGLDMC,
+			F_ZGLDMC,
+			F_GYZXMC,
+	        F_CRDATE,
+			F_CHDATE
+        ) VALUES (
+        	#{F_XMBH} ,
+        	#{F_XMMC} ,
+        	#{F_SQSJ} ,
+        	#{F_SQDW} ,
+        	#{F_SQR} ,
+			#{F_GYZX} ,
+        	#{F_DWLD} ,
+        	#{F_FGLD} ,
+			#{F_ZGLD} ,
+			#{F_CLXQSJ} ,
+			#{F_WGSJ} ,
+			#{F_SQRMC} ,
+			#{F_XMZT} ,
+			#{F_DWLDMC} ,
+			#{F_FGLDMC} ,
+			#{F_ZGLDMC} ,
+			#{F_GYZXMC} ,
+        	#{F_CRDATE} ,
+			#{F_CHDATE}
+        )
+	</insert>
+	
+	<select id="findAll" resultMap="rm">
+    	SELECT 
+	        F_CLBH,
+	        F_CLMC,
+	        F_GGXH,
+	        F_JLDW,
+	        HYCLZD.F_DWBH,
+			HYDWZD.F_DWMC,
+	        HYCLZD.F_LRR,
+			HYZGZD.F_ZGMC,
+			HYCLZD.F_SYZT,
+	        HYCLZD.F_CRDATE,
+			HYCLZD.F_CHDATE
+	    FROM HYCLZD, HYDWZD, HYZGZD	    
+		WHERE 
+	        HYCLZD.F_DWBH = HYDWZD.F_DWBH AND HYCLZD.F_LRR = HYZGZD.F_ZGBH
+		ORDER BY F_CRDATE
+    </select>
+	
+	<select id="findByObjId" resultMap="rm">
+    	SELECT 
+	        F_CLBH,
+	        F_CLMC,
+	        F_GGXH,
+	        F_JLDW,
+	        HYCLZD.F_DWBH,
+			HYDWZD.F_DWMC,
+	        HYCLZD.F_LRR,
+			HYZGZD.F_ZGMC,
+			HYCLZD.F_SYZT,
+	        HYCLZD.F_CRDATE,
+			HYCLZD.F_CHDATE
+	    FROM HYCLZD, HYDWZD, HYZGZD	    
+		WHERE 
+	        F_CLBH like "%"#{keywords,jdbcType=VARCHAR}"%" AND HYCLZD.F_DWBH = HYDWZD.F_DWBH AND HYCLZD.F_LRR = HYZGZD.F_ZGBH
+		ORDER BY F_CRDATE
+    </select>
+	
+	<select id="findByCL" resultMap="rm">
+    	SELECT 
+	        HYXMZD.F_XMBH,
+	        HYXMZD.F_XMMC,
+	        HYXMZD.F_SQSJ,
+	        HYXMZD.F_SQDW,
+	        HYXMZD.F_SQR,
+			HYXMZD.F_SQRMC,
+			HYXMZD.F_GYZX,
+	        HYXMZD.F_DWLD,
+	        HYXMZD.F_FGLD,
+			HYXMZD.F_ZGLD,
+			HYXMZD.F_GYZXMC,
+			HYXMZD.F_DWLDMC,
+	        HYXMZD.F_FGLDMC,
+			HYXMZD.F_ZGLDMC,
+			HYXMZD.F_CLXQSJ,
+	        HYXMZD.F_WGSJ,
+			HYXMZD.F_WCRBH,
+			HYXMZD.F_WCRMC,
+			HYXMZD.F_XMZT,
+			HYXMZD.F_CRDATE,
+			HYXMZD.F_CHDATE
+	    FROM HYXMZD
+	    WHERE 
+			<if test="F_XMZT!=null" >
+				HYXMZD.F_XMZT = #{F_XMZT} AND 
+			</if>
+			<if test="F_XMBH!=null" >
+				HYXMZD.F_XMBH like "%"#{F_XMBH,jdbcType=VARCHAR}"%" AND
+			</if>
+			(F_SQSJ &gt;= #{beginDate} AND F_SQSJ &lt;= #{endDate}) AND 
+			exists(select 1 from HYXMMX where HYXMZD.F_XMBH = HYXMMX.F_XMBH and HYXMMX.F_CLBH like "%"#{F_CLBH,jdbcType=VARCHAR}"%")
+	        
+		ORDER BY HYXMZD.F_XMBH
+    </select>
+	
+	<update id="update" parameterType="dwz.persistence.beans.ResBook">
+        UPDATE HYXMZD SET
+			F_SQDW = #{F_SQDW} ,
+	        F_XMMC = #{F_XMMC} ,
+	        F_SQR = #{F_SQR} ,
+	        F_SQRMC = #{F_SQRMC} ,
+	        F_GYZX = #{F_GYZX} ,
+			F_GYZXMC = #{F_GYZXMC} ,
+			F_DWLD = #{F_DWLD} ,
+	        F_DWLDMC = #{F_DWLDMC} ,
+			F_FGLD = #{F_FGLD} ,
+	        F_FGLDMC = #{F_FGLDMC} ,
+			F_ZGLD = #{F_ZGLD} ,
+	        F_ZGLDMC = #{F_ZGLDMC} ,
+	        F_CHDATE = #{F_CHDATE}
+        WHERE 
+	        F_XMBH = #{F_XMBH} 
+	</update>
+	
+	<update id="updateXMBH" parameterType="dwz.persistence.beans.ResBook">
+        UPDATE HYXMZD SET
+			F_XMBH = #{F_XMBH}
+        WHERE 
+	        F_XMBH = #{UUID} 
+	</update>
+	
+	<update id="updateXMZT" parameterType="dwz.persistence.beans.ResBook">
+        UPDATE HYXMZD SET
+			F_WGSJ = #{F_WGSJ},
+			F_WCRBH = #{F_WCRBH},
+			F_WCRMC = #{F_WCRMC},
+			F_XMZT = #{F_XMZT}
+        WHERE 
+	        F_XMBH = #{F_XMBH} 
+	</update>
+</mapper>
+
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="gb2312"?>
+<package id="" caption="装配清单">
+<SERVERLOAD  id="server" capiton="server load事件">'
+  <rfp id="mdload" caption="元数据load" clazz="com.efounder.dctbuilder.server.plugin.DictBaseDataServer" order="-100"/>
+</SERVERLOAD>
+ <CLASSES id="" caption="可以在此注册对象，无需修改注册表文件">
+      <!-- 每个对象的详细定义 -->
+      <CLSID guid="ESPHELP"      id="ESPHelp"      name="ESPHELP"           class="com.pansoft.server.help.ESPDBHelpObject" ver="1.0.0" type="CLSID_AbstractDataActiveObjectCategory" />
+      <CLSID guid="ESPDBExpress" id="ESPDBExpress" name="ESPDBExpress"      class="com.pansoft.server.ESPDALDBExpress"      ver="1.0.0" type="CLSID_AbstractDataActiveObjectCategory" />
+  </CLASSES>
+</package>

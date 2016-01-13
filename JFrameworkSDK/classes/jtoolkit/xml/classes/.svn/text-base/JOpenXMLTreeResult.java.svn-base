@@ -1,0 +1,112 @@
+package jtoolkit.xml.classes;
+
+import java.util.*;
+
+import org.jdom.*;
+import com.pansoft.pub.comp.*;
+
+/**
+ * <p>Title: </p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @author not attributable
+ * @version 1.0
+ */
+
+public class JOpenXMLTreeResult extends JOpenXMLResultSet {
+  public JOpenXMLTreeResult() {
+  }
+  //------------------------------------------------------------------------------------------------
+  //描述:
+  //设计: Skyline(2001.12.29)
+  //实现: Skyline
+  //修改:
+  //------------------------------------------------------------------------------------------------
+  public JOpenXMLTreeResult(String DataString) {
+    super(DataString);
+  }
+  //------------------------------------------------------------------------------------------------
+  //描述:
+  //设计: Skyline(2001.12.29)
+  //实现: Skyline
+  //修改:
+  //------------------------------------------------------------------------------------------------
+  public IStubObject getStubList(String Caption,Class StubObjectClass) {
+    IStubObject Root = null;
+    try {
+      Root = CreateTree(ResultElement, null,StubObjectClass);
+      Root.setCaption(Caption);
+    } catch ( Exception e ) {
+      e.printStackTrace();
+    }
+    return Root;
+  }
+  public IStubObject getStubList(IStubObject root,Class StubObjectClass) {
+    IStubObject Root = null;
+    try {
+      Root = CreateTree(ResultElement, root,StubObjectClass);
+    } catch ( Exception e ) {
+      e.printStackTrace();
+    }
+    return Root;
+  }
+  //----------------------------------------------------------------------------------------------
+  //描述:
+  //设计: Skyline(2001.12.29)
+  //实现: Skyline
+  //修改:
+  //----------------------------------------------------------------------------------------------
+  IStubObject CreateTree(Element node,IStubObject ISO,Class StubObjectClass) throws Exception {
+    int Index=0;Element nd;java.util.List nodelist;
+    IStubObject nodeobject;IStubObject ROOT = null;
+      if ( ResultElement == node ) {
+        if ( ISO == null ) {
+          ROOT = (IStubObject) StubObjectClass.newInstance();
+          ISO = ROOT;
+        } else {
+          ROOT = ISO;
+        }
+      }
+      nodelist = BeginEnumerate(node);
+      if ( nodelist != null ) {
+          while ( true ) {
+              nd = Enumerate(nodelist,Index);
+              Index++;
+              if ( nd != null ) {
+                  nodeobject = (IStubObject)StubObjectClass.newInstance();
+                  ISO.addChild(nodeobject);
+                  SetObjectValue(nodeobject,nd);
+                  CreateTree(nd,nodeobject,StubObjectClass);
+              } else break;
+          }
+      }
+      EndEnumerate();
+      return ROOT;
+    }
+    //----------------------------------------------------------------------------------------------
+    //描述:
+    //设计: Skyline(2001.12.29)
+    //实现: Skyline
+    //修改:
+    //----------------------------------------------------------------------------------------------
+    void SetObjectValue(IStubObject ISO,Element node) {
+      int ColCount = this.ColNameArray.length;String Type;
+      for(int i=0;i<ColCount;i++) {
+        ISO.setObject(ColNameArray[i],GetElementValue(node,ColAliasArray[i]));
+//        Type = this.ColTypeArray[i];
+//        if ( Type.equals("C") ) {
+//          ISO.setString(ColNameArray[i],GetElementValue(node,ColNameArray[i]));
+//          continue;
+//        }
+//        if ( Type.equals("N") ) {
+//          ISO.setInt(ColNameArray[i],Integer.parseInt(GetElementValue(node,ColNameArray[i])));
+//          continue;
+//        }
+//        if ( Type.equals("F") ) {
+//          ISO.setDouble(ColNameArray[i],Double.parseDouble(GetElementValue(node,ColNameArray[i])));
+//          continue;
+//        }
+      }
+    }
+}

@@ -1,0 +1,7 @@
+#LocalRegistry
+#Fri May 29 20:46:10 CST 2015
+server_ip=127.0.0.1
+127.0.0.1_9080_password=123456
+127.0.0.1_9080_user=01
+savePASS=1
+server_port=9080

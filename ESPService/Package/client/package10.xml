@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="gb2312"?>
+<package id="" caption="装配清单">
+  <CLASSES id="" caption="">
+    <CLSID guid="GenerQueryObject"  id="GenerQueryObject"  name="GenerQueryObject"  class="jservice.jbof.classes.GenerQueryObject" ver="1.0.0" type="CLSID_BusinessActiveObjectCategory"/>    
+  </CLASSES>
+</package>

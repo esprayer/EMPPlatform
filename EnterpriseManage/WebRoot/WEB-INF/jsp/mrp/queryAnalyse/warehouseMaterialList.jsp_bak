@@ -1,0 +1,199 @@
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../../../../../include.inc.jsp"%>
+
+<style type="text/css">
+	ul.rightTools {float:right; display:block;}
+	ul.rightTools li{float:left; display:block; margin-right:35px}
+</style>
+
+<script>
+
+var appletObj = function(){
+	var tool;
+    this.myMethod = function(json, fun){
+        try{
+            this.getInstance().myMethod(json, fun);
+        } catch(e){
+			
+        }
+    }
+
+    this.getInstance = function(){
+        if(typeof tool == 'undefined'){
+            tool = $("#tool")[0];
+        }
+        return tool;
+    }
+    return this;
+}();
+
+function selectDirectory(){
+	//选择路径后回到函数，调用exportTableData方法
+	appletObj.selectDirectory("exportTableData");
+};
+
+function exportTableData(jsonObj){
+	var parame = {title:jsonObj.directory,headDate:getHeadFormat(),bodyData:getBodyData()};
+	appletObj.myMethod(JSON.stringify(parame), "exportTableData");
+};
+
+function getHeadFormat(){
+	var ttt = $("#warehouseMaterialTable thead");
+	var nTrs = $('tr', ttt);
+	var nTds = $('td', nTrs);
+	var i = 0;
+	var j = 0;
+	var addRows=[];
+	var returnData=[];
+	nTrs.each(function () {
+		var row = new Array(1);
+		
+		nTrs.each(function () {
+			var column = new Object();
+			column.align=$($("td", nTrs[i])[j])[0].attr["align"];
+			column.width=$($("td", nTrs[i])[j])[0].attr["width"];
+			column.rowspan=$($("td", nTrs[i])[j])[0].attr["rowspan"];
+			column.colspan=$($("td", nTrs[i])[j])[0].attr["colspan"];
+			column.type=$($("td", nTrs[i])[j])[0].attr["type"];
+			column.caption=$($("td", nTrs[i])[j])[0].textContent;
+			row.push(column);
+			j++;
+		});
+		addRows.push(row);
+		i++;
+	});
+	var thread = DWZ.obj2json(addRows);
+    console.log(getTime() + "========jsonObj:" + JSON.stringify(addRows));
+    console.log(getTime() + "======btn1Click:" + thread);
+    return thread;
+}
+
+function getBodyData(){
+	var ttt = $("#warehouseMaterialTable tbody");
+	var nTrs = $('tr', ttt);
+	var nTds = $('td', nTrs);
+	var i = 0;
+	var j = 0;
+	var addRows=[];
+	var returnData=[];
+	nTrs.each(function () {
+		var row = new Array(1);
+		
+		nTrs.each(function () {
+			var column = new Object();
+			column.align=$($("td", nTrs[i])[j])[0].attr["align"];
+			column.width=$($("td", nTrs[i])[j])[0].attr["width"];
+			column.type=$($("td", nTrs[i])[j])[0].attr["type"];
+			column.caption=$($("td", nTrs[i])[j])[0].textContent;
+			row.push(column);
+			j++;
+		});
+		addRows.push(row);
+		i++;
+	});
+	var bodyData = DWZ.obj2json(addRows);
+    console.log(getTime() + "========jsonObj:" + JSON.stringify(addRows));
+    console.log(getTime() + "======btn1Click:" + thread);
+    return bodyData;
+}
+</script>
+
+<form id="pagerForm" method="post" action="w_list.html">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="${model.numPerPage}" />
+	<input type="hidden" name="orderField" value="${param.orderField}" />
+	<input type="hidden" name="orderDirection" value="${param.orderDirection}" />
+</form>
+
+<form method="post" rel="pagerForm" action="${ctx}/queryAnalyse/warehouseMaterial?F_CLBH="  class="pageForm" onsubmit="return navTabSearch(this,'warehouseMaterialLiNav')">
+	<div class="pageFormContent" id="searchParam">
+		<div class="panel" defH="34">
+			<h1>查询条件</h1>
+			<div>
+				<p style="width:230px;">
+					<label style="width:60px;padding: 0px;">仓库名称: </label>
+					<input id="F_CKBH" name="F_CKBH" value="${F_CKBH}" type="hidden"/>
+					<input readonly="readonly" class="required" name="F_CKMC" type="text" postField="keyword" suggestFields="F_CKBH,F_CKMC" lookupGroup="org1" value="${F_CKMC}"/>
+					<a style="float:right; display:block; margin-left:5px" class="btnLook" href="${ctx}/dictHelp/deportHelp"" lookupGroup="">查找带回</a>	
+					<span class="info"></span>
+				</p>
+				<ul class="rightTools">
+					<li><div class="button"><div class="buttonContent"><button type="submit">搜索</button></div></div></li>					
+				</ul>
+			</div>
+		</div>
+		<div class="divider"></div>
+	</div>
+</form>
+
+<form method="post" rel="pagerForm" action="${ctx}/queryAnalyse/warehouseMaterial?F_CLBH="  class="pageForm" onsubmit="return navTabSearch(this,'warehouseMaterialLiNav')">
+	<div class="pageContent">
+		<div class="panelBar">
+			<ul class="toolBar">
+				<li><a class="icon" target="navTab" rel="projectCarryoverNav" href="${ctx}/queryAnalyse/action/projectCarryover{slt_objId}&F_XMZT=1&F_XMBH=" title="项目结转"><span>项目结转</span></a></li>
+				<li class="line">line</li>
+				<li><a class="icon" href="#" onClick="selectDirectory()" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
+				<li><a class="delete" target="ajaxTodo" href="${ctx}/dailyBusiness/transfers/form/deletefl{slt_objId}&F_DJBH=${hydbd.f_DJBH}&F_KJQJ=${hydbd.f_KJQJ}&F_CHDATE=${F_CHDATE}&F_CKBH={F_CKBH}&callbackType=forward&callBackUrl=${ctx}/dailyBusiness/transfers/form/editForm" title="你确定要删除该调拨单明细吗?"><span>删除调拨单明细</span></a></li>
+			</ul>
+		</div>
+
+		<APPLET CODEBASE="${ctx}/styles/lib" CODE="com.AppletTest.class" id="tool" ARCHIVE="applet.jar" WIDTH="0" HEIGHT="0"/>
+		<!-- <table class="table" width="100%" layoutH="230"> -->
+		<table id="warehouseMaterialTable" class="table" width="100%" layoutH="180">
+			<thead>
+				<tr>
+					<th width="30" align="center">序号</th>
+					<th name="F_CLBH">材料编号</th>
+					<th name="F_CLMC">材料名称</th>
+					<th name="F_GGXH">规格型号</th>
+					<th name="F_JLDW">计量单位</th>
+					<th name="F_DWMC">供应商名称</th>
+					<th name="F_CSMC">厂商名称</th>
+					<th name="F_CLSL" align="right">库存数量</th>
+					<th name="F_CLDJ" align="right">材料单价</th>
+					<th name="F_CLZJ" align="right">材料总价</th>
+				</tr>			
+			</thead>
+			<tbody>
+				<dataset:forEach var="item" items="${queryDataSet}" varStatus="s">
+					<tr target="slt_objId" rel="?F_CLBH=${item.F_CLBH}&F_DWBH=${item.F_DWBH}&F_CSBH=${item.F_CSBH}&F_CLDJ=${item.F_CLDJ}&F_CKBH=${F_CKBH}">
+						<td width="30">${s + 1}</td>
+						<td>${item.F_CLBH}</td>
+						<td>${item.F_CLMC}</td>				
+						<td>${item.F_GGXH}</td>
+						<td>${item.F_JLDW}</td>	
+						<td>${item.F_DWMC}</td>
+						<td>${item.F_CSMC}</td>
+						<td>${item.F_CLSL}</td>
+						<td>${item.F_CLDJ}</td>
+						<td>${item.F_CLZJ}</td>
+					</tr>	
+				</dataset:forEach>
+			</tbody>
+		</table>
+		
+		<div class="panelBar" >
+			<div class="pages">
+				<span>显示</span>
+				<select name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+					<option value="20">20</option>
+					<option value="50">50</option>
+					<option value="100">100</option>
+					<option value="200">200</option>
+				</select>
+				<span>条，共23条</span>
+			</div>
+			
+			<div class="pagination" targetType="navTab" totalCount="200" numPerPage="20" pageNumShown="10" currentPage="2"></div>		
+		</div>
+
+		<!-- <div class="formBar"  style="height:50px">
+			<div style="height:10px"></div>		
+			<ul>			
+				<li><a class="buttonActive" target="navTab" rel="projectCarryoverNav" href="${ctx}/queryAnalyse/action/projectMaterialCarryover{slt_objId}&F_XMZT=1&F_XMBH=" title="项目结转"><span>项目结转</span></a></li>
+	
+			</ul>
+		 -->
+		</div>
+	</div>
+</form>

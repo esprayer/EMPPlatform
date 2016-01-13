@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="gb2312"?>
+<package id="" caption="装配清单">
+  <startUI>
+    <ui class="com.efounder.eai.ide.ViewBuilder"/>
+    <ui class="com.efounder.eai.ui.ExplorerMenu"/>
+  </startUI>
+  <ViewClass id="" caption="视图实现类">
+  	<TopViewClass      class="com.efounder.eai.ui.JViewPanel" caption=""/>
+	<ExplorerViewClass class="com.efounder.eai.ui.JGenerViewPanel" caption=""/>
+	<ContentViewClass  class="com.efounder.eai.ui.JWindowPanel" caption=""/>
+        <PropertyViewClass class="com.efounder.eai.ui.JPropertyViewPanel" caption=""/>
+	<StructViewClass   class="com.efounder.eai.ui.JSelectViewPanel" caption=""/>
+	<MessageViewClass  class="com.efounder.eai.ui.JViewPanel" caption=""/>
+        <DialogViewClass   class="com.efounder.eai.ui.JDialogView" caption=""/>
+        <FloatViewClass    class="" caption=""/>
+        <ViewDeviceClass  class="com.efounder.eai.ui.JViewDevicePanel" caption=""/>
+        <ExplorerAdapter  class="com.efounder.eai.ide.ExplorerAdapter" caption=""/>
+        <MainWindowBottom class="com.efounder.eai.ui.JEnterpriseStatusPanel" caption=""/>
+  </ViewClass>
+</package>

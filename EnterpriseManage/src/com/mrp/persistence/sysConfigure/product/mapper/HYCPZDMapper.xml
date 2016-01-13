@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.mrp.persistence.sysConfigure.product.mapper.HYCPZDMapper">
+	<resultMap id="rm" type="com.mrp.persistence.sysConfigure.product.bean.HYCPZD">
+        <result property="F_CPBH" jdbcType="VARCHAR" column="F_CPBH"/>
+		<result property="F_CPMC" jdbcType="VARCHAR" column="F_CPMC"/>
+        <result property="F_SYZT" jdbcType="INTEGER" column="F_SYZT"/>
+        <result property="F_CRDATE" jdbcType="TIMESTAMP" column="F_CRDATE"/>
+        <result property="F_CHDATE" jdbcType="TIMESTAMP" column="F_CHDATE"/>
+	</resultMap>
+	
+	<select id="loadHYCP" resultMap="rm">
+		SELECT 
+	        F_CPBH,
+	        F_CPMC,	        
+			HYCPZD.F_SYZT,        
+	        HYCPZD.F_CRDATE,
+			HYCPZD.F_CHDATE
+	    FROM HYCPZD
+	    WHERE 
+	    	<if test="F_SYZT!=null" >
+				HYCPZD.F_SYZT = #{F_SYZT} AND 
+			</if>
+	        HYCPZD.F_CPBH = #{F_CPBH}
+		ORDER BY HYCPZD.F_CPBH
+	</select>
+	
+	<!-- 按Id删除 -->
+	<delete id="deleteHYCP" parameterType="java.lang.Integer">
+        DELETE FROM HYCPZD WHERE
+        F_CPBH = #{F_CPBH}
+    </delete>
+    
+     <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="OBJ_ID">
+        INSERT INTO HYCPZD (       
+	        F_CPBH,
+	        F_CPMC,	        
+			F_SYZT,        
+	        F_CRDATE,
+			F_CHDATE
+        ) VALUES (
+        	#{F_CPBH} ,
+        	#{F_CPMC} ,
+        	#{F_SYZT} ,
+        	#{F_CRDATE} ,
+			#{F_CHDATE}
+        )
+	</insert>
+	
+	<select id="findByObjId" resultMap="rm">
+		SELECT
+	        F_CPBH,
+	        F_CPMC,	        
+			HYCPZD.F_SYZT,        
+	        HYCPZD.F_CRDATE,
+			HYCPZD.F_CHDATE
+	    FROM HYCPZD
+	    WHERE 
+	    	<if test="F_SYZT!=null" >
+				HYCPZD.F_SYZT = #{F_SYZT} AND 
+			</if>
+	        HYCPZD.F_CPBH like "%"#{F_CPBH,jdbcType=VARCHAR}"%"
+		ORDER BY HYCPZD.F_CPBH    	
+    </select>
+	
+	<update id="update" parameterType="com.mrp.persistence.sysConfigure.deport.bean.HYCKZD">
+        UPDATE HYCPZD SET
+	        F_CPMC = #{F_CPMC} ,	        
+	        F_SYZT = #{F_SYZT} ,
+	        F_CHDATE = #{F_CHDATE}
+        WHERE 
+	        F_CPBH = #{F_CPBH}
+	</update>
+</mapper>
+

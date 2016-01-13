@@ -1,0 +1,221 @@
+package com.report.table.jxml;
+
+import java.util.*;
+import org.jdom.*;
+//Xyz add 2004/08/11 分页显示 START
+//Xyz add 2004/08/11 分页显示 END
+
+import com.pub.util.StringFunction;
+
+/**
+ * <p>Title: </p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @author not attributable
+ * @version 1.0
+ */
+
+public class TableDataManager extends XmlManager{
+
+  //Xyz add 2004/08/11 分页显示 START
+  public static final int    MaxLinages    = 100000;
+  public static final String PageSeparator = "~~~~~";
+  private TableDataManager     nextPageDM    = null;
+  private boolean             isGetTDs      = false;
+  private String               nextPageXML   = null;
+  //Xyz add 2004/08/11 分页显示 END
+  private Element     Table;
+  private Element     TableData;
+  private Element     Rows;
+
+  public TableDataManager() {
+      super();
+      initEmpty();
+  }
+  public TableDataManager(java.io.InputStream is) {
+      super();
+
+      super.InitXMLStream(is);
+      init();
+  }
+  public TableDataManager(String s) {
+      //super(s);
+      //Xyz add 2004/08/11 分页显示 START
+      super(StringFunction.splitStringByToken(s,PageSeparator)[0]);
+      //System.out.println("TableDataManager s:"+s);
+      String[] dataStrings = StringFunction.splitStringByToken(s,PageSeparator);
+      //System.out.println("TableDataManager sb:"+dataStrings[0]);
+      //System.out.println("TableDataManager sc:"+dataStrings[1]);
+      nextPageXML   = dataStrings[1];
+//      if( dataStrings[1] != null && (!dataStrings[1].trim().equals("")) ){
+//        nextPageDM = new TableDataManager(dataStrings[1]);
+//      }
+      //Xyz add 2004/08/11 分页显示 END
+      init();
+  }
+
+  /**
+   * 初始化空的XML
+   */
+  private void initEmpty(){
+    Element TT = null;//super.getRootElement();
+    //if (TT == null) {
+      TT = super.CreateElement("Table");
+      super.Root = TT;
+      super.getDocment().setRootElement(Root);
+    //}
+
+    Table = TT;
+
+    List TableDataList = super.getChildrenNodes(Table, "TableData");
+    if (TableDataList != null && TableDataList.size() > 0) {
+      TableData = (Element) TableDataList.get(0);
+    }
+    else {
+      TableData = super.CreateElement("TableData");
+      Table.addContent(TableData);
+    }
+
+    List RowsList = super.getChildrenNodes(TableData, "Rows");
+    if (RowsList != null && RowsList.size() > 0) {
+      Rows = (Element) RowsList.get(0);
+    }
+    else {
+      Rows = super.CreateElement("Rows");
+      TableData.addContent(Rows);
+    }
+  }
+
+  /**
+   * 已经给定一个XMLSTRING，初始化XML
+   */
+  private void init(){
+    Element TT = super.getDocment().getRootElement();
+
+    Table = TT;
+
+    List TableDataList = super.getChildrenNodes(Table, "TableData");
+    if (TableDataList != null && TableDataList.size() > 0) {
+      TableData = (Element) TableDataList.get(0);
+    }
+    else {
+      TableData = super.CreateElement("TableData");
+      Table.addContent(TableData);
+    }
+
+    List RowsList = super.getChildrenNodes(TableData, "Rows");
+    if (RowsList != null && RowsList.size() > 0) {
+      Rows = (Element) RowsList.get(0);
+    }
+    else {
+      Rows = super.CreateElement("Rows");
+      TableData.addContent(Rows);
+    }
+  }
+
+  public Object[][] getTableDatas(Object[] colIds){
+      //Xyz add 2004/08/11 分页显示 START
+      if(isGetTDs){
+        if( nextPageXML != null && (!nextPageXML.trim().equals("")) ){
+          if(nextPageDM == null){
+            nextPageDM = new TableDataManager(nextPageXML);
+          }
+          return nextPageDM.getTableDatas(colIds);
+        }else{
+          return null;
+        }
+      }
+      isGetTDs = true;
+      //Xyz add 2004/08/11 分页显示 END
+      int colMax = colIds.length;
+      if( super.getDocment() == null)
+          return new Object[0][colMax];
+
+      List rowList = super.getChildrenNodes(Rows,"Row");
+      //计算行数
+      int rowMax = 0;
+      for(int i=0;i<rowList.size();i++){
+          Element rowNode = (Element)rowList.get(i);
+          //if(rowNode.getNodeType() == Node.ELEMENT_NODE){
+          rowMax++;
+          //}
+      }
+
+      Object[][] tableDatas = new Object[rowMax][colMax];
+      int ip = 0;
+      for(int i=0; i<rowList.size(); i++) {
+          Element rowNode = (Element)rowList.get(i);
+          //if(rowNode.getNodeType() == Node.ELEMENT_NODE){
+              for(int j=0; j<colMax; j++){
+                Attribute ATR = rowNode.getAttribute((String)colIds[j]);
+                if ( ATR == null )
+                  tableDatas[ip][j] = "";
+                else
+                  tableDatas[ip][j] = ATR.getValue();
+              }
+              ip++;
+          //}
+      }
+      return tableDatas;
+  }
+
+  //参数是一个数据行的属性列表
+  //列表中的元素是2维字符串数组，一个属性名，一个属性值
+  public void addDataRow(Vector v){
+      //Xyz add 2004/08/11 分页显示 START
+      if(Rows.getContent().size() >= MaxLinages){
+        if(nextPageDM == null){
+          nextPageDM = new TableDataManager();
+        }
+        nextPageDM.addDataRow(v);
+        //
+        return;
+      }
+      //Xyz add 2004/08/11 分页显示 END
+      Element Row;
+      Row = super.CreateElement("Row");
+      for(int i=0; i<v.size(); i++){
+          Object  RES = v.elementAt(i);
+
+          if ( RES == null ) continue;
+
+          String[] attr =  (String[])RES;
+
+          try{
+            if ( attr[0] == null ) continue;
+
+            if ( attr[1] == null ) attr[1] = "";
+
+            Row.setAttribute(attr[0], attr[1]);
+          }
+          catch (Exception E){
+            Row.setAttribute(attr[0], "");
+          }
+      }
+
+      Rows.addContent(Row);
+  }
+
+  //Xyz add 2004/08/11 分页显示 START
+  public String GetRootXMLString() {
+    StringBuffer xmlString = new StringBuffer(super.GetRootXMLString());
+    if(nextPageDM != null){
+      xmlString.append(PageSeparator);
+      xmlString.append(nextPageDM.GetRootXMLString());
+      //System.out.println("GetRootXMLString:"+xmlString);
+    }
+    return xmlString.toString();
+  }
+  public String printDOMTree() {
+    StringBuffer xmlString = new StringBuffer(super.printDOMTree());
+    if(nextPageDM != null){
+      xmlString.append(PageSeparator);
+      xmlString.append(nextPageDM.printDOMTree());
+      //System.out.println("printDOMTree:"+xmlString);
+    }
+    return xmlString.toString();
+  }
+  //Xyz add 2004/08/11 分页显示 END
+
+}

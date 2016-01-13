@@ -1,0 +1,208 @@
+package jdatareport.dof.classes.report.filter;
+
+import java.util.*;
+import jdatareport.dof.classes.report.ext.condition.util.*;
+import com.pansoft.pub.util.StringFunction;
+
+/**
+ * <p>Title: </p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2004</p>
+ * <p>Company: </p>
+ * @author not attributable
+ * @version 1.0
+ */
+
+public class JDRFilterUtils {
+  /**
+   *
+   */
+  public JDRFilterUtils() {
+  }
+
+  /**
+   * modi by fengbo 2007-9-27
+   * 正规化.
+   * @param filterExpressions
+   * @return
+   */
+  public static String normalize(Object[] values, int colCount,
+                                 JCExpression exp) {
+    String strExp = "", columnIndex;
+    // 获取所有条件表达式列表
+    Vector exps = exp.mExpItems;
+
+    // 解析表达式
+    for (Enumeration e = exps.elements(); e.hasMoreElements(); ) {
+      JCExpressionItem info = (JCExpressionItem) e.nextElement();
+      //2.1 组织一个三位长度的列序号
+      columnIndex = JCExpression.COLUMN_NAME_PREFIX +
+          StringFunction.FillZeroFromBegin(info.mCompareItem.getColumnIndex(),
+                                           3);
+
+      //2.2 解析运算符--like
+      if (info.mOpCompare.trim().equalsIgnoreCase("like")) {
+        strExp += info.mOpLeft +
+            "like(" +
+            "\"" +
+            columnIndex + "\"";
+        strExp += ",";
+        strExp += "\"";
+        strExp += info.mCompareValue;
+        strExp += "\"";
+        strExp += ")" + info.mOpRight;
+
+      }
+      else {
+        //数值类型运算
+        if (info.mCompareItem.getColumnType().equals("N")) {
+          strExp += info.mOpLeft + columnIndex ;
+
+          if (info.mOpCompare.trim().equals("=")) {
+            strExp += "==";
+          }
+          else if (info.mOpCompare.trim().equals("<>")) {
+            strExp += "!=";
+          }
+          else {
+            strExp += info.mOpCompare;
+          }
+          strExp += info.mCompareValue;
+          strExp += info.mOpRight;
+        }
+        //字符类型
+        else {
+          strExp += info.mOpLeft + "\"" + columnIndex + "\"";
+          if (info.mOpCompare.trim().equals("=")) {
+            strExp += "==";
+          }
+          else if (info.mOpCompare.trim().equals("<>")) {
+            strExp += "!=";
+          }
+          else {
+            strExp += info.mOpCompare;
+          }
+
+          strExp += "\"";
+          strExp += info.mCompareValue;
+          strExp += "\"" + info.mOpRight;
+        }
+      }
+
+      // 解析连接运算符
+      if (info.mOpConn.equals("OR")) {
+        strExp += " || ";
+      }
+      else if (info.mOpConn.equals("AND")) {
+        strExp += " && ";
+      }
+    }
+    return replaceValue(strExp, values, colCount);
+  }
+
+//  /**
+//   * 正规化
+//   * @param filterExpressions
+//   * @return
+//   */
+//  public static String normalize(Object[] values, int colCount,
+//                                 JCExpression exp) {
+//    String strExp = "", columnIndex;
+//    Vector exps = exp.mExpItems;
+//    for (Enumeration e = exps.elements(); e.hasMoreElements(); ) {
+//      JCExpressionItem info = (JCExpressionItem) e.nextElement();
+//      //组织一个三位长度的列序号
+//      columnIndex = StringFunction.FillZeroFromBegin(info.mCompareItem.
+//          getColumnIndex(), 3);
+//      if (info.mOpCompare.trim().equalsIgnoreCase("like")) {
+//        strExp += info.mOpLeft +
+//            "like(" +
+//            "\"" + JCExpression.COLUMN_NAME_PREFIX +
+//            columnIndex + "\"";
+//        strExp += ",";
+//        strExp += "\"";
+//        strExp += info.mCompareValue;
+//        strExp += "\"";
+//        strExp += ")" + info.mOpRight;
+//        if (info.mOpConn.equals("OR")) {
+//          strExp += " || ";
+//        }
+//        else if (info.mOpConn.equals("AND")) {
+//          strExp += " && ";
+//        }
+//      } //2005-09-23 Yrh
+//      else {
+//        try {
+//          //看看长度,如果过长,不管是不是数字,都作为字符比较
+//          int ivlen = info.mCompareValue.length();
+//          if (ivlen > 12) {
+//            Double.parseDouble("让你出错!就得错!");
+//          }
+//          //判断是否是字符,出错则按汉字处理
+//          double dvalues = Double.parseDouble(info.mCompareValue);
+//          //strExp += info.toStoreString();
+//          //modify by fengbo 2007-6-22
+//          strExp += info.mOpLeft
+//              + JCExpression.COLUMN_NAME_PREFIX
+//              + columnIndex
+//              + (info.mOpCompare.trim().equals("=")?"==":info.mOpCompare)
+//              + info.mCompareValue
+//              + info.mOpRight;
+//          continue;
+//        }
+//        catch (Exception E) {
+//          strExp += info.mOpLeft +
+//              "\"" + JCExpression.COLUMN_NAME_PREFIX +
+//              columnIndex + "\"";
+//          if (info.mOpCompare.trim().equals("=")) {
+//            strExp += "==";
+//          }
+//          else if (info.mOpCompare.trim().equals("<>")) {
+//            strExp += "!=";
+//          }
+//          else {
+//            strExp += info.mOpCompare;
+//          }
+//          strExp += "\"";
+//          strExp += info.mCompareValue;
+//          strExp += "\"" + info.mOpRight;
+//          if (info.mOpConn.equals("OR")) {
+//            strExp += " || ";
+//          }
+//          else if (info.mOpConn.equals("AND")) {
+//            strExp += " && ";
+//          }
+//        }
+//      }
+//    }
+//    return replaceValue(strExp, values, colCount);
+//  }
+
+  /**
+   *
+   * @param strExp
+   * @param filterExpressions
+   * @param values
+   * @return
+   */
+  public static String replaceValue(String strExp, Object[] values,
+                                    int colCount) {
+    if (strExp != null && values != null) {
+      for (int i = 0; i < colCount; i++) {
+        String sValue = (String) values[i].toString().trim();
+        String columnIndex = StringFunction.FillZeroFromBegin( (i + 1), 3);
+        //查询根据摘要过滤结果集，因为摘要里有$特殊字符，导致过滤报错 modify by ES 2014-07-18
+        int    index = sValue.indexOf("$");
+        if(index > -1) {
+        	while(index > -1) {
+        		sValue = sValue.substring(0, index) + "\\$" + sValue.substring(index + 1);
+        		index = sValue.substring(index + 3).indexOf("$");
+        	}
+        }
+        strExp = strExp.replaceAll(JCExpression.COLUMN_NAME_PREFIX + columnIndex, sValue);
+      }
+
+    }
+    return strExp;
+  }
+}

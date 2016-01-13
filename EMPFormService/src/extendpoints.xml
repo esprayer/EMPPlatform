@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!-- edited with XML Spy v4.2 U (http://www.xmlspy.com) by LISL (XmlPansoft) -->
+<XML_ROOT>
+ <extendpoints>
+           <extends  Point="com.eai.frame.dal.ExchangeObject" Caption="数据交换器枚举">
+           	<Default     Id="Default"        Caption="缺省"       Class="com.eai.form.dal.TDataExchangeByObject"/>
+           	<XmlFile     Id="XmlFile"        Caption="XML文件"    Class="com.eai.form.dal.TDataExchangeXml"/>
+           	<BDEDataSet  Id="BDEDataSet"     Caption="BDE数据集"  Class="com.eai.form.dal.TDataExchange"/>
+           </extends>
+
+           <extends  Point="com.pansoft.formservice.ExchangeObject.Active"  Caption="数据交换器枚举">
+           	<Active     Id="Active"   Active="Default"  />
+           </extends>
+
+  </extendpoints>
+</XML_ROOT>

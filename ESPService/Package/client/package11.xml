@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="gb2312"?>
+<package id="" caption="装配清单">
+  <bizFormServicePlugins>
+  	<item id="CMSSaveSCSQFormToFlow" caption="保存表单提交任务" modelClazz="com.cms.server.resolver.plugins.scsq.CMSSaveSCSQFormToFlow" icon16="jprofiler/method_down_16.png" icon32="jprofiler/method_down_16.png" /> 
+  	<item id="CMSCheckSubmitToFlow" caption="检查是否允许提交任务" modelClazz="com.cms.server.resolver.plugins.scsq.CMSCheckSubmitToFlow" icon16="jprofiler/method_down_16.png" icon32="jprofiler/method_down_16.png" />  	
+  	<item id="CMSSubmitToFlow" caption="提交任务到下一节点" modelClazz="com.cms.server.resolver.plugins.scsq.CMSSubmitToFlow" icon16="jprofiler/method_down_16.png" icon32="jprofiler/method_down_16.png" />
+  	<item id="CMSSubmitToCountersignNode" caption="提交任务到下一节会签节点" modelClazz="com.cms.server.resolver.plugins.submit.CMSSubmitToCountersignNode" icon16="jprofiler/method_down_16.png" icon32="jprofiler/method_down_16.png" />
+  	<item id="CMSSubmitToFlowEnd" caption="提交任务结束" modelClazz="com.cms.server.resolver.plugins.scsq.CMSSubmitToFlowEnd" icon16="jprofiler/method_down_16.png" icon32="jprofiler/method_down_16.png" />
+  	<item id="CMSSubmitSCSQToSCTZ" caption="提交任务结束生成生产通知单" modelClazz="com.cms.server.resolver.plugins.scsq.CMSSubmitSCSQToSCTZ" icon16="jprofiler/method_down_16.png" icon32="jprofiler/method_down_16.png" />
+  	<item id="CMSSubmitCheckCCTZSL" caption="检查提交出厂通知单出厂数量" modelClazz="com.cms.server.resolver.plugins.scsq.CMSSubmitCheckCCTZSL" icon16="jprofiler/method_down_16.png" icon32="jprofiler/method_down_16.png" />
+  	<item id="CMSCheckCountersignPreNodeRetake" caption="检查会签节点上一个节点是否可以取回" modelClazz="com.cms.server.resolver.plugins.sctz.CMSCheckCountersignPreNodeRetake" icon16="jprofiler/method_down_16.png" icon32="jprofiler/method_down_16.png" />
+  	<item id="CMSCountersignPreNodeRetake" caption="会签节点上一个节点取回单据" modelClazz="com.cms.server.resolver.plugins.sctz.CMSCountersignPreNodeRetake" icon16="jprofiler/method_down_16.png" icon32="jprofiler/method_down_16.png" />
+  	<item id="CMSMergerCountersignNodeToNextNode" caption="会签节点都审批完提交到下一个节点" modelClazz="com.cms.server.resolver.plugins.sctz.CMSMergerCountersignNodeToNextNode" icon16="jprofiler/method_down_16.png" icon32="jprofiler/method_down_16.png" />  	
+  	<item id="CMSCountersignNextNodeRollback" caption="会签节点下一个节点退回" modelClazz="com.cms.server.resolver.plugins.sctz.CMSCountersignNextNodeRollback" icon16="jprofiler/method_down_16.png" icon32="jprofiler/method_down_16.png" />
+  	<item id="CMSAutoSubmit" caption="节点自动提交" modelClazz="com.cms.server.resolver.plugins.sctz.CMSAutoSubmit" icon16="jprofiler/method_down_16.png" icon32="jprofiler/method_down_16.png" />  	  	
+  </bizFormServicePlugins>
+</package>

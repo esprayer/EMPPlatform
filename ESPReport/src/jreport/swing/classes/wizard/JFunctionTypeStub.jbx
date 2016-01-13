@@ -1,0 +1,11 @@
+[PropertyInfo]
+cobj,String,false,false, , ,false,<default>
+dobj,String,false,false, , ,false,<default>
+FunctionList,java.util.Vector,false,false, , ,false,<default>
+id,String,false,false, , ,false,<default>
+text,String,false,false, , ,false,<default>
+[IconNames]
+
+
+
+

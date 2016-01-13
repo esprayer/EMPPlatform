@@ -1,0 +1,81 @@
+<!-- edited with XMLSPY v2004 rel. 4 U (http://www.xmlspy.com) by yamakasy (pansoft) -->
+<JDRDesignerConfig>
+	<GUI>
+		<MenuBar Id="">
+			<Menu Id="" Caption="File" Mnemonic="">
+				<MenuItem Id="" Caption="New" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<Separater Id=""/>
+				<MenuItem Id="" Caption="Open" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<Separater Id=""/>
+				<MenuItem Id="" Caption="Close" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<Separater Id=""/>
+				<MenuItem Id="" Caption="Save" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<MenuItem Id="" Caption="Save As" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<MenuItem Id="" Caption="Save All" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<Separater Id=""/>
+				<MenuItem Id="" Caption="PageSetup" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<MenuItem Id="" Caption="Print Preview" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<MenuItem Id="" Caption="Print" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<Separater/>
+				<MenuItem Id="" Caption="Exit" Mnemonic="" Hotkey="" Icon="" Action=""/>
+			</Menu>
+			<Menu Id="" Caption="Edit" Mnemonic="">
+				<MenuItem Id="" Caption="Undo" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<MenuItem Id="" Caption="Redo" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<Separater Id=""/>
+				<MenuItem Id="" Caption="Cut" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<MenuItem Id="" Caption="Copy" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<MenuItem Id="" Caption="Paste" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<Separater Id=""/>
+				<MenuItem Id="" Caption="Rename" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<MenuItem Id="" Caption="Select All" Mnemonic="" Hotkey="" Icon="" Action=""/>
+			</Menu>
+			<Menu Id="" Caption="Search" Mnemonic="">
+				<MenuItem Id="" Caption="Find" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<MenuItem Id="" Caption="Replace" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<Separater Id=""/>
+				<MenuItem Id="" Caption="Goto" Mnemonic="" Hotkey="" Icon="" Action=""/>
+			</Menu>
+			<Menu Id="" Caption="View" Mnemonic="">
+				<Menu Caption="Toolbars" Mnemonic="">
+					<MenuItem Id="" Caption="File" Mnemonic="" Hotkey="" Icon="" Action=""/>
+					<MenuItem Id="" Caption="Edit" Mnemonic="" Hotkey="" Icon="" Action=""/>
+					<MenuItem Id="" Caption="Search" Mnemonic="" Hotkey="" Icon="" Action=""/>
+					<MenuItem Id="" Caption="View" Mnemonic="" Hotkey="" Icon="" Action=""/>
+					<MenuItem Id="" Caption="Tools" Mnemonic="" Hotkey="" Icon="" Action=""/>
+					<MenuItem Id="" Caption="Window" Mnemonic="" Hotkey="" Icon="" Action=""/>
+					<MenuItem Id="" Caption="Help" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				</Menu>
+				<Separater Id=""/>
+				<MenuItem Id="" Caption="Structure" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<MenuItem Id="" Caption="Properties" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<MenuItem Id="" Caption="Views" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<MenuItem Id="" Caption="Messages" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<MenuItem Id="" Caption="Status Bar" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<Separater Id=""/>
+				<MenuItem Id="" Caption="Show All" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<MenuItem Id="" Caption="Hidden All" Mnemonic="" Hotkey="" Icon="" Action=""/>
+			</Menu>
+			<Menu Id="" Caption="Tools" Mnemonic="">
+				<MenuItem Id="" Caption="Preferences" Mnemonic="" Hotkey="" Icon="" Action=""/>
+			</Menu>
+			<Menu Id="" Caption="Window" Mnemonic="">
+				<MenuItem Id="" Caption="Minimize Window" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<MenuItem Id="" Caption="Maximize Window" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<Separater Id=""/>
+				<MenuItem Id="" Caption="Switch View" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<MenuItem Id="" Caption="Close View" Mnemonic="" Hotkey="" Icon="" Action=""/>
+			</Menu>
+			<Menu Id="" Caption="Help" Mnemonic="">
+				<MenuItem Id="" Caption="Help Topic" Mnemonic="" Hotkey="" Icon="" Action=""/>
+				<Separater Id=""/>
+				<MenuItem Id="" Caption="About JDataReport Designer" Mnemonic="" Hotkey="" Icon="" Action=""/>
+			</Menu>
+		</MenuBar>
+		<Toolbars>
+			<Toolbar Id="" Caption="">
+				<Button Id="" Caption="" Mnemonic="" Hotkey="" icon="" Action=""/>
+			</Toolbar>
+		</Toolbars>
+	</GUI>
+</JDRDesignerConfig>

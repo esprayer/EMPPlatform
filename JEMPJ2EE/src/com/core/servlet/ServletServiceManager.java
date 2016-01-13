@@ -1,0 +1,220 @@
+package com.core.servlet;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+import com.core.xml.*;
+import com.core.servlet.LoginStub;
+//import com.efounder.eai.EAI;
+
+/**
+ * <p>Title: </p>
+ *
+ * <p>Description: </p>
+ *
+ * <p>Copyright: Copyright (c) 2004</p>
+ *
+ * <p>Company: </p>
+ *
+ * @author not attributable
+ * @version 1.0
+ */
+public abstract class ServletServiceManager {
+  /**
+   *
+   */
+  public ServletServiceManager() {
+
+  }
+  /**
+   *
+   */
+  public void destroy() {
+  }
+  /**
+   *
+   * @return ESPServiceManager
+   */
+  public static final ServletServiceManager getInstance(String serviceID) {
+    java.util.List ssmList = PackageStub.getContentVector(ServletServiceManager.class.getName());
+    StubObject stub = null;
+    for(int i=0;ssmList!=null&&i<ssmList.size();i++) {
+      stub = (StubObject)ssmList.get(i);
+      if ( serviceID.equals(stub.getID()) ) {
+        String clazz = stub.getString("implement",null);
+        try {
+          Class cla = InitBootObject.loader.loadClass(clazz);
+          ServletServiceManager eaiServiceManager = (ServletServiceManager)cla.newInstance();
+          return eaiServiceManager;
+        } catch ( Exception e ) {
+          e.printStackTrace();
+        }
+      }
+    }
+    return null;
+  }
+  /**
+   *
+   * @param objectName String
+   * @param objectMethod String
+   * @param paramObject WebParamObject
+   * @param dataObject WebDataObject
+   * @return WebResponse
+   */
+//  public WebResponse invokeGWTService(String objectName,String objectMethod,
+//                                      RemoteESPServiceServlet httpServlent,
+//                                      HttpServletRequest  request,
+//                                      HttpServletResponse httpServletResponse,
+//                                      WebParamObject paramObject,WebDataObject dataObject) throws Exception {
+//    return null;
+//  }
+  /**
+   *
+   * @param httpServlet HttpServlet
+   * @param p0 HttpServletRequest
+   * @param p1 HttpServletResponse
+   * @return boolean
+   * @throws Exception
+   */
+  public boolean invokeService(HttpServlet httpServlet,HttpServletRequest p0, HttpServletResponse p1) throws Exception {
+    return false;
+  }
+  /**
+   *
+   * @param httpServlet HttpServlet
+   * @param p0 HttpServletRequest
+   * @param p1 HttpServletResponse
+   * @param isLogin boolean
+   * @return boolean
+   * @throws Exception
+   */
+  public boolean invokeService(HttpServlet httpServlet,HttpServletRequest p0, HttpServletResponse p1,boolean isLogin) throws Exception {
+    return invokeService(httpServlet,p0,p1);
+  }
+  /**
+   *
+   * @param httpServlet HttpServlet
+   * @param p0 HttpServletRequest
+   * @param p1 HttpServletResponse
+   * @return boolean
+   * @throws Exception
+   */
+  public abstract LoginStub getLoginStub(HttpServlet httpServlet,HttpServletRequest p0, HttpServletResponse p1) throws Exception;
+  /**
+   *
+   * @param p0 HttpServletRequest
+   * @param p1 HttpServletResponse
+   * @throws Exception
+   */
+  public void doGet(HttpServlet httpServlet,HttpServletRequest p0, HttpServletResponse p1) throws ServletException, IOException {
+    nullPageService(httpServlet,p0,p1);
+  }
+  /**
+   *
+   * @param p0 HttpServletRequest
+   * @param p1 HttpServletResponse
+   * @throws Exception
+   */
+  public void doPost(HttpServlet httpServlet,HttpServletRequest p0, HttpServletResponse p1) throws ServletException, IOException {
+    nullPageService(httpServlet,p0,p1);
+  }
+  private static final String CONTENT_TYPE = "text/html; charset=utf8";
+  /**
+   *
+   * @param httpServlet HttpServlet
+   * @param request HttpServletRequest
+   * @param response HttpServletResponse
+   * @throws Exception
+   */
+  protected void nullPageService(HttpServlet httpServlet,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    response.setContentType(CONTENT_TYPE);
+    PrintWriter out = response.getWriter();
+    out.println("<html>");
+    out.println("<head><title>EFounder Enterprise Application Server"+httpServlet.getServletName()+"</title></head>");
+    out.println("<body>");
+    // 增加上JVMGuid
+    String showInfo =
+        "JVMGuid:" + System.getProperty("JVMGuid", "defaultJVM") + "," +
+        "JVMHost:" + System.getProperty("JVMHost", "defaultHost")+ "," +
+        "JVMPID:"  + System.getProperty("JVMPID",  "defaultPID");
+    out.println("<p>The EFounder Enterprise Application Server "+showInfo +" is running!-"+request.getMethod()+"-</p>");
+    out.println("</body></html>");
+  }
+  /**
+   *
+   * @param p0 ServletRequest
+   * @param p1 ServletResponse
+   * @param filterChain FilterChain
+   * @return boolean
+   */
+  public boolean invokeFilter(ServletRequest p0, ServletResponse p1,FilterChain filterChain) {
+    return false;
+  }
+  /**
+   *
+   * @param se HttpSessionEvent
+   */
+  public void sessionCreated(HttpSessionEvent se) {
+  }
+  /**
+   *
+   * @param se HttpSessionEvent
+   */
+  public void sessionDestroyed(HttpSessionEvent se) {
+
+  }
+  /**
+   *
+   * @param objectName String
+   * @param methodName String
+   * @param param String
+   * @param data String
+   * @param custom String
+   * @param addin String
+   * @return String
+   * @throws Exception
+   */
+  public String invokeWebService(String objectName,String methodName,
+                                 String param,String data,
+                                 String custom,String addin) throws Exception {
+    return null;
+  }
+  /**
+   *
+   * @param objectName String
+   * @param methodName String
+   * @param param String
+   * @param data String
+   * @param custom String
+   * @param addin String
+   * @return String
+   * @throws Exception
+   */
+  public String invokeESPService(String serviceKey,
+                                 String param,String data,
+                                 String custom,String addin) throws Exception {
+    return null;
+  }
+  /**
+   *
+   * @param request HttpServletRequest
+   * @param httpServlet HttpServlet
+   * @return Object
+   * @throws Exception
+   */
+  public Object getRequestObject(HttpServletRequest request,HttpServlet httpServlet) throws Exception {
+    return null;
+  }
+  /**
+   *
+   * @param httpServlet HttpServlet
+   * @param p0 HttpServletRequest
+   * @param p1 HttpServletResponse
+   * @param isLogin boolean
+   * @throws Exception
+   */
+  public void StartMonitorService(HttpServlet httpServlet,HttpServletRequest p0, HttpServletResponse p1,boolean isLogin) throws Exception {
+
+  }
+}

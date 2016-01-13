@@ -1,0 +1,864 @@
+package com.efounder.bz.dbform.datamodel.column;
+
+import java.math.*;
+import java.util.*;
+
+import javax.swing.table.*;
+
+import org.jdesktop.swingx.table.*;
+import com.efounder.builder.base.data.*;
+import com.efounder.bz.dbform.datamodel.*;
+
+/**
+ *
+ * <p>Title: </p>
+ *
+ * <p>Description: </p>
+ *
+ * <p>Copyright: Copyright (c) 2009</p>
+ *
+ * <p>Company: </p>
+ *
+ * @author not attributable
+ * @version 1.0
+ */
+
+public class Column extends TableColumnExt {
+	
+	//编辑方式
+	private int editStyle=1;
+
+	public int getEditStyle() {
+		return editStyle;
+	}
+	public void setEditStyle(int editStyle) {
+		this.editStyle = editStyle;
+	}
+	//工作表ID
+	private int sheetID=0;
+	public int getSheetID() {
+		return sheetID;
+	}
+	public void setSheetID(int sheetID) {
+		this.sheetID = sheetID;
+	}
+	//单元格ID
+	private String cellID;
+	public String getCellID() {
+		return cellID;
+	}
+	public void setCellID(String cellID) {
+		this.cellID = cellID;
+	}
+	
+	/**
+	 * 不透明
+	 */
+	private boolean opaque = true;
+	public boolean isOpaque() {
+		return opaque;
+	}
+	public void setOpaque(boolean opaque) {
+		this.opaque = opaque;
+	}
+	/**
+	 *
+	 */
+	protected ESPRowSet dimSetRowSet = null;
+	/**
+	 * 排序类型
+	 */
+	private int sortOrder;
+	/**
+	 *
+	 */
+	public static final int ASCENDING = 1;
+	/**
+	 *
+	 */
+	public static final int DESCENDING = 2;
+	/**
+	 *
+	 */
+	public static final int UNSORTED = 0;
+	/**
+	 *
+	 * @return ESPRowSet
+	 */
+	public ESPRowSet getDimSetRowSet() {
+		return dimSetRowSet;
+	}
+	/**
+	 *
+	 * @param dimSetRowSet ESPRowSet
+	 */
+	public void setDimSetRowSet(ESPRowSet dimSetRowSet) {
+		this.dimSetRowSet = dimSetRowSet;
+	}
+	/**
+	 *
+	 */
+	protected ESPRowSet valSetRowSet = null;
+	/**
+	 *
+	 * @return ESPRowSet
+	 */
+	public ESPRowSet getValSetRowSet() {
+		return valSetRowSet;
+	}
+	/**
+	 *
+	 * @param valSetRowSet ESPRowSet
+	 */
+	public void setValSetRowSet(ESPRowSet valSetRowSet) {
+		this.valSetRowSet = valSetRowSet;
+	}
+
+	/**
+	 *
+	 */
+	protected static java.util.Map columnClassMap = new java.util.HashMap();
+	/**
+	 *
+	 */
+	static {
+		columnClassMap.put("C",String.class);
+		columnClassMap.put("T",Date.class);
+		columnClassMap.put("I",Integer.class);
+		columnClassMap.put("N",BigDecimal.class);
+	}
+	/**
+	 *
+	 * @param flag String
+	 * @param def Class
+	 * @return Class
+	 */
+	public static Class getColumnClass(String flag,Class def) {
+		Class val = (Class)columnClassMap.get(flag);
+		if ( val == null ) val = def;
+		return val;
+	}
+	/**
+	 *
+	 * @return Column
+	 */
+	public static Column getInstance() {
+		Column column = new Column();
+		return column;
+	}
+
+	/**
+	 *
+	 */
+	public Column() {
+		super();
+		modelIndex = -1;
+		this.setMinWidth(0);
+	}
+	/**
+	 *
+	 * @param modelIndex int
+	 * @param width int
+	 * @param cellRenderer TableCellRenderer
+	 * @param cellEditor TableCellEditor
+	 */
+	public Column(int modelIndex, int width, TableCellRenderer cellRenderer, TableCellEditor cellEditor) {
+		super(modelIndex, width, cellRenderer, cellEditor);
+	}
+	
+	public String getDataType() {
+		return this.getDimSetRowSet().getString("COL_TYPE", "");
+	}
+	
+//  /**
+//   *
+//   * @return Object
+//   */
+//  public Object getHeaderValue() {
+//    // 如果定义了
+//    if ( this.headText != null && this.headText.trim().length() > 0 ) return headText;
+//    String caption = getColCaption();
+//    if ( caption == null ) return super.getHeaderValue();
+//    return caption;
+//  }
+  /**
+   *
+   * @return String
+   */
+  protected String getColCaption() {
+	  return this.getDimSetRowSet().getString("COL_MC", "");
+  }
+//  /**
+//   *
+//   */
+//  protected String dataSetColID = null;
+//  /**
+//   *
+//   * @return String
+//   */
+//  public String getDataSetColID() {
+//    return this.dataSetColID;
+//  }
+//  /**
+//   *
+//   * @param dataSetColID String
+//   */
+//  public void setDataSetColID(String dataSetColID) {
+//    this.dataSetColID = dataSetColID;
+//  }
+//  /**
+//   *
+//   */
+//  protected String internalDataSetID = null;
+//  /**
+//   *
+//   * @return String
+//   */
+//  public String getInternalDataSetID() {
+//    return internalDataSetID;
+//  }
+//  /**
+//   *
+//   * @param dataSetID String
+//   */
+//  public void setInternalDataSetID(String dataSetID) {
+//    this.internalDataSetID = dataSetID;
+//  }
+//  /**
+//   *
+//   * @return Object
+//   */
+//  public Object getIdentifier() {
+//    if ( (internalDataSetID != null && internalDataSetID.trim().length() != 0 ) && this.dataSetColID != null ) {
+//      return internalDataSetID+"."+dataSetColID;
+//    }
+//    return dataSetColID;
+//  }
+//  /**
+//   *
+//   * @return DataSetComponent
+//   */
+//  public DataSetComponent getDataSetComponent() {
+//    ColumnModel columnModel = (ColumnModel)this.getParentDataComponent();
+//    if ( columnModel.getDMComponent() == null ) return null;
+//    DataSetComponent dataSetComponent = columnModel.getDMComponent().getDataSetComponent();
+//    return dataSetComponent;
+//  }
+//  /**
+//   *
+//   * @return String
+//   */
+//  public String getDataSetID() {
+//    ColumnModel columnModel = (ColumnModel)this.getParentDataComponent();
+//    if ( columnModel.getDMComponent() == null ) return null;
+//    return columnModel.getDMComponent().getDataSetID();
+//  }
+//  /**
+//   *
+//   * @return DMComponent
+//   */
+//  protected DMComponent getDMComponent() {
+//    ColumnModel columnModel = (ColumnModel)this.getParentDataComponent();
+//    if ( columnModel == null ) return null;
+//    if ( columnModel.getDMComponent() == null ) return null;
+//    return columnModel.getDMComponent();
+//  }
+//  protected boolean metaData = false;
+//  public boolean getMetaData() {
+//    return metaData;
+//  }
+//  public void setMetaData(boolean v) {
+//    metaData = v;
+//  }
+//  /**
+//   *
+//   */
+//  protected String viewDataSetID = null;
+//  /**
+//   *
+//   * @param viewDataSetID String
+//   */
+//  public void   setViewDataSetID(String viewDataSetID) {
+//    this.viewDataSetID = viewDataSetID;
+//  }
+//  /**
+//   *
+//   * @return String
+//   */
+//  public String getViewDataSetID() {
+//    return viewDataSetID;
+//  }
+//  /**
+//   *
+//   */
+//  protected String viewDataSetColID = null;
+//  /**
+//   *
+//   * @param viewDataSetColID String
+//   */
+//  public void   setViewDataSetColID(String viewDataSetColID) {
+//    this.viewDataSetColID = viewDataSetColID;
+//  }
+//  /**
+//   *
+//   * @return String
+//   */
+//  public String getViewDataSetColID() {
+//    return viewDataSetColID;
+//  }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//  /**
+//   *
+//   */
+//  protected String dataModelID = null;
+//  /**
+//   *
+//   */
+//  protected String dataCompName = null;
+//  /**
+//   *
+//   * @return String
+//   * @todo Implement this com.efounder.bz.dbform.datamodel.DataComponent method
+//   */
+//  public String getID() {
+//    return dataModelID;
+//  }
+//
+//  /**
+//   *
+//   * @return String
+//   * @todo Implement this com.efounder.bz.dbform.datamodel.DataComponent method
+//   */
+//  public String getName() {
+//    return dataCompName;
+//  }
+//
+//  /**
+//   *
+//   * @param id String
+//   * @todo Implement this com.efounder.bz.dbform.datamodel.DataComponent method
+//   */
+//  public void setID(String id) {
+//    dataModelID = id;
+//  }
+//
+//  /**
+//   *
+//   * @param name String
+//   * @todo Implement this com.efounder.bz.dbform.datamodel.DataComponent method
+//   */
+//  public void setName(String name) {
+//    dataCompName = name;
+//  }
+  /**
+   *
+   * @return String
+   */
+  public String toString() {
+	  return this.getDimSetRowSet().getString("COL_MC", "");
+  }
+//  /**
+//   *
+//   */
+//  protected java.util.Map propertyMap = null;
+//  /**
+//   *
+//   * @return Map
+//   */
+//  public java.util.Map getPropertyMap() {
+//    return propertyMap;
+//  }
+//  /**
+//   *
+//   * @param propertyMap Map
+//   */
+//  public void setPropertyMap(java.util.Map propertyMap) {
+//    this.propertyMap = propertyMap;
+//  }
+//  /**
+//   *
+//   * @param key Object
+//   * @param def Object
+//   * @return Object
+//   */
+//  public Object getProperty(Object key,Object def) {
+//    Object ret = null;
+//    if ( propertyMap == null ) return def;
+//    ret = propertyMap.get(key);
+//    return ret==null?def:ret;
+//  }
+//  /**
+//   *
+//   * @param key Object
+//   * @param value Object
+//   */
+//  public void setProperty(Object key,Object value) {
+//    if ( propertyMap == null ) propertyMap = new HashMap();
+//    propertyMap.put(key,value);
+//  }
+//  /**
+//   *
+//   */
+//  protected DataContainer dataContainer = null;
+//  /**
+//   *
+//   * @return DataContainer
+//   */
+//  public DataContainer getDataContainer() {
+//    return dataContainer;
+//  }
+//  /**
+//   *
+//   * @param dataContainer DataContainer
+//   */
+//  public void setDataContainer(DataContainer dataContainer) {
+//    this.dataContainer = dataContainer;
+//  }
+//  /**
+//   *
+//   */
+//  protected java.util.Map eventMap = new HashMap();
+//  /**
+//   *
+//   * @return Map
+//   */
+//  public Map getEventMap() {
+//    return eventMap;
+//  }
+//  /**
+//   *
+//   * @param eventMap Map
+//   */
+//  public void setEventMap(Map eventMap) {
+//    this.eventMap = eventMap;
+//  }
+//  /**
+//   *
+//   */
+//  protected DataComponent parent = null;
+//  /**
+//   *
+//   * @return DataComponent
+//   */
+//  public DataComponent getParentDataComponent() {
+//    return parent;
+//  }
+//  /**
+//   *
+//   * @param dc DataComponent
+//   */
+//  public void setParentDataComponent(DataComponent dc) {
+//    parent = dc;
+//    if ( parent instanceof DataContainer ) {
+//      this.dataContainer = (DataContainer)parent;
+//    }
+//  }
+//  /**
+//   *
+//   */
+////  protected java.util.List childList = null;
+//  /**
+//   *
+//   * @return List
+//   */
+//  public java.util.List getChildList() {
+//    return null;
+//  }
+//  /**
+//   *
+//   * @param childList List
+//   */
+//  public void setChildList(java.util.List childList) {
+////    this.childList = childList;
+//  }
+//  /**
+//   *
+//   * @param index int
+//   * @return DataComponent
+//   */
+//  public DataComponent getDataComponent(int index) {
+////    if ( childList == null ) return null;
+////    if ( index < 0 || index >= childList.size() ) return null;
+////    return (DataComponent)childList.get(index);
+//    return null;
+//  }
+//  /**
+//   *
+//   * @param ID String
+//   * @return DataComponent
+//   */
+//  public DataComponent getDataComponent(String ID) {
+////    if ( childList == null ) return null;
+////    for(int i=0;i<childList.size();i++) {
+////      if ( ID.equals(((DataComponent)childList.get(i)).getID()) ) {
+////        return (DataComponent)childList.get(i);
+////      }
+////    }
+//    return null;
+//  }
+//  /**
+//   *
+//   * @param dataComponent DataComponent
+//   */
+//  public int insertDataComponent(DataComponent dataComponent) {
+////    if ( childList == null ) childList = new java.util.ArrayList();
+////    childList.add(dataComponent);
+////    dataComponent.setParent(this);
+//    return -1;
+//  }
+//  /**
+//   *
+//   * @param dataComponent DataComponent
+//   */
+//  public void removeDataComponent(DataComponent dataComponent) {
+////    if ( dataComponent != null ) {
+////      this.childList.remove(dataComponent);
+////      dataComponent.setParent(null);
+////    }
+//  }
+//
+//  public boolean canAddChild(DataComponent childDC) {
+//    return false;
+//  }
+//  protected FormFunctionObject customFunction = null;
+//  /**
+//   *
+//   * @return FormFunctionObject
+//   */
+//  public FormFunctionObject getCustomFunction() {
+//    return customFunction;
+//  }
+//  /**
+//   *
+//   * @param ffo FormFunctionObject
+//   */
+//  public void setCustomFunction(FormFunctionObject ffo) {
+//    this.customFunction = ffo;
+//  }
+//  protected boolean userInternalDataSetID = false;
+//  public boolean isUserInternalDataSetID() {
+//    return userInternalDataSetID;
+//  }
+//
+//  public void setUserInternalDataSetID(boolean v) {
+//    userInternalDataSetID = v;
+//  }
+//  protected String fkeyID = null;
+//  //
+//  public String getFkeyID() {
+//    return fkeyID;
+//  }
+//  //
+//  public void setFkeyID(String fkey) {
+//    this.fkeyID = fkey;
+//  }
+//  protected String rlglID = null;
+//  //
+//  public String getRlglID() {
+//    return rlglID;
+//  }
+//  //
+//  public void setRlglID(String rlglID) {
+//    this.rlglID = rlglID;
+//  }
+//  protected String valueDataSetColID = null;
+//  // 取值字段
+//  public void setValueDataSetColID(String valueDataSetColID) {
+//    this.valueDataSetColID = valueDataSetColID;
+//  }
+//  //
+//  public String getValueDataSetColID() {
+//    return valueDataSetColID;
+//  }
+//  /**
+//   *
+//   */
+//  protected boolean checkBoxColumn = false;
+//  /**
+//   *
+//   * @param cbc boolean
+//   */
+//  public void setCheckBoxColumn(boolean cbc) {
+//    checkBoxColumn = cbc;
+//  }
+//  /**
+//   *
+//   * @return boolean
+//   */
+//  public boolean isCheckBoxColumn() {
+//    return checkBoxColumn;
+//  }
+//  /**
+//   *
+//   */
+//  protected boolean iconColumn = false;
+//  /**
+//   *
+//   * @param ic boolean
+//   */
+//  public void setIconColumn(boolean ic) {
+//    this.iconColumn = ic;
+//  }
+//  /**
+//   *
+//   * @return boolean
+//   */
+//  public boolean isIconColumn() {
+//    return iconColumn;
+//  }
+//  /**
+//   *
+//   */
+//  protected String headText = null;
+//  /**
+//   *
+//   * @return String
+//   */
+//  public String getHeadText() {
+//    return headText;
+//  }
+//  /**
+//   *
+//   * @param headText String
+//   */
+//  public void setHeadText(String headText) {
+//    this.headText = headText;
+//    if ( headText != null && headText.length() > 0 ) {
+//      this.setHeaderValue(headText);
+//    }
+//  }
+//  /**
+//   *
+//   */
+//  protected int horizontalAlignment = -1;
+//  /**
+//   *
+//   * @return int
+//   */
+//  public int getHorizontalAlignment() {
+//    return horizontalAlignment;
+//  }
+//  /**
+//   *
+//   * @param horizontalAlignment int
+//   */
+//  public void setHorizontalAlignment(int horizontalAlignment) {
+//    this.horizontalAlignment = horizontalAlignment;
+//  }
+//  /**
+//   *
+//   */
+//  protected String numberFormat = null;
+//  /**
+//   *
+//   * @return String
+//   */
+//  public String getNumberFormat() {
+//    return numberFormat;
+//  }
+//  /**
+//   *
+//   * @param numberFormat String
+//   */
+//  public void setNumberFormat(String numberFormat) {
+//    this.numberFormat = numberFormat;
+//  }
+//  /**
+//   *
+//   */
+//  protected String dateFormat = null;
+//  /**
+//   *
+//   * @return String
+//   */
+//  public String getDateFormat() {
+//    return this.dateFormat;
+//  }
+//  /**
+//   *
+//   * @param dateFormat String
+//   */
+//  public void setDateFormat(String dateFormat) {
+//    this.dateFormat = dateFormat;
+//  }
+//  /**
+//   *
+//   */
+//  protected String formulaOne = null;
+//  private int calcOrder;
+//  private boolean calcSum=false;
+//  private boolean calcAvg=false;
+//  private boolean calcMax=false;
+//  private boolean calcMin=false;
+//  private boolean nvl=true; 
+//  
+//  private boolean enabled = true;
+//  public boolean isEnabled() {
+//	  return enabled;
+//  }
+//  public void setEnabled(boolean enabled) {
+//	  this.enabled = enabled;
+//  }
+//  
+//  /**
+//   *
+//   * @return String
+//   */
+//  public String getFormulaOne() {
+//    return this.formulaOne;
+//  }
+//
+//  public int getCalcOrder() {
+//    return calcOrder;
+//  }
+//
+//  public boolean isCalcSum() {
+//    return calcSum;
+//  }
+//
+//  public boolean isCalcAvg() {
+//    return calcAvg;
+//  }
+//
+//  public boolean isCalcMax() {
+//    return calcMax;
+//  }
+//
+//  public boolean isCalcMin() {
+//    return calcMin;
+//  }
+//
+//  public boolean isNvl() {
+//    return nvl;
+//  }
+//
+//  /**
+//   *
+//   * @return int
+//   */
+//  public int getSortOrder() {
+//      return sortOrder;
+//  }
+//
+//  /**
+//   *
+//   * @param formulaOne String
+//   */
+//  public void setFormulaOne(String formulaOne) {
+//    this.formulaOne = formulaOne;
+//  }
+//
+//  public void setCalcOrder(int calcOrder) {
+//    this.calcOrder = calcOrder;
+//  }
+//
+//  public void setCalcSum(boolean calcSum) {
+//    this.calcSum = calcSum;
+//  }
+//
+//  public void setCalcAvg(boolean calcAvg) {
+//    this.calcAvg = calcAvg;
+//  }
+//
+//  public void setCalcMax(boolean calcMax) {
+//    this.calcMax = calcMax;
+//  }
+//
+//  public void setCalcMin(boolean calcMin) {
+//    this.calcMin = calcMin;
+//  }
+//
+//  public void setNvl(boolean nvl) {
+//    this.nvl = nvl;
+//  }
+//  /**
+//   *
+//   * @param sortOrder int
+//   */
+//  public void setSortOrder(int sortOrder) {
+//      this.sortOrder = sortOrder;
+//  }
+//
+//  /**
+//   * 转换列的排序方式:UNSORTED->ASCENDING->DESCENDING->UNSORTED
+//   */
+//  public void convertSortOrder() {
+//      if (getSortOrder() == UNSORTED) {
+//          setSortOrder(ASCENDING);
+//      } else if (getSortOrder() == ASCENDING) {
+//          setSortOrder(DESCENDING);
+//      } else if (getSortOrder() == DESCENDING){
+//          setSortOrder(UNSORTED);
+//      }
+//  }
+//
+//  /**
+//   *
+//   * @return String
+//   */
+//  public String getColumnType() {
+//      if ( dataSetColID == null || this.internalDataSetID == null ) return null;
+//      if ( !(this.getParentDataComponent() instanceof ColumnModel) ) return null;
+//      ColumnModel columnModel = (ColumnModel)this.getParentDataComponent();
+//      ESPRowSet rowSet = columnModel.getColumnInfo(this);
+//      if ( rowSet == null ) return null;
+//      return rowSet.getString("COL_TYPE",null);
+//  }
+//
+//  /**
+//   *
+//   */
+//  public void convertCellRenderer() {
+//      String value = (String) getHeaderValue();
+//      if (value.endsWith("↑") || value.endsWith("↓")) {
+//          value = value.substring(0, value.length() - 1);
+//      }
+//      if (getSortOrder() == ASCENDING) value += "↑";
+//      if (getSortOrder() == DESCENDING) value += "↓";
+//      setHeadText(value);
+//  }
+//  public void sysInitDataComponent() {
+//	// TODO Auto-generated method stub
+//	
+//  }
+//  
+//  //编辑掩码
+//  String editMask;
+//  public String getEditMask() {
+//	  // TODO Auto-generated method stub
+//	  return editMask;
+//  }
+//  public void setEditMask(String editMask) {
+//	  // TODO Auto-generated method stub
+//	  this.editMask = editMask;
+//  }
+}

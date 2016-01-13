@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="JEMPXML" default="copy" basedir=".">
+
+	<target name="init">
+		<tstamp />
+		<property name="Name" value="JEMPXML" />
+		<property name="version" value="0.1" />
+		<property name="year" value="2011" />
+
+		<property name="debug" value="on" />
+		<property name="optimize" value="on" />
+		<property name="deprecation" value="on" />
+
+		<property name="src" value="./src" />
+		<property name="root" value="D:\BeiHuaYuanWorkSpace\ESPApplication\ESPLib\CodeSpace\JEnterprise\public" />
+		<property name="public"  value="D:\HyeclWorkSpace\HyeclEmp\WebRoot\WEB-INF\lib" />
+		<property name="lib" value="${root}" />
+		<property name="classes" value="./classes" />
+
+		<property name="server_public" value="D:\HouseLeaseWorkSpace\EnterpriseServer\WebRoot\WEB-INF\lib" />
+		
+		<path id="compile.classpath">
+			<fileset dir="${root}">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${public}">
+				<include name="*.jar" />
+			</fileset>
+			<pathelement location="${classes}" />
+		</path>
+		<mkdir dir="${classes}" />
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${classes}" fork="true" memorymaximumsize="256m">
+			<classpath refid="compile.classpath" />
+		</javac>
+	</target>
+
+	<target name="clean" depends="compile">
+		<delete>
+			<fileset dir="${public}">
+				<include name="JEMPXML.jar" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="package" depends="clean">
+		<jar jarfile="${public}/JEMPXML.jar">
+			<fileset dir="${classes}">
+				<include name="com/core/**" />
+			</fileset>			
+		</jar>
+	</target>
+
+	<target name="copy" depends="package">
+		<copy todir="${server_public}">
+			<fileset dir="${public}">
+				<include name="JEMPXML.jar" />
+			</fileset>
+		</copy>
+	</target>
+
+</project>

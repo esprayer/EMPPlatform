@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.mrp.persistence.dailyBusiness.storage.mapper.HYRKDMapper">
+	<resultMap id="rm" type="com.mrp.persistence.dailyBusiness.storage.bean.HYRKD">
+		<result property="F_DJBH" jdbcType="VARCHAR" column="F_DJBH"/>
+        <result property="F_GUID" jdbcType="VARCHAR" column="F_GUID"/>
+        <result property="F_KJQJ" jdbcType="VARCHAR" column="F_KJQJ"/>
+		<result property="F_DATE" jdbcType="VARCHAR" column="F_DATE"/>
+        <result property="F_DJZT" jdbcType="VARCHAR" column="F_DJZT"/>
+        <result property="F_BZ" jdbcType="VARCHAR" column="F_BZ"/>
+		<result property="F_BZRID" jdbcType="VARCHAR" column="F_BZRID"/>
+        <result property="F_BZRMC" jdbcType="VARCHAR" column="F_BZRMC"/>	
+        <result property="F_SBRID" jdbcType="VARCHAR" column="F_SBRID"/>
+        <result property="F_SBRMC" jdbcType="VARCHAR" column="F_SBRMC"/>	
+		<result property="F_CKBH" jdbcType="VARCHAR" column="F_CKBH"/>
+        <result property="F_CKMC" jdbcType="VARCHAR" column="F_CKMC"/>	
+		<result property="F_RKLX" jdbcType="VARCHAR" column="F_RKLX"/>		
+        <result property="F_CRDATE" jdbcType="DECIMAL" column="DECIMAL"/>
+        <result property="F_CHDATE" jdbcType="DECIMAL" column="DECIMAL"/>
+        <result property="F_SBDATE" jdbcType="DECIMAL" column="F_SBDATE"/>
+	</resultMap>
+	
+	<select id="loadHYRKD" resultMap="rm">
+		SELECT 
+			F_DJBH,
+			F_KJQJ,
+			F_DATE,
+			F_GUID,
+	        F_DJZT,
+	        F_BZ,		
+			F_BZRID,     
+			A.USER_NAME AS F_BZRMC,
+			F_SBRID,     
+			B.USER_NAME AS F_SBRMC,
+			HYRKD.F_CKBH,
+			HYRKD.F_RKLX,
+			HYCKZD.F_CKMC,
+	        HYRKD.F_CRDATE,
+			HYRKD.F_CHDATE,
+			HYRKD.F_SBDATE
+	    FROM HYRKD 
+	    LEFT JOIN BSUSER A ON HYRKD.F_BZRID = A.USER_ID
+	    LEFT JOIN BSUSER B ON HYRKD.F_SBRID = B.USER_ID  	
+		LEFT JOIN HYCKZD ON HYRKD.F_CKBH = HYCKZD.F_CKBH
+	    WHERE 
+			<if test="F_DJZT!=null" >
+				F_DJZT = #{F_DJZT} AND 
+			</if>
+			<if test="F_DATE!=null" >
+				F_DATE = #{F_DATE} AND 
+			</if>
+			<if test="F_CKBH!=null" >
+				HYRKD.F_CKBH = #{F_CKBH} AND 
+			</if>
+			<if test="F_GUID!=null" >
+				F_GUID = #{F_GUID} AND 
+			</if>
+			<if test="F_DJBH!=null" >
+				F_DJBH = #{F_DJBH} AND 
+			</if>
+			<if test="F_RKLX!=null" >
+				F_RKLX = #{F_RKLX} AND 
+			</if>
+	        F_KJQJ = #{F_KJQJ}
+		ORDER BY F_DJBH
+	</select>	
+</mapper>
+

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="gb2312"?>
+<package id="" caption="装配清单">
+  <com.efounder.mdm.MasterDataManager>
+    <item implement="com.efounder.mdm.client.ClientMasterDataManager" caption=""/>
+  </com.efounder.mdm.MasterDataManager>
+  
+  <BIZServiceComponentPalettes caption="服务组件面板定义">
+    <item id="bizMDMServicePlugins" caption="主数据管理列表" compClazz="com.efounder.mdm.server.provider.component.MDMServiceComponent"  icon="oicons/update.png"/>
+  </BIZServiceComponentPalettes>
+  
+  <bizMDMServicePlugins_ContextBuilder>
+    <item id="MDMLoadServiceContextBuilder" caption="主数据环境创建" modelClazz="com.efounder.mdm.server.provider.context.MDMLoadServiceContextBuilder" icon16="oicons/xml_enumeration.png" icon32="oicons/xml_enumeration.png" />
+  </bizMDMServicePlugins_ContextBuilder>
+  
+  <bizMDMServicePlugins>
+  	<item id="DICTDataLoader"  caption="字典数据加载" modelClazz="com.efounder.mdm.server.provider.plugin.DICTDataLoader" icon16="dataset.gif" icon32="dataset.gif" />
+    <item id="FKEYDataLoader"  caption="外键数据加载" modelClazz="com.efounder.mdm.server.provider.plugin.FKEYDataLoader" icon16="DBButtonDataBinder_Color16.gif" icon32="DBButtonDataBinder_Color16.gif" />
+  </bizMDMServicePlugins>
+</package>

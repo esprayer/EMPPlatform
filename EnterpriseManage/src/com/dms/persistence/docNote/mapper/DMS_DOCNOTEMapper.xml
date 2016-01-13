@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.dms.persistence.docNote.mapper.DMS_DOCNOTEMapper">
+	<resultMap id="rm" type="com.dms.persistence.docNote.bean.DMS_DOCNOTE">
+		<result property="F_ID" jdbcType="VARCHAR" column="F_ID"/>
+        <result property="F_DOCID" jdbcType="VARCHAR" column="F_DOCID"/>
+		<result property="F_WRITER" jdbcType="VARCHAR" column="F_WRITER"/>
+        <result property="F_WRITERNAME" jdbcType="VARCHAR" column="F_WRITERNAME"/>
+		<result property="F_MS" jdbcType="VARCHAR" column="F_MS"/>        
+        <result property="F_CRDATE" jdbcType="TIMESTAMP" column="F_CRDATE"/>
+		<result property="F_CHDATE" jdbcType="TIMESTAMP" column="F_CHDATE"/>
+	</resultMap>
+	
+	<select id="DocNoteList" resultMap="rm">
+		SELECT 
+			DMS_DOCNOTE.F_ID,
+	        DMS_DOCNOTE.F_DOCID,	
+	        DMS_DOCNOTE.F_WRITER,
+			BSUSER.USER_NAME AS F_WRITERNAME,
+			DMS_DOCNOTE.F_MS,
+			DMS_DOCNOTE.F_CRDATE,
+			DMS_DOCNOTE.F_CHDATE
+	    FROM DMS_DOCNOTE, BSUSER
+		WHERE 
+			DMS_DOCNOTE.F_DOCID = #{F_DOCID} AND 
+			DMS_DOCNOTE.F_WRITER = BSUSER.USER_ID 	
+		ORDER BY DMS_DOCNOTE.F_CRDATE
+	</select>
+	
+	<select id="load" resultMap="rm">
+		SELECT 
+			DMS_DOCNOTE.F_ID,
+	        DMS_DOCNOTE.F_DOCID,	
+	        DMS_DOCNOTE.F_WRITER,
+			BSUSER.USER_NAME AS F_WRITERNAME,
+			DMS_DOCNOTE.F_MS,
+			DMS_DOCNOTE.F_CRDATE,
+			DMS_DOCNOTE.F_CHDATE
+	    FROM DMS_DOCNOTE, BSUSER
+		WHERE 
+			DMS_DOCNOTE.F_WRITER = BSUSER.USER_ID 
+			AND DMS_DOCNOTE.F_ID = #{F_ID}	
+	</select>
+	
+     <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="OBJ_ID">
+        INSERT INTO DMS_DOCNOTE (
+        	F_ID,
+	        F_DOCID,			
+	        F_WRITER,
+			F_MS,     
+	        F_CRDATE,
+			F_CHDATE
+        ) VALUES (
+        	#{F_ID} ,
+        	#{F_DOCID} ,
+        	#{F_WRITER} ,
+        	#{F_MS} ,
+			#{F_CRDATE},
+			#{F_CHDATE}
+        )
+	</insert>
+	
+	<!-- 按Id删除 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM DMS_DOCNOTE WHERE F_ID = #{F_ID} 
+    </delete>
+	
+	<update id="update" parameterType="dwz.persistence.beans.ResBook">
+        UPDATE DMS_DOCNOTE SET
+	        F_MS = #{F_MS} ,
+	        F_CHDATE = #{F_CHDATE}
+        WHERE 
+	        F_ID = #{F_ID} 
+	</update>
+	
+	<!-- 按Id删除 -->
+	<delete id="deleteDocNote" parameterType="java.lang.Integer">
+        DELETE FROM DMS_DOCNOTE
+        WHERE 
+	        F_DOCID = #{F_DOCID}
+	</delete>
+</mapper>
+

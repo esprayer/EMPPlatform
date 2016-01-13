@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.mrp.persistence.dailyBusiness.warnmaterial.mapper.HYCLYJMapper">
+	<resultMap id="rm" type="com.mrp.persistence.dailyBusiness.warnmaterial.bean.HYCLYJ">
+		<result property="F_CLBH" jdbcType="VARCHAR" column="F_CLBH"/>
+        <result property="F_CLMC" jdbcType="VARCHAR" column="F_CLMC"/>
+        <result property="F_GGXH" jdbcType="VARCHAR" column="F_GGXH"/>
+        <result property="F_JLDW" jdbcType="VARCHAR" column="F_JLDW"/>
+		<result property="F_DWBH" jdbcType="VARCHAR" column="F_DWBH"/>
+		<result property="F_DWMC" jdbcType="VARCHAR" column="F_DWMC"/>
+		<result property="F_CSBH" jdbcType="VARCHAR" column="F_CSBH"/>
+		<result property="F_CSMC" jdbcType="VARCHAR" column="F_CSMC"/>
+		<result property="F_KCSX" jdbcType="DECIMAL" column="F_KCSX"/>	
+		<result property="F_KCXX" jdbcType="DECIMAL" column="F_KCXX"/>	
+        <result property="F_CRDATE" jdbcType="TIMESTAMP" column="F_CRDATE"/>
+        <result property="F_CHDATE" jdbcType="TIMESTAMP" column="F_CHDATE"/>
+	</resultMap>
+	
+	<select id="findByCLBH" resultMap="rm">
+    	SELECT 
+	        HYCLYJ.F_CLBH,
+	        HYCLZD.F_CLMC,
+	        HYCLZD.F_GGXH,
+	        HYCLZD.F_JLDW,
+	        HYCLZD.F_DWBH,
+			HYDWZD.F_DWMC,
+	        HYCLZD.F_CSBH,
+			HYCSZD.F_CSMC,
+			HYCLYJ.F_KCSX,
+			HYCLYJ.F_KCXX,
+	        HYCLYJ.F_CRDATE,
+			HYCLYJ.F_CHDATE
+	    FROM HYCLYJ 
+		LEFT JOIN HYCLZD ON HYCLZD.F_CLBH = HYCLYJ.F_CLBH  
+		LEFT JOIN HYDWZD ON HYDWZD.F_DWBH = HYCLZD.F_DWBH  
+		LEFT JOIN HYCSZD ON HYCSZD.F_CSBH = HYCLZD.F_CSBH  
+		WHERE 
+	        HYCLYJ.F_CLBH like "%"#{F_CLBH}"%"
+		ORDER BY F_CLBH
+    </select>
+	
+	<select id="load" resultMap="rm">
+		SELECT 
+			HYCLYJ.F_CLBH,
+	        HYCLZD.F_CLMC,
+	        HYCLZD.F_GGXH,
+	        HYCLZD.F_JLDW,
+	        HYCLZD.F_DWBH,
+			HYDWZD.F_DWMC,
+	        HYCLZD.F_CSBH,
+			HYCSZD.F_CSMC,
+			HYCLYJ.F_KCSX,
+			HYCLYJ.F_KCXX,
+	        HYCLYJ.F_CRDATE,
+			HYCLYJ.F_CHDATE
+	    FROM HYCLYJ 
+		LEFT JOIN HYCLZD ON HYCLZD.F_CLBH = HYCLYJ.F_CLBH  
+		LEFT JOIN HYDWZD ON HYDWZD.F_DWBH = HYCLZD.F_DWBH  
+		LEFT JOIN HYCSZD ON HYCSZD.F_CSBH = HYCLZD.F_CSBH  
+		WHERE 
+	        HYCLYJ.F_CLBH = #{F_CLBH}
+		ORDER BY F_CLBH
+	</select>
+
+	<!-- 按Id删除 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM HYCLYJ WHERE F_CLBH = #{F_CLBH}
+    </delete>
+     <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="OBJ_ID">
+        INSERT INTO HYCLYJ (
+        	F_CLBH,
+	        F_KCSX,
+	        F_KCXX,      
+	        F_CRDATE,
+			F_CHDATE
+        ) VALUES (
+        	#{F_CLBH} ,
+        	#{F_KCSX} ,
+        	#{F_KCXX} ,
+        	#{F_CRDATE} ,
+			#{F_CHDATE}
+        )
+	</insert>
+
+	<update id="update" parameterType="com.mrp.persistence.sysConfigure.deport.bean.HYCKZD">
+        UPDATE HYCLYJ SET
+			F_KCSX = #{F_KCSX} ,
+			F_KCXX = #{F_KCXX} ,         	       
+	        F_CHDATE = #{F_CHDATE}
+        WHERE 
+	        F_CLBH = #{F_CLBH}
+	</update>
+</mapper>
+

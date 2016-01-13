@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="gb2312"?>
+<package id="" caption="装配清单">
+  <CLASSES id="" caption="可以在此注册对象，无需修改注册表文件">
+    <CLSID guid="EMPFormServiceObject" id="EMPFormServiceObject" name="EMPFormServiceObject" class="com.server.EMPFormServiceObject" ver="1.0.0" type="CLSID_AbstractDataActiveObjectCategory"/>
+  </CLASSES>
+</package>

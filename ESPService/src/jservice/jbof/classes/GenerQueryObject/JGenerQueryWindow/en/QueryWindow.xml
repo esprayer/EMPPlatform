@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!-- edited with XML Spy v4.2 U (http://www.xmlspy.com) by xSkyline (Pansoft) -->
+<ModuleConfig>
+  <gui>
+    <toolbars>
+      <toolbar name="MainToolbar" des="查询主工具条" layout="1" visible="1"/>
+      <toolbar name="FormatToolbar" des="格式控制工具条" layout="2" visible="1"/>
+      <toolbar name="DrawToolbar" des="图形绘制工具条" layout="3" visible="0"/>
+    </toolbars>
+    <menus>
+      <mainmenu name="menu">
+        <menuitem1 name="mnInsert" caption="插入(I)" oerateitem="" ischild="false" icon="" selchar="I">
+          <menuitem2 name="mnInsertRow" caption="插入行(R)" icon="insertrow.gif" selchar="R" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnInsertCol" caption="插入列(C)" icon="insertcol.gif" selchar="C" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnInsertSheet" caption="插入工作表(S)" icon="insertsheet.gif" selchar="S" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="separator" caption="-"/>
+          <menuitem2 name="mnInsertPagebreak" caption="分页符(B)" icon="" selchar="B" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnInsertHyperlink" caption="超链接(i)..." icon="" selchar="i" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="separator" caption="-"/>
+          <menuitem2 name="mnInsertDraw1" caption="图表(H)..." icon="tb.gif" selchar="H" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnInsertDraw2" caption="图片(P)..." icon="graph.gif" selchar="P" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="separator" caption="-"/>
+          <menuitem2 name="mnInsertDraw" caption="图形对象" icon="">
+            <menuitem3 name="mnInsertDraw0" caption="正常模式" icon="draw0.gif" type="2" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnInsertDraw1" caption="图表对象" icon="draw1.gif" type="2" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnInsertDraw2" caption="图片" icon="draw2.gif" type="2" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnInsertDraw3" caption="曲线" icon="draw3.gif" type="2" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnInsertDraw4" caption="直线" icon="draw4.gif" type="2" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnInsertDraw5" caption="圆" icon="draw5.gif" type="2" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnInsertDraw6" caption="多边形" icon="draw6.gif" type="2" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnInsertDraw7" caption="矩形" icon="draw7.gif" type="2" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          </menuitem2>
+          <menuitem2 name="mnInsertObject" caption="表单对象" icon="">
+            <menuitem3 name="mnInsertObject1" caption="按钮" icon="object1.gif"  type="2" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnInsertObject2" caption="复选框" icon="object2.gif"  type="2" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnInsertObject3" caption="下拉框" icon="object3.gif"  type="2" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnInsertObject4" caption="列表框" icon="object4.gif"  type="2" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnInsertObject5" caption="单选框" icon="object5.gif"  type="2" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnInsertObject6" caption="文本框" icon="object6.gif"  type="2" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          </menuitem2>
+        </menuitem1>
+        <menuitem1 name="mnFormat" caption="格式(M)" operateitem="" ischild="false" icon="" selchar="M">
+          <menuitem2 name="mnCellFormat" caption="单元格(C)..." icon="attrib.gif" selchar="C" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnDeleteFmt" caption="删除(D)" icon="" selchar="D">
+            <menuitem3 name="mnDeleteRow" caption="行(R)" icon="delrow.gif" selchar="R" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnDeleteCol" caption="列(C)" icon="delcol.gif" selchar="C" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnDeleteSheet" caption="工作表(S)" icon="insertsheet.gif" selchar="S" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="separator" caption="-"/>
+            <menuitem3 name="mnDeletePagebreak" caption="分页符(B)" icon="" selchar="B" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          </menuitem2>
+          <menuitem2 name="mnRowFormat" caption="行(R)" icon="" selchar="R">
+            <menuitem3 name="mnRowFormat1" caption="高度(H)..." icon="rowheight.gif" selchar="H" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnRowFormat2" caption="最佳高度(G)" selchar="G" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnRowFormat3" caption="隐藏(D)" selchar="D" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnRowFormat4" caption="显示(S)" selchar="S" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          </menuitem2>
+          <menuitem2 name="mnColFormat" caption="列(C)" icon="" selchar="C">
+            <menuitem3 name="mnColFormat1" caption="宽度(W)..." icon="colwidth.gif" selchar="W" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnColFormat2" caption="最佳宽度(G)" icon="" selchar="G" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnColFormat3" caption="隐藏(D)" icon="" selchar="D" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnColFormat4" caption="显示(S)" icon="" selchar="S" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          </menuitem2>
+          <menuitem2 name="mnSheetFormat" caption="工作表(S)" icon="" selchar="S">
+            <menuitem3 name="mnSheetFormat1" caption="重命名" icon="" selchar="" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnSheetFormat2" caption="隐藏" icon="" selchar="" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnSheetFormat3" caption="显示" icon="" selchar="" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="separator" caption="-"/>
+            <menuitem3 name="mnSheetFormat5" caption="属性" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          </menuitem2>
+          <menuitem2 name="mnObjectFormat" caption="对象(O)" icon="" selchar="O">
+            <menuitem3 name="mnObjectFormat1" caption="选项(N)..." icon="" selchar="N" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnObjectFormat2" caption="置前" icon="" selchar="" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnObjectFormat3" caption="置后" icon="" selchar="" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnObjectFormat4" caption="合并" icon="" selchar="" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnObjectFormat5" caption="分开" icon="" selchar="" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          </menuitem2>
+          <menuitem2 name="separator" caption="-"/>
+          <menuitem2 name="mnPageSetup" caption="页面设置(U)..." icon="object6.gif" toolbar="1" selchar="U" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnPrintArea" caption="打印区域(A)" icon="" selchar="A">
+            <menuitem3 name="mnPrintArea1" caption="设置" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnPrintArea2" caption="取消" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          </menuitem2>
+          <menuitem2 name="mnPrintTitle" caption="打印标题(T)" icon="" selchar="T" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="separator" caption="-"/>
+          <menuitem2 name="mnGoto" caption="跳转到(G)..." icon="" selchar="G" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnPrint" caption="打印..." icon="print16.gif" toolbar="1" type="6" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnPrintPreview" caption="打印预览..." icon="printview.gif" toolbar="1" type="6" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnBold" caption="加粗" icon="bold.gif" selchar="" type="3" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnItalic" caption="斜体" icon="i.gif" selchar="" type="3" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnUnderline" caption="下划线" icon="u.gif" selchar="" type="3" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnLeft" caption="左对齐" icon="left.gif" selchar="" type="3" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnCenter" caption="居中" icon="center.gif" selchar="" type="3" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnRight" caption="右对齐" icon="right.gif" selchar="" type="3" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnUnite" caption="合并" icon="hb.gif" selchar="" type="3" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnLeftToRight" caption="从左到右" icon="czdy.gif" selchar="" type="3" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnUpToDown" caption="从上到下" icon="csdx.gif" selchar="" type="3" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnMoney" caption="货币样式" icon="mony.gif" selchar="" type="5" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnPercent" caption="百分比样式" icon="bfh.gif" selchar="" type="5" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnDot" caption="千位分隔样式" icon="dh.gif" selchar="" type="5" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnAddZero" caption="增加小数位数" icon="zj0.gif" selchar="" type="5" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnDelZero" caption="减少小数位数" icon="js0.gif" selchar="" type="5" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnSubSpace" caption="减少缩进量" icon="jssjl.gif" selchar="" type="5" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnAddSpace" caption="增加缩进量" icon="zjsjl.gif" selchar="" type="5" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnBorder" caption="边框" icon="bk.gif" selchar="" type="5" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnFontColor" caption="字体色" icon="zts.gif" selchar="" type="5" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnBackColor" caption="背景色" icon="bjs.gif" selchar="" type="5" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnTop" caption="垂直靠上" icon="ks.gif" selchar="" type="3" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnVCenter" caption="垂直居中" icon="czcenter.gif" selchar="" type="3" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnDown" caption="垂直靠下" icon="kx.gif" selchar="" type="3" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnDraw" caption="图形控制" icon="draw.gif" selchar="" type="3" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+        </menuitem1>
+        <menuitem1 name="mnFormat" caption="数据(D)" operateitem="" ischild="false" icon="" selchar="D">
+          <menuitem2 name="mnExport" caption="转出(E)" icon="export16.gif" toolbar="1" selchar="B" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnStyle" caption="样式(Y)" icon="style.gif" selchar="i" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnSort" caption="排序(S)" icon="sort.gif" toolbar="1" selchar="i" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnFilter" caption="过滤(I)" icon="filter.gif" toolbar="1" selchar="i" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnCancelFilter" caption="取消过滤(X)" icon="cancelFilter.gif" toolbar="1" selchar="i" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="mnReQuery" caption="重置(Q)" icon="reset.gif" toolbar="1" selchar="i" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem2 name="separator" caption="-"/>
+          <!--
+            <menuitem2 name="mnEditMode" caption="编辑模式" icon="" selchar="S">
+            <menuitem3 name="mnEditReadOnly" caption="只读" icon="" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnEditWritable" caption="可写" icon="" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            </menuitem2>
+          -->
+          <menuitem2 name="mnObjectFormat" caption="冻结窗格" icon="" selchar="O">
+            <menuitem3 name="mnFreezePanes" caption="设置(S)" icon="freeze_panes16.gif" selchar="S" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+            <menuitem3 name="mnDefreezePanes" caption="撤销(C)" icon="defreeze_panes16.gif" selchar="C" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          </menuitem2>
+        </menuitem1>
+      </mainmenu>
+      <popupmenu1 name="menu">
+        <menuitem2 name="mnCopy" caption="复制(C)" icon="copy16.gif" selchar="C" keychar="C" keymask="CTRL" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+        <menuitem2 name="mnCut" caption="剪切(T)" icon="cut16.gif" selchar="T" keychar="X" keymask="CTRL" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+        <menuitem2 name="mnPaste" caption="粘贴(P)" icon="paste16.gif" selchar="P" keychar="V" keymask="CTRL" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+        <menuitem2 name="separator" caption="-" icon=""/>
+        <menuitem2 name="mnFind" caption="查找(F)" icon="find16.gif" selchar="i" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+        <!--menuitem2 name="mnReplace" caption="替换(R)" icon="replace16.gif" selchar="i" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+        <menuitem2 name="mnDelete" caption="删除(D)" icon="delete16.gif" selchar="127" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/-->
+        <menuitem2 name="separator" caption="-"/>
+        <menuitem2 name="mnExport" caption="转出(E)" icon="export16.gif" selchar="B" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+        <menuitem2 name="mnStyle" caption="样式(Y)" icon="style.gif" selchar="i" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+        <menuitem2 name="mnSort" caption="排序(S)" icon="sort.gif" selchar="i" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+        <menuitem2 name="mnFilter" caption="过滤(I)" icon="filter.gif" selchar="i" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+        <menuitem2 name="mnCancelFilter" caption="取消过滤(X)" icon="cancelFilter.gif" selchar="i" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+        <menuitem2 name="mnReQuery" caption="重置(Q)" icon="reset.gif" selchar="i" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+        <menuitem2 name="separator" caption="-"/>
+        <menuitem2 name="mnEditMode" caption="编辑模式" icon="" selchar="S">
+          <menuitem3 name="mnEditReadOnly" caption="只读" icon="" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem3 name="mnEditWritable" caption="可写" icon="" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+        </menuitem2>
+        <menuitem2 name="mnObjectFormat" caption="冻结窗格" icon="" selchar="O">
+          <menuitem3 name="mnFreezePanes" caption="设置(S)" icon="freeze_panes16.gif" selchar="S" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+          <menuitem3 name="mnDefreezePanes" caption="撤销(C)" icon="defreeze_panes16.gif" selchar="C" operateitem="jservice.jbof.classes.GenerQueryObject.JGenerQueryActions"/>
+        </menuitem2>
+      </popupmenu1>
+    </menus>
+  </gui>
+</ModuleConfig>

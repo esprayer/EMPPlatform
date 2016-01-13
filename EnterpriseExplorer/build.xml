@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="EnterpriseExplorer" default="copy" basedir=".">
+
+	<target name="init">
+		<tstamp />
+		<property name="Name" value="EnterpriseExplorer" />
+		<property name="version" value="0.1" />
+		<property name="year" value="2011" />
+
+
+		<property name="debug" value="on" />
+		<property name="optimize" value="on" />
+		<property name="deprecation" value="on" />
+
+		<property name="src" value="./src" />
+		<property name="client" value="D:\HyeclWorkSpace\HyeclEmp\WebRoot\WEB-INF\lib" />
+		<property name="lib" value="${root}" />
+		<property name="classes" value="./classes" />
+
+		<path id="compile.classpath">
+			<fileset dir="${client}">
+				<include name="*.jar" />
+			</fileset>
+			<pathelement location="${classes}" />
+		</path>
+		<mkdir dir="${classes}" />
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${classes}" fork="true" memorymaximumsize="1024m">
+			<classpath refid="compile.classpath" />
+		</javac>
+	</target>
+
+	<target name="clean" depends="compile">
+		<delete>
+			<fileset dir="${client}">
+				<include name="EnterpriseExplorer.jar" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="package" depends="clean">
+		<jar jarfile="${client}/EnterpriseExplorer.jar">
+			<fileset dir="${classes}">
+				<include name="com/**" />
+			</fileset>
+			<fileset dir="./">
+				<include name="Package/client/**" />
+				<include name="Package/public/**" />
+				<include name="Package/server/**" />
+			</fileset>
+		</jar>
+		
+	</target>
+
+	<target name="copy" depends="package">
+		
+	</target>
+
+</project>

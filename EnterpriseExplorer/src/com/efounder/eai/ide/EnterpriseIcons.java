@@ -1,0 +1,296 @@
+package com.efounder.eai.ide;
+
+import com.efounder.ui.Icons;
+import com.efounder.ui.Images;
+import java.awt.Image;
+import javax.swing.Icon;
+
+/**
+ * <p>Title: Enterprise Explorer</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2004</p>
+ * <p>Company: EFounder</p>
+ * @author Skyline
+ * @version 1.0
+ */
+
+public class EnterpriseIcons {
+
+  public EnterpriseIcons() {
+
+  }
+
+  static Class a; /* synthetic field */
+  public static final Icon ICON_ARCHIVE_MODULE;
+  public static final Icon ICON_MODULE_DD_FOLDER;
+  public static final Icon ICON_APPLICATION_CLIENT;
+  public static final Icon ICON_DB_CONNECTION_FACTORY;
+  public static final Icon ICON_DB_CONNECTION_POOL;
+  public static final Icon ICON_DB_SYNC_COMP;
+  public static final Icon ICON_DB_PUMP_COMP;
+  public static final Icon ICON_DB_DATA_SOURCE;
+  public static final Icon ICON_CORBA_SERVER_INT;
+  public static final Icon ICON_EXCLUDE_FILTER;
+  public static final Icon ICON_INCLUDE_FILTER;
+  public static final Icon ICON_ORB_CONNECT;
+  public static final Icon ICON_IDL_VALUE;
+  public static final Icon ICON_IDL_VALID_VALUE;
+  public static final Icon ICON_IDL_UNION;
+  public static final Icon ICON_IDL_SUPERVALUE;
+  public static final Icon ICON_IDL_SUPERSTRUCT;
+  public static final Icon ICON_IDL_STRUCT;
+  public static final Icon ICON_IDL_OPERATION;
+  public static final Icon ICON_IDL_MODULE;
+  public static final Icon ICON_IDL_MEMBER;
+  public static final Icon ICON_IDL_INITIALIZER;
+  public static final Icon ICON_IDL_INCLUDE;
+  public static final Icon ICON_IDL_EXCEPTION;
+  public static final Icon ICON_IDL_ENUM;
+  public static final Icon ICON_IDL_CONSTANT;
+  public static final Icon ICON_IDL_ATTRIBUTE;
+  public static final Icon ICON_IDL_ALIAS;
+  public static final Icon ICON_CORBA_SERVER_APP;
+  public static final Icon ICON_EJB_REMOTE;
+  public static final Icon ICON_EJB_HOME;
+  public static final Icon ICON_EJB_BEANBASE;
+  public static final Icon ICON_EJB_BEAN;
+  public static final Icon ICON_SERVER_OPTIONS;
+  public static final Icon ICON_CONFIGURE_SERVERS;
+  public static final Icon ICON_STOP_CONTAINER;
+  public static final Icon ICON_START_CONTAINER;
+  public static final Icon ICON_TRANSACTION_SERVICE;
+  public static final Icon ICON_SESSION_SERVICE;
+  public static final Icon ICON_NAMING_SERVICE;
+  public static final Icon ICON_LIB_SERVER;
+  public static final Icon ICON_CONNECTOR_SERVICE;
+  public static final Icon ICON_JDBC_EXPLORER;
+  public static final Icon ICON_JDATASTORE_EXPLORER;
+  public static final Icon ICON_JDATASTORE_SERVER;
+  public static final Icon ICON_TESTSUITE;
+  public static final Icon ICON_TESTDEBUG;
+  public static final Icon ICON_TESTCASE;
+  public static final Icon ICON_TEST;
+  public static final Icon ICON_EXTERNALBUILDTASK;
+  public static final Icon ICON_WEB_OPTIMIZE;
+  public static final Icon ICON_TEST_OPTIMIZE;
+  public static final Icon ICON_WEB_RUN;
+  public static final Icon ICON_FILEJSP_NEW;
+  public static final Icon ICON_FILETLD;
+  public static final Icon ICON_FILEJSP;
+  public static final Icon ICON_ARCHIVE_WAR;
+  public static final Icon ICON_ARCHIVE_APPLICATION;
+  public static final Icon ICON_WEB_SLASH_BRACKET;
+  public static final Icon ICON_WEB_DEBUG;
+  public static final Icon ICON_WEBAPP_DD_FOLDER;
+  public static final Icon ICON_WEBSTART;
+  public static final Icon ICON_WEBAPP_SERVLET_NEW;
+  public static final Icon ICON_WEBAPP_SERVLET;
+  public static final Icon ICON_WEBAPP_RESOURCE_NEW;
+  public static final Icon ICON_WEBAPP_RESOURCE;
+  public static final Icon ICON_WEBAPP_FILTER_NEW;
+  public static final Icon ICON_WEBAPP_FILTER;
+  public static final Icon ICON_WEBAPP_DD;
+  public static final Icon ICON_WEBAPP;
+  public static final Icon ICON_USE_DATAMODULE;
+  public static final Icon ICON_SECURITY_ADD;
+  public static final Icon ICON_SECURITY_NEW;
+  public static final Icon ICON_SECURITY;
+  public static final Icon ICON_LIST_MODULES;
+  public static final Icon ICON_FILEIDL;
+  public static final Icon ICON_DEPLOYMENT_WIZARD;
+  public static final Icon ICON_BUILD_NATIVE_EXECUTABLE;
+  public static final Icon ICON_FILE_ASSOCIATIONS;
+  public static final Icon ICON_DEPLOY_MODULE;
+  public static final Icon ICON_LIB_FRAMEWORK;
+  public static final Icon ICON_SURROUND_TRY_CATCH;
+  public static final Icon ICON_FORMAT_FILE;
+  public static final Icon ICON_FORMAT_DIR;
+  public static final Icon ICON_INDENT_OPTIONS;
+  public static final Icon ICON_ZIPFOLDER;
+  public static final Icon ICON_GEAR;
+  public static final Icon ICON_FILEJAVA;
+  public static final Icon ICON_PACKAGENEW;
+  public static final Icon ICON_PACKAGESOURCE_NEW;
+  public static final Icon ICON_UNDEPLOY_MODULE;
+  public static final Icon ICON_REDEPLOY_MODULE;
+  public static final Icon ICON_EJB_PROJ_VIEW;
+  public static final Icon ICON_JSP_WIZARD;
+  public static final Icon ICON_INTERFACE_WIZARD;
+  public static final Icon ICON_OVERRIDE_WIZARD;
+  public static final Icon ICON_STRING_WIZARD;
+  public static final Icon ICON_UNPREPAREDINTERFACE;
+  public static final Icon ICON_UNPREPAREDCLASS;
+  public static final Icon ICON_PACKAGE;
+  public static final Icon ICON_NEW_INTERFACE;
+  public static final Icon ICON_MESSAGE_SERVICE;
+  public static final Icon ICON_INTERFACE;
+  public static final Icon ICON_PACKAGES_INCLUDEONLY;
+  public static final Icon ICON_PACKAGES_EXCLUDEONLY;
+  public static final Icon ICON_PACKAGES_FOLDER;
+  public static final Icon ICON_PACKAGES_INCLUDE;
+  public static final Icon ICON_PACKAGES_EXCLUDE;
+  public static final Icon ICON_PACKAGESOURCE;
+  public static final Icon ICON_REPLACE_IN_PATH;
+  public static final Icon ICON_INCREMENTALSEARCH;
+  public static final Icon ICON_BROWSESYMBOL;
+  public static final Icon ICON_LIB_NONJDK;
+  public static final Icon ICON_LIB_JDK;
+  public static final Icon ICON_JBPROJECT;
+  public static final Icon JBUILDER_ICON_NO_ALPHA = null;
+  public static final Image JBUILDER_IMAGE_NO_ALPHA = null;
+//    public static final String JBUILDER_IMAGE_RELATIVE_PATH_NO_ALPHA = JBuilderInfo.isStudio() ? "image/studio_16.png" : "image/icon_no_alpha.png";
+  public static final Icon JBUILDER_ICON = null;
+  public static final Image JBUILDER_IMAGE = null;
+//    public static final String JBUILDER_IMAGE_RELATIVE_PATH = JBuilderInfo.isStudio() ? "image/studio_32.png" : "image/icon.png";
+  public static final Class JBUILDER_IMAGE_PATH_ROOT;
+  private static final Icon h;
+  private static final Image f;
+  private static final String j = "image/studio_16.png";
+  private static final Icon g;
+  private static final Image e;
+  private static final String i = "image/studio_32.png";
+  private static final Class d;
+  public static final Icon ICON_CLASS;
+  public static final Icon ICON_BLANK = Icons.getBlankIcon(16, 16);
+  private static final com.efounder.ui.Icons.IconFactory c;
+  private static final com.efounder.ui.Icons.IconFactory b;
+  public static final Image IMAGE_JBACTIONS_DISABLED;
+  public static final Image IMAGE_JBACTIONS;
+
+  static Class a(String s) {
+    try {
+      return Class.forName(s);
+    }
+    catch(ClassNotFoundException classnotfoundexception) {
+      throw new NoClassDefFoundError(classnotfoundexception.getMessage());
+    }
+  }
+  static {
+    IMAGE_JBACTIONS = Images.getImage(a != null ? a : (a = a("com.efounder.eai.ide.EnterpriseIcons")), "image/jbactions16.gif");
+    IMAGE_JBACTIONS_DISABLED = Images.getDisabledImage(IMAGE_JBACTIONS);
+    b = Icons.getIconFactory(IMAGE_JBACTIONS, 16);
+    c = Icons.getIconFactory(IMAGE_JBACTIONS_DISABLED, 16);
+    ICON_CLASS = ExplorerIcons.ICON_OBJECTS;
+    d = a != null ? a : (a = a("com.efounder.eai.ide.EnterpriseIcons"));
+    e = Images.getImage(d, "image/studio_32.png");
+    g = Icons.getIcon(e);
+    f = Images.getImage(d, "image/studio_16.png");
+    h = Icons.getIcon(f);
+    JBUILDER_IMAGE_PATH_ROOT = d;
+    ICON_JBPROJECT = b.getIcon(0);
+    ICON_LIB_JDK = b.getIcon(1);
+    ICON_LIB_NONJDK = b.getIcon(2);
+    ICON_BROWSESYMBOL = b.getIcon(3);
+    ICON_INCREMENTALSEARCH = b.getIcon(4);
+    ICON_REPLACE_IN_PATH = b.getIcon(5);
+    ICON_PACKAGESOURCE = b.getIcon(6);
+    ICON_PACKAGES_EXCLUDE = b.getIcon(7);
+    ICON_PACKAGES_INCLUDE = b.getIcon(8);
+    ICON_PACKAGES_FOLDER = b.getIcon(9);
+    ICON_PACKAGES_EXCLUDEONLY = b.getIcon(10);
+    ICON_PACKAGES_INCLUDEONLY = b.getIcon(11);
+    ICON_INTERFACE = b.getIcon(12);
+    ICON_MESSAGE_SERVICE = b.getIcon(13);
+    ICON_NEW_INTERFACE = b.getIcon(14);
+    ICON_PACKAGE = b.getIcon(15);
+    ICON_UNPREPAREDCLASS = b.getIcon(16);
+    ICON_UNPREPAREDINTERFACE = b.getIcon(17);
+    ICON_STRING_WIZARD = b.getIcon(18);
+    ICON_OVERRIDE_WIZARD = b.getIcon(19);
+    ICON_INTERFACE_WIZARD = b.getIcon(20);
+    ICON_JSP_WIZARD = b.getIcon(21);
+    ICON_EJB_PROJ_VIEW = b.getIcon(22);
+    ICON_REDEPLOY_MODULE = b.getIcon(23);
+    ICON_UNDEPLOY_MODULE = b.getIcon(24);
+    ICON_PACKAGESOURCE_NEW = b.getIcon(25);
+    ICON_PACKAGENEW = b.getIcon(26);
+    ICON_FILEJAVA = b.getIcon(27);
+    ICON_GEAR = b.getIcon(28);
+    ICON_ZIPFOLDER = b.getIcon(29);
+    ICON_INDENT_OPTIONS = b.getIcon(30);
+    ICON_FORMAT_DIR = b.getIcon(31);
+    ICON_FORMAT_FILE = b.getIcon(32);
+    ICON_SURROUND_TRY_CATCH = b.getIcon(33);
+    ICON_LIB_FRAMEWORK = b.getIcon(34);
+    ICON_DEPLOY_MODULE = b.getIcon(35);
+    ICON_FILE_ASSOCIATIONS = b.getIcon(0, 1);
+    ICON_BUILD_NATIVE_EXECUTABLE = b.getIcon(1, 1);
+    ICON_DEPLOYMENT_WIZARD = b.getIcon(2, 1);
+    ICON_FILEIDL = b.getIcon(3, 1);
+    ICON_LIST_MODULES = b.getIcon(4, 1);
+    ICON_SECURITY = b.getIcon(5, 1);
+    ICON_SECURITY_NEW = b.getIcon(6, 1);
+    ICON_SECURITY_ADD = b.getIcon(7, 1);
+    ICON_USE_DATAMODULE = b.getIcon(8, 1);
+    ICON_WEBAPP = b.getIcon(9, 1);
+    ICON_WEBAPP_DD = b.getIcon(10, 1);
+    ICON_WEBAPP_FILTER = b.getIcon(11, 1);
+    ICON_WEBAPP_FILTER_NEW = b.getIcon(12, 1);
+    ICON_WEBAPP_RESOURCE = b.getIcon(13, 1);
+    ICON_WEBAPP_RESOURCE_NEW = b.getIcon(14, 1);
+    ICON_WEBAPP_SERVLET = b.getIcon(15, 1);
+    ICON_WEBAPP_SERVLET_NEW = b.getIcon(16, 1);
+    ICON_WEBSTART = b.getIcon(17, 1);
+    ICON_WEBAPP_DD_FOLDER = b.getIcon(18, 1);
+    ICON_WEB_DEBUG = b.getIcon(19, 1);
+    ICON_WEB_SLASH_BRACKET = b.getIcon(20, 1);
+    ICON_ARCHIVE_APPLICATION = b.getIcon(21, 1);
+    ICON_ARCHIVE_WAR = b.getIcon(22, 1);
+    ICON_FILEJSP = b.getIcon(23, 1);
+    ICON_FILETLD = b.getIcon(24, 1);
+    ICON_FILEJSP_NEW = b.getIcon(25, 1);
+    ICON_WEB_RUN = b.getIcon(26, 1);
+    ICON_TEST_OPTIMIZE = b.getIcon(0, 2);
+    ICON_WEB_OPTIMIZE = b.getIcon(1, 2);
+    ICON_EXTERNALBUILDTASK = b.getIcon(2, 2);
+    ICON_TEST = b.getIcon(3, 2);
+    ICON_TESTCASE = b.getIcon(4, 2);
+    ICON_TESTDEBUG = b.getIcon(5, 2);
+    ICON_TESTSUITE = b.getIcon(6, 2);
+    ICON_JDATASTORE_SERVER = b.getIcon(10, 2);
+    ICON_JDATASTORE_EXPLORER = b.getIcon(11, 2);
+    ICON_JDBC_EXPLORER = b.getIcon(12, 2);
+    ICON_CONNECTOR_SERVICE = b.getIcon(13, 2);
+    ICON_LIB_SERVER = b.getIcon(14, 2);
+    ICON_NAMING_SERVICE = b.getIcon(15, 2);
+    ICON_SESSION_SERVICE = b.getIcon(16, 2);
+    ICON_TRANSACTION_SERVICE = b.getIcon(17, 2);
+    ICON_START_CONTAINER = b.getIcon(18, 2);
+    ICON_STOP_CONTAINER = b.getIcon(19, 2);
+    ICON_CONFIGURE_SERVERS = b.getIcon(20, 2);
+    ICON_SERVER_OPTIONS = b.getIcon(21, 2);
+    ICON_EJB_BEAN = b.getIcon(22, 2);
+    ICON_EJB_BEANBASE = b.getIcon(23, 2);
+    ICON_EJB_HOME = b.getIcon(24, 2);
+    ICON_EJB_REMOTE = b.getIcon(25, 2);
+    ICON_CORBA_SERVER_APP = b.getIcon(0, 3);
+    ICON_IDL_ALIAS = b.getIcon(1, 3);
+    ICON_IDL_ATTRIBUTE = b.getIcon(2, 3);
+    ICON_IDL_CONSTANT = b.getIcon(3, 3);
+    ICON_IDL_ENUM = b.getIcon(4, 3);
+    ICON_IDL_EXCEPTION = b.getIcon(5, 3);
+    ICON_IDL_INCLUDE = b.getIcon(6, 3);
+    ICON_IDL_INITIALIZER = b.getIcon(7, 3);
+    ICON_IDL_MEMBER = b.getIcon(8, 3);
+    ICON_IDL_MODULE = b.getIcon(9, 3);
+    ICON_IDL_OPERATION = b.getIcon(10, 3);
+    ICON_IDL_STRUCT = b.getIcon(11, 3);
+    ICON_IDL_SUPERSTRUCT = b.getIcon(12, 3);
+    ICON_IDL_SUPERVALUE = b.getIcon(13, 3);
+    ICON_IDL_UNION = b.getIcon(14, 3);
+    ICON_IDL_VALID_VALUE = b.getIcon(15, 3);
+    ICON_IDL_VALUE = b.getIcon(16, 3);
+    ICON_ORB_CONNECT = b.getIcon(17, 3);
+    ICON_INCLUDE_FILTER = b.getIcon(18, 3);
+    ICON_EXCLUDE_FILTER = b.getIcon(19, 3);
+    ICON_CORBA_SERVER_INT = b.getIcon(20, 3);
+    ICON_DB_DATA_SOURCE = b.getIcon(21, 3);
+    ICON_DB_PUMP_COMP = b.getIcon(22, 3);
+    ICON_DB_SYNC_COMP = b.getIcon(23, 3);
+    ICON_DB_CONNECTION_POOL = b.getIcon(24, 3);
+    ICON_DB_CONNECTION_FACTORY = b.getIcon(25, 3);
+    ICON_APPLICATION_CLIENT = b.getIcon(26, 3);
+    ICON_MODULE_DD_FOLDER = ICON_WEBAPP_DD_FOLDER;
+    ICON_ARCHIVE_MODULE = ICON_ARCHIVE_WAR;
+  }
+}

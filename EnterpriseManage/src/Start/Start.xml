@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<jnlp spec="1.0+"
+	version  = "1.5.0"
+	codebase = "${appclientprotocol}://${appclienthost}:${appclientport}/${contextpath}/"
+	href     = "${protocol}://${host}:${port}/${contextpath}/Start?${QueryString}">
+  <information>
+    <title>${productcaption} on ${appclienthost} </title>
+    <vendor>Pansoft, Inc.</vendor>
+    <homepage href="http://www.pansoft.com.cn/Product/${product}" />
+    <offline-allowed/>
+    <description>Enterprise ${productcaption} on ${appclienthost}</description>
+    <description kind="short">${productcaption} on ${appclienthost}</description>
+    <description kind="one-line">${productcaption} on ${appclienthost}</description>
+    <description kind="tooltip">Pansoft Enterprise ${productcaption} on ${appclienthost}</description>
+    <icon href="${producticon}"/>
+  </information>
+  <shortcut online="false">
+    <desktop/>
+    <menu submenu="Pansoft Application"/>
+  </shortcut>
+  <resources>
+    <j2se version="1.4+" href="http://java.sun.com/products/autodl/j2se" initial-heap-size="32m" max-heap-size="1024m" />
+    <jar href = "JnlpSpace/JBootstrap.jar"   main = "true"  download = "eager"/>
+    <jar href = "JnlpSpace/JBootadd.jar"     main = "false" download = "eager"/>
+    <jar href = "JnlpSpace/JEAIXML.jar"      main = "false" download = "eager"/>
+    <!--jar href = "JnlpSpace/jdic.jar"         main = "false" download="eager"/>
+    <jar href = "JnlpSpace/jdic_native_applet.jar" main="false" download="eager" /-->
+  </resources>
+  <property name="sun.java2d.noddraw" value="true"/>
+  <!--resources os="Windows">
+    <jar       href="JnlpSpace/windows/JMSBridgeMaster.jar" />
+    <nativelib href="JnlpSpace/windows/JMSBridge.jar" />
+    <jar       href="JnlpSpace/windows/NetSignC.jar" />
+    <nativelib href="JnlpSpace/windows/NetSignN.jar" />
+  </resources-->
+  <application-desc main-class="com.core.loader.Main">
+	<argument>application=JEnterprise</argument>
+	<argument>product=${product}</argument>
+	<argument>language=zh</argument>
+	<argument>country=CN</argument>
+	<argument>update=false</argument>
+	<argument>easoffline=false</argument>
+	<argument>sessionid=${sessionid}</argument>
+	<argument>eaiserver=${eaiserver}</argument>
+	<argument>updateURL=${updateURL}</argument>
+	<argument>username=${username}</argument>
+  <argument>password=${password}</argument>
+	<argument>code=${code}</argument>	
+  </application-desc>
+  <security>
+      <all-permissions/>
+  </security>
+</jnlp>

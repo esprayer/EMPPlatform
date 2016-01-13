@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!-- edited with XML Spy v4.2 U (http://www.xmlspy.com) by xSkyline (Pansoft) -->
+<ModuleConfig>
+	<gui>
+		<toolbars>
+			<toolbar name="MainToolbar"   des="操作工具条" layout="1" visible="1"/>
+		</toolbars>
+		<menus>
+			<mainmenu name="menu">
+				<menuitem1 name="mnOper" caption="操作(O)" oerateitem="" ischild="false" icon="" selchar="O">
+					<menuitem2 name="mnAdd" caption="增加(A)" icon="AddNode.gif" toolbar="1" selchar="A" operateitem="jreport.jdof.classes.DOFReportObject.ReportWindow.JReportWindowActionEditObject"/>
+					<menuitem2 name="mnDelete" caption="删除(D)" icon="RemoveNode.gif" toolbar="1" selchar="D" operateitem="jreport.jdof.classes.DOFReportObject.ReportWindow.JReportWindowActionEditObject"/>
+					<menuitem2 name="mnSave" caption="保存(S)" icon="Save.gif" toolbar="1" selchar="S" operateitem="jreport.jdof.classes.DOFReportObject.ReportWindow.JReportWindowActionEditObject"/>
+					<menuitem2 name="separator" caption="-"/>
+					<menuitem2 name="mnExit" caption="退出(E)" icon="Exit.gif" toolbar="1" selchar="E" operateitem="jreport.jdof.classes.DOFReportObject.ReportWindow.JReportWindowActionEditObject"/>
+				</menuitem1>
+			</mainmenu>
+		</menus>
+	</gui>
+</ModuleConfig>

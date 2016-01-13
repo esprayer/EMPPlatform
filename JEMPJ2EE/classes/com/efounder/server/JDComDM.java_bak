@@ -1,0 +1,64 @@
+package com.efounder.server;
+
+import jdal.foundation.classes.*;
+import jframework.foundation.classes.*;
+import jtoolkit.registry.classes.*;
+import com.efounder.sql.JConnection;
+import com.efounder.eai.data.JParamObject;
+/**
+ *
+ * <p>Title: </p>
+ *
+ * <p>Description: </p>
+ *
+ * <p>Copyright: Copyright (c) 2004</p>
+ *
+ * <p>Company: </p>
+ *
+ * @author not attributable
+ * @version 1.0
+ */
+public class JDComDM extends JActiveDComDM {
+  /**
+   *
+   */
+  public JDComDM() {
+  }
+  /**
+   *
+   * @param Param String
+   * @param Data String
+   * @param CustomObject Object
+   * @param AdditiveObject Object
+   * @return Object
+   */
+  public Object Initialize(String Param,String Data,Object CustomObject,Object AdditiveObject) {
+    JActiveDComDM.FrameworkClassLoader = this.getClass().getClassLoader();
+    JActiveDComDM.XMLRegistry = new JXMLRegistry();
+    JActiveDComDM.XMLRegistry.InitRegistry(BofXmlFile);
+
+    JManagerActiveObject.LoadAcitveObjects();
+    //
+    AbstractDataActiveFramework = new JAbstractDataActiveFramework();
+    //
+    AbstractDataActiveFramework.setCompany(Company);
+    AbstractDataActiveFramework.setProduct(Product);
+    AbstractDataActiveFramework.setTier(Tier);
+    AbstractDataActiveFramework.Initialize(Param,Data,CustomObject,AdditiveObject);
+    //
+    ManagerRequestObject = new JManagerRequestObject();
+    return null;
+  }
+  /**
+   *
+   * @return Object
+   */
+  public Object Destroy() {
+    if ( AbstractDataActiveFramework != null ) {
+      AbstractDataActiveFramework.Destroy();
+      AbstractDataActiveFramework = null;
+    }
+    return null;
+  }
+
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/EMPBase"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/EMPCMS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/EMPDBExpress"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/EMPDMS"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/EMPDWZ"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/EMPEAIService"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/EMPFormBuilder"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/EMPMetaDataBuilder"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/EMPMRP"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/EMPPermission"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/EMPStandard"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/HyeclEmp"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/JEMPSDK"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/JFrameworkSDK"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hyeclLib"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/tomcat"/>
+	<classpathentry kind="output" path="classes"/>
+</classpath>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="gb2312"?>
+<package id="" caption="装配清单">
+  <CLASSES id="" caption="可以在此注册对象，无需修改注册表文件">
+    <CLSID guid="SecurityObject" id="SecurityObject" name="系统安全管理对象" class="com.efounder.eai.service.dal.JDALSecurityObject" ver="1.0.0" type="CLSID_AbstractDataActiveObjectCategory" />
+    <CLSID guid="ServiceObject" id="ServiceObject" name="数据管理对象" class="com.efounder.eai.service.dal.JDALServiceObject" ver="1.0.0" type="CLSID_AbstractDataActiveObjectCategory" />
+    <CLSID guid="ConfigObject" id="ConfigObject" name="配置管理对象" class="com.efounder.eai.service.dal.EMPDALConfigObject" ver="1.0.0" type="CLSID_AbstractDataActiveObjectCategory"/>
+    <CLSID guid="DBManagerObject" id="DBManagerObject" name="数据库管理对象" class="com.efounder.eai.service.dal.JDALDBManagerObject" ver="1.0.0" type="CLSID_AbstractDataActiveObjectCategory"/>
+    <CLSID guid="00000000-0003-0001-0000000000000009" id="DBService" name="数据服务对象" class="com.efounder.eai.service.dal.DBService" ver="1.0.0" type="CLSID_AbstractDataActiveObjectCategory"/>
+    <CLSID guid="00000000-0003-0001-0000000000000007" id="ResourceObject" name="系统资源管理对象" class="com.efounder.eai.service.dal.JDALResourceObject" ver="1.0.0" type="CLSID_AbstractDataActiveObjectCategory" />    
+  </CLASSES>
+  
+  <com.efounder.db.DBServerAgent>
+    <item implement="com.db.EAIDBServerAgent"/>
+  </com.efounder.db.DBServerAgent>
+</package>

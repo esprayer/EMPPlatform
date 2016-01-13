@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.mrp.persistence.sysConfigure.department.mapper.HYBMZDMapper">
+	<resultMap id="rm" type="com.mrp.persistence.sysConfigure.department.bean.HYBMZD">
+        <result property="F_BMBH" jdbcType="VARCHAR" column="F_BMBH"/>
+        <result property="F_BMMC" jdbcType="VARCHAR" column="F_BMMC"/>
+        <result property="F_JS" jdbcType="INTEGER" column="F_JS"/>
+        <result property="F_MX" jdbcType="INTEGER" column="F_MX"/>
+        <result property="F_SYZT" jdbcType="INTEGER" column="F_SYZT"/>
+        <result property="F_CRDATE" jdbcType="TIMESTAMP" column="F_CRDATE"/>
+        <result property="F_CHDATE" jdbcType="TIMESTAMP" column="F_CHDATE"/>
+	</resultMap>
+	
+	<select id="load" resultMap="rm">
+		SELECT 
+	        F_BMBH,
+	        F_BMMC,
+	        F_JS,
+	        F_MX,
+	        F_SYZT,	        
+	        F_CRDATE,
+			F_CHDATE
+	    FROM HYBMZD
+	    WHERE 
+	        F_BMBH = #{F_BMBH} 
+	</select>
+	
+	<select id="findBySYZT" resultMap="rm">
+		SELECT 
+	        F_BMBH,
+	        F_BMMC,
+	        F_JS,
+	        F_MX,
+	        F_SYZT,	        
+	        F_CRDATE,
+			F_CHDATE
+	    FROM HYBMZD
+	    WHERE 
+	        F_SYZT = #{F_SYZT} 
+		order by F_BMBH
+	</select>
+	
+	<!-- 按Id删除 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM HYBMZD WHERE
+        F_BMBH = #{F_BMBH} 
+    </delete>
+     <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="OBJ_ID">
+        INSERT INTO HYBMZD (
+        	F_BMBH,
+	        F_BMMC,
+	        F_JS,
+	        F_MX,
+	        F_SYZT,	        
+	        F_CRDATE,
+			F_CHDATE
+        ) VALUES (
+        	#{F_BMBH} ,
+        	#{F_BMMC} ,
+        	#{F_JS} ,
+        	#{F_MX} ,
+        	#{F_SYZT} ,
+        	#{F_CRDATE} ,
+			#{F_CHDATE}
+        )
+	</insert>
+
+	<select id="findAll" resultMap="rm">
+    	SELECT 
+	        F_BMBH,
+	        F_BMMC,
+	        F_JS,
+	        F_MX,
+	        F_SYZT,	        
+	        F_CRDATE,
+			F_CHDATE
+	    FROM HYBMZD
+		ORDER BY F_BMBH
+    </select>
+	
+	<select id="findByObjId" resultMap="rm">
+    	SELECT 
+	        F_BMBH,
+	        F_BMMC,
+	        F_JS,
+	        F_MX,
+	        F_SYZT,	        
+	        F_CRDATE,
+			F_CHDATE
+	    FROM HYBMZD
+		WHERE 
+	        F_BMBH like "%"#{keywords,jdbcType=VARCHAR}"%"
+		ORDER BY F_BMBH
+    </select>
+	
+	<update id="update" parameterType="dwz.persistence.beans.ResBook">
+        UPDATE HYBMZD SET
+	        F_BMMC = #{F_BMMC} ,
+	        F_JS = #{F_JS} ,
+	        F_MX = #{F_MX} ,
+	        F_SYZT = #{F_SYZT} ,
+	        F_CHDATE = #{F_CHDATE}
+        WHERE 
+	        F_BMBH = #{F_BMBH} 
+	</update>
+</mapper>
+

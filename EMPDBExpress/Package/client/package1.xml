@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="gb2312"?>
+<package id="" caption="装配清单">
+
+  <CLIENTLOAD id="rfp"   caption="字典load事件" >
+    <rfp id="metaload" caption="元数据load处理" clazz="com.efounder.dctbuilder.event.plugin.DataSetMetaDataProcess"/>
+  </CLIENTLOAD>
+  
+  <DATASETEVENT id="rfp" caption="数据变化事件">
+    <rfp id="editable" type="row"    caption="单元格是否可编辑"         clazz="com.efounder.dctbuilder.event.plugin.DataSetEditable"/>
+  </DATASETEVENT>
+  
+  <SERVERLOAD id="server" capiton="server load事件">
+    <rfp id="mdload" caption="数据保存更新编码" clazz="com.efounder.dctbuilder.event.plugin.DictBaseDataServerCreateLsh" order="1025"/>
+  </SERVERLOAD>
+  
+  <SERVERLOAD_BSUSER id="server" capiton="server load事件">
+    <rfp id="BSUSERPass" caption="密码加密" clazz="com.efounder.dctbuilder.event.plugin.DictEncryptPassDataServer" order="1025"/>
+  </SERVERLOAD_BSUSER>
+  
+  <!--编码规则-->
+  <CodeRule>
+    <rfp id="CodeRule" caption="编码规则" clazz="com.efounder.dctbuilder.rule.EMPCodeRuler"/>
+  </CodeRule>
+  
+  <!--变量解析-->
+  <Variant>
+    <rfp id="DATE" caption="日期变量" clazz="com.efounder.dctbuilder.variant.parser.DateParser"/>
+    <rfp id="NEXTYEAR" caption="日期变量" clazz="com.efounder.dctbuilder.variant.parser.DateParser"/>
+    <rfp id="KJND" caption="会计年度" clazz="com.efounder.dctbuilder.variant.parser.KJNDParser"/>
+    <rfp id="KJQJ" caption="会计期间" clazz="com.efounder.dctbuilder.variant.parser.KJNDParser"/>
+    <rfp id="YEAR" caption="登陆年度" clazz="com.efounder.dctbuilder.variant.parser.LoginYearParser"/>
+    <rfp id="PO" caption="PO变量获取" clazz="com.efounder.dctbuilder.variant.parser.POParser"/>
+  </Variant>
+</package>

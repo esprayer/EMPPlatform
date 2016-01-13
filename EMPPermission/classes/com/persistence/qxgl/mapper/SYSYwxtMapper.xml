@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.persistence.qxgl.mapper.SYSYwxtMapper">
+	<resultMap id="rm" type="com.persistence.qxgl.beans.SYSYwxt">
+        <result property="APP_ID"    jdbcType="VARCHAR" column="APP_ID"/>
+        <result property="APP_NAME"  jdbcType="VARCHAR" column="APP_NAME"/>
+        <result property="APP_DES"   jdbcType="INTEGER" column="APP_DES"/>
+        <result property="APP_ICON"  jdbcType="VARCHAR" column="APP_ICON"/>
+        <result property="APP_URL"  jdbcType="VARCHAR"  column="APP_URL"/>
+		<result property="LAN_ID"    jdbcType="VARCHAR" column="LAN_ID"/>
+		<result property="F_SYZT"    jdbcType="VARCHAR" column="F_SYZT"/>
+		<result property="F_CRDATE"  jdbcType="TIMESTAMP" column="F_CRDATE"/>
+		<result property="F_CHDATE"  jdbcType="TIMESTAMP" column="F_CHDATE"/>
+		
+	</resultMap>
+	
+	<select id="load" resultMap="rm">
+		SELECT APP_ID, APP_NAME, APP_DES, APP_URL, APP_ICON, LAN_ID, F_SYZT, F_CRDATE, F_CHDATE
+		  FROM sys_app
+		 WHERE APP_ID = #{APP_ID}
+	     ORDER BY APP_ID DESC;
+	</select>
+	
+	<select id="findAll" resultMap="rm">
+		SELECT APP_ID, APP_NAME, APP_DES,  APP_URL, APP_ICON, LAN_ID, F_SYZT, F_CRDATE, F_CHDATE 
+		  FROM sys_app
+		  WHERE F_SYZT = '1'
+	     ORDER BY APP_ID DESC;
+	</select>
+	
+	<select id="findByObjId" resultMap="rm">
+		SELECT APP_ID, APP_NAME, APP_DES,  APP_URL, APP_ICON, LAN_ID, F_SYZT, F_CRDATE, F_CHDATE 
+		  FROM sys_app
+		 WHERE APP_ID LIKE "%"#{ywxtBhOrMc,jdbcType=VARCHAR}"%"
+	     ORDER BY APP_ID DESC;
+	</select>
+	
+	<insert id="insert" useGeneratedKeys="false" keyProperty="OBJ_ID">
+        INSERT INTO sys_app (
+        	APP_ID,
+			APP_NAME,
+			APP_DES,
+			APP_ICON,
+			APP_URL,
+			LAN_ID,
+			F_SYZT,
+			F_CRDATE,
+			F_CHDATE
+        ) VALUES (
+        	#{APP_ID} ,
+        	#{APP_NAME} ,
+        	#{APP_DES} ,
+        	#{APP_ICON} ,
+        	#{APP_URL} ,
+        	#{LAN_ID} ,
+        	#{F_SYZT} ,
+        	#{F_CRDATE} ,
+        	#{F_CHDATE} 
+        )
+	</insert>
+	<update id="update" parameterType="com.persistence.qxgl.beans.SYSYwxt">
+        UPDATE sys_app SET
+	        APP_NAME = #{APP_NAME} ,
+   	        APP_DES = #{APP_DES} ,
+   	        APP_ICON = #{APP_ICON} ,
+   	        APP_URL = #{APP_URL} ,
+   	        LAN_ID = #{LAN_ID} ,
+   	        F_SYZT = #{F_SYZT} ,
+   	        F_CRDATE = #{F_CRDATE} ,
+	        F_CHDATE = #{F_CHDATE}
+        WHERE 
+	        APP_ID = #{APP_ID} 
+	</update>
+	<delete id="delete" parameterType="java.lang.String">
+        DELETE FROM sys_app WHERE
+        APP_ID = #{APP_ID} 
+    </delete>
+</mapper>
+
+

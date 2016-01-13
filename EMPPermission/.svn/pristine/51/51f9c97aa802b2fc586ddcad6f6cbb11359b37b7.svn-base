@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.persistence.qxgl.mapper.SYSUserMapper">
+	<resultMap id="rm" type="com.persistence.qxgl.beans.SYSUser">
+        <result property="USER_ID"         jdbcType="VARCHAR" column="USER_ID"/>
+        <result property="USER_NAME"       jdbcType="VARCHAR" column="USER_NAME"/>
+        <result property="USER_TYPE"       jdbcType="INTEGER" column="USER_TYPE"/>
+        <result property="USER_ORGID"      jdbcType="VARCHAR" column="USER_ORGID"/>
+		<result property="USER_PASS"       jdbcType="VARCHAR" column="USER_PASS"/>
+	    <result property="USER_DISABLE"    jdbcType="VARCHAR" column="USER_DISABLE"/>
+		<result property="USER_ISADMIN"    jdbcType="VARCHAR" column="USER_ISADMIN"/>
+		<result property="USER_MAIL1"      jdbcType="VARCHAR" column="USER_MAIL1"/>
+		<result property="USER_MAIL2"      jdbcType="VARCHAR" column="USER_MAIL2"/>
+		<result property="USER_PHONE1"     jdbcType="VARCHAR" column="USER_PHONE1"/>
+		<result property="USER_PHONE2"     jdbcType="VARCHAR" column="USER_PHONE2"/>		
+		<result property="USER_ADDRESSS1"  jdbcType="VARCHAR" column="USER_ADDRESSS1"/>	
+     	<result property="USER_ADDRESSS2"  jdbcType="VARCHAR" column="USER_ADDRESSS2"/>
+		<result property="USER_T01"        jdbcType="VARCHAR" column="USER_T01"/>		
+        <result property="F_CRDATE"        jdbcType="TIMESTAMP" column="F_CRDATE"/>
+        <result property="F_CHDATE"        jdbcType="TIMESTAMP" column="F_CHDATE"/>
+	</resultMap>
+	
+	<select id="load" resultMap="rm">
+		SELECT 
+	        USER_ID,
+	        USER_NAME,
+	        USER_TYPE,
+	        USER_ORGID,
+	        USER_PASS,	
+	        USER_DISABLE,
+			USER_ISADMIN,
+	        USER_MAIL1,		
+			USER_MAIL2,        
+	        USER_PHONE1,
+			USER_PHONE2,
+			USER_ADDRESSS1,
+			USER_ADDRESSS2,
+			'' USER_T01,
+			F_CRDATE,
+			F_CHDATE
+	    FROM BSUSER
+	    WHERE 
+	        USER_ORGID = #{USER_ORGID} 
+		ORDER BY F_CRDATE
+	</select>
+	
+	<select id="loadUserById" resultMap="rm">
+		SELECT 
+	        USER_ID,
+	        USER_NAME,
+	        USER_TYPE,
+	        USER_ORGID,
+	        USER_PASS,	
+	        USER_DISABLE,
+			USER_ISADMIN,
+	        USER_MAIL1,		
+			USER_MAIL2,        
+	        USER_PHONE1,
+			USER_PHONE2,
+			USER_ADDRESSS1,
+			USER_ADDRESSS2,
+			'' USER_T01,
+			F_CRDATE,
+			F_CHDATE
+	    FROM BSUSER
+	    WHERE 
+	        USER_ID = #{USER_ID} 
+			and USER_DISABLE = '1'
+		ORDER BY F_CRDATE
+	</select>
+	
+	<select id="checkUserById" resultMap="rm">
+		SELECT 
+	        USER_ID,
+	        USER_NAME,
+	        USER_TYPE,
+	        USER_ORGID,
+	        USER_PASS,	
+	        USER_DISABLE,
+			USER_ISADMIN,
+	        USER_MAIL1,		
+			USER_MAIL2,        
+	        USER_PHONE1,
+			USER_PHONE2,
+			USER_ADDRESSS1,
+			USER_ADDRESSS2,
+			'' USER_T01,
+			F_CRDATE,
+			F_CHDATE
+	    FROM BSUSER
+	    WHERE 
+	        USER_ID = #{USER_ID} 
+		ORDER BY F_CRDATE
+	</select>
+	
+	<select id="checkUserByBm" resultMap="rm">
+		SELECT 
+	        USER_ID,
+	        USER_NAME,
+	        USER_TYPE,
+	        USER_ORGID,
+	        USER_PASS,	
+	        USER_DISABLE,
+			USER_ISADMIN,
+	        USER_MAIL1,		
+			USER_MAIL2,        
+	        USER_PHONE1,
+			USER_PHONE2,
+			USER_ADDRESSS1,
+			USER_ADDRESSS2,
+			'' USER_T01,
+			F_CRDATE,
+			F_CHDATE
+	    FROM BSUSER
+	    WHERE 
+	        USER_ORGID = #{USER_ORGID} and 
+			USER_DISABLE = #{USER_DISABLE}
+		ORDER BY F_CRDATE
+	</select>
+	
+	<select id="loadUser" resultMap="rm">
+		SELECT 
+	        USER_ID,
+	        USER_NAME,
+	        USER_TYPE,
+	        USER_ORGID,
+	        USER_PASS,	
+	        USER_DISABLE,
+			USER_ISADMIN,
+	        USER_MAIL1,		
+			USER_MAIL2,        
+	        USER_PHONE1,
+			USER_PHONE2,
+			USER_ADDRESSS1,
+			USER_ADDRESSS2,
+			'' USER_T01,
+			F_CRDATE,
+			F_CHDATE
+	    FROM BSUSER
+	    WHERE 
+	        USER_ORGID = #{USER_ORGID} AND USER_ID = #{USER_ID}
+		ORDER BY F_CRDATE
+	</select>
+	
+	<select id="findUserByOrg" resultMap="rm">
+		SELECT 
+	        USER_ID,
+	        USER_NAME,
+	        USER_TYPE,
+	        USER_ORGID,
+	        USER_PASS,	
+	        USER_DISABLE,
+			USER_ISADMIN,
+	        USER_MAIL1,		
+			USER_MAIL2,        
+	        USER_PHONE1,
+			USER_PHONE2,
+			USER_ADDRESSS1,
+			USER_ADDRESSS2,
+			'' USER_T01,
+			F_CRDATE,
+			F_CHDATE
+	    FROM BSUSER
+	    WHERE 
+	        USER_ORGID = #{USER_ORGID} 
+		ORDER BY F_CRDATE
+	</select>
+	
+	<!-- 按Id删除 -->
+	<delete id="deleteUser" parameterType="java.lang.Integer">
+        DELETE FROM BSUSER WHERE
+        USER_ID = #{USER_ID} AND USER_ORGID = #{USER_ORGID}
+    </delete>
+     <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="OBJ_ID">
+        INSERT INTO BSUSER (
+        	USER_ID,
+	        USER_NAME,
+	        USER_TYPE,
+	        USER_ORGID,
+	        USER_PASS,	
+	        USER_DISABLE,
+			USER_ISADMIN,
+	        USER_MAIL1,		
+			USER_MAIL2,        
+	        USER_PHONE1,
+			USER_PHONE2,
+			USER_ADDRESSS1,
+			USER_ADDRESSS2,
+			USER_T01,
+			F_CRDATE,
+			F_CHDATE
+        ) VALUES (
+        	#{USER_ID} ,
+        	#{USER_NAME} ,
+        	#{USER_TYPE} ,
+        	#{USER_ORGID} ,
+        	#{USER_PASS} ,
+			#{USER_DISABLE} ,
+        	#{USER_ISADMIN} ,
+        	#{USER_MAIL1} ,
+        	#{USER_MAIL2} ,
+        	#{USER_PHONE1} ,
+        	#{USER_PHONE2} ,
+        	#{USER_ADDRESSS1} ,
+        	#{USER_ADDRESSS2} ,
+        	#{USER_T01} ,
+        	#{F_CRDATE} ,
+			#{F_CHDATE}
+        )
+	</insert>
+
+	<select id="findAll" resultMap="rm">
+    	SELECT 
+	        USER_ID,
+	        USER_NAME,
+	        USER_TYPE,
+	        USER_ORGID,
+	        USER_PASS,	
+	        USER_DISABLE,
+			USER_ISADMIN,
+	        USER_MAIL1,		
+			USER_MAIL2,        
+	        USER_PHONE1,
+			USER_PHONE2,
+			USER_ADDRESSS1,
+			USER_ADDRESSS2,
+			USER_T01,
+			F_CRDATE,
+			F_CHDATE
+	    FROM BSUSER
+		ORDER BY F_CRDATE
+    </select>
+	
+	<select id="findUserByOrgAndId" resultMap="rm">
+    	SELECT 
+	        USER_ID,
+	        USER_NAME,
+	        USER_TYPE,
+	        USER_ORGID,
+	        USER_PASS,	
+	        USER_DISABLE,
+			USER_ISADMIN,
+	        USER_MAIL1,		
+			USER_MAIL2,        
+	        USER_PHONE1,
+			USER_PHONE2,
+			USER_ADDRESSS1,
+			USER_ADDRESSS2,
+			USER_T01,
+			F_CRDATE,
+			F_CHDATE
+	    FROM BSUSER
+		WHERE 
+	        USER_ID like "%"#{USER_ID,jdbcType=VARCHAR}"%" AND USER_ORGID = #{USER_ORGID} 
+		ORDER BY F_CRDATE
+    </select>
+	
+	<update id="update" parameterType="dwz.persistence.beans.ResBook">
+        UPDATE BSUSER SET
+	        USER_ID = #{USER_ID} ,
+	        USER_NAME = #{USER_NAME} ,
+	        USER_TYPE = #{USER_TYPE} ,
+	        USER_ORGID = #{USER_ORGID} ,
+	        USER_DISABLE = #{USER_DISABLE} ,
+	        USER_ISADMIN = #{USER_ISADMIN} ,
+	        USER_MAIL1 = #{USER_MAIL1} ,
+	        USER_MAIL2 = #{USER_MAIL2} ,
+	        USER_PHONE1 = #{USER_PHONE1} ,
+	        USER_PHONE2 = #{USER_PHONE2} ,
+	        USER_ADDRESSS1 = #{USER_ADDRESSS1} ,
+	        USER_ADDRESSS2 = #{USER_ADDRESSS2} ,
+	        USER_T01 = #{USER_T01} ,      
+	        F_CHDATE = #{F_CHDATE}
+        WHERE 
+	        USER_ID = #{USER_ID} AND USER_ORGID = #{USER_ORGID}
+	</update>
+	<update id="updatePass" parameterType="java.lang.String">
+        UPDATE BSUSER SET
+	        USER_PASS = #{USER_PASS}
+        WHERE 
+	        USER_ID = #{USER_ID} 
+	</update>
+</mapper>
+

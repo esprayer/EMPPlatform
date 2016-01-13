@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="gb2312"?>
+<Resource>
+       	<java.net.ConnectException text="网络链接异常"/>
+        <java.lang.NullPointerException text="空指针异常"/>
+</Resource>

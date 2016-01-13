@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.mrp.persistence.sysConfigure.projectProduct.mapper.HYXMCPMapper">
+	<resultMap id="rm" type="com.mrp.persistence.sysConfigure.projectProduct.bean.HYXMCP">
+        <result property="F_XMBH" jdbcType="VARCHAR" column="F_XMBH"/>
+        <result property="F_XMMC" jdbcType="VARCHAR" column="F_XMMC"/>
+        <result property="F_CPBH" jdbcType="VARCHAR" column="F_CPBH"/>
+		<result property="F_CPMC" jdbcType="VARCHAR" column="F_CPMC"/>
+        <result property="F_SYZT" jdbcType="INTEGER" column="F_SYZT"/>
+        <result property="F_CRDATE" jdbcType="TIMESTAMP" column="F_CRDATE"/>
+        <result property="F_CHDATE" jdbcType="TIMESTAMP" column="F_CHDATE"/>
+	</resultMap>
+	
+	<select id="findCpByXm" resultMap="rm">
+		SELECT 
+	        HYXMCP.F_XMBH,
+	        HYXMZD.F_XMMC,
+	        HYXMCP.F_CPBH,
+	        HYCPZD.F_CPMC,	        
+			HYCPZD.F_SYZT,        
+	        HYXMCP.F_CRDATE,
+			HYXMCP.F_CHDATE
+	    FROM HYXMCP 
+	    LEFT JOIN HYXMZD ON HYXMCP.F_XMBH = HYXMZD.F_XMBH
+	    LEFT JOIN HYCPZD ON HYXMCP.F_CPBH = HYCPZD.F_CPBH
+	    WHERE 
+	        HYXMCP.F_XMBH = #{F_XMBH}
+	        <if test="F_SYZT!=null" >
+				AND HYCPZD.F_SYZT = #{F_SYZT}  
+			</if>
+		ORDER BY HYXMCP.F_CPBH
+	</select>
+	
+	<select id="loadHYXMCP" resultMap="rm">
+		SELECT 
+	        HYXMCP.F_XMBH,
+	        HYXMZD.F_XMMC,
+	        HYXMCP.F_CPBH,
+	        HYCPZD.F_CPMC,	        
+			HYCPZD.F_SYZT,        
+	        HYXMCP.F_CRDATE,
+			HYXMCP.F_CHDATE
+	    FROM HYXMCP 
+	    LEFT JOIN HYXMZD ON HYXMCP.F_XMBH = HYXMZD.F_XMBH
+	    LEFT JOIN HYCPZD ON HYXMCP.F_CPBH = HYCPZD.F_CPBH
+	    WHERE 
+	    	<if test="F_XMBH!=null" >
+				HYXMCP.F_XMBH = #{F_XMBH} AND 
+			</if>
+	        HYXMCP.F_CPBH = #{F_CPBH}
+	    ORDER BY HYXMCP.F_CPBH
+	</select>
+
+	<!-- 按Id删除 -->
+	<delete id="deleteHYXMCP" parameterType="java.lang.Integer">
+        DELETE FROM HYXMCP WHERE
+        F_CPBH = #{F_CPBH} AND F_XMBH = #{F_XMBH}
+    </delete>
+     <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="OBJ_ID">
+        INSERT INTO HYXMCP (
+        	F_XMBH,	        
+	        F_CPBH,       
+			F_SYZT,        
+	        F_CRDATE,
+			F_CHDATE
+        ) VALUES (
+        	#{F_XMBH} ,
+        	#{F_CPBH} ,
+        	#{F_SYZT} ,
+        	#{F_CRDATE} ,
+			#{F_CHDATE}
+        )
+	</insert>
+	
+	<select id="findCpByXms" resultMap="rm">
+		SELECT
+			HYXMCP.F_XMBH,
+	        HYXMZD.F_XMMC,
+	        HYXMCP.F_CPBH,
+	        HYCPZD.F_CPMC,	        
+			HYCPZD.F_SYZT,        
+	        HYXMCP.F_CRDATE,
+			HYXMCP.F_CHDATE
+	    FROM HYXMCP 
+	    LEFT JOIN HYXMZD ON HYXMCP.F_XMBH = HYXMZD.F_XMBH
+	    LEFT JOIN HYCPZD ON HYXMCP.F_CPBH = HYCPZD.F_CPBH
+	    WHERE 
+	        HYXMCP.F_CPBH like "%"#{F_CPBH,jdbcType=VARCHAR}"%" AND HYXMCP.F_XMBH = #{F_XMBH}
+	    <if test="F_SYZT!=null" >
+	    	and exists(select 1 from HYCPZD CP where HYXMCP.F_CPBH = CP.F_CPBH and CP.F_SYZT = #{F_SYZT})
+		</if>
+		ORDER BY HYXMCP.F_CPBH    	
+    </select>
+	
+	<select id="findCpByXmCk" resultMap="rm">
+		SELECT
+	        HYXMCP.F_XMBH,
+	        HYXMZD.F_XMMC,
+	        HYXMCP.F_CPBH,
+	        HYCPZD.F_CPMC,
+			HYCPZD.F_SYZT,        
+	        HYXMCP.F_CRDATE,
+			HYXMCP.F_CHDATE
+	    FROM HYXMCP
+	    LEFT JOIN HYXMZD ON HYXMCP.F_XMBH = HYXMZD.F_XMBH
+	    LEFT JOIN HYCPZD ON HYXMCP.F_CPBH = HYCPZD.F_CPBH
+	    WHERE 
+			exists (select 1 from HYXMCK where HYXMCK.F_XMBH = HYXMCP.F_XMBH
+			and HYXMCK.F_CPBH = HYXMCP.F_CPBH and HYXMCK.F_CRFX = 'R' and HYXMCK.F_CKBH = #{F_CKBH})
+			and exists(select 1 from HYXMZD where HYXMCP.F_XMBH = HYXMZD.F_XMBH
+			and HYXMZD.F_XMZT = #{F_XMZT})
+			and HYXMCP.F_XMBH = #{F_XMBH} AND HYXMCP.F_CPBH like "%"#{F_CPBH,jdbcType=VARCHAR}"%"
+		ORDER BY HYXMCP.F_CPBH    	
+    </select>
+	
+	<update id="update" parameterType="com.mrp.persistence.sysConfigure.deport.bean.HYCKZD">
+        UPDATE HYXMCP SET	        
+	        F_SYZT = #{F_SYZT} ,
+	        F_CHDATE = #{F_CHDATE}
+        WHERE 
+	        F_XMBH = #{F_XMBH} AND F_CPBH = #{F_CPBH}
+	</update>
+	
+	<select id="searchHYCPZDByXMCL" resultMap="rm">
+    	SELECT 
+    		HYXMCP.F_XMBH,
+    		HYXMZD.F_XMMC,
+	        HYXMCP.F_CPBH,
+	        HYCPZD.F_CPMC
+	    FROM HYXMCP
+	    LEFT JOIN HYCPZD ON HYXMCP.F_CPBH = HYCPZD.F_CPBH
+	    LEFT JOIN HYXMZD ON HYXMCP.F_XMBH = HYXMZD.F_XMBH
+	    WHERE 
+			exists(select 1 from HYXMZD, HYXMMX where HYXMCP.F_XMBH = HYXMZD.F_XMBH and 
+			HYXMZD.F_XMBH = HYXMMX.F_XMBH and HYXMZD.F_XMZT = '0' and HYXMMX.F_CLBH = #{F_CLBH} and HYXMCP.F_CPBH = HYCPZD.F_CPBH and 
+			(F_SQSJ &gt;= #{beginDate} AND F_SQSJ &lt;= #{endDate})) and 
+			HYXMCP.F_XMBH like "%"#{F_XMBH,jdbcType=VARCHAR}"%" and 
+			HYXMCP.F_CPBH like "%"#{F_CPBH,jdbcType=VARCHAR}"%"
+		ORDER BY HYXMCP.F_XMBH, HYXMCP.F_CPBH
+    </select>
+    
+</mapper>

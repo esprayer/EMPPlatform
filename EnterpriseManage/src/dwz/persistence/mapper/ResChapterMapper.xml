@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="dwz.persistence.mapper.ResChapterMapper">
+	<resultMap id="rm" type="dwz.persistence.beans.ResChapter">
+        <result property="id" jdbcType="INTEGER" column="ID"/>
+        <result property="bookId" jdbcType="INTEGER" column="BOOK_ID"/>
+        <result property="bookNameCn" jdbcType="VARCHAR" column="BOOK_NAME_CN"/>
+        <result property="bookNameEn" jdbcType="VARCHAR" column="BOOK_NAME_EN"/>
+        <result property="authorId" jdbcType="INTEGER" column="AUTHOR_ID"/>
+        <result property="translator" jdbcType="VARCHAR" column="TRANSLATOR"/>
+        <result property="chapterNo" jdbcType="INTEGER" column="CHAPTER_NO"/>
+        <result property="nameCn" jdbcType="VARCHAR" column="NAME_CN"/>
+        <result property="nameEn" jdbcType="VARCHAR" column="NAME_EN"/>
+        <result property="summary" jdbcType="VARCHAR" column="SUMMARY"/>
+        <result property="path" jdbcType="VARCHAR" column="PATH"/>
+        <result property="keywords" jdbcType="VARCHAR" column="KEYWORDS"/>
+        <result property="startPageNo" jdbcType="INTEGER" column="START_PAGE_NO"/>
+        <result property="pageCount" jdbcType="INTEGER" column="PAGE_COUNT"/>
+        <result property="insertDate" jdbcType="TIMESTAMP" column="INSERT_DATE"/>
+        <result property="updateDate" jdbcType="TIMESTAMP" column="UPDATE_DATE"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		c.ID,
+        c.BOOK_ID,
+		b.NAME_CN as BOOK_NAME_CN,
+        b.NAME_EN as BOOK_NAME_EN,
+        c.AUTHOR_ID,
+        c.TRANSLATOR,
+        c.CHAPTER_NO,
+        c.NAME_CN,
+        c.NAME_EN,
+        c.SUMMARY,
+        c.PATH,
+        c.KEYWORDS,
+        c.START_PAGE_NO,
+        c.PAGE_COUNT,
+        c.INSERT_DATE,
+        c.UPDATE_DATE
+	</sql>
+  
+	<select id="load" resultMap="rm">
+		SELECT 
+	        ID,
+	        BOOK_ID,
+	        AUTHOR_ID,
+	        TRANSLATOR,
+	        CHAPTER_NO,
+	        NAME_CN,
+	        NAME_EN,
+	        SUMMARY,
+	        PATH,
+	        KEYWORDS,
+	        START_PAGE_NO,
+	        PAGE_COUNT,
+	        INSERT_DATE,
+	        UPDATE_DATE
+		FROM res_chapter 
+	    WHERE 
+	        ID = #{id} 
+	</select>
+	<!-- 查询所有的ID -->
+	<select id="findAllIds" resultType="java.lang.Integer">
+		SELECT ID FROM res_chapter
+	</select>
+	<!-- 查询所有 -->
+	<select id="getAll" parameterType="java.lang.Integer" resultMap="rm">
+		SELECT
+	        ID,
+	        BOOK_ID,
+	        AUTHOR_ID,
+	        TRANSLATOR,
+	        CHAPTER_NO,
+	        NAME_CN,
+	        NAME_EN,
+	        SUMMARY,
+	        PATH,
+	        KEYWORDS,
+	        START_PAGE_NO,
+	        PAGE_COUNT,
+	        INSERT_DATE,
+	        UPDATE_DATE
+		FROM res_chapter
+		WHERE
+        ID = #{id} 
+	</select>
+	
+	<select id="findPageBreakByCondition" resultMap="rm" parameterType="map">
+		SELECT 
+	        <include refid="Base_Column_List" />
+		from res_chapter c, res_book b  
+		<where>
+			c.book_id=b.id
+		    <if test="bookId != null">
+				and c.BOOK_ID = #{bookId,jdbcType=VARCHAR} 
+      		</if>
+			<if test="startInsertDate != null &amp;&amp; endInsertDate != null">
+				 and c.INSERT_DATE &gt;= #{startInsertDate,jdbcType=TIMESTAMP} and c.INSERT_DATE &lt;= #{endInsertDate,jdbcType=TIMESTAMP}  
+			</if>
+			<if test="startInsertDate != null &amp;&amp; endInsertDate == null">
+				 and c.INSERT_DATE &gt;= #{startInsertDate,jdbcType=TIMESTAMP} 
+			</if>
+			<if test="startInsertDate == null &amp;&amp; endInsertDate != null">
+				 and c.INSERT_DATE &lt;= #{endInsertDate,jdbcType=TIMESTAMP} 
+			</if>
+			<if test="keywords != null">
+				and (
+					b.NAME_CN LIKE "%"#{keywords,jdbcType=VARCHAR}"%"
+					or b.NAME_EN LIKE "%"#{keywords,jdbcType=VARCHAR}"%"
+					or c.NAME_CN LIKE "%"#{keywords,jdbcType=VARCHAR}"%"
+					or c.NAME_EN LIKE "%"#{keywords,jdbcType=VARCHAR}"%"
+					or c.KEYWORDS LIKE "%"#{keywords,jdbcType=VARCHAR}"%"
+					or c.CONTENT LIKE "%"#{keywords,jdbcType=VARCHAR}"%"
+				)
+      		</if>
+      		order by c.INSERT_DATE DESC 
+      	</where>
+	</select>
+	<select id="findNumberByCondition" resultType="java.lang.Integer" parameterType="map">
+		select count(0) as a from res_chapter c, res_book b 
+		<where>
+			c.book_id=b.id
+		    <if test="bookId != null">
+				and c.BOOK_ID = #{bookId,jdbcType=VARCHAR} 
+      		</if>
+			<if test="startInsertDate != null &amp;&amp; endInsertDate != null">
+				 and c.INSERT_DATE &gt;= #{startInsertDate,jdbcType=TIMESTAMP} and c.INSERT_DATE &lt;= #{endInsertDate,jdbcType=TIMESTAMP}  
+			</if>
+			<if test="startInsertDate != null &amp;&amp; endInsertDate == null">
+				 and c.INSERT_DATE &gt;= #{startInsertDate,jdbcType=TIMESTAMP} 
+			</if>
+			<if test="startInsertDate == null &amp;&amp; endInsertDate != null">
+				 and c.INSERT_DATE &lt;= #{endInsertDate,jdbcType=TIMESTAMP} 
+			</if>
+			<if test="keywords != null">
+				and (
+					b.NAME_CN LIKE "%"#{keywords,jdbcType=VARCHAR}"%"
+					or b.NAME_EN LIKE "%"#{keywords,jdbcType=VARCHAR}"%"
+					or c.NAME_CN LIKE "%"#{keywords,jdbcType=VARCHAR}"%"
+					or c.NAME_EN LIKE "%"#{keywords,jdbcType=VARCHAR}"%"
+					or c.KEYWORDS LIKE "%"#{keywords,jdbcType=VARCHAR}"%"
+					or c.CONTENT LIKE "%"#{keywords,jdbcType=VARCHAR}"%"
+				)
+      		</if>
+      	</where>
+	</select>
+	
+	<select id="findNotInitContent" parameterType="java.lang.Integer" resultMap="rm">
+		SELECT ID, PATH
+		FROM res_chapter WHERE INIT_CONTENT != 1
+	</select>
+  
+	<!-- 按Id删除 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM res_chapter WHERE
+        ID = #{id} 
+    </delete>
+     <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO res_chapter (
+        	ID ,
+        	BOOK_ID ,
+        	AUTHOR_ID ,
+        	TRANSLATOR ,
+        	CHAPTER_NO ,
+        	NAME_CN ,
+        	NAME_EN ,
+        	SUMMARY ,
+        	PATH ,
+        	KEYWORDS ,
+        	START_PAGE_NO ,
+        	PAGE_COUNT ,
+        	INSERT_DATE ,
+        	UPDATE_DATE 
+        ) VALUES (
+        	#{id} ,
+        	#{bookId} ,
+        	#{authorId} ,
+        	#{translator} ,
+        	#{chapterNo} ,
+        	#{nameCn} ,
+        	#{nameEn} ,
+        	#{summary} ,
+        	#{path} ,
+        	#{keywords} ,
+        	#{startPageNo} ,
+        	#{pageCount} ,
+        	#{insertDate} ,
+        	#{updateDate} 
+        )
+	</insert>
+	
+	<select id="countAll" resultType="java.lang.Long">
+        SELECT count(ID) FROM res_chapter    
+    </select>
+    
+	<select id="findAll" resultMap="rm">
+    	SELECT 
+	    	<include refid="Base_Column_List" />
+		from res_chapter c, res_book b where c.book_id=b.id
+    </select>
+	
+	<!-- 更新 -->
+	<update id="updateSelective" parameterType="dwz.persistence.beans.ResChapter">
+		UPDATE res_chapter 
+			<set>
+				<if test="bookId!=null">
+				BOOK_ID = #{bookId},
+				</if>
+				<if test="authorId!=null">
+				AUTHOR_ID = #{authorId},
+				</if>
+				<if test="translator!=null">
+				TRANSLATOR = #{translator},
+				</if>
+				<if test="chapterNo!=null">
+				CHAPTER_NO = #{chapterNo},
+				</if>
+				<if test="nameCn!=null">
+				NAME_CN = #{nameCn},
+				</if>
+				<if test="nameEn!=null">
+				NAME_EN = #{nameEn},
+				</if>
+				<if test="summary!=null">
+				SUMMARY = #{summary},
+				</if>
+				<if test="path!=null">
+				PATH = #{path},
+				</if>
+				<if test="keywords!=null">
+				KEYWORDS = #{keywords},
+				</if>
+				<if test="content!=null">
+				CONTENT = #{content},
+				</if>
+				<if test="initContent!=null">
+				INIT_CONTENT = #{initContent},
+				</if>
+				<if test="startPageNo!=null">
+				START_PAGE_NO = #{startPageNo},
+				</if>
+				<if test="pageCount!=null">
+				PAGE_COUNT = #{pageCount},
+				</if>
+				<if test="insertDate!=null">
+				INSERT_DATE = #{insertDate},
+				</if>
+				<if test="updateDate!=null">
+				UPDATE_DATE = #{updateDate}
+				</if>
+			</set>
+		WHERE 
+			ID = #{id}
+	</update>
+	
+	<update id="update" parameterType="dwz.persistence.beans.ResChapter">
+        UPDATE res_chapter SET
+	        BOOK_ID = #{bookId} ,
+	        AUTHOR_ID = #{authorId} ,
+	        TRANSLATOR = #{translator} ,
+	        CHAPTER_NO = #{chapterNo} ,
+	        NAME_CN = #{nameCn} ,
+	        NAME_EN = #{nameEn} ,
+	        SUMMARY = #{summary} ,
+	        PATH = #{path} ,
+	        KEYWORDS = #{keywords} ,
+	        START_PAGE_NO = #{startPageNo} ,
+	        PAGE_COUNT = #{pageCount} ,
+	        INSERT_DATE = #{insertDate} ,
+	        UPDATE_DATE = #{updateDate} 
+        WHERE 
+	        ID = #{id} 
+	</update>
+	
+	<select id="findByBook" parameterType="java.lang.Integer"
+		resultMap="rm">
+		select 
+	        <include refid="Base_Column_List" />
+		from res_chapter c, res_book b where c.book_id=b.id and c.book_id = #{bookId}
+	</select>
+</mapper>
+

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="EMPFlowManager" default="copy" basedir=".">
+
+	<target name="init">
+		<tstamp />
+		<property name="Name" value="EMPFlowManager" />
+		<property name="version" value="0.1" />
+		<property name="year" value="2011" />
+
+
+		<property name="debug" value="on" />
+		<property name="optimize" value="on" />
+		<property name="deprecation" value="on" />
+
+		<property name="src" value="./src" />
+		<property name="root" value="D:\HyeclWorkSpace\HyeclEmp\WebRoot\WEB-INF\lib" />
+		<property name="client" value="E:\NewFrameworkSpace\NewFrameworkLib\JEnterprise\client" />
+		<property name="server" value="E:\NewFrameworkSpace\NewFrameworkLib\JEnterprise\server" />
+		<property name="lib" value="${root}" />
+		<property name="classes" value="./classes" />
+
+		<property name="server_lib" value="E:\NewFrameworkSpace\EnterpriseServerWeb\WebRoot\CodeSpace\JEnterprise\public" />
+		<property name="server_client" value="E:\NewFrameworkSpace\EnterpriseServerWeb\WebRoot\CodeSpace\JEnterprise\client" />
+		<property name="server_server" value="E:\NewFrameworkSpace\EnterpriseServerWeb\WebRoot\CodeSpace\JEnterprise\server" />
+		<property name="WEB-INF" value="E:\NewFrameworkSpace\EnterpriseServerWeb\WebRoot\WEB-INF\lib" />
+		
+		<path id="compile.classpath">
+			<fileset dir="${root}">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${client}">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${server}">
+				<include name="*.jar" />
+			</fileset>
+			<pathelement location="${classes}" />
+		</path>
+		<mkdir dir="${classes}" />
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${classes}" fork="true" memorymaximumsize="1024m">
+			<classpath refid="compile.classpath" />
+		</javac>
+	</target>
+
+	<target name="clean" depends="compile">
+		<delete>
+			<fileset dir="${lib}">
+				<include name="EMPFlowManager.jar" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="package" depends="clean">
+		<jar jarfile="${lib}/EMPFlowManager.jar">
+			<fileset dir="${classes}">
+				<include name="**/*.*" />
+			</fileset>
+			<fileset dir="./">
+				<include name="Package/client/**" />
+				<include name="Package/public/**" />
+				<include name="Package/server/**" />
+			</fileset>
+		</jar>
+		
+	</target>
+
+	<target name="copy" depends="package">
+	</target>
+
+</project>

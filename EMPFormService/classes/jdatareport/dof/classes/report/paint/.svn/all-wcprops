@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/CVSpace/!svn/ver/7739/SinopecFMISSDK/JFormservice/src/jdatareport/dof/classes/report/paint
+END
+JDRPainter.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/CVSpace/!svn/ver/7739/SinopecFMISSDK/JFormservice/src/jdatareport/dof/classes/report/paint/JDRPainter.java
+END
+JDRDataWindowPainter.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/CVSpace/!svn/ver/7739/SinopecFMISSDK/JFormservice/src/jdatareport/dof/classes/report/paint/JDRDataWindowPainter.java
+END
+JDRQueryPainter.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/CVSpace/!svn/ver/7739/SinopecFMISSDK/JFormservice/src/jdatareport/dof/classes/report/paint/JDRQueryPainter.java
+END
+JDRQueryPainterUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/CVSpace/!svn/ver/6259/SinopecFMISSDK/JFormservice/src/jdatareport/dof/classes/report/paint/JDRQueryPainterUtils.java
+END
+JDRPaintUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/CVSpace/!svn/ver/7739/SinopecFMISSDK/JFormservice/src/jdatareport/dof/classes/report/paint/JDRPaintUtils.java
+END

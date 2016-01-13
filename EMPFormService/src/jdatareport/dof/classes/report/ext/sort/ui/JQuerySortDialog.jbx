@@ -1,0 +1,44 @@
+[PropertyInfo]
+border1,Border,false,false, , ,false,<default>
+border2,Border,false,false, , ,false,<default>
+border3,Border,false,false, , ,false,<default>
+border4,Border,false,false, , ,false,<default>
+border5,Border,false,false, , ,false,<default>
+borderLayout1,BorderLayout,false,false, , ,false,<default>
+borderLayout2,BorderLayout,false,false, , ,false,<default>
+borderLayout3,BorderLayout,false,false, , ,false,<default>
+borderLayout4,BorderLayout,false,false, , ,false,<default>
+borderLayout5,BorderLayout,false,false, , ,false,<default>
+borderLayout6,BorderLayout,false,false, , ,false,<default>
+flowLayout1,FlowLayout,false,false, , ,false,<default>
+jPanel1,JPanel,false,false, , ,false,<default>
+jPanel2,JPanel,false,false, , ,false,<default>
+jPanel3,JPanel,false,false, , ,false,<default>
+jPanel4,JPanel,false,false, , ,false,<default>
+jPanel5,JPanel,false,false, , ,false,<default>
+jPanel6,JPanel,false,false, , ,false,<default>
+jPanel7,JPanel,false,false, , ,false,<default>
+jPanel8,JPanel,false,false, , ,false,<default>
+mCancelBtn,JButton,false,false, , ,false,<default>
+mDownBtn,JButton,false,false, , ,false,<default>
+mLeftSp,JScrollPane,false,false, , ,false,<default>
+mOkBtn,JButton,false,false, , ,false,<default>
+mRightSp,JScrollPane,false,false, , ,false,<default>
+mSelAllBtn,JButton,false,false, , ,false,<default>
+mSelBtn,JButton,false,false, , ,false,<default>
+mSelModel,JQuerySortTableModel,false,false, , ,false,<default>
+mSelTable,JTable,false,false, , ,false,<default>
+mUnselAllBtn,JButton,false,false, , ,false,<default>
+mUnselBtn,JButton,false,false, , ,false,<default>
+mUnselModel,JQuerySortTableModel,false,false, , ,false,<default>
+mUnselTable,JTable,false,false, , ,false,<default>
+mUpBtn,JButton,false,false, , ,false,<default>
+sortColumn,Vector,false,false, , ,true,<default>
+sortColumns,Vector,false,false, , ,true,<default>
+verticalFlowLayout1,VerticalFlowLayout,false,false, , ,false,<default>
+verticalFlowLayout2,VerticalFlowLayout,false,false, , ,false,<default>
+[IconNames]
+
+
+
+

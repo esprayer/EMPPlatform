@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="gb2312"?>
+<package id="" caption="装配清单">
+  <helptab>
+    <item id="comm" caption="普通" icon="idea/actions/diff.png" clazz="com.help.plugin.CommonHelpAdapter"/>
+  </helptab>
+</package>

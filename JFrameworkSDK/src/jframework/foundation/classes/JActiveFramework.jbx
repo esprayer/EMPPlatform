@@ -1,0 +1,22 @@
+[PropertyInfo]
+ActiveObjectStubList,Vector,false,false, , ,false,<default>
+contextInterface,IContextInterface,false,false, , ,true,<default>
+ContextInterface,IContextInterface,false,false, , ,false,<default>
+environmentInterface,IEnvironmentInterface,false,false, , ,true,<default>
+EnvironmentInterface,IEnvironmentInterface,false,false, , ,false,<default>
+helperInterface,IHelperInterface,false,false, , ,true,<default>
+HelperInterface,IHelperInterface,false,false, , ,false,<default>
+offlineInterface,IOfflineInterface,false,false, , ,true,<default>
+OfflineInterface,IOfflineInterface,false,false, , ,false,<default>
+remoteInterface,IRemoteInterface,false,false, , ,true,<default>
+RemoteInterface,IRemoteInterface,false,false, , ,false,<default>
+securityInterface,ISecurityInterface,false,false, , ,true,<default>
+SecurityInterface,ISecurityInterface,false,false, , ,false,<default>
+securtiyInterface,ISecurityInterface,false,false, , ,true,<default>
+setupInterface,ISetupInterface,false,false, , ,true,<default>
+SetupInterface,ISetupInterface,false,false, , ,false,<default>
+[IconNames]
+
+
+
+

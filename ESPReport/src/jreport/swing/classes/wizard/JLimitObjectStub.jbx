@@ -1,0 +1,21 @@
+[PropertyInfo]
+bhCol,String,false,false, , ,false,<default>
+defvalue,String,false,false, , ,false,<default>
+des1,String,false,false, , ,false,<default>
+des2,String,false,false, , ,false,<default>
+FunctionStub,jreport.swing.classes.wizard.JFunctionStub,false,false, , ,false,<default>
+help,String,false,false, , ,false,<default>
+helpObject,jreport.swing.classes.wizard.JWizardHelpObject,false,false, , ,true,<default>
+HelpObject,jreport.swing.classes.wizard.JWizardHelpObject,false,false, , ,false,<default>
+id,String,false,false, , ,false,<default>
+mcCol,String,false,false, , ,false,<default>
+struCol,String,false,false, , ,false,<default>
+tbName,String,false,false, , ,false,<default>
+text,String,false,false, , ,false,<default>
+type,String,false,false, , ,false,<default>
+value,String,false,false, , ,false,<default>
+[IconNames]
+
+
+
+

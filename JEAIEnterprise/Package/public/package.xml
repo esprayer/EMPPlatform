@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="gb2312"?>
+<package id="" caption="装配清单">
+  <com.efounder.eai.data.JParamObject>
+    <item implement="com.efounder.node.BIZParamObject" id="BIZContext"/>
+  </com.efounder.eai.data.JParamObject>
+</package>

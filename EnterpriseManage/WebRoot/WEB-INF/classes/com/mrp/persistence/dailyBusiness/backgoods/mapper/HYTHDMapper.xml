@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.mrp.persistence.dailyBusiness.backgoods.mapper.HYTHDMapper">
+	<resultMap id="rm" type="com.mrp.persistence.dailyBusiness.backgoods.bean.HYTHD">
+		<result property="F_DJBH"       jdbcType="VARCHAR" column="F_DJBH"/>
+        <result property="F_GUID"       jdbcType="VARCHAR" column="F_GUID"/>
+        <result property="F_KJQJ"       jdbcType="VARCHAR" column="F_KJQJ"/>
+		<result property="F_DATE"       jdbcType="VARCHAR" column="F_DATE"/>        
+        <result property="F_DJZT"       jdbcType="VARCHAR" column="F_DJZT"/>
+        <result property="F_BZ"         jdbcType="VARCHAR" column="F_BZ"/>
+        <result property="F_THLX"       jdbcType="VARCHAR" column="F_THLX"/>
+		<result property="F_THRID"      jdbcType="VARCHAR" column="F_THRID"/>
+        <result property="F_THRMC"      jdbcType="VARCHAR" column="F_THRMC"/>	
+		<result property="F_BZRID"      jdbcType="VARCHAR" column="F_BZRID"/>
+        <result property="F_ZDRMC"      jdbcType="VARCHAR" column="F_ZDRMC"/>	
+		<result property="F_SBRID"      jdbcType="VARCHAR" column="F_SBRID"/>
+        <result property="F_SBRMC"      jdbcType="VARCHAR" column="F_SBRMC"/>	
+		<result property="F_CKBH"       jdbcType="VARCHAR" column="F_CKBH"/>
+        <result property="F_CKMC"       jdbcType="VARCHAR" column="F_CKMC"/>		
+		<result property="F_CSBH"       jdbcType="VARCHAR" column="F_CSBH"/>
+        <result property="F_CSMC"       jdbcType="VARCHAR" column="F_CSMC"/>		
+		<result property="F_XMBH"       jdbcType="VARCHAR" column="F_XMBH"/>
+        <result property="F_XMMC"       jdbcType="VARCHAR" column="F_XMMC"/>	
+		<result property="EXT_BIZ_KJQJ" jdbcType="VARCHAR" column="EXT_BIZ_KJQJ"/>
+        <result property="EXT_BIZ_DJBH" jdbcType="VARCHAR" column="EXT_BIZ_DJBH"/>		
+        <result property="F_CRDATE"     jdbcType="DECIMAL" column="F_CRDATE"/>
+        <result property="F_CHDATE"     jdbcType="DECIMAL" column="F_CHDATE"/>
+        <result property="F_SBDATE"     jdbcType="DECIMAL" column="F_SBDATE"/>
+	</resultMap>
+	
+	<select id="loadHYTHD" resultMap="rm">
+		SELECT 
+			F_DJBH,
+			F_GUID,
+			F_KJQJ,
+			F_DATE,			
+	        F_DJZT,
+	        F_THLX,
+	        F_BZ,		  
+			EXT_BIZ_KJQJ,
+			EXT_BIZ_DJBH,  
+			F_THRID,
+			TH.F_ZGMC AS F_THRMC,  
+			F_BZRID,     
+			ZD.USER_NAME AS F_BZRMC,   
+			F_SBRID,     
+			SB.USER_NAME AS F_SBRMC,   
+			HYTHD.F_CKBH,
+			HYCKZD.F_CKMC,
+			HYTHD.F_CSBH,
+			HYCSZD.F_CSMC,
+			HYTHD.F_XMBH,
+			HYXMZD.F_XMMC,
+			HYXMZD.F_XMZT,
+	        HYTHD.F_CRDATE,
+			HYTHD.F_CHDATE,
+			HYTHD.F_SBDATE
+	    FROM HYTHD 
+		LEFT JOIN HYZGZD TH ON HYTHD.F_THRID = TH.F_ZGBH 
+		LEFT JOIN BSUSER ZD ON HYTHD.F_BZRID = ZD.USER_ID 
+		LEFT JOIN BSUSER SB ON HYTHD.F_SBRID = SB.USER_ID 
+		LEFT JOIN HYCSZD ON HYTHD.F_CSBH = HYCSZD.F_CSBH
+		LEFT JOIN HYCKZD ON HYTHD.F_CKBH = HYCKZD.F_CKBH
+		LEFT JOIN HYXMZD ON HYTHD.F_XMBH = HYXMZD.F_XMBH
+		WHERE 
+		<if test="F_DJBH!=null" >
+			F_DJBH = #{F_DJBH} AND 
+		</if>
+		<if test="F_GUID!=null" >
+			F_GUID = #{F_GUID} AND 
+		</if>
+		<if test="F_DJZT!=null" >
+			HYTHD.F_DJZT = #{F_DJZT} AND 
+		</if>
+		<if test="F_XMBH!=null" >
+			HYTHD.F_XMBH = #{F_XMBH} AND 
+		</if>
+		<if test="F_THLX!=null" >
+			HYTHD.F_THLX = #{F_THLX} AND 
+		</if>
+		<if test="F_CKBH!=null" >
+			HYTHD.F_CKBH = #{F_CKBH} AND 
+		</if>
+	    F_KJQJ = #{F_KJQJ}
+		ORDER BY F_DJBH
+	</select>
+	
+	<select id="searchHYTHDByHYCKD" resultMap="rm">
+		SELECT 
+			F_DJBH,
+			F_GUID,
+			F_KJQJ,
+			F_DATE,			
+	        F_DJZT,
+	        F_THLX,
+	        F_BZ,		  
+			EXT_BIZ_KJQJ,
+			EXT_BIZ_DJBH,  
+			F_THRID,
+			TH.F_ZGMC AS F_THRMC,  
+			F_BZRID,     
+			ZD.USER_NAME AS F_BZRMC,   
+			F_SBRID,     
+			SB.USER_NAME AS F_SBRMC,   
+			HYTHD.F_CKBH,
+			HYCKZD.F_CKMC,
+			HYTHD.F_CSBH,
+			HYCSZD.F_CSMC,
+			HYTHD.F_XMBH,
+			HYXMZD.F_XMMC,
+			HYXMZD.F_XMZT,
+	        HYTHD.F_CRDATE,
+			HYTHD.F_CHDATE,
+			HYTHD.F_SBDATE
+	    FROM HYTHD 
+		LEFT JOIN HYZGZD TH ON HYTHD.F_THRID = TH.F_ZGBH 
+		LEFT JOIN BSUSER ZD ON HYTHD.F_BZRID = ZD.USER_ID 
+		LEFT JOIN BSUSER SB ON HYTHD.F_SBRID = SB.USER_ID 
+		LEFT JOIN HYCSZD ON HYTHD.F_CSBH = HYCSZD.F_CSBH
+		LEFT JOIN HYCKZD ON HYTHD.F_CKBH = HYCKZD.F_CKBH
+		LEFT JOIN HYXMZD ON HYTHD.F_XMBH = HYXMZD.F_XMBH
+		WHERE 
+		<if test="F_DJZT!=null" >
+			HYTHD.F_DJZT = #{F_DJZT} AND 
+		</if>
+		<if test="F_THLX!=null" >
+			HYTHD.F_THLX = #{F_THLX} AND 
+		</if>
+		HYTHD.EXT_BIZ_KJQJ = #{F_KJQJ} AND 
+		HYTHD.EXT_BIZ_DJBH = #{F_DJBH}
+		ORDER BY F_KJQJ, F_DJBH
+	</select>
+</mapper>
+

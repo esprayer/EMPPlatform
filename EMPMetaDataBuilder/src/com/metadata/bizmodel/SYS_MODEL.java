@@ -1,0 +1,14 @@
+package com.metadata.bizmodel;
+
+public interface SYS_MODEL {
+	public static final String            MODEL_ID     = "MODEL_ID";
+	public static final String          SERVICE_ID     = "SERVICE_ID";
+	public static final String       _BILL_BH_COL_     = "BILL_BH_COL";
+	public static final String       _BLFL_BH_COL_     = "BLFL_BH_COL";
+	public static final String     _BLFL_KJQJ_COL_     = "BLFL_KJQJ_COL";
+	public static final String     _BILL_GUID_COL_     = "BILL_GUID_COL";
+	public static final String   _BILL_CHDATE_COL_     = "BILL_CHDATE_COL";
+	public static final String     _BILL_FLBH_COL_     = "BILL_FLBH_COL";
+	public static final String     _BILL_TYBH_COL_     = "BILL_TYBH_COL";
+	public static final String         _MDL_BHDCT_     = "MDL_BHDCT";
+} 

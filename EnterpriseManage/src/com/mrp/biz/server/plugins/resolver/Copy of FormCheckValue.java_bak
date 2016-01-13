@@ -1,0 +1,152 @@
+package com.mrp.biz.server.plugins.resolver;
+
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.DecimalFormat;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.mrp.biz.server.EMPCheckFormUtil;
+import com.mrp.biz.server.plugins.util.FormBillFieldUtil;
+
+import esyt.framework.com.builder.base.data.DataSetUtils;
+import esyt.framework.com.builder.base.data.EFDataSet;
+import esyt.framework.com.builder.base.data.EFRowSet;
+import esyt.framework.com.dbform.bizmodel.EFFormDataModel;
+import esyt.framework.com.dbform.io.FormDataResolver;
+import esyt.framework.com.dbform.io.FormDataResolverAdapter;
+
+@Transactional(rollbackFor = Exception.class)
+@Repository
+public class FormCheckValue implements FormDataResolver {
+
+	public void prepareSaveForm(Statement stmt, EFFormDataModel model) throws Exception {
+		
+		checkFormSave(stmt, model);
+		
+		EFDataSet eds = model.getBillDataSet();
+	    formHeadDefValueSet(stmt, model, eds);
+	    
+	    EFRowSet ers = model.getBillData(0);
+	    formItemDefValueSet(stmt, model, ers);		
+	}
+	
+	protected void checkFormSave(Statement stmt, EFFormDataModel model) throws Exception {
+		String         errorMsg = "";
+		EFDataSet   billDataSet = model.getBillDataSet();
+		int            rowCount = billDataSet.getRowCount();
+		String           F_KJQJ = billDataSet.getRowSet(0).getString("F_KJQJ", "");
+		String           F_GUID = billDataSet.getRowSet(0).getString("F_GUID", "");
+		String         F_CHDATE = billDataSet.getRowSet(0).getString("F_CHDATE", "");
+		int      formEditStatus = model.getFormEditStatus();
+		
+		if(F_CHDATE.trim().length() == 0) {
+			F_CHDATE = String.valueOf(billDataSet.getRowSet(0).getNumber("F_CHDATE", 0));
+		}
+		
+		boolean bExists = EMPCheckFormUtil.checkFormExiss(stmt, F_KJQJ, F_GUID, billDataSet.getTableName());
+		
+		
+		//如果之前FormEditStatus已经设置了，就不需要再重新设置了
+		if(formEditStatus != EFFormDataModel._FORM_EDIT_STATUS_) {
+			bExists = true;			
+		} else {
+			if(!bExists) model.setFormEditStatus(EFFormDataModel._FORM_EDIT_CREATE_);
+			else model.setFormEditStatus(EFFormDataModel._FORM_EDIT_CHANGE_);
+		}
+		
+		
+		if(bExists && rowCount > 0){
+		      errorMsg += EMPCheckFormUtil.checkFormSubmit(stmt, F_KJQJ, F_GUID, billDataSet.getTableName(), F_CHDATE);
+		      errorMsg += EMPCheckFormUtil.checkFormEdit(stmt, F_KJQJ, F_GUID, billDataSet.getTableName(), F_CHDATE);
+		}
+
+		if(!errorMsg.equals("")) {
+			throw new Exception(errorMsg);
+		}
+	}
+
+	protected void formHeadDefValueSet(Statement stmt, EFFormDataModel model, EFDataSet eds) throws Exception {
+		java.util.Date currTime = new java.util.Date();
+		EFRowSet ers = eds.getRowSet(0);
+		EFRowSet rowset = null;
+	    String F_GUID = ers.getString("F_GUID", null);
+	    String F_KJQJ = ers.getString("F_KJQJ", "");
+	    String F_DJBH = ers.getString("F_DJBH", null);
+	    
+	    if (model.getFormEditStatus() == EFFormDataModel._FORM_EDIT_CREATE_) {
+	    	ers.putString("F_DJBH", ers.getString("F_GUID", ""));
+			ers.putNumber("F_CRDATE", currTime.getTime());		
+			ers.putNumber("F_CHDATE", currTime.getTime());
+	        return;
+	    }
+	    
+	    Iterator it;
+	    EFDataSet headDataSet = EFDataSet.getInstance(eds.getTableName());
+	    ResultSet rs;
+		String strSql = "select * from " + eds.getTableName() + " where F_KJQJ = '" + F_KJQJ + "'";
+		if(F_GUID != null) {
+			strSql += " and F_GUID = '" + F_GUID + "'";
+		}
+		if(F_DJBH != null) {
+			strSql += " and F_DJBH = '" + F_DJBH + "'";
+		}
+		rs = stmt.executeQuery(strSql);
+		headDataSet = DataSetUtils.resultSet2DataSet(rs, headDataSet);
+		
+		if(headDataSet.getRowCount() > 0) {
+			rowset = headDataSet.getRowSet(0);
+			it = rowset.entrySet().iterator();
+			while(it.hasNext()) {
+				Map.Entry m = (Entry) it.next();
+				if(ers.getDataMap().get(m.getKey().toString()) == null) {
+					ers.getDataMap().put(m.getKey().toString(), m.getValue());
+				}
+			}
+		}
+		ers.putNumber("F_CHDATE", currTime.getTime());
+	}
+	
+	protected void formItemDefValueSet(Statement stmt, EFFormDataModel model, EFRowSet ers) throws Exception {
+		java.util.List<String>   dataSetKeyList = new java.util.ArrayList<String>();
+		EFDataSet                           eds;
+		DecimalFormat                      dffl = FormBillFieldUtil.getBILL_FL_Format();
+		String                             flbh;
+		java.util.Date                 currTime = new java.util.Date();
+		dataSetKeyList = ers.getDataSetKeyList();
+		
+		//如果删除分录的话，分录不做任何修改，防止做了修改后，删除的时候找不到分录
+		if(model.getFormEditStatus() == EFFormDataModel._FORM_EDIT_DELETE_) return;
+		
+		for(int i = 0 ; i < dataSetKeyList.size(); i++) {
+			eds = ers.getDataSet(dataSetKeyList.get(i).toString());
+			
+			for(int j = 0; j < eds.getRowCount(); j++) {
+				eds.getRowSet(j).putString("F_DJBH", ers.getString("F_DJBH", ""));
+				eds.getRowSet(j).putNumber("F_CRDATE", eds.getRowSet(j).getNumber("F_CRDATE", currTime.getTime()));
+				eds.getRowSet(j).putNumber("F_CHDATE", ers.getNumber("F_CHDATE", currTime.getTime()));
+				flbh = dffl.format(j+ 1);
+				eds.getRowSet(j).putString("F_FLBH", flbh);
+			}
+		}
+	}
+
+	@Override
+	public void finishSaveForm(Statement stmt, EFFormDataModel model,
+			EFDataSet itemDataSet) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void saveBillData(Statement stmt, EFFormDataModel model,
+			EFDataSet itemDataSet) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+}

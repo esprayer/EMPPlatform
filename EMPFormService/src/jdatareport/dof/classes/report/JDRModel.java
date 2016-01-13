@@ -1,0 +1,455 @@
+package jdatareport.dof.classes.report;
+
+import java.util.*;
+
+import java.awt.*;
+
+import org.jdom.*;
+import jdatareport.dof.classes.report.figure.*;
+import jdatareport.dof.classes.report.util.*;
+import jformservice.jdof.classes.*;
+import jtoolkit.xml.classes.*;
+import com.report.table.jxml.*;
+
+/**
+ *
+ * <p>Title: JDRModel</p>
+ * <p>Description: 报表数据模型</p>
+ * <p>Copyright: Copyright (c) 2004</p>
+ * <p>Company: Pansoft</p>
+ * @author Stephen Zhao
+ * @version 1.0
+ */
+public class JDRModel
+    implements JDRConstants {
+    /**
+     *
+     */
+    private String mRptName = null;
+    private JXMLBaseObject mXMLObj = null;
+    private JDRRptFigure mRptFigure = null;
+
+    private Hashtable mForms = new Hashtable();
+    private Hashtable mQuerys = new Hashtable();
+
+    private JDRQueryFormatInfo mQueryFormatObject = new JDRQueryFormatInfo();
+    /**
+     * 参数说明:
+     * 用途:变量替换,数据窗口参数
+     */
+    private Hashtable mParams = new Hashtable(); //公共参数
+
+    private int mMaxRow = 0;
+    private int mMaxCol = 0;
+
+    private int mTitleRowCount = 0;
+    private int mHeadRowCount = 0;
+    private int mBodyRowCount = 0;
+
+    /**
+     * 构造方法
+     */
+    public JDRModel(String rptName, Hashtable params) {
+        this.setRptName(rptName);
+        this.addParams(params);
+        init();
+    }
+
+    /**
+     * 构造方法
+     * @param XMLObj
+     */
+    public JDRModel(JXMLBaseObject XMLObj) {
+        this.mXMLObj = XMLObj;
+        init();
+    }
+
+//    /**
+//     * 绘制单个查询结果
+//     * @param queryResult
+//     */
+//    public JDRModel(TableManager tableManager,TreeTableDataManager dataManager) {
+//        init();
+//        Object [] queryResult = {tableManager,dataManager};
+//        JDRCellFigure cellFigure = new JDRCellFigure();
+//        cellFigure.setType(JDRConstants.TYPE_QUERY);
+//        cellFigure.setName("SingleQuery");
+//        cellFigure.setCaption("");
+//        cellFigure.setStartRow(0);
+//        cellFigure.setStartCol(0);
+//        cellFigure.setEndRow( -1);
+//        cellFigure.setEndCol( -1);
+//        cellFigure.setAlignment(this.DEFAULT_ALIGNMENT);
+//        cellFigure.setRowRef("");
+//        cellFigure.setColRef("");
+//
+//        Font font = new Font(this.DEFAULT_FONT_NAME,
+//                             Font.PLAIN,
+//                             this.DEFAULT_FONT_SIZE);
+//        cellFigure.setFont(font);
+//        mRptFigure.addCellFigure(cellFigure);
+//
+//        this.addQuery("SingleQuery", queryResult);
+//    }
+
+    /**
+     * 绘制单个查询结果
+     * @param queryResult
+     */
+    public JDRModel(TableManager tableManager,QueryDataSet queryDataSet) {
+        init();
+        Object [] queryResult = {tableManager,queryDataSet};
+        JDRCellFigure cellFigure = new JDRCellFigure();
+        cellFigure.setType(JDRConstants.TYPE_QUERY);
+        cellFigure.setName("SingleQuery");
+        cellFigure.setCaption("");
+        cellFigure.setStartRow(0);
+        cellFigure.setStartCol(0);
+        cellFigure.setEndRow( -1);
+        cellFigure.setEndCol( -1);
+        cellFigure.setAlignment(this.DEFAULT_ALIGNMENT);
+        cellFigure.setRowRef("");
+        cellFigure.setColRef("");
+
+        Font font = new Font(this.DEFAULT_FONT_NAME,
+                             Font.PLAIN,
+                             this.DEFAULT_FONT_SIZE);
+        cellFigure.setFont(font);
+        mRptFigure.addCellFigure(cellFigure);
+
+        this.addQuery("SingleQuery", queryResult);
+    }
+    /**
+     *
+     * @param qfo
+     */
+    public void setQueryFormat(JDRQueryFormatInfo qfo) {
+        this.mQueryFormatObject = qfo;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public JDRQueryFormatInfo getQueryFormat() {
+        return this.mQueryFormatObject;
+    }
+
+    /**
+     * 获得所有的数据窗口
+     * @return
+     */
+    public Hashtable getForms() {
+        return mForms;
+    }
+
+    /**
+     * 获得数据窗口,如果在缓存中没有则从后台打开
+     * @param name       数据窗口名称(逻辑名称)
+     * @param formName   数据窗口名称(物理名称)
+     * @param params     参数列表
+     * @return
+     */
+    public JDataWindow getForm(String name, String formName, Hashtable params) {
+        //客户端
+        for (Enumeration e = mForms.keys(); e.hasMoreElements(); ) {
+            String crtName = (String) e.nextElement();
+            JDataWindow crtForm = (JDataWindow) mForms.get(crtName);
+            /**
+             * 数据窗口名称相同而且合并后的参数相同
+             */
+            if (crtName.equals(name)) {
+                return crtForm;
+            }
+        }
+        //合并参数
+        Hashtable comboParams = JDRUtils.join(mParams, params);
+        JDataWindow form = JDRUtils.openForm(formName, comboParams);
+        if (form != null) {
+            this.addForm(name, form);
+        }
+        return form;
+    }
+
+    /**
+     * 添加数据窗口
+     * @param form     数据窗口名称(逻辑名称)
+     * @param params   参数列表
+     */
+    public void addForm(String name, JDataWindow form) {
+        if (form != null) {
+            if (!hasForm(name)) {
+                //合并参数
+                this.mForms.put(name, form);
+            }
+        }
+    }
+
+    /**
+     * 是否有改数据窗口
+     * @param name 数据窗口名称(逻辑名称)
+     * @return
+     */
+    public boolean hasForm(String name) {
+        if (name != null) {
+            return this.mForms.containsKey(name);
+        }
+        return false;
+    }
+
+    /**
+     * 获得所有的查询结果
+     * @return
+     */
+    public Hashtable getQuerys() {
+        return mQuerys;
+    }
+
+    /**
+     * 获得查询结果
+     * @param queryName 查询名称
+     * @return
+     */
+    public Object getQuery(String queryName) {
+        if (mQuerys.containsKey(queryName)) {
+            return mQuerys.get(queryName);
+        }
+        return null;
+    }
+
+    /**
+     * 添加查询
+     * @param queryName 查询名称
+     * @param queryResult 查询结果
+     * @return
+     */
+    public void addQuery(String queryName, Object queryResult) {
+        if (queryResult != null) {
+            if (!hasQuery(queryName)) {
+                mQuerys.put(queryName, queryResult);
+            }
+        }
+
+    }
+
+    /**
+     * 是否有查询结果
+     * @param queryName 查询名称
+     * @return
+     */
+    public boolean hasQuery(String queryName) {
+        if (queryName != null) {
+            return mQuerys.containsKey(queryName);
+        }
+        return false;
+    }
+
+    /**
+     * 获得参数列表
+     * @return
+     */
+    public Hashtable getParams() {
+        return mParams;
+    }
+
+    /**
+     * 添加参数
+     * @param name    键
+     * @param value   值
+     */
+    public void addParam(String name, String value) {
+        if (name != null && value != null) {
+            this.mParams.put(name, value);
+        }
+    }
+
+    /**
+     * 添加参数
+     * @param params 参数列表
+     */
+    public void addParams(Hashtable params) {
+        if (params != null) {
+            for (Enumeration e = params.elements(); e.hasMoreElements(); ) {
+                String key = (String) e.nextElement();
+                String val = (String) params.get(key);
+                this.addParam(key, val);
+            }
+        }
+    }
+
+    /**
+     * 初始化
+     */
+    private void init() {
+        if (mXMLObj != null) {
+            mRptFigure = new JDRRptFigure();
+
+            Element rptElmt = mXMLObj.GetElementByName("report");
+            mRptFigure.setName(JDRXMLUtils.getAttributeValue(rptElmt, "name", ""));
+
+            for (Iterator it = rptElmt.getChildren().iterator(); it.hasNext(); ) {
+                Element cellElmt = (Element) it.next();
+                JDRCellFigure cellFigure = new JDRCellFigure();
+                cellFigure.setType(JDRXMLUtils.getAttributeValue(cellElmt, "type", "text"));
+                cellFigure.setName(JDRXMLUtils.getAttributeValue(cellElmt, "name", ""));
+                cellFigure.setCaption(JDRXMLUtils.getAttributeValue(cellElmt, "caption", ""));
+                cellFigure.setStartRow(JDRXMLUtils.getAttributeValue(cellElmt, "row0", 0));
+                cellFigure.setStartCol(JDRXMLUtils.getAttributeValue(cellElmt, "col0", 0));
+                cellFigure.setEndRow(JDRXMLUtils.getAttributeValue(cellElmt, "row1", 0));
+                cellFigure.setEndCol(JDRXMLUtils.getAttributeValue(cellElmt, "col1", 0));
+                cellFigure.setAlignment(JDRXMLUtils.getAttributeValue(cellElmt, "alignment", this.DEFAULT_ALIGNMENT));
+                cellFigure.setRowRef(JDRXMLUtils.getAttributeValue(cellElmt, "rowref", ""));
+                cellFigure.setColRef(JDRXMLUtils.getAttributeValue(cellElmt, "colref", ""));
+                //Font
+                String fontStyle = JDRXMLUtils.getAttributeValue(cellElmt, "fontstyle", this.DEFAULT_FONT_STYLE);
+
+                int fs = Font.PLAIN;
+                if (fontStyle.equals("bold")) {
+                    fs = Font.BOLD;
+                }
+                if (fontStyle.equals("italic")) {
+                    fs |= Font.ITALIC;
+                }
+                Font font = new Font(JDRXMLUtils.getAttributeValue(cellElmt, "fontname", this.DEFAULT_FONT_NAME),
+                                     fs,
+                                     JDRXMLUtils.getAttributeValue(cellElmt, "fontsize", this.DEFAULT_FONT_SIZE));
+                //
+                cellFigure.setFont(font);
+                if (JDRXMLUtils.getAttributeValue(cellElmt, "type", "text").equals("form")) {
+                    cellFigure.addAttribute("ds", JDRXMLUtils.getAttributeValue(cellElmt, "ds", ""));
+                    cellFigure.addAttribute("params", JDRXMLUtils.getAttributeValue(cellElmt, "params", ""));
+                }
+                cellFigure.setRowRef(JDRXMLUtils.getAttributeValue(cellElmt, "rowref", ""));
+                cellFigure.setColRef(JDRXMLUtils.getAttributeValue(cellElmt, "colref", ""));
+                mRptFigure.addCellFigure(cellFigure);
+            }
+        }
+        else {
+
+            this.mRptFigure = new JDRRptFigure();
+
+        }
+    }
+
+    /**
+     * 获得报表名称
+     * @return
+     */
+    public String getRptName() {
+        return mRptName;
+    }
+
+    /**
+     * 设置报表名称
+     * @param rptName
+     */
+    public void setRptName(String rptName) {
+        this.mRptName = rptName;
+    }
+
+    /**
+     * 获得RptFigure
+     * @return
+     */
+    public JDRRptFigure getRptFigure() {
+        return mRptFigure;
+    }
+
+    /**
+     * 设置RptFigure
+     * @param figure
+     */
+    public void setRptFigure(JDRRptFigure figure) {
+        if (figure != null) {
+            this.mRptFigure = figure;
+        }
+    }
+
+    /**
+     * 设置最大行数
+     * @param row
+     */
+    public void setMaxRow(int row) {
+        mMaxRow = row;
+    }
+
+    /**
+     * 设置最大列数
+     * @param col
+     */
+    public void setMaxCol(int col) {
+        mMaxCol = col;
+    }
+
+    /**
+     * 获得最大行数
+     * @return
+     */
+    public int getMaxRow() {
+        return mMaxRow;
+    }
+
+    /**
+     * 获得最大列数
+     * @return
+     */
+    public int getMaxCol() {
+        return mMaxCol;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getTitleRowCount() {
+        return this.mTitleRowCount;
+    }
+
+    /**
+     *
+     * @param titleRowCount
+     */
+    public void setTitleRowCount(int titleRowCount) {
+        if (titleRowCount > this.mTitleRowCount) {
+            this.mTitleRowCount = titleRowCount;
+        }
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getHeadRowCount() {
+        return this.mHeadRowCount;
+    }
+
+    /**
+     *
+     * @param headRowCount
+     */
+    public void setHeadRowCount(int headRowCount) {
+        if (headRowCount > this.mHeadRowCount) {
+            this.mHeadRowCount = headRowCount;
+        }
+
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getBodyRowCount() {
+        return this.getMaxRow() + 1 - getTitleRowCount() - getHeadRowCount();
+    }
+
+    /**
+     *
+     * @param bodyRowCount
+     */
+    public void setBodyRowCount(int bodyRowCount) {
+        if (bodyRowCount > this.mBodyRowCount) {
+            this.mBodyRowCount = bodyRowCount;
+        }
+
+    }
+}

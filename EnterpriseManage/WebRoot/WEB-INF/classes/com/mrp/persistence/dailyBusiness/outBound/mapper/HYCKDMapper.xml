@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.mrp.persistence.dailyBusiness.outBound.mapper.HYCKDMapper">
+	<resultMap id="rm" type="com.mrp.persistence.dailyBusiness.outBound.bean.HYCKD">   
+		<result property="F_DATE" jdbcType="VARCHAR" column="F_DATE"/>		 	 
+		<result property="F_KJQJ" jdbcType="VARCHAR" column="F_KJQJ"/>		 
+		<result property="F_DJBH" jdbcType="VARCHAR" column="F_DJBH"/>
+        <result property="F_GUID" jdbcType="VARCHAR" column="F_GUID"/>
+        <result property="F_XMBH" jdbcType="VARCHAR" column="F_XMBH"/>
+        <result property="F_XMMC" jdbcType="VARCHAR" column="F_XMMC"/>	
+        <result property="F_CKBH" jdbcType="VARCHAR" column="F_CKBH"/>
+        <result property="F_CKMC" jdbcType="VARCHAR" column="F_CKMC"/>	
+        <result property="F_BZ" jdbcType="VARCHAR" column="F_BZ"/>	
+        <result property="F_DJZT" jdbcType="VARCHAR" column="F_DJZT"/>        
+		<result property="F_LLRID" jdbcType="VARCHAR" column="F_LLRID"/>
+        <result property="F_LLRMC" jdbcType="VARCHAR" column="F_LLRMC"/>	
+		<result property="F_BZRID" jdbcType="VARCHAR" column="F_BZRID"/>
+        <result property="F_BZRMC" jdbcType="VARCHAR" column="F_BZRMC"/>	
+		<result property="F_SBRID" jdbcType="VARCHAR" column="F_SBRID"/>
+        <result property="F_SBRMC" jdbcType="VARCHAR" column="F_SBRMC"/>				
+        <result property="F_CRDATE" jdbcType="DECIMAL" column="DECIMAL"/>
+        <result property="F_CHDATE" jdbcType="DECIMAL" column="DECIMAL"/>
+        <result property="F_SBDATE" jdbcType="DECIMAL" column="F_SBDATE"/>
+	</resultMap>
+	
+	<select id="loadHYCKD" resultMap="rm">
+		SELECT 
+			F_DJBH,
+			F_GUID,
+			F_KJQJ,	
+			F_DATE,	
+	        F_DJZT,
+	        F_BZ,		
+			F_BZRID,     
+			F_LLRID,
+			F_SBRID,
+			LL.F_ZGMC AS F_LLRMC,
+			ZD.USER_NAME AS F_BZRMC,   
+			SB.USER_NAME AS F_SBRMC,   
+			HYCKD.F_CKBH,
+			HYCKZD.F_CKMC,
+			HYCKD.F_XMBH,
+			HYXMZD.F_XMMC,
+			HYXMZD.F_XMZT,
+	        HYCKD.F_CRDATE,
+			HYCKD.F_CHDATE,
+			HYCKD.F_SBDATE
+	    FROM HYCKD 
+		LEFT JOIN HYCKZD ON HYCKD.F_CKBH = HYCKZD.F_CKBH
+		LEFT JOIN HYXMZD ON HYCKD.F_XMBH = HYXMZD.F_XMBH
+		LEFT JOIN HYZGZD LL ON HYCKD.F_LLRID = LL.F_ZGBH
+		LEFT JOIN BSUSER ZD ON HYCKD.F_BZRID = ZD.USER_ID  	
+		LEFT JOIN BSUSER SB ON HYCKD.F_SBRID = SB.USER_ID
+	    WHERE 
+			<if test="F_DJZT!=null" >
+				F_DJZT = #{F_DJZT} AND 
+			</if>
+			<if test="F_CKBH!=null" >
+				HYCKD.F_CKBH = #{F_CKBH} AND 
+			</if>
+			<if test="F_XMBH!=null" >
+				HYCKD.F_XMBH = #{F_XMBH} AND 
+			</if>
+			<if test="F_GUID!=null" >
+				F_GUID = #{F_GUID} AND 
+			</if>
+			<if test="F_DJBH!=null" >
+				F_DJBH = #{F_DJBH} AND 
+			</if>
+	        F_KJQJ = #{F_KJQJ}
+		ORDER BY F_DJBH
+	</select>
+	
+	<select id="loadHYCLRKMX" resultMap="rm">
+		SELECT 
+			F_DJBH,
+			F_KJQJ,
+			F_GUID,
+			F_FLBH,
+	        HYCLRK.F_CLBH,
+	        HYCLZD.F_CLMC,
+	        HYCLRK.F_XMBH,
+	        HYXMZD.F_XMMC,
+	        HYCLRK.F_CPBH,	
+			HYCPZD.F_CPMC,
+			HYCLRK.F_DWBH,	
+			HYDWZD.F_DWMC,
+	        F_CLDJ,		
+			F_RKSL,  
+			F_RKLX,      
+	        HYCLRK.F_CRDATE,
+			HYCLRK.F_CHDATE,
+			HYCKD.F_SBDATE
+	    FROM HYCLRK, HYCLZD, HYXMZD, HYCPZD, HYDWZD
+	    WHERE 
+	        HYCLRK.F_KJQJ = #{F_KJQJ} AND HYCLRK.F_DJBH = #{F_DJBH} AND HYCLRK.F_GUID = #{F_GUID} AND 
+		    HYCLRK.F_FLBH = #{F_FLBH} AND HYCLRK.F_CLBH = HYCLZD.F_CLBH AND 
+			HYCLRK.F_XMBH = HYXMZD.F_XMBH AND HYCLRK.F_CPBH = HYCPZD.F_CPBH AND 
+			HYCLRK.F_DWBH = HYDWZD.F_DWBH
+		ORDER BY F_FLBH
+	</select>
+
+</mapper>
+

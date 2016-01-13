@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.mrp.persistence.sysConfigure.company.mapper.HYCSZDMapper">
+	<resultMap id="rm" type="com.mrp.persistence.sysConfigure.company.bean.HYCSZD">
+        <result property="F_CSBH" jdbcType="VARCHAR" column="F_CSBH"/>
+        <result property="F_CSMC" jdbcType="VARCHAR" column="F_CSMC"/>       
+        <result property="F_SYZT" jdbcType="INTEGER" column="F_SYZT"/>
+        <result property="F_CRDATE" jdbcType="TIMESTAMP" column="F_CRDATE"/>
+        <result property="F_CHDATE" jdbcType="TIMESTAMP" column="F_CHDATE"/>
+	</resultMap>
+	
+	<!-- 查询所有厂商 -->
+	<select id="load" resultMap="rm">
+		SELECT 
+	        F_CSBH,
+	        F_CSMC,	
+			F_SYZT,        
+	        F_CRDATE,
+			F_CHDATE
+	    FROM HYCSZD
+	    WHERE 
+	        HYCSZD.F_CSBH = #{F_CSBH}
+		ORDER BY F_CRDATE
+	</select>
+	
+	<!-- 查询所有厂商 -->
+	<select id="loadHYCS" resultMap="rm">
+		SELECT 
+	        F_CKBH,
+	        F_CKMC,
+	        HYCKZD.F_BMBH,
+	        HYBMZD.F_BMMC,
+	        HYCKZD.F_ZGBH,	
+			HYZGZD.F_ZGMC,
+	        F_MS,		
+			HYCKZD.F_SYZT,        
+	        HYCKZD.F_CRDATE,
+			HYCKZD.F_CHDATE
+	    FROM HYCKZD, HYBMZD, HYZGZD
+	    WHERE 
+	        HYCKZD.F_BMBH = #{F_BMBH} AND HYCKZD.F_CKBH = #{F_CKBH} AND 
+		    HYCKZD.F_BMBH = HYBMZD.F_BMBH AND HYCKZD.F_ZGBH = HYZGZD.F_ZGBH
+		ORDER BY F_CRDATE
+	</select>
+	
+	<!-- 查询所有厂商 -->
+	<select id="findAll" resultMap="rm">
+    	SELECT 
+	        F_CSBH,
+	        F_CSMC,	        
+			F_SYZT,        
+	        F_CRDATE,
+			F_CHDATE
+	    FROM HYCSZD
+		ORDER BY F_CRDATE
+    </select>
+	
+	<!-- 查询符合条件的厂商 -->
+	<select id="findById" resultMap="rm">
+		SELECT
+			F_CSBH,
+	        F_CSMC,
+			F_SYZT,        
+	        F_CRDATE,
+			F_CHDATE
+	    FROM HYCSZD
+	    WHERE 
+			<if test="F_SYZT!=null" >
+				F_SYZT = #{F_SYZT} AND 
+			</if>
+			<if test="F_CSBH!=null" >
+				F_CSBH like "%"#{F_CSBH,jdbcType=VARCHAR}"%" AND 
+			</if>	 
+			1 = 1       
+		ORDER BY F_CRDATE    	
+    </select>
+
+	<!-- 按Id删除 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM HYCSZD WHERE F_CSBH = #{F_CSBH}
+    </delete>
+	
+     <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="OBJ_ID">
+        INSERT INTO HYCSZD (
+        	F_CSBH,
+	        F_CSMC,	
+			F_SYZT,        
+	        F_CRDATE,
+			F_CHDATE
+        ) VALUES (
+        	#{F_CSBH} ,
+        	#{F_CSMC} ,        	
+        	#{F_SYZT} ,
+        	#{F_CRDATE} ,
+			#{F_CHDATE}
+        )
+	</insert>
+	
+	<update id="update" parameterType="com.mrp.persistence.sysConfigure.deport.bean.HYCKZD">
+        UPDATE HYCSZD SET
+	        F_CSMC = #{F_CSMC} ,        
+	        F_SYZT = #{F_SYZT} ,
+	        F_CHDATE = #{F_CHDATE}
+        WHERE 
+	        F_CSBH = #{F_CSBH}
+	</update>
+</mapper>

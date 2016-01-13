@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/hyeclLib"/>
+	<classpathentry kind="lib" path="D:/HyeclWorkSpace/HyeclEmp/WebRoot/WEB-INF/lib/EMPCMS.jar"/>
+	<classpathentry kind="lib" path="D:/HyeclWorkSpace/HyeclEmp/WebRoot/WEB-INF/lib/EMPDBExpress.jar"/>
+	<classpathentry kind="lib" path="D:/HyeclWorkSpace/HyeclEmp/WebRoot/WEB-INF/lib/EMPFormManager.jar" sourcepath="/EMPFormManager/src"/>
+	<classpathentry kind="lib" path="D:/HyeclWorkSpace/HyeclEmp/WebRoot/WEB-INF/lib/EMPService.jar"/>
+	<classpathentry kind="lib" path="D:/HyeclWorkSpace/HyeclEmp/WebRoot/WEB-INF/lib/JFrameworkSDK.jar"/>
+	<classpathentry kind="lib" path="D:/HyeclWorkSpace/HyeclEmp/WebRoot/WEB-INF/lib/JEMPSDK.jar"/>
+	<classpathentry kind="lib" path="D:/HyeclWorkSpace/HyeclEmp/WebRoot/WEB-INF/lib/JEMPXML.jar"/>
+	<classpathentry kind="lib" path="D:/HyeclWorkSpace/HyeclEmp/WebRoot/WEB-INF/lib/EMPFormBuilder.jar"/>
+	<classpathentry kind="lib" path="D:/HyeclWorkSpace/HyeclEmp/WebRoot/WEB-INF/lib/EMPBase.jar"/>
+	<classpathentry kind="output" path="classes"/>
+</classpath>

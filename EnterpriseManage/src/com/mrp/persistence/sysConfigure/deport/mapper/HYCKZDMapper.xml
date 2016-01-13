@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.mrp.persistence.sysConfigure.deport.mapper.HYCKZDMapper">
+	<resultMap id="rm" type="com.mrp.persistence.sysConfigure.deport.bean.HYCKZD">
+        <result property="F_CKBH" jdbcType="VARCHAR" column="F_CKBH"/>
+        <result property="F_CKMC" jdbcType="VARCHAR" column="F_CKMC"/>
+        <result property="F_BMBH" jdbcType="VARCHAR" column="F_BMBH"/>
+		<result property="F_BMMC" jdbcType="VARCHAR" column="F_BMMC"/>
+        <result property="F_ZGBH" jdbcType="VARCHAR" column="F_ZGBH"/>
+		<result property="F_ZGMC" jdbcType="VARCHAR" column="F_ZGMC"/>
+        <result property="F_MS" jdbcType="VARCHAR" column="F_MS"/>        
+        <result property="F_SYZT" jdbcType="INTEGER" column="F_SYZT"/>
+        <result property="F_CRDATE" jdbcType="TIMESTAMP" column="F_CRDATE"/>
+        <result property="F_CHDATE" jdbcType="TIMESTAMP" column="F_CHDATE"/>
+	</resultMap>
+	
+	<select id="findCkByBm" resultMap="rm">
+		SELECT 
+	        F_CKBH,
+	        F_CKMC,
+	        HYCKZD.F_BMBH,
+	        HYBMZD.F_BMMC,
+	        HYCKZD.F_ZGBH,	
+			HYZGZD.F_ZGMC,
+	        F_MS,		
+			HYCKZD.F_SYZT,        
+	        HYCKZD.F_CRDATE,
+			HYCKZD.F_CHDATE
+	    FROM HYCKZD, HYBMZD, HYZGZD
+	    WHERE 
+	        HYCKZD.F_BMBH = #{F_BMBH} AND HYCKZD.F_BMBH = HYBMZD.F_BMBH AND HYCKZD.F_ZGBH = HYZGZD.F_ZGBH
+	        AND HYZGZD.F_SXBM = HYBMZD.F_BMBH
+		ORDER BY F_CRDATE
+	</select>
+	
+	<select id="loadHYCK" resultMap="rm">
+		SELECT 
+	        F_CKBH,
+	        F_CKMC,
+	        HYCKZD.F_BMBH,
+	        HYBMZD.F_BMMC,
+	        HYCKZD.F_ZGBH,	
+			HYZGZD.F_ZGMC,
+	        F_MS,		
+			HYCKZD.F_SYZT,        
+	        HYCKZD.F_CRDATE,
+			HYCKZD.F_CHDATE
+	    FROM HYCKZD, HYBMZD, HYZGZD
+	    WHERE 
+	        HYCKZD.F_BMBH = #{F_BMBH} AND HYCKZD.F_CKBH = #{F_CKBH} AND 
+	        HYZGZD.F_SXBM = HYBMZD.F_BMBH AND 
+		    HYCKZD.F_BMBH = HYBMZD.F_BMBH AND HYCKZD.F_ZGBH = HYZGZD.F_ZGBH
+		ORDER BY F_CRDATE
+	</select>
+
+	<select id="loadHYCKZD" resultMap="rm">
+		SELECT 
+	        F_CKBH,
+	        F_CKMC,
+	        HYCKZD.F_BMBH,
+	        HYCKZD.F_ZGBH,	
+	        F_MS,		
+			HYCKZD.F_SYZT,        
+	        HYCKZD.F_CRDATE,
+			HYCKZD.F_CHDATE
+	    FROM HYCKZD
+	    WHERE 
+	        HYCKZD.F_CKBH = #{F_CKBH}
+	</select>
+	
+	<!-- 按Id删除 -->
+	<delete id="deleteHYCK" parameterType="java.lang.Integer">
+        DELETE FROM HYCKZD WHERE
+        F_CKBH = #{F_CKBH} AND F_BMBH = #{F_BMBH}
+    </delete>
+     <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="OBJ_ID">
+        INSERT INTO HYCKZD (
+        	F_CKBH,
+	        F_CKMC,
+	        F_BMBH,
+	        F_ZGBH,				
+	        F_MS,		
+			F_SYZT,        
+	        F_CRDATE,
+			F_CHDATE
+        ) VALUES (
+        	#{F_CKBH} ,
+        	#{F_CKMC} ,
+        	#{F_BMBH} ,
+        	#{F_ZGBH} ,
+        	#{F_MS} ,
+        	#{F_SYZT} ,
+        	#{F_CRDATE} ,
+			#{F_CHDATE}
+        )
+	</insert>
+
+	<select id="findAll" resultMap="rm">
+    	SELECT 
+	        F_ZGBH,
+	        F_ZGMC,
+	        F_SJHM,
+	        F_BGDH,
+	        F_YHYX,	
+			F_SFGLY,
+	        F_SXBM,		
+			F_SYZT,        
+	        F_CRDATE,
+			F_CHDATE
+	    FROM HYZGZD
+		ORDER BY F_CRDATE
+    </select>
+	
+	<select id="findCkByBms" resultMap="rm">
+		SELECT
+			F_CKBH,
+	        F_CKMC,
+	        HYCKZD.F_BMBH,
+	        HYBMZD.F_BMMC,
+	        HYCKZD.F_ZGBH,	
+			HYZGZD.F_ZGMC,
+	        F_MS,		
+			HYCKZD.F_SYZT,        
+	        HYCKZD.F_CRDATE,
+			HYCKZD.F_CHDATE
+	    FROM HYCKZD, HYBMZD, HYZGZD
+	    WHERE 
+	        HYCKZD.F_CKBH like "%"#{F_CKBH,jdbcType=VARCHAR}"%" AND HYCKZD.F_BMBH = #{F_BMBH} AND HYZGZD.F_SXBM = HYBMZD.F_BMBH AND HYCKZD.F_BMBH = HYBMZD.F_BMBH AND HYCKZD.F_ZGBH = HYZGZD.F_ZGBH
+		ORDER BY F_CRDATE    	
+    </select>
+	
+	<update id="update" parameterType="com.mrp.persistence.sysConfigure.deport.bean.HYCKZD">
+        UPDATE HYCKZD SET
+	        F_CKMC = #{F_CKMC} ,
+	        F_ZGBH = #{F_ZGBH} ,	        
+	        F_SYZT = #{F_SYZT} ,
+	        F_MS = #{F_MS} ,
+	        F_CHDATE = #{F_CHDATE}
+        WHERE 
+	        F_CKBH = #{F_CKBH} AND F_BMBH = #{F_BMBH}
+	</update>
+</mapper>
+

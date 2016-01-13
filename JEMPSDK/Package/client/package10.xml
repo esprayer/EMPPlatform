@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="gb2312"?>
+<package id="" caption="装配清单">
+  <com.efounder.sql.JConnection>
+    <item implement="com.efounder.eai.service.EAIConnection" />
+  </com.efounder.sql.JConnection>
+</package>

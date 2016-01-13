@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="gb2312"?>
+<package id="" caption="装配清单">
+  <BIZServiceComponentPalettes caption="服务组件面板定义">
+    <item id="bizFormServicePlugins" caption="表单服务组件列表" icon="oicons/update.png"/>
+  </BIZServiceComponentPalettes>
+  <bizFormServicePlugins>
+  	<item id="formDataModelInit" caption="表单模型初始化" modelClazz="com.efounder.form.server.resolver.plugins.FormDataModelInitialization" icon16="jprofiler/method_down_16.png" icon32="jprofiler/method_down_16.png" />
+  	<item id="formDataProvider" caption="表单数据信息加载" modelClazz="com.efounder.form.server.provider.plugins.FormDataProvider" icon16="jprofiler/method_down_16.png" icon32="jprofiler/method_down_16.png" />
+    <item id="formEnumDataProvider" caption="枚举表单信息加载" modelClazz="com.efounder.form.server.provider.plugins.FormHeadEnumProvider" icon16="jprofiler/method_down_16.png" icon32="jprofiler/method_down_16.png" />
+    <item id="FormDataProvider2" caption="保存表单数据加载插件2" modelClazz="com.efounder.form.server.provider.plugins.FormDataProvider2" icon16="jprofiler/method_down_16.png" icon32="jprofiler/method_down_16.png" />
+    <item id="FormCheckValue" caption="检查表单值插件" modelClazz="com.efounder.form.server.resolver.plugins.FormCheckValue" icon16="jprofiler/method_down_16.png" icon32="jprofiler/method_down_16.png" />    
+  </bizFormServicePlugins>
+</package>

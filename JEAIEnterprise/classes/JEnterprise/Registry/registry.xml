@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!-- edited with XML Spy v4.4 U (http://www.xmlspy.com) by Skyline (efounder) --><REGISTRY ver="1.0.0">
+	<!-- 系统框架与系统对象注册信息就放在此项目中 -->
+	<HKEY_CLASSES_ROOT>
+		<!-- 存放系统中可用的框架 -->
+		<FRAMEWORKS>
+			<!-- 每一个框架的定义 -->
+			<CLSID guid="00000000-0000-0000-0000000000000001" id="" name="业务对象框架" version="1.0.0">
+				<!-- 框架中包含哪些对象在此定义 -->
+				<Objects>
+				</Objects>
+			</CLSID>
+			<CLSID guid="00000000-0000-0000-0000000000000002" id="" name="数据对象框架" version="1.0.0">
+				<!-- 框架中包含哪些对象在此定义 -->
+				<Objects>
+				</Objects>
+			</CLSID>
+			<CLSID guid="00000000-0000-0000-0000000000000003" id="" name="抽像数据对象框架" version="1.0.0">
+				<!-- 框架中包含哪些对象在此定义 -->
+				<Objects>
+				</Objects>
+			</CLSID>
+		</FRAMEWORKS>
+		<!-- 存放系统中可用的对象类定义 -->
+		<CLASSES>
+			<CLSID_BusinessActiveObjectCategory>
+				<!-- 每个对象的详细定义 -->
+				<!-- JBOF 业务对象 -->
+			</CLSID_BusinessActiveObjectCategory>
+			<CLSID_DataActiveObjectCategory>
+				<!-- JDOF 数据对象 -->
+				<!-- 公用服务数据对象 -->
+			</CLSID_DataActiveObjectCategory>
+			<CLSID_AbstractDataActiveObjectCategory>
+				<!-- JDAL 抽象数据对象 -->
+				<!-- 公用服务中的数据抽象对象 -->
+			</CLSID_AbstractDataActiveObjectCategory>
+			<CLSID_FlowCortrolObjectCategory>
+				<!-- 系统中流程控制对象(也在对象列表中存在，用不同的类型进行区分) -->
+				<!-- JFLOW 流程控制对象 -->
+			</CLSID_FlowCortrolObjectCategory>
+		</CLASSES>
+	</HKEY_CLASSES_ROOT>
+	<HKEY_CURRENT_USER />
+	<HKEY_LOCAL_MACHINE>
+		<SOFTWARE>
+			<JActiveFrameworkApplications>
+                      		<Framework>
+                              		<Client>
+                              			<BusinessAcitveFramework>
+                              				<Framework guid="00000000-0000-0000-0000000000000001" />
+                              			</BusinessAcitveFramework>
+                              			<DataActiveFramework>
+                              				<Framework guid="00000000-0000-0000-0000000000000002" />
+                              			</DataActiveFramework>
+                              			<AbstractDataActiveFramework>
+                              				<Framework guid="00000000-0000-0000-0000000000000003" />
+                              			</AbstractDataActiveFramework>
+                              		</Client>
+                              		<Middle>
+                              			<AbstractDataActiveFramework>
+                              				<Framework guid="00000000-0000-0000-0000000000000003" />
+                              			</AbstractDataActiveFramework>
+                              		</Middle>
+                              		<Server>
+                              			<AbstractDataActiveFramework>
+                              				<Framework guid="00000000-0000-0000-0000000000000003" />
+                              			</AbstractDataActiveFramework>
+                              		</Server>
+                                </Framework>
+                                <Application>
+					<efounder>
+					</efounder>
+                                </Application>
+			</JActiveFrameworkApplications>
+		</SOFTWARE>
+	</HKEY_LOCAL_MACHINE>
+	<HKEY_USERS />
+	<HKEY_CURRENT_CONFIG />
+</REGISTRY>

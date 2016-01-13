@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.mrp.persistence.dailyBusiness.storage.mapper.HYRKDMXMapper">
+	<resultMap id="rm" type="com.mrp.persistence.dailyBusiness.storage.bean.HYRKDMX">
+		<result property="F_DJBH" jdbcType="VARCHAR" column="F_DJBH"/>
+        <result property="F_GUID" jdbcType="VARCHAR" column="F_GUID"/>
+        <result property="F_KJQJ" jdbcType="VARCHAR" column="F_KJQJ"/>
+		<result property="F_FLBH" jdbcType="DECIMAL" column="F_FLBH"/>
+		<result property="F_FLGUID" jdbcType="VARCHAR" column="F_FLGUID"/>
+        <result property="F_CLBH" jdbcType="VARCHAR" column="F_CLBH"/>
+        <result property="F_CLMC" jdbcType="VARCHAR" column="F_CLMC"/>
+        <result property="F_XMBH" jdbcType="VARCHAR" column="F_XMBH"/>
+		<result property="F_XMMC" jdbcType="VARCHAR" column="F_XMMC"/>
+        <result property="F_CPBH" jdbcType="VARCHAR" column="F_CPBH"/>
+		<result property="F_CPMC" jdbcType="VARCHAR" column="F_CPMC"/>
+		<result property="F_DWBH" jdbcType="VARCHAR" column="F_DWBH"/>
+		<result property="F_DWMC" jdbcType="VARCHAR" column="F_DWMC"/>
+		<result property="F_CSBH" jdbcType="VARCHAR" column="F_CSBH"/>
+		<result property="F_CSMC" jdbcType="VARCHAR" column="F_CSMC"/>
+        <result property="F_CLDJ" jdbcType="DECIMAL" column="F_CLDJ"/>		
+		<result property="F_RKSL" jdbcType="DECIMAL" column="F_RKSL"/>
+		<result property="F_ROW" jdbcType="INTEGER" column="F_ROW"/>
+		<result property="F_COL" jdbcType="INTEGER" column="F_COL"/>
+        <result property="F_CRDATE" jdbcType="DECIMAL" column="F_CRDATE"/>
+        <result property="F_CHDATE" jdbcType="DECIMAL" column="F_CHDATE"/>
+        <result property="F_SBDATE" jdbcType="DECIMAL" column="F_SBDATE"/>
+	</resultMap>
+	
+	<select id="loadHYCLRKMXByKey" resultMap="rm">
+		SELECT 
+			F_DJBH,
+			F_KJQJ,
+			F_GUID,
+			F_FLBH,
+			F_FLGUID,
+	        HYRKDMX.F_CLBH,
+	        HYCLZD.F_CLMC,
+	        HYRKDMX.F_XMBH,
+	        HYXMZD.F_XMMC,
+	        HYRKDMX.F_CPBH,	
+			HYCPZD.F_CPMC,
+			HYRKDMX.F_DWBH,	
+			HYDWZD.F_DWMC,
+			HYRKDMX.F_CSBH,	
+			HYCSZD.F_CSMC,
+	        F_CLDJ,		
+			F_RKSL,    
+			F_ROW,
+			F_COL,  
+	        HYRKDMX.F_CRDATE,
+			HYRKDMX.F_CHDATE
+	    FROM HYRKDMX, HYCLZD, HYXMZD, HYCPZD, HYDWZD, HYCSZD
+	    WHERE 
+			<if test="F_DJBH!=null" >
+				F_DJBH = #{F_DJBH} AND 
+			</if>
+		
+			<if test="F_GUID!=null" >
+				F_GUID = #{F_GUID} AND 
+			</if>
+		
+			<if test="F_FLBH!=null" >
+				F_FLBH = #{F_FLBH} AND 
+			</if>
+			
+			<if test="F_FLGUID!=null" >
+				F_FLGUID = #{F_FLGUID} AND 
+			</if>
+		
+	        HYRKDMX.F_KJQJ = #{F_KJQJ} AND HYRKDMX.F_CLBH = HYCLZD.F_CLBH AND 
+			HYRKDMX.F_XMBH = HYXMZD.F_XMBH AND HYRKDMX.F_CPBH = HYCPZD.F_CPBH AND 
+			HYRKDMX.F_DWBH = HYDWZD.F_DWBH AND HYRKDMX.F_CSBH = HYCSZD.F_CSBH
+		ORDER BY F_FLGUID, F_FLBH
+	</select>
+	
+	<select id="loadHYCLRKMX" resultMap="rm">
+		SELECT 
+			F_DJBH,
+			F_KJQJ,
+			F_GUID,
+			F_FLBH,
+	        HYCLRK.F_CLBH,
+	        HYCLZD.F_CLMC,
+	        HYCLRK.F_XMBH,
+	        HYXMZD.F_XMMC,
+	        HYCLRK.F_CPBH,	
+			HYCPZD.F_CPMC,
+			HYCLRK.F_DWBH,	
+			HYDWZD.F_DWMC,
+	        F_CLDJ,		
+			F_RKSL,    
+			F_ROW,
+			F_COL, 
+	        HYCLRK.F_CRDATE,
+			HYCLRK.F_CHDATE
+	    FROM HYCLRK, HYCLZD, HYXMZD, HYCPZD, HYDWZD, HYCSZD
+	    WHERE 
+	        HYCLRK.F_KJQJ = #{F_KJQJ} AND HYCLRK.F_DJBH = #{F_DJBH} AND HYCLRK.F_GUID = #{F_GUID} AND 
+		    HYCLRK.F_FLBH = #{F_FLBH} AND HYCLRK.F_CLBH = HYCLZD.F_CLBH AND 
+			HYCLRK.F_XMBH = HYXMZD.F_XMBH AND HYCLRK.F_CPBH = HYCPZD.F_CPBH AND 
+			HYCLRK.F_DWBH = HYDWZD.F_DWBH AND HYRKDMX.F_CSBH = HYCSZD.F_CSBH
+		ORDER BY F_FLGUID, F_FLBH
+	</select>
+
+	<!-- 按Id删除 -->
+	<delete id="deleteHYCLRKMX" parameterType="java.lang.Integer">
+        DELETE FROM HYRKDMX WHERE
+        F_KJQJ = #{F_KJQJ} AND F_DJBH = #{F_DJBH} AND F_FLGUID = #{F_FLGUID} AND F_FLBH = #{F_FLBH}
+    </delete>
+     <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="OBJ_ID">
+        INSERT INTO HYRKDMX (
+        	F_KJQJ,
+	        F_DJBH,
+	        F_GUID,
+	        F_FLBH,				
+	        F_CLBH,
+			F_XMBH,
+			F_CPBH,
+			F_DWBH,
+			F_CSBH,		
+			F_CLDJ,
+			F_RKSL,		
+			F_ROW,
+			F_COL,		       
+	        F_CRDATE,
+			F_CHDATE
+        ) VALUES (
+        	#{F_KJQJ} ,
+        	#{F_DJBH} ,
+        	#{F_GUID} ,
+        	#{F_FLBH} ,
+        	#{F_CLBH} ,
+        	#{F_XMBH} ,
+			#{F_CPBH} ,
+        	#{F_DWBH} ,
+			#{F_CSBH} ,
+        	#{F_CLDJ} ,
+			#{F_RKSL} ,
+			#{F_ROW} ,
+			#{F_COL} ,
+        	#{F_CRDATE} ,
+			#{F_CHDATE}
+        )
+	</insert>
+
+	<update id="update" parameterType="com.mrp.persistence.sysConfigure.deport.bean.HYCKZD">
+        UPDATE HYRKDMX SET
+	        F_CLBH = #{F_CLBH} ,
+	        F_XMBH = #{F_XMBH} ,	        
+	        F_CPBH = #{F_CPBH} ,
+			F_DWBH = #{F_DWBH} ,
+	        F_CLDJ = #{F_CLDJ} ,	        
+	        F_RKSL = #{F_RKSL} ,
+			F_ROW = #{F_ROW} ,
+			F_COL = #{F_COL} ,
+	        F_CHDATE = #{F_CHDATE}
+        WHERE 
+	        F_KJQJ = #{F_KJQJ} AND F_DJBH = #{F_DJBH} AND 
+			F_GUID = #{F_GUID} AND F_FLBH = #{F_FLBH}
+	</update>
+	
+	<update id="updateHYRKDMXTHCL" parameterType="com.mrp.persistence.sysConfigure.deport.bean.HYCKZD">
+        UPDATE HYRKDMX SET
+	        F_THSL = F_RKSL
+        WHERE 
+	        F_KJQJ = #{F_KJQJ} AND F_DJBH = #{F_DJBH}
+	</update>
+</mapper>

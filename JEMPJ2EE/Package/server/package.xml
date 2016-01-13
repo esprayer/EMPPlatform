@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="gb2312"?>
+<package id="" caption="装配清单">
+  <CLASSES id="" caption="可以在此注册对象，无需修改注册表文件">
+      <!-- JDAL 抽象数据对象 -->
+      <CLSID guid="00000000-0011-0010-0000000000000011" id="DataSetService"     name="数据集服务" class="com.efounder.server.DataServiceActiveObject" ver="1.0.0" type="CLSID_AbstractDataActiveObjectCategory" />
+  </CLASSES>
+  <ITLAMP_CheckPass>
+    <item id="" caption="" pluginClass="com.itlamp.pass.Check"/>
+  </ITLAMP_CheckPass>
+</package>

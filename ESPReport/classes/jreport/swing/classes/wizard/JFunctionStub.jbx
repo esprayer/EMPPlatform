@@ -1,0 +1,22 @@
+[PropertyInfo]
+CObj,java.util.Vector,false,false, , ,true,<default>
+cobj,String,false,false, , ,false,<default>
+des1,String,false,false, , ,false,<default>
+des2,String,false,false, , ,false,<default>
+DObj,java.util.Vector,false,false, , ,true,<default>
+dobj,String,false,false, , ,false,<default>
+functionString,String,false,false, , ,true,<default>
+id,String,false,false, , ,false,<default>
+param,java.util.Vector,false,false, , ,true,<default>
+param,String,false,false, , ,true,<default>
+paramList,java.util.Hashtable,false,false, , ,true,<default>
+ParamList,java.util.Hashtable,false,false, , ,false,<default>
+paramList1,java.util.Vector,false,false, , ,true,<default>
+ParamList1,java.util.Vector,false,false, , ,false,<default>
+ps,int,false,false, , ,false,<default>
+text,String,false,false, , ,false,<default>
+[IconNames]
+
+
+
+

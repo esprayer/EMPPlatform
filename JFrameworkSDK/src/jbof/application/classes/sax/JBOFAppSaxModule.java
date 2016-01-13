@@ -1,0 +1,83 @@
+package jbof.application.classes.sax;
+
+import jbof.application.classes.*;
+import org.jdom.*;
+
+import com.efounder.eai.application.classes.JBOFApplication;
+import com.efounder.eai.application.classes.JBOFApplicationStub;
+
+import jtoolkit.xml.classes.JDOMXMLBaseObject;
+/**
+ * <p>Title: Java Framework</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2002</p>
+ * <p>Company: </p>
+ * @author Skyline
+ * @version 1.0
+ */
+//--------------------------------------------------------------------------------------------------
+//描述:
+//设计: Skyline(2001.04.22)
+//实现: Skyline
+//修改:
+//--------------------------------------------------------------------------------------------------
+public class JBOFAppSaxModule extends JDOMXMLBaseObject {
+  private JBOFApplication    ba;
+  private JBOFApplicationStub BOFApplicationStub;
+  //----------------------------------------------------------------------------------------------
+  //描述: 模块定义文件的解析器的构造函数
+  //设计: Skyline(2001.12.29)
+  //实现: Skyline
+  //修改:
+  //----------------------------------------------------------------------------------------------
+  public JBOFAppSaxModule(JBOFApplication BA,JBOFApplicationStub bas) {
+      ba  = BA;
+      BOFApplicationStub = bas;
+  }
+  //----------------------------------------------------------------------------------------------
+  //描述: 模块定义文件的解析器解析过程
+  //设计: Skyline(2001.12.29)
+  //实现: Skyline
+  //修改:
+  //----------------------------------------------------------------------------------------------
+  public boolean parseXmlApplicationDefine(String uri) {
+    this.InitXMLURI(uri);
+    startApplication();
+    startStyle();
+    return true;
+  }
+  //----------------------------------------------------------------------------------------------
+  //描述: 开始一个元素的解析
+  //设计: Skyline(2001.12.29)
+  //实现: Skyline
+  //修改:
+  //----------------------------------------------------------------------------------------------
+  public void startApplication() {
+    Element E = this.GetElementByName("Application");
+      if ( E != null ) {
+        BOFApplicationStub.XML_OPERATE        = GetElementValue(E,"operate");        // 操作定义的XML描述
+        BOFApplicationStub.XML_STYLE          = GetElementValue(E,"style");          // MDI
+        BOFApplicationStub.description       = GetElementValue(E,"description");
+        BOFApplicationStub.img1              = GetElementValue(E,"img1");
+        BOFApplicationStub.img2              = GetElementValue(E,"img2");
+        BOFApplicationStub.img3              = GetElementValue(E,"img3");
+        BOFApplicationStub.img4              = GetElementValue(E,"img4");
+        BOFApplicationStub.img5              = GetElementValue(E,"img5");
+      }
+  }
+  //----------------------------------------------------------------------------------------------
+  //描述: 开始一个元素的解析
+  //设计: Skyline(2001.12.29)
+  //实现: Skyline
+  //修改:
+  //----------------------------------------------------------------------------------------------
+  public void startStyle() {
+      // 获取应用的模式
+      Element E = this.GetElementByName("STYLE");
+      if ( E != null ) {
+        BOFApplicationStub.XML_STYLE_MDI      = GetElementValue(E,"STYLE_MDI");
+        BOFApplicationStub.XML_STYLE_WIZARD   = GetElementValue(E,"STYLE_WIZARD");
+        BOFApplicationStub.XML_STYLE_EXPLORER = GetElementValue(E,"STYLE_EXPLORER");
+      }
+  }
+}

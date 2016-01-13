@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.dms.persistence.sysLogger.mapper.DMS_SYSLOGMapper">
+	<resultMap id="rm" type="com.dms.persistence.sysLogger.bean.DMS_SYSLOG">
+		<result property="F_ID" jdbcType="VARCHAR" column="F_ID"/>
+        <result property="F_CREATOR" jdbcType="VARCHAR" column="F_CREATOR"/>
+        <result property="F_IP" jdbcType="VARCHAR" column="F_IP"/>
+		<result property="F_MSG" jdbcType="VARCHAR" column="F_MSG"/>        
+        <result property="F_CRDATE" jdbcType="TIMESTAMP" column="F_CRDATE"/>        
+	</resultMap>
+	
+	<select id="SYSLogList" resultMap="rm">
+		SELECT 
+			F_ID,
+	        F_CREATOR,
+	        F_IP,
+	        F_MSG,					        
+	        F_CRDATE
+	    FROM DMS_SYSLOG
+		WHERE 			
+			F_CREATOR = #{F_CREATOR}
+		ORDER BY F_CRDATE
+	</select>
+	
+     <!-- 插入 -->
+    <insert id="insertSYSLog" useGeneratedKeys="true" parameterType="com.dms.persistence.sysLogger.bean.DMS_SYSLOG">
+        INSERT INTO DMS_SYSLOG (
+        	F_ID,
+	        F_CREATOR,
+	        F_IP,
+	        F_MSG,					        
+	        F_CRDATE
+        ) VALUES (
+        	#{sysLog.F_ID} ,
+        	#{sysLog.F_CREATOR} ,
+        	#{sysLog.F_IP} ,
+        	#{sysLog.F_MSG} ,
+        	#{sysLog.F_CRDATE}
+        )
+	</insert>
+</mapper>
+

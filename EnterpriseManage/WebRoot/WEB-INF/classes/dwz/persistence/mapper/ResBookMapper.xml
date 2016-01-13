@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="dwz.persistence.mapper.ResBookMapper">
+	<resultMap id="rm" type="dwz.persistence.beans.ResBook">
+        <result property="id" jdbcType="INTEGER" column="ID"/>
+        <result property="sn" jdbcType="VARCHAR" column="SN"/>
+        <result property="nameCn" jdbcType="VARCHAR" column="NAME_CN"/>
+        <result property="nameEn" jdbcType="VARCHAR" column="NAME_EN"/>
+        <result property="publish" jdbcType="VARCHAR" column="PUBLISH"/>
+        <result property="publishDate" jdbcType="DATE" column="PUBLISH_DATE"/>
+        <result property="insertDate" jdbcType="TIMESTAMP" column="INSERT_DATE"/>
+        <result property="updateDate" jdbcType="TIMESTAMP" column="UPDATE_DATE"/>
+	</resultMap>
+	
+	<select id="load" resultMap="rm">
+		SELECT 
+	        ID,
+	        SN,
+	        NAME_CN,
+	        NAME_EN,
+	        PUBLISH,
+	        PUBLISH_DATE,
+	        INSERT_DATE,
+	        UPDATE_DATE
+		FROM res_book 
+	    WHERE 
+	        ID = #{id} 
+	</select>
+	<!-- 查询所有的ID -->
+	<select id="findAllIds" resultType="java.lang.Integer">
+		SELECT ID FROM res_book
+	</select>
+	<!-- 查询所有 -->
+	<select id="getAll" parameterType="java.lang.Integer" resultMap="rm">
+		SELECT
+	        ID,
+	        SN,
+	        NAME_CN,
+	        NAME_EN,
+	        PUBLISH,
+	        PUBLISH_DATE,
+	        INSERT_DATE,
+	        UPDATE_DATE
+		FROM res_book
+		WHERE
+        ID = #{id} 
+	</select>
+	<!-- 按Id删除 -->
+	<delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM res_book WHERE
+        ID = #{id} 
+    </delete>
+     <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO res_book (
+        	ID ,
+        	SN ,
+        	NAME_CN ,
+        	NAME_EN ,
+        	PUBLISH ,
+        	PUBLISH_DATE ,
+        	INSERT_DATE ,
+        	UPDATE_DATE 
+        ) VALUES (
+        	#{id} ,
+        	#{sn} ,
+        	#{nameCn} ,
+        	#{nameEn} ,
+        	#{publish} ,
+        	#{publishDate} ,
+        	#{insertDate} ,
+        	#{updateDate} 
+        )
+	</insert>
+	
+	<select id="countAll" resultType="java.lang.Long">
+        SELECT count(ID) FROM res_book    
+    </select>
+    
+	<select id="findAll" resultMap="rm">
+    	SELECT 
+	        ID,
+	        SN,
+	        NAME_CN,
+	        NAME_EN,
+	        PUBLISH,
+	        PUBLISH_DATE,
+	        INSERT_DATE,
+	        UPDATE_DATE
+	    FROM res_book
+    </select>
+	
+	<!-- 更新 -->
+	<update id="updateSelective" parameterType="dwz.persistence.beans.ResBook">
+        UPDATE res_book 
+        	<set>
+			        <if test="SN!=null" >
+			        SN = #{sn} ,
+					</if>
+			        <if test="NAME_CN!=null" >
+			        NAME_CN = #{nameCn} ,
+					</if>
+			        <if test="NAME_EN!=null" >
+			        NAME_EN = #{nameEn} ,
+					</if>
+			        <if test="PUBLISH!=null" >
+			        PUBLISH = #{publish} ,
+					</if>
+			        <if test="PUBLISH_DATE!=null" >
+			        PUBLISH_DATE = #{publishDate} ,
+					</if>
+			        <if test="INSERT_DATE!=null" >
+			        INSERT_DATE = #{insertDate} ,
+					</if>
+			        <if test="UPDATE_DATE!=null" >
+			        UPDATE_DATE = #{updateDate} 
+					</if>
+	        </set>
+        WHERE 
+	        ID = #{id} 
+	</update>
+	
+	<update id="update" parameterType="dwz.persistence.beans.ResBook">
+        UPDATE res_book SET
+	        SN = #{sn} ,
+	        NAME_CN = #{nameCn} ,
+	        NAME_EN = #{nameEn} ,
+	        PUBLISH = #{publish} ,
+	        PUBLISH_DATE = #{publishDate} ,
+	        INSERT_DATE = #{insertDate} ,
+	        UPDATE_DATE = #{updateDate} 
+        WHERE 
+	        ID = #{id} 
+	</update>
+	
+</mapper>
+

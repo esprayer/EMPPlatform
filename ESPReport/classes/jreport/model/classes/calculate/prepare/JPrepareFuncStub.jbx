@@ -1,0 +1,14 @@
+[PropertyInfo]
+dobj,String,false,false, , ,true,<default>
+dobjList,java.util.ArrayList,false,false, , ,false,<default>
+funcString,String,false,false, , ,false,<default>
+funcXh,String,false,false, , ,false,<default>
+hzdx,String,false,false, , ,true,<default>
+hzdxList,java.util.ArrayList,false,false, , ,false,<default>
+ID,String,false,false, , ,false,<default>
+resultMap,java.util.HashMap,false,false, , ,false,<default>
+[IconNames]
+
+
+
+

@@ -1,0 +1,301 @@
+package jdatareport.dof.classes.report;
+
+import java.util.*;
+
+import java.awt.*;
+import javax.swing.*;
+
+import com.f1j.swing.*;
+import com.pub.util.*;
+import jdatareport.dof.classes.report.event.*;
+import jdatareport.dof.classes.report.filter.*;
+import jdatareport.dof.classes.report.paint.*;
+import jdatareport.dof.classes.report.util.*;
+
+/**
+ *
+ * <p>Title: JDRView</p>
+ * <p>Description: 报表视图</p>
+ * <p>Copyright: Copyright (c) 2004</p>
+ * <p>Company: Pansoft</p>
+ * @author Stephen Zhao
+ * @version 1.0
+ */
+public class JDRView
+    extends JPanel {
+  /**
+   * 过滤条件
+   */
+  public static final byte FILTER_ALL = 0;
+  public static final byte FILTER_DATA_ONLY = 1;
+  public static final byte FILTER_FORMAT_ONLY = 2;
+
+  protected String mRptName = null;
+  protected Hashtable mParams = null;
+
+  protected JBook mBook = null;
+  protected JDRModel mModel = null;
+  protected JDRCtrl mCtrl = new JDRCtrl();
+  protected JDRPainter mPainter = null;
+  /**
+   *
+   * @param painter JDRPainter
+   */
+  public void setJDRPainter(JDRPainter painter) {
+    mPainter = painter;
+  }
+  /**
+   *
+   * @return JDRPainter
+   */
+  public JDRPainter getJDRPainter() {
+    return mPainter;
+  }
+
+  /**
+   * 构造方法
+   * @param rptName 报表名称
+   */
+  public JDRView(String rptName, Hashtable params) {
+    try {
+      this.mRptName = rptName;
+      this.mParams = params;
+      init();
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * 构造方法
+   * @param model 数据模型
+   */
+  public JDRView(JDRModel model) {
+    try {
+      this.mModel = model;
+      this.mRptName = model.getRptName();
+      init();
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * 初始化
+   */
+
+  public void init() throws Exception {
+    JDREvent bEvent = new JDREvent(this, JDREvent.TYPE_BEFORE_INIT);
+    this.notifyListeners(bEvent);
+
+    if (mModel == null && mRptName != null) {
+      mModel = JDRUtils.loadModel(mRptName);
+      mModel.setRptName(mRptName);
+      mModel.addParams(mParams);
+    }
+
+    if (mModel != null) {
+      if (mBook == null) {
+        //取出来
+//        LookAndFeel lookfeel = com.efounder.eai.service.dof.JDOFResourceObject.
+//            getCurrentLookAndFeel();
+//        LookAndFeel oldfeel = com.efounder.eai.service.dof.JDOFResourceObject.getAlloyLookandFeel();
+//        javax.swing.UIManager.setLookAndFeel(oldfeel);
+        mBook = new JBook();
+//        javax.swing.UIManager.setLookAndFeel(lookfeel);
+        mBook.setSelection(0, 0, 0, 0);
+//        mBook.setAllowInCellEditing(true);
+        //            mBook.setAllowDesigner(false);
+        mBook.setAllowEditHeaders(false);
+        mBook.setAllowMoveRange(false);
+        //            mBook.setAllowArrows(false);
+        mBook.setAllowShortcutMenus(false);
+        //            mBook.setAllowTabs(false);
+        mBook.setShowZeroValues(false);
+        mBook.setShowSelections(JBook.eShowOn);
+        mPainter = new JDRPainter(mBook, mModel);
+        this.setLayout(new BorderLayout());
+        this.add(mBook, BorderLayout.CENTER);
+      }
+      mBook.setSheet(0);
+    }
+
+    JDREvent aEvent = new JDREvent(this, JDREvent.TYPE_AFTER_INIT);
+    this.notifyListeners(aEvent);
+  }
+
+  /**
+   * 加载数据
+   */
+  public void load() throws Exception {
+    JDREvent bEvent = new JDREvent(this, JDREvent.TYPE_BEFORE_LOAD);
+    this.notifyListeners(bEvent);
+
+    if (mModel != null && mPainter != null) {
+      //mPainter.draw(this.FILTER_ALL);
+      mPainter.initJDRPainter(mBook, mModel);
+      mPainter.draw();
+      setReportFormat();
+    }
+
+    JDREvent aEvent = new JDREvent(this, JDREvent.TYPE_AFTER_LOAD);
+    this.notifyListeners(aEvent);
+  }
+
+  /**
+   * 加载
+   */
+  public void load(byte viewFilter) throws Exception {
+    JDREvent bEvent = new JDREvent(this, JDREvent.TYPE_BEFORE_LOAD);
+    this.notifyListeners(bEvent);
+
+    if (mModel != null && mPainter != null) {
+      mPainter.mColFilter = null;
+      mPainter.draw(viewFilter);
+      setReportFormat();
+    }
+    JDREvent aEvent = new JDREvent(this, JDREvent.TYPE_AFTER_LOAD);
+    this.notifyListeners(aEvent);
+  }
+
+  /**
+   *
+   * @param filterExpressions
+   * @throws java.lang.Exception
+   */
+  public void load(JDRRowFilter rowFilter) throws Exception {
+    if (rowFilter != null) {
+      JDREvent bEvent = new JDREvent(this, JDREvent.TYPE_BEFORE_LOAD);
+      this.notifyListeners(bEvent);
+
+      if (mModel != null && mPainter != null) {
+        mPainter.draw(rowFilter);
+        setReportFormat();
+      }
+
+      JDREvent aEvent = new JDREvent(this, JDREvent.TYPE_AFTER_LOAD);
+      this.notifyListeners(aEvent);
+
+    }
+  }
+
+  /**
+   *
+   */
+  //Xyz add 2004/08/11 分页显示 START
+  public void setReportFormat() {
+    //Xyz add 2004/08/11 分页显示 END
+    try {
+      if (mModel != null && mBook != null) {
+        int maxRow = mModel.getMaxRow();
+        int maxCol = 0;
+        if (mModel.getMaxCol() > 1) {
+          maxCol = mModel.getMaxCol() - 1;
+        }
+        int fixedRow = mModel.getTitleRowCount() + mModel.getHeadRowCount();
+        int titleRow = 0;
+        if (mModel.getTitleRowCount() > 1) {
+          titleRow = mModel.getTitleRowCount() - 1;
+        }
+        //锁定标题和表头
+        mBook.setFixedRow(0);
+        mBook.setFixedRows(fixedRow);
+        //Debug.PrintlnMessageToSystem("行锁定:" + fixedRow);
+        //设置打印标题
+        String printTitleFormula = JDRUtils.coor2Formula(mBook, 0, 0, titleRow,
+            maxCol);
+        //Debug.PrintlnMessageToSystem("打印标题:" + printTitleFormula);
+        mBook.setPrintArea(printTitleFormula);
+        //设置打印区域
+        String printAreaFormula = JDRUtils.coor2Formula(mBook, 0, 0, maxRow,
+            maxCol);
+        //Debug.PrintlnMessageToSystem("打印区域:" + printAreaFormula);
+        if (printAreaFormula != null && printAreaFormula.length() > 0) {
+          mBook.setPrintArea(printAreaFormula);
+        }
+      }
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+
+  }
+
+  /**
+   * 获得数据默默新
+   * @return JDRModel
+   */
+  public JDRModel getModel() {
+    return mModel;
+  }
+
+  /**
+   * 设置数据模型,设置完成后会自动重新加载
+   * @param model
+   */
+  public void setModel(JDRModel model) {
+    if (model == null) {
+      throw new IllegalArgumentException();
+    }
+    try {
+      this.mModel = model;
+      init();
+      load();
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * 获得JBook
+   * @return
+   */
+  public JBook getBook() {
+    return this.mBook;
+  }
+
+  /**
+   * 获得报表名称
+   * @return
+   */
+  public String getRptName() {
+    return mRptName;
+  }
+
+  /**
+   * 添加事件监听器
+   * @param listener
+   */
+  public void addListener(JDRListener listener) {
+    if (listener != null) {
+      this.mCtrl.addListener(listener);
+    }
+  }
+
+  /**
+   * 删除事件监听器
+   * @param listener
+   */
+  public void removeListener(JDRListener listener) {
+    if (listener != null) {
+      this.mCtrl.removeListener(listener);
+    }
+  }
+
+  /**
+   * 事件通知
+   * @param event
+   */
+  public void notifyListeners(JDREvent event) {
+    if (event != null) {
+      this.mCtrl.notifyListeners(event);
+    }
+  }
+
+  public JDRPainter getRDPainter(){
+   return  mPainter;
+  }
+}

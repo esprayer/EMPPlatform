@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="gb2312"?>
+<package id="" caption="装配清单">
+  <NodeContextActionProvider>
+    <ActionProvider clazz="com.efounder.form.client.component.action.ImagePreviewActionProvider"   key="ImagePreView_ACTION"/>
+  </NodeContextActionProvider>
+
+  <CapRes>
+      <item id="" clazz="com.lc.client.dll.JNtNataive"/>
+  </CapRes>
+</package>
